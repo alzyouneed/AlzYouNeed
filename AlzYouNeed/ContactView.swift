@@ -36,6 +36,9 @@ import UIKit
         addSubview(view)
         
         contactImageView.layer.cornerRadius = contactImageView.frame.size.width / 2
+        contactImageView.layer.masksToBounds = false
+        contactImageView.clipsToBounds = true
+        
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
     }
@@ -47,14 +50,34 @@ import UIKit
         return view
     }
     
-//    func loadImageFromPath(path: String) -> UIImage? {
-//        let image = UIImage(contentsOfFile: path)
-//        
-//        if image == nil {
-//            print("missing image at: \(path)")
-//        }
-//        print("loading image from path: \(path)")
-//        return image
-//    }
+    func setImageWithPath(path: String) {
+        let image = loadImageFromPath(path)
+        if image != nil {
+            print("Successfully set contactImageView")
+            contactImageView.image = image
+        }
+    }
+    
+    func loadImageFromPath(path: String) -> UIImage? {
+        
+        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+//        let docsDir = dirPaths[0] as String
+        let docsDir = "\(dirPaths[0] as String)/"
+        
+        print("New docs directory path: \(docsDir)")
+        
+        let completePath = "\(docsDir)\(path)"
+        print("Complete path: \(completePath)")
+        
+        let image = UIImage(contentsOfFile: completePath)
+        
+        if image == nil {
+            print("missing image at: \(path)")
+        }
+        else {
+            print("loading image from path: \(path)")
+        }
+        return image
+    }
 
 }

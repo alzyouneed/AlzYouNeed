@@ -33,6 +33,11 @@ class ContactDetailViewController: UIViewController {
         contactCard.rightButton.setTitle("Message", forState: UIControlState.Normal)
         
         contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        
+        // Check if saved image to load
+        if let imagePhotoPath = person.photoPath {
+            contactCard.setImageWithPath(imagePhotoPath)
+        }
     }
 
     override func viewDidLoad() {
@@ -48,7 +53,7 @@ class ContactDetailViewController: UIViewController {
     
     func leftButtonPressed(sender: UIButton) {
         print("Left button pressed")
-        print("Phone number available: \(person.phoneNumber)")
+        print("Calling: \(person.phoneNumber)")
 //        let telephoneNumber = (person.phoneNumber as CNPhoneNumber).stringValue
         let url: NSURL = NSURL(string: "tel://\(person.phoneNumber)")!
 //        let url: NSURL = NSURL(string: "tel://123456789")!

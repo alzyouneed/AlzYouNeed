@@ -70,7 +70,7 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             let groups = try store.groupsMatchingPredicate(nil)
             let predicate = CNContact.predicateForContactsInGroupWithIdentifier(groups[0].identifier)
             
-            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
+            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactImageDataAvailableKey, CNContactImageDataKey]
             
             let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
             
@@ -78,7 +78,17 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             
             for contact in contacts {
 //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
-                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                
+                // Create image for saving (if one exists)
+                var contactImage = UIImage()
+                if contact.imageDataAvailable {
+                    if let data = contact.imageData {
+                        contactImage = UIImage(data: data)!
+                    }
+                }
+                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                
+//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
                 userContacts.append(person)
                 
 //                print("NUMBER: \((contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as! String)")
@@ -97,8 +107,8 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     func addExistingContact() {
         let contactPicker = CNContactPickerViewController()
         
-//        contactPicker.predicateForSelectionOfContact = NSPredicate(format: "", argumentArray: nil)
-        
+        // Only search contacts with phoneNumbers
+        contactPicker.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0", argumentArray: nil)   
         contactPicker.delegate = self
         self.presentViewController(contactPicker, animated: true, completion: nil)
     }
@@ -118,9 +128,16 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         if let contact = sender.userInfo?["contactToAdd"] as? CNContact {
             
             if !UserDefaultsManager.contactExists(contact.identifier) {
-            
+                var contactImage = UIImage()
+                if contact.imageDataAvailable {
+                    if let data = contact.imageData {
+                        contactImage = UIImage(data: data)!
+                    }
+                }
 //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
-                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                
+//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
                 print("Inserting new object: \(person.identifier), \(person.firstName) \(person.lastName), \(person.phoneNumber)")
                 userContacts.append(person)
             
