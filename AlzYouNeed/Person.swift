@@ -12,11 +12,11 @@ class Person: NSObject, NSCoding {
     // MARK: - Properties
     var identifier: String!
     var firstName: String!
-    var lastName: String?
+    var lastName: String!
 //    var photo: UIImage?
     // Save image path for more efficient storage and loading
-    var photoPath: String?
-    var phoneNumber: String?
+    var photoPath: String!
+    var phoneNumber: String!
     
     
     // MARK: - Init
@@ -24,9 +24,9 @@ class Person: NSObject, NSCoding {
         super.init()
         self.identifier = identifier
         self.firstName = firstName
-        self.lastName = lastName
-        self.photoPath = photoPath
-        self.phoneNumber = phoneNumber
+        self.lastName = lastName ?? ""
+        self.photoPath = photoPath ?? ""
+        self.phoneNumber = phoneNumber ?? ""
     }
     
     required convenience init(coder aDecoder: NSCoder) {

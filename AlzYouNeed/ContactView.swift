@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactView: UIView {
+@IBDesignable class ContactView: UIView {
 
     var view: UIView!
     
@@ -34,6 +34,10 @@ class ContactView: UIView {
         view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         
         addSubview(view)
+        
+        contactImageView.layer.cornerRadius = contactImageView.frame.size.width / 2
+        leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
+        rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
     }
     
     func loadViewFromNib() -> UIView {

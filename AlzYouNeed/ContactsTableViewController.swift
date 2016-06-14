@@ -23,7 +23,9 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         
         getContacts()
         
-        addNewGroup()
+        loadContacts()
+        
+//        addNewGroup()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -39,6 +41,12 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     
     // MARK: - Logic
     
+    func loadContacts() {
+        userContacts.removeAll()
+        userContacts = UserDefaultsManager.getAllContacts()!
+        self.tableView.reloadData()
+    }
+    
     func getContacts() {
         let store = CNContactStore()
         
@@ -46,13 +54,13 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         if CNContactStore.authorizationStatusForEntityType(.Contacts) == .NotDetermined {
             store.requestAccessForEntityType(.Contacts, completionHandler: { (authorized: Bool, error: NSError?) in
                 if authorized {
-                    self.retrieveContactsWithStore(store)
+//                    self.retrieveContactsWithStore(store)
                 }
             })
         }
         // Immediately retrieve contacts
         else if CNContactStore.authorizationStatusForEntityType(.Contacts) == .Authorized {
-            self.retrieveContactsWithStore(store)
+//            self.retrieveContactsWithStore(store)
         }
     }
     
@@ -66,14 +74,15 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             
             let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
             
+            userContacts.removeAll()
+            
             for contact in contacts {
-//                let person
+//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
+                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                userContacts.append(person)
+                
+//                print("NUMBER: \((contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as! String)")
             }
-            
-            self.userContacts = contacts
-            
-//            print("First contact:")
-//            print("Phone number: \(contacts[0].phoneNumbers[0].value)")
             
             // Update tableview on main thread
             dispatch_async(dispatch_get_main_queue(), { 
@@ -98,64 +107,6 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         addExistingContact()
     }
     
-    func addNewGroup() {
-        if !checkExistingGroups("Family - Alz You Need") {
-            print("Creating Family group")
-        
-            let store = CNContactStore()
-            
-            let familyGroup = CNMutableGroup()
-            familyGroup.name = "Family - Alz You Need"
-            let saveRequest = CNSaveRequest()
-            saveRequest.addGroup(familyGroup, toContainerWithIdentifier: nil)
-            
-            do {
-                try store.executeSaveRequest(saveRequest)
-                print("Adding new group")
-            }
-            catch {
-                print(error)
-            }
-        }
-        else {
-            print("Family group exists")
-        }
-    }
-    
-    func checkExistingGroups(group: String) -> Bool {
-        do {
-            let store = CNContactStore()
-            let groups = try store.groupsMatchingPredicate(nil)
-            let filteredGroups = groups.filter {
-                $0.name == "\(group)"
-            }
-            
-            guard let checkedGroup = filteredGroups.first else {
-                print("No \(group) group")
-                return false
-            }
-            
-            let predicate = CNContact.predicateForContactsInGroupWithIdentifier(checkedGroup.identifier)
-            let keysToFetch = [CNContactGivenNameKey]
-            let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
-            
-            print(contacts)
-            return true
-        }
-        catch {
-            print(error)
-            return false
-        }
-    }
-    
-    func saveContactInGroup(contact: CNContact) {
-        let store = CNContactStore()
-        print(contact.phoneNumbers[0].value)
-        
-        // Create copy of contact to update
-        var newContact = contact.mutableCopy() as! CNMutableContact
-        
-    }
     
     // MARK: - CNContactPickerDelegate
     
@@ -165,9 +116,23 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     
     func insertNewObject(sender: NSNotification) {
         if let contact = sender.userInfo?["contactToAdd"] as? CNContact {
-            userContacts.insert(contact, atIndex: 0)
-            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            
+            if !UserDefaultsManager.contactExists(contact.identifier) {
+            
+//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
+                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+                print("Inserting new object: \(person.identifier), \(person.firstName) \(person.lastName), \(person.phoneNumber)")
+                userContacts.append(person)
+            
+                // Save to defaults
+                UserDefaultsManager.saveContact(person)
+            
+                let indexPath = NSIndexPath(forRow: userContacts.count-1, inSection: 0)
+                self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+            else {
+                print("Contact already exists")
+            }
         }
     }
 
@@ -188,53 +153,15 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         let cell = tableView.dequeueReusableCellWithIdentifier("contactCell", forIndexPath: indexPath)
 
         let contact = userContacts[indexPath.row]
-        let formatter = CNContactFormatter()
+//        let formatter = CNContactFormatter()
         
-        cell.textLabel?.text = formatter.stringFromContact(contact)
-        cell.detailTextLabel?.text = contact.emailAddresses.first?.value as? String
-//        for phoneNumber in contact.phoneNumbers {
-//            let number = (phoneNumber.value as! CNPhoneNumber).stringValue
-//            print(number)
-//        }
+        print("Contact: \(contact.firstName) \(contact.lastName), \(contact.phoneNumber)")
+        
+        cell.textLabel?.text = "\(contact.firstName) \(contact.lastName)"
+        cell.detailTextLabel?.text = "\(contact.phoneNumber)"
+
         return cell
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -244,12 +171,113 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let contactObject = userContacts[indexPath.row]
                 let controller = segue.destinationViewController as! ContactDetailViewController
-                controller.contactItem = contactObject
+//                controller.contactItem = contactObject
+                controller.person = contactObject
 //                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
 //                controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
     
+    
+    // MARK: - Unused
+    
+    /*
+        func addNewGroup() {
+            if !checkExistingGroups("Family - Alz You Need") {
+                print("Creating Family group")
+    
+                let store = CNContactStore()
+    
+                let familyGroup = CNMutableGroup()
+                familyGroup.name = "Family - Alz You Need"
+                let saveRequest = CNSaveRequest()
+                saveRequest.addGroup(familyGroup, toContainerWithIdentifier: nil)
+    
+                do {
+                    try store.executeSaveRequest(saveRequest)
+                    print("Adding new group")
+                }
+                catch {
+                    print(error)
+                }
+            }
+            else {
+                print("Family group exists")
+            }
+        }
+    
+        func checkExistingGroups(group: String) -> Bool {
+            do {
+                let store = CNContactStore()
+                let groups = try store.groupsMatchingPredicate(nil)
+                let filteredGroups = groups.filter {
+                    $0.name == "\(group)"
+                }
+    
+                guard let checkedGroup = filteredGroups.first else {
+                    print("No \(group) group")
+                    return false
+                }
+    
+                let predicate = CNContact.predicateForContactsInGroupWithIdentifier(checkedGroup.identifier)
+                let keysToFetch = [CNContactGivenNameKey]
+                let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+    
+                print(contacts)
+                return true
+            }
+            catch {
+                print(error)
+                return false
+            }
+        }
+    
+        func saveContactInGroup(contact: CNContact) {
+            let store = CNContactStore()
+            print(contact.phoneNumbers[0].value)
+            
+            // Create copy of contact to update
+            var newContact = contact.mutableCopy() as! CNMutableContact
+            
+        }
+    */
+    
+    
+    /*
+     // Override to support conditional editing of the table view.
+     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+     if editingStyle == .Delete {
+     // Delete the row from the data source
+     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+     } else if editingStyle == .Insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
+    /*
+     // Override to support rearranging the table view.
+     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+     
+     }
+     */
+    
+    /*
+     // Override to support conditional rearranging of the table view.
+     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+
 
 }

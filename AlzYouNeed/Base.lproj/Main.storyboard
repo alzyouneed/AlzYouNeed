@@ -39,7 +39,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="6GR-aY-NXl" kind="show" identifier="showDetail" id="QDe-QX-ghY"/>
+                                    <segue destination="lrj-J9-jsr" kind="show" identifier="showDetail" id="bUe-RH-BTX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -122,16 +122,46 @@
                             <constraint firstAttribute="trailingMargin" secondItem="hwT-d6-len" secondAttribute="trailing" id="ybG-KG-0eD"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="address" destination="hwT-d6-len" id="PZq-ji-Yh1"/>
-                        <outlet property="contactImage" destination="UhJ-0m-OG5" id="vaV-S3-5I7"/>
-                        <outlet property="email" destination="KWU-XL-7pq" id="W0r-tI-LQW"/>
-                        <outlet property="fullName" destination="tC5-bZ-ieN" id="CVB-ug-4on"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9xR-VA-LXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1890" y="489"/>
+        </scene>
+        <!--Contact Detail View Controller-->
+        <scene sceneID="xtE-Sz-yxS">
+            <objects>
+                <viewController id="lrj-J9-jsr" customClass="ContactDetailViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r1v-BX-jPE"/>
+                        <viewControllerLayoutGuide type="bottom" id="uNM-fj-SOc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BET-g9-A0z">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAx-Z9-lar" customClass="ContactView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="200" y="20" width="200" height="225"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="225" id="K7I-zD-rwZ"/>
+                                    <constraint firstAttribute="width" constant="200" id="Rkd-f1-s71"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RAx-Z9-lar" firstAttribute="top" secondItem="r1v-BX-jPE" secondAttribute="bottom" id="RyJ-Uz-oWA"/>
+                            <constraint firstItem="RAx-Z9-lar" firstAttribute="centerX" secondItem="BET-g9-A0z" secondAttribute="centerX" id="nnU-ew-9LA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="mta-rB-KmW"/>
+                    <connections>
+                        <outlet property="contactCard" destination="RAx-Z9-lar" id="B21-uK-P7q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sE7-b7-8su" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1898" y="1214"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a7R-X4-BPr">
