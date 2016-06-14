@@ -16,24 +16,19 @@ class Person: NSObject, NSCoding {
     
     // Save image path for more efficient storage and loading
     var photoPath: String!
-    
-    // For saving image to file directory
-//    var photo: UIImage!
     var phoneNumber: String!
     
     
     // MARK: - Init
-//    init(identifier: String, firstName: String, lastName: String?, photoPath: String?, photo: UIImage?, phoneNumber: String?) {
     init(identifier: String, firstName: String, lastName: String?, photo: UIImage?, phoneNumber: String?) {
         super.init()
         self.identifier = identifier
         self.firstName = firstName
         self.lastName = lastName ?? ""
         self.photoPath = ""
-//        self.photo = photo ?? nil
         self.phoneNumber = phoneNumber ?? ""
         
-        // If there is a photo, save the image and photoPath
+        // If there is a photo, save the image using full name
         if photo != nil {
             print("Photo exists -- attempting to save")
             self.photoPath = saveImage(photo!, identifier: identifier)
@@ -46,7 +41,6 @@ class Person: NSObject, NSCoding {
         self.firstName = firstName
         self.lastName = lastName ?? ""
         self.photoPath = photoPath ?? ""
-//        self.photo = nil
         self.phoneNumber = phoneNumber ?? ""
     }
     
@@ -75,29 +69,19 @@ class Person: NSObject, NSCoding {
     func saveImage(image: UIImage, identifier: String) -> String {
         print("Saving image")
         let pngImageData = UIImagePNGRepresentation(image)
-//        let result = pngImageData!.writeToFile(path, atomically: true)
-//        let imagePath = fileInDocumentDirectory("\(self.firstName)\(self.lastName).png")
-        
         
         let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        let docsDir = "\(dirPaths[0] as String)/"
-        let imagePath = "\(docsDir)\(self.firstName)\(self.lastName).png"
-//        let imagePath = fileInDocumentDirectory("\(identifier).png")
-        pngImageData!.writeToFile(imagePath, atomically: true)
+        let docsDir = "\(dirPaths[0] as String)/" // Document directory
         
-        // return imagePath for loading
-        return "\(self.firstName)\(self.lastName).png"
-//        return imagePath
-    }
-    
-    func getDocumentsURL() -> NSURL {
-        let documentssURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-        return documentssURL
-    }
-    
-    func fileInDocumentDirectory(filename: String) -> String {
-        let fileURL = getDocumentsURL().URLByAppendingPathComponent(filename)
-        return fileURL.path!
+        let imageName = "\(identifier).png"
+        let imagePath = "\(docsDir)\(imageName)"
+        
+        if pngImageData != nil {
+            pngImageData!.writeToFile(imagePath, atomically: true)
+        }
+        
+        // return imageName for loading later
+        return imageName
     }
 
 }

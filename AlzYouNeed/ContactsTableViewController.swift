@@ -12,8 +12,6 @@ import ContactsUI
 
 class ContactsTableViewController: UITableViewController, CNContactPickerDelegate {
     
-//    var userContacts: [CNContact] = []
-    
     var userContacts: [Person] = []
 
     override func viewDidLoad() {
@@ -21,17 +19,9 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsTableViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
-        getContacts()
+//        getContacts()
         
         loadContacts()
-        
-//        addNewGroup()
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +35,8 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         userContacts.removeAll()
         userContacts = UserDefaultsManager.getAllContacts()!
         self.tableView.reloadData()
+        
+        print("Loaded \(userContacts.count) contacts from UserDefaults")
     }
     
     func getContacts() {
@@ -108,7 +100,7 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         let contactPicker = CNContactPickerViewController()
         
         // Only search contacts with phoneNumbers
-        contactPicker.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0", argumentArray: nil)   
+        contactPicker.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0", argumentArray: nil)
         contactPicker.delegate = self
         self.presentViewController(contactPicker, animated: true, completion: nil)
     }
@@ -127,20 +119,23 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     func insertNewObject(sender: NSNotification) {
         if let contact = sender.userInfo?["contactToAdd"] as? CNContact {
             
+            // Check that contact does not already exist
             if !UserDefaultsManager.contactExists(contact.identifier) {
                 var contactImage = UIImage()
+                // Check for contact image
                 if contact.imageDataAvailable {
                     if let data = contact.imageData {
                         contactImage = UIImage(data: data)!
                     }
                 }
-//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
+                
+                // Create new person using contact
                 let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
                 
-//                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
-                print("Inserting new object: \(person.identifier), \(person.firstName) \(person.lastName), \(person.phoneNumber)")
+//                print("Inserting new object: \(person.identifier), \(person.firstName) \(person.lastName), \(person.phoneNumber)")
+                
+                // Add contact to local array
                 userContacts.append(person)
-            
                 // Save to defaults
                 UserDefaultsManager.saveContact(person)
             
@@ -170,9 +165,6 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         let cell = tableView.dequeueReusableCellWithIdentifier("contactCell", forIndexPath: indexPath)
 
         let contact = userContacts[indexPath.row]
-//        let formatter = CNContactFormatter()
-        
-        print("Contact: \(contact.firstName) \(contact.lastName), \(contact.phoneNumber)")
         
         cell.textLabel?.text = "\(contact.firstName) \(contact.lastName)"
         cell.detailTextLabel?.text = "\(contact.phoneNumber)"

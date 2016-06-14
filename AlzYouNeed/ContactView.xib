@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactView" customModule="AlzYouNeed" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="hdq-70-oLI" id="lpM-GI-A53"/>
                 <outlet property="contactImageView" destination="nd4-wO-RUx" id="8KT-KR-ITF"/>
                 <outlet property="leftButton" destination="HFO-dg-PD2" id="foA-kL-PjG"/>
                 <outlet property="nameLabel" destination="ezW-v5-SPO" id="Yk7-6f-zzw"/>
@@ -18,6 +19,31 @@
             <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdq-70-oLI">
+                    <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezW-v5-SPO">
+                            <rect key="frame" x="8" y="8" width="184" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="hIZ-cQ-WsL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="hIZ-cQ-WsL"/>
+                                </mask>
+                            </variation>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="ezW-v5-SPO" firstAttribute="leading" secondItem="hdq-70-oLI" secondAttribute="leading" constant="8" id="BAS-uF-eAF"/>
+                        <constraint firstItem="ezW-v5-SPO" firstAttribute="top" secondItem="hdq-70-oLI" secondAttribute="top" constant="8" id="x1B-qA-gWa"/>
+                        <constraint firstAttribute="trailing" secondItem="ezW-v5-SPO" secondAttribute="trailing" constant="8" id="yoK-CL-raD"/>
+                    </constraints>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nd4-wO-RUx">
                     <rect key="frame" x="50" y="29" width="100" height="100"/>
                     <constraints>
@@ -44,24 +70,18 @@
                         </button>
                     </subviews>
                 </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezW-v5-SPO">
-                    <rect key="frame" x="8" y="0.0" width="184" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="SpE-Vf-aqw" secondAttribute="trailing" constant="20" id="8eE-OW-1Sn"/>
-                <constraint firstItem="ezW-v5-SPO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="F0S-Ah-pNV"/>
+                <constraint firstItem="hdq-70-oLI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AU1-WC-DON"/>
                 <constraint firstItem="nd4-wO-RUx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="FGu-si-ZdC"/>
+                <constraint firstItem="hdq-70-oLI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="G1u-cc-V3W"/>
                 <constraint firstAttribute="bottom" secondItem="SpE-Vf-aqw" secondAttribute="bottom" constant="10" id="PDr-pk-gM1"/>
-                <constraint firstAttribute="trailing" secondItem="ezW-v5-SPO" secondAttribute="trailing" constant="8" id="VaN-Eq-QWZ"/>
-                <constraint firstItem="ezW-v5-SPO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Z0U-p8-1kD"/>
+                <constraint firstAttribute="trailing" secondItem="hdq-70-oLI" secondAttribute="trailing" id="Zht-uD-wdf"/>
                 <constraint firstItem="SpE-Vf-aqw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="eLq-s5-Rbk"/>
                 <constraint firstItem="SpE-Vf-aqw" firstAttribute="top" secondItem="nd4-wO-RUx" secondAttribute="bottom" constant="8" id="i0T-Qk-bWO"/>
-                <constraint firstItem="nd4-wO-RUx" firstAttribute="top" secondItem="ezW-v5-SPO" secondAttribute="bottom" constant="8" id="qHS-jH-vMy"/>
+                <constraint firstItem="nd4-wO-RUx" firstAttribute="top" secondItem="ezW-v5-SPO" secondAttribute="bottom" id="ltB-HW-1Al"/>
+                <constraint firstAttribute="bottom" secondItem="hdq-70-oLI" secondAttribute="bottom" id="ozj-Dk-NjW"/>
                 <constraint firstItem="SpE-Vf-aqw" firstAttribute="top" secondItem="nd4-wO-RUx" secondAttribute="bottom" constant="16" id="qgy-HZ-G8V"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

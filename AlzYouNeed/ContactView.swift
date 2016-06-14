@@ -10,12 +10,17 @@ import UIKit
 
 @IBDesignable class ContactView: UIView {
 
+    // MARK: - Properties
+    
     var view: UIView!
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var contactImageView: UIImageView!
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
+    @IBOutlet var backgroundView: UIView!
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +31,8 @@ import UIKit
         super.init(coder: aDecoder)
         xibSetup()
     }
+    
+    // MARK: - Setup
     
     func xibSetup() {
         view = loadViewFromNib()
@@ -41,6 +48,9 @@ import UIKit
         
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
+        
+        backgroundView.clipsToBounds = true
+        backgroundView.layer.cornerRadius = 10
     }
     
     func loadViewFromNib() -> UIView {
@@ -53,7 +63,7 @@ import UIKit
     func setImageWithPath(path: String) {
         let image = loadImageFromPath(path)
         if image != nil {
-            print("Successfully set contactImageView")
+//            print("Successfully set contactImageView \n")
             contactImageView.image = image
         }
     }
@@ -61,13 +71,12 @@ import UIKit
     func loadImageFromPath(path: String) -> UIImage? {
         
         let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-//        let docsDir = dirPaths[0] as String
-        let docsDir = "\(dirPaths[0] as String)/"
+        let docsDir = "\(dirPaths[0] as String)/" // Document directory
         
-        print("New docs directory path: \(docsDir)")
+//        print("New docs directory path: \(docsDir)")
         
         let completePath = "\(docsDir)\(path)"
-        print("Complete path: \(completePath)")
+//        print("Complete path: \(completePath)")
         
         let image = UIImage(contentsOfFile: completePath)
         
