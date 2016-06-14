@@ -73,14 +73,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UhJ-0m-OG5">
-                                <rect key="frame" x="250" y="85" width="100" height="100"/>
+                                <rect key="frame" x="250" y="129" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="N24-cJ-JxV"/>
                                     <constraint firstAttribute="width" constant="100" id="bKM-cc-vpk"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tC5-bZ-ieN">
-                                <rect key="frame" x="20" y="193" width="560" height="44"/>
+                                <rect key="frame" x="20" y="237" width="560" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="16e-WS-UyK"/>
                                 </constraints>
@@ -89,7 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwT-d6-len">
-                                <rect key="frame" x="20" y="245" width="560" height="21"/>
+                                <rect key="frame" x="20" y="289" width="560" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="yd7-Pr-abs"/>
                                 </constraints>
@@ -98,7 +98,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWU-XL-7pq">
-                                <rect key="frame" x="20" y="274" width="560" height="21"/>
+                                <rect key="frame" x="20" y="318" width="560" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="lJr-Nh-fMO"/>
                                 </constraints>

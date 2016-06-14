@@ -12,7 +12,9 @@ import ContactsUI
 
 class ContactsTableViewController: UITableViewController, CNContactPickerDelegate {
     
-    var userContacts: [CNContact] = []
+//    var userContacts: [CNContact] = []
+    
+    var userContacts: [Person] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +65,11 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
             
             let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+            
+            for contact in contacts {
+//                let person
+            }
+            
             self.userContacts = contacts
             
 //            print("First contact:")

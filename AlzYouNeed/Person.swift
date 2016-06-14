@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Person: NSObject {
+class Person: NSObject, NSCoding {
     // MARK: - Properties
     var identifier: String!
     var firstName: String!
@@ -16,17 +16,34 @@ class Person: NSObject {
 //    var photo: UIImage?
     // Save image path for more efficient storage and loading
     var photoPath: String?
-    var phoneNumber: String!
+    var phoneNumber: String?
     
     
     // MARK: - Init
-    init(identifier: String, firstName: String, lastName: String?, photoPath: String?, phoneNumber: String) {
+    init(identifier: String, firstName: String, lastName: String?, photoPath: String?, phoneNumber: String?) {
         super.init()
         self.identifier = identifier
         self.firstName = firstName
         self.lastName = lastName
         self.photoPath = photoPath
         self.phoneNumber = phoneNumber
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let identifier = aDecoder.decodeObjectForKey("identifier") as! String
+        let firstName = aDecoder.decodeObjectForKey("firstName") as! String
+        let lastName = aDecoder.decodeObjectForKey("lastName") as? String
+        let photoPath = aDecoder.decodeObjectForKey("photoPath") as? String
+        let phoneNumber = aDecoder.decodeObjectForKey("phoneNumber") as? String
+        self.init(identifier: identifier, firstName: firstName, lastName: lastName, photoPath: photoPath, phoneNumber: phoneNumber)
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(self.identifier, forKey: "identifier")
+        aCoder.encodeObject(self.firstName, forKey: "firstName")
+        aCoder.encodeObject(self.lastName, forKey: "lastName")
+        aCoder.encodeObject(self.photoPath, forKey: "photoPath")
+        aCoder.encodeObject(self.phoneNumber, forKey: "phoneNumber")
     }
 
 }
