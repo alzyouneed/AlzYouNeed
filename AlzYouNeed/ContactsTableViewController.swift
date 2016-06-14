@@ -60,10 +60,13 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
             let groups = try store.groupsMatchingPredicate(nil)
             let predicate = CNContact.predicateForContactsInGroupWithIdentifier(groups[0].identifier)
             
-            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey]
+            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey]
             
             let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
             self.userContacts = contacts
+            
+//            print("First contact:")
+//            print("Phone number: \(contacts[0].phoneNumbers[0].value)")
             
             // Update tableview on main thread
             dispatch_async(dispatch_get_main_queue(), { 
@@ -140,10 +143,10 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     
     func saveContactInGroup(contact: CNContact) {
         let store = CNContactStore()
+        print(contact.phoneNumbers[0].value)
         
         // Create copy of contact to update
         var newContact = contact.mutableCopy() as! CNMutableContact
-        
         
     }
     
@@ -182,7 +185,10 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
         
         cell.textLabel?.text = formatter.stringFromContact(contact)
         cell.detailTextLabel?.text = contact.emailAddresses.first?.value as? String
-
+//        for phoneNumber in contact.phoneNumbers {
+//            let number = (phoneNumber.value as! CNPhoneNumber).stringValue
+//            print(number)
+//        }
         return cell
     }
  
