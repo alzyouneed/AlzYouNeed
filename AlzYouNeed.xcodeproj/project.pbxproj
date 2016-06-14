@@ -39,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D2244EE1D0F994E005D9DF5 /* ContactList */ = {
+			isa = PBXGroup;
+			children = (
+				2D6EBACC1D0F0FC8004AD135 /* Controller */,
+			);
+			name = ContactList;
+			sourceTree = "<group>";
+		};
 		2D6EBACC1D0F0FC8004AD135 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,7 +78,7 @@
 				2D9834D71D0C4A91000977DC /* AppDelegate.swift */,
 				2D9834D91D0C4A91000977DC /* ViewController.swift */,
 				2D9834DB1D0C4A91000977DC /* Main.storyboard */,
-				2D6EBACC1D0F0FC8004AD135 /* Controller */,
+				2D2244EE1D0F994E005D9DF5 /* ContactList */,
 				2D9834DE1D0C4A91000977DC /* Assets.xcassets */,
 				2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */,
 				2D9834E31D0C4A91000977DC /* Info.plist */,

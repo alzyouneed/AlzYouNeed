@@ -16,9 +16,12 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsTableViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
         getContacts()
+        
+        addNewGroup()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -75,7 +78,7 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     func addExistingContact() {
         let contactPicker = CNContactPickerViewController()
         
-        contactPicker.predicateForSelectionOfContact = NSPredicate(format: "", argumentArray: nil)
+//        contactPicker.predicateForSelectionOfContact = NSPredicate(format: "", argumentArray: nil)
         
         contactPicker.delegate = self
         self.presentViewController(contactPicker, animated: true, completion: nil)
@@ -84,6 +87,66 @@ class ContactsTableViewController: UITableViewController, CNContactPickerDelegat
     @IBAction func addExisting(sender: AnyObject) {
         addExistingContact()
     }
+    
+    func addNewGroup() {
+        if !checkExistingGroups("Family - Alz You Need") {
+            print("Creating Family group")
+        
+            let store = CNContactStore()
+            
+            let familyGroup = CNMutableGroup()
+            familyGroup.name = "Family - Alz You Need"
+            let saveRequest = CNSaveRequest()
+            saveRequest.addGroup(familyGroup, toContainerWithIdentifier: nil)
+            
+            do {
+                try store.executeSaveRequest(saveRequest)
+                print("Adding new group")
+            }
+            catch {
+                print(error)
+            }
+        }
+        else {
+            print("Family group exists")
+        }
+    }
+    
+    func checkExistingGroups(group: String) -> Bool {
+        do {
+            let store = CNContactStore()
+            let groups = try store.groupsMatchingPredicate(nil)
+            let filteredGroups = groups.filter {
+                $0.name == "\(group)"
+            }
+            
+            guard let checkedGroup = filteredGroups.first else {
+                print("No \(group) group")
+                return false
+            }
+            
+            let predicate = CNContact.predicateForContactsInGroupWithIdentifier(checkedGroup.identifier)
+            let keysToFetch = [CNContactGivenNameKey]
+            let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+            
+            print(contacts)
+            return true
+        }
+        catch {
+            print(error)
+            return false
+        }
+    }
+    
+    func saveContactInGroup(contact: CNContact) {
+        let store = CNContactStore()
+        
+        // Create copy of contact to update
+        var newContact = contact.mutableCopy() as! CNMutableContact
+        
+        
+    }
+    
     // MARK: - CNContactPickerDelegate
     
     func contactPicker(picker: CNContactPickerViewController, didSelectContact contact: CNContact) {
