@@ -19,7 +19,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsTableViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
         loadContacts()
     }
@@ -64,6 +64,8 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     
     func insertNewObject(sender: NSNotification) {
         if let contact = sender.userInfo?["contactToAdd"] as? CNContact {
+            
+            print("Adding contact: \(contact.givenName) \(contact.familyName) \n")
             
             // Check that contact does not already exist
             if !UserDefaultsManager.contactExists(contact.identifier) {
@@ -132,7 +134,10 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Check for saved image to load
         if cell.contactView.contactImageView.image == nil {
             if let imagePhotoPath = person.photoPath {
-                cell.contactView.setImageWithPath(imagePhotoPath)
+                // Only load if real image path exists
+                if imagePhotoPath != "" {
+                    cell.contactView.setImageWithPath(imagePhotoPath)
+                }
             }
         }
     
@@ -140,12 +145,11 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     }
     
     func leftButtonPressed(sender: UIButton) {
-        print("Left button pressed")
-        print("Button row: \(sender.tag)")
         
         let phoneNumber = userContacts[sender.tag].phoneNumber
+        print("Left button pressed -- row: \(sender.tag) -- Calling: \(phoneNumber) \n")
         
-        print("Calling: \(phoneNumber)")
+//        print("Calling: \(phoneNumber)")
         let url: NSURL = NSURL(string: "tel://\(phoneNumber)")!
         
         UIApplication.sharedApplication().openURL(url)
@@ -181,6 +185,79 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
     
     }
+     
+    // MARK: - Unused
+     
+     func getContacts() {
+     let store = CNContactStore()
+     
+     // Check if use of contacts is authorized
+     if CNContactStore.authorizationStatusForEntityType(.Contacts) == .NotDetermined {
+     store.requestAccessForEntityType(.Contacts, completionHandler: { (authorized: Bool, error: NSError?) in
+     if authorized {
+     //                    self.retrieveContactsWithStore(store)
+     }
+     })
+     }
+     // Immediately retrieve contacts
+     else if CNContactStore.authorizationStatusForEntityType(.Contacts) == .Authorized {
+     //            self.retrieveContactsWithStore(store)
+     }
+     }
+     
+     func retrieveContactsWithStore(store: CNContactStore) {
+     do {
+     // Predicate matches all groups
+     let groups = try store.groupsMatchingPredicate(nil)
+     let predicate = CNContact.predicateForContactsInGroupWithIdentifier(groups[0].identifier)
+     
+     let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactImageDataAvailableKey, CNContactImageDataKey]
+     
+     let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
+     
+     userContacts.removeAll()
+     
+     for contact in contacts {
+     //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
+     
+     // Create image for saving (if one exists)
+     var contactImage = UIImage()
+     if contact.imageDataAvailable {
+     if let data = contact.imageData {
+     contactImage = UIImage(data: data)!
+     }
+     }
+     let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+     
+     //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
+     userContacts.append(person)
+     
+     //                print("NUMBER: \((contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as! String)")
+     }
+     
+     // Update tableview on main thread
+     dispatch_async(dispatch_get_main_queue(), {
+     self.tableView.reloadData()
+     })
+     }
+     catch {
+     print(error)
+     }
+     }
+     
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     if segue.identifier == "showDetail" {
+     if let indexPath = self.tableView.indexPathForSelectedRow {
+     let contactObject = userContacts[indexPath.row]
+     let controller = segue.destinationViewController as! ContactDetailViewController
+     //                controller.contactItem = contactObject
+     controller.person = contactObject
+     //                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+     //                controller.navigationItem.leftItemsSupplementBackButton = true
+     }
+     }
+     }
+     
     */
 
 }

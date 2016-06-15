@@ -84,7 +84,7 @@ import UIKit
             print("missing image at: \(path)")
         }
         else {
-            print("loading image from path: \(path)")
+//            print("loading image from path: \(path)")
         }
         return image
     }
