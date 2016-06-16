@@ -17,6 +17,9 @@
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
+		2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */; };
+		2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */; };
+		2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */; };
 		2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
@@ -36,6 +39,9 @@
 		2D9834DE1D0C4A91000977DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardView.xib; sourceTree = "<group>"; };
+		2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDashboardView.swift; sourceTree = "<group>"; };
 		2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCollectionViewController.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -112,13 +118,48 @@
 				2D9834D71D0C4A91000977DC /* AppDelegate.swift */,
 				2D9834DB1D0C4A91000977DC /* Main.storyboard */,
 				2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */,
-				2DE890B71D11B9B7001DC19F /* Extras */,
+				2DC8D5B81D12DBDD00952483 /* Dashboard */,
 				2D2244EE1D0F994E005D9DF5 /* ContactList */,
+				2DE890B71D11B9B7001DC19F /* Extras */,
 				2D9834DE1D0C4A91000977DC /* Assets.xcassets */,
 				2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */,
 				2D9834E31D0C4A91000977DC /* Info.plist */,
 			);
 			path = AlzYouNeed;
+			sourceTree = "<group>";
+		};
+		2DC8D5B81D12DBDD00952483 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				2DC8D5BB1D12DC0700952483 /* Model */,
+				2DC8D5BC1D12DC0B00952483 /* View */,
+				2DC8D5B91D12DBF600952483 /* Controller */,
+			);
+			name = Dashboard;
+			sourceTree = "<group>";
+		};
+		2DC8D5B91D12DBF600952483 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2DC8D5BB1D12DC0700952483 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2DC8D5BC1D12DC0B00952483 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */,
+				2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
@@ -194,6 +235,7 @@
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
+				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,11 +249,13 @@
 			files = (
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
+				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
+				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 			);
