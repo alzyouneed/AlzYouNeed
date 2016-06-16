@@ -20,6 +20,8 @@
 		2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */; };
 		2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */; };
 		2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */; };
+		2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5C21D12E12F00952483 /* DateDashboardView.xib */; };
+		2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5C41D12E13D00952483 /* DateDashboardView.swift */; };
 		2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
@@ -42,6 +44,8 @@
 		2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardView.xib; sourceTree = "<group>"; };
 		2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDashboardView.swift; sourceTree = "<group>"; };
+		2DC8D5C21D12E12F00952483 /* DateDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateDashboardView.xib; sourceTree = "<group>"; };
+		2DC8D5C41D12E13D00952483 /* DateDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateDashboardView.swift; sourceTree = "<group>"; };
 		2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCollectionViewController.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -156,10 +160,28 @@
 		2DC8D5BC1D12DC0B00952483 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2DC8D5C11D12E11800952483 /* UserDashboardView */,
+				2DC8D5C61D12E14300952483 /* DateDashboardView */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2DC8D5C11D12E11800952483 /* UserDashboardView */ = {
+			isa = PBXGroup;
+			children = (
 				2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */,
 				2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */,
 			);
-			name = View;
+			name = UserDashboardView;
+			sourceTree = "<group>";
+		};
+		2DC8D5C61D12E14300952483 /* DateDashboardView */ = {
+			isa = PBXGroup;
+			children = (
+				2DC8D5C21D12E12F00952483 /* DateDashboardView.xib */,
+				2DC8D5C41D12E13D00952483 /* DateDashboardView.swift */,
+			);
+			name = DateDashboardView;
 			sourceTree = "<group>";
 		};
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
@@ -237,6 +259,7 @@
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
+				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +281,7 @@
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
+				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

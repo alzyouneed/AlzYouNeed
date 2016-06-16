@@ -9,10 +9,18 @@
 import UIKit
 
 class DashboardViewController: UIViewController {
+    
+    @IBOutlet var userView: UserDashboardView!
+    @IBOutlet var dateView: DateDashboardView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        let now = NSDate()
+        dateView.configureView(now)
     }
 
     override func didReceiveMemoryWarning() {

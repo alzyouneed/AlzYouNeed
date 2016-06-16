@@ -136,10 +136,10 @@
             </objects>
             <point key="canvasLocation" x="14" y="658"/>
         </scene>
-        <!--View Controller-->
+        <!--Dashboard View Controller-->
         <scene sceneID="0Nc-oR-Kwk">
             <objects>
-                <viewController id="fTz-C2-Fo8" sceneMemberID="viewController">
+                <viewController id="fTz-C2-Fo8" customClass="DashboardViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aJU-23-cUd"/>
                         <viewControllerLayoutGuide type="bottom" id="ZlT-Ga-xyb"/>
@@ -155,14 +155,27 @@
                                     <constraint firstAttribute="height" constant="80" id="aKX-b8-nAI"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="172" y="236" width="256" height="81"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="8bx-2a-YDb"/>
+                                    <constraint firstAttribute="height" constant="81" id="fN7-3b-R15"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.81960784310000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="OU6-lO-WOk" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" constant="59" id="4x1-1o-ixj"/>
+                            <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="xLL-Sp-XmI" secondAttribute="centerX" id="R0i-Xl-EBf"/>
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="centerX" secondItem="Zri-OK-PIv" secondAttribute="centerX" id="Uq8-UP-Qlu"/>
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" constant="33" id="lxA-EI-pkt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JRu-Ga-1J2"/>
+                    <connections>
+                        <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
+                        <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCy-rb-sTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
