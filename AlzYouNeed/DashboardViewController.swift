@@ -28,5 +28,19 @@ class DashboardViewController: UIViewController {
         
     }
     
+    @IBAction func logout(sender: UIBarButtonItem) {
+        UserDefaultsManager.logout()
+        self.performSegueWithIdentifier("Logout", sender: self)
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let onboardingVC = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
+//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        appDelegate.window?.rootViewController = onboardingVC
+//
+////        self.showDetailViewController(onboardingVC, sender: self)
+//        
+//        UIView.transitionWithView(appDelegate.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: {
+//            appDelegate.window?.rootViewController = onboardingVC
+//            }, completion: nil)
+    }
 
 }

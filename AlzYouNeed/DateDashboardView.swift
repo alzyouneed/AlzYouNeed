@@ -54,17 +54,17 @@ import UIKit
         let dayFormatter = NSDateFormatter()
         dayFormatter.dateFormat = "EEEE"
         let dayString = dayFormatter.stringFromDate(date)
-        print(dayString)
+//        print(dayString)
         
         let fullDateFormatter = NSDateFormatter()
         fullDateFormatter.dateFormat = "MMMM d, yyyy"
         let fullDateString = fullDateFormatter.stringFromDate(date)
-        print(fullDateString)
+//        print(fullDateString)
         
         let timeFormatter = NSDateFormatter()
         timeFormatter.dateFormat = "H:mm a"
         let timeString = timeFormatter.stringFromDate(date)
-        print(timeString)
+//        print(timeString)
 
         dayLabel.text = dayString
         fullDateLabel.text = fullDateString

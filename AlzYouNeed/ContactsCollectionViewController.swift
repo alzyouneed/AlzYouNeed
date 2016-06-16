@@ -22,7 +22,17 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Create observer for CNContactPicker selection
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
-        loadContacts()
+        if UserDefaultsManager.loggedIn() {
+            loadContacts()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Check if logged in
+        if !UserDefaultsManager.loggedIn() {
+            print("Not logged in -- moving to onboarding flow")
+            self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {

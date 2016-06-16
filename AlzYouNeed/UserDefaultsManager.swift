@@ -72,4 +72,29 @@ class UserDefaultsManager: NSObject {
         defaults.synchronize()
     }
 
+    class func login() {
+//        print("Logging in -- logged in: \(loggedIn())")
+        if !loggedIn() {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setBool(true, forKey: "loggedIn")
+            defaults.synchronize()
+        }
+    }
+    
+    class func logout() {
+//        print("Logging Out -- logged in: \(loggedIn())")
+        if loggedIn() {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setBool(false, forKey: "loggedIn")
+            defaults.synchronize()
+        }
+    }
+    
+    // Check if user is logged in
+    class func loggedIn() -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+//        print("Logged in: \(defaults.boolForKey("loggedIn"))")
+        return defaults.boolForKey("loggedIn")
+    }
+    
 }

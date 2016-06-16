@@ -99,10 +99,75 @@
             </objects>
             <point key="canvasLocation" x="1344" y="658"/>
         </scene>
+        <!--Onboarding View Controller-->
+        <scene sceneID="6dU-ax-Uhd">
+            <objects>
+                <viewController storyboardIdentifier="OnboardingVC" id="dEd-h1-zPp" customClass="OnboardingViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Hh-bb-hIh"/>
+                        <viewControllerLayoutGuide type="bottom" id="aSs-ck-fte"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aSa-gE-Fff">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnB-JD-yef">
+                                <rect key="frame" x="214" y="212" width="173" height="47"/>
+                                <color key="backgroundColor" red="1" green="0.81960784310000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="D2a-w8-7rf"/>
+                                    <constraint firstAttribute="width" constant="173" id="ryK-Ul-fmN"/>
+                                </constraints>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="login:" destination="dEd-h1-zPp" eventType="touchUpInside" id="59g-hk-OSj"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alz You Need" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78x-OC-pb2">
+                                <rect key="frame" x="0.0" y="28" width="600" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="aSk-xp-ZfF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get started today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp0-RJ-eq9">
+                                <rect key="frame" x="0.0" y="150" width="600" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="zZ4-84-a0M"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nnB-JD-yef" firstAttribute="top" secondItem="bp0-RJ-eq9" secondAttribute="bottom" constant="14" id="6Em-bn-oui"/>
+                            <constraint firstItem="bp0-RJ-eq9" firstAttribute="top" secondItem="78x-OC-pb2" secondAttribute="bottom" constant="56" id="GUo-uu-gKq"/>
+                            <constraint firstItem="78x-OC-pb2" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="Uzo-e2-LYT"/>
+                            <constraint firstItem="78x-OC-pb2" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="8" id="Xf1-hY-ydu"/>
+                            <constraint firstItem="bp0-RJ-eq9" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="eBn-a5-XwY"/>
+                            <constraint firstItem="nnB-JD-yef" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="hh2-7B-Pka"/>
+                            <constraint firstAttribute="trailing" secondItem="bp0-RJ-eq9" secondAttribute="trailing" id="mKh-bI-EMi"/>
+                            <constraint firstAttribute="trailing" secondItem="78x-OC-pb2" secondAttribute="trailing" id="wCO-oF-e5F"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="loginButton" destination="nnB-JD-yef" id="jO0-2h-2oj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0jN-Ya-MSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-757" y="-73"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KVa-5m-7Jk">
             <objects>
-                <tabBarController id="FWg-a8-Cxv" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarController" id="FWg-a8-Cxv" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="azE-NK-cVF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -111,6 +176,7 @@
                     <connections>
                         <segue destination="qfV-xL-rPd" kind="relationship" relationship="viewControllers" id="oxl-2Q-pEy"/>
                         <segue destination="d6k-9s-Qi8" kind="relationship" relationship="viewControllers" id="ePP-cs-mQB"/>
+                        <segue destination="dEd-h1-zPp" kind="presentation" identifier="Onboarding" id="n2I-B1-qFV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIH-IG-nN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -171,10 +237,17 @@
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" constant="33" id="lxA-EI-pkt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="JRu-Ga-1J2"/>
+                    <navigationItem key="navigationItem" id="JRu-Ga-1J2">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="btF-PG-gBU">
+                            <connections>
+                                <action selector="logout:" destination="fTz-C2-Fo8" id="j9A-LP-aog"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
+                        <segue destination="dEd-h1-zPp" kind="presentation" identifier="Logout" id="ygK-Eh-CbQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCy-rb-sTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -201,4 +274,7 @@
             <point key="canvasLocation" x="14" y="1340"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ygK-Eh-CbQ"/>
+    </inferredMetricsTieBreakers>
 </document>
