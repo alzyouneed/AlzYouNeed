@@ -19,6 +19,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Create observer for CNContactPicker selection
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
         loadContacts()
@@ -28,16 +29,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Logic
     
@@ -88,7 +79,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 UserDefaultsManager.saveContact(person)
                 
                 let indexPath = NSIndexPath(forRow: userContacts.count-1, inSection: 0)
-//                self.collectionView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 self.collectionView?.insertItemsAtIndexPaths([indexPath])
             }
             else {
@@ -103,16 +93,13 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         NSNotificationCenter.defaultCenter().postNotificationName("addNewContact", object: nil, userInfo: ["contactToAdd": contact])
     }
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return userContacts.count
     }
 
@@ -121,17 +108,20 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     
         let person = userContacts[indexPath.row]
         
+        // Configure cell
         cell.contactView.nameLabel.text = "\(person.firstName) \(person.lastName)"
         cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
         cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
         
-        // Matches cell buttton to phone number (for calling)
-        cell.contactView.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        // Add targets for both buttons
+        cell.contactView.leftButton.addTarget(self, action: #selector(ContactsCollectionViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        cell.contactView.rightButton.addTarget(self, action: #selector(ContactsCollectionViewController.rightButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        
+        // Saves row in tag for contact-specific actions
         cell.contactView.leftButton.tag = indexPath.row
+        cell.contactView.rightButton.tag = indexPath.row
         
-//        cell.contactView.layer.cornerRadius = 10
-        
-        // Check for saved image to load
+        // Check for saved image to load -- will only load first time cell appears in view
         if cell.contactView.contactImageView.image == nil {
             if let imagePhotoPath = person.photoPath {
                 // Only load if real image path exists
@@ -144,17 +134,31 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         return cell
     }
     
+    // MARK: - Contact Card Actions
+    
     func leftButtonPressed(sender: UIButton) {
         
         let phoneNumber = userContacts[sender.tag].phoneNumber
         print("Left button pressed -- row: \(sender.tag) -- Calling: \(phoneNumber) \n")
-        
-//        print("Calling: \(phoneNumber)")
+
         let url: NSURL = NSURL(string: "tel://\(phoneNumber)")!
         
         UIApplication.sharedApplication().openURL(url)
     }
     
+    func rightButtonPressed(sender: UIButton) {
+        print("Right button pressed -- row: \(sender.tag)")
+    }
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
 
     // MARK: UICollectionViewDelegate
 
