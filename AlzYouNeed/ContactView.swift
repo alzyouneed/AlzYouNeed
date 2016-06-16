@@ -62,7 +62,7 @@ import UIKit
     
     func setImageWithPath(path: String) {
         let image = loadImageFromPath(path)
-        if image != nil {
+        if path != "" && image != nil {
 //            print("Successfully set contactImageView \n")
             contactImageView.image = image
         }
