@@ -6,6 +6,7 @@
 target 'AlzYouNeed' do
 
 pod 'Firebase'
+pod ‘Firebase/Crash’
 
 end
 

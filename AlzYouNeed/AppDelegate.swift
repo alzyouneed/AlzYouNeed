@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,15 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
-        // Present onboarding VC if not logged in
-//        if !UserDefaultsManager.loggedIn() {
-//        
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let onboardingVC = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
-//            self.window?.rootViewController = onboardingVC
-//        }
+        FIRApp.configure()
         
         return true
     }
