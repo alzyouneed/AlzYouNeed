@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class DashboardViewController: UIViewController {
     
@@ -16,6 +17,15 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+//            if let currentUser = user {
+//                // User is signed in.
+//                print("\(currentUser) is logged in")
+//            } else {
+//                // No user is signed in.
+//                print("No user is signed in")
+//            }
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -29,8 +39,12 @@ class DashboardViewController: UIViewController {
     }
     
     @IBAction func logout(sender: UIBarButtonItem) {
-        UserDefaultsManager.logout()
+//        UserDefaultsManager.logout()
+        
+        try! FIRAuth.auth()?.signOut()
+        
         self.performSegueWithIdentifier("Logout", sender: self)
+        
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        let onboardingVC = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
 //        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

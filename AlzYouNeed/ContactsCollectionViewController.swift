@@ -9,6 +9,7 @@
 import UIKit
 import Contacts
 import ContactsUI
+import Firebase
 
 private let reuseIdentifier = "ContactCell"
 
@@ -22,16 +23,33 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Create observer for CNContactPicker selection
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
-        if UserDefaultsManager.loggedIn() {
-            loadContacts()
-        }
+//        if UserDefaultsManager.loggedIn() {
+//            loadContacts()
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {
         // Check if logged in
-        if !UserDefaultsManager.loggedIn() {
-            print("Not logged in -- moving to onboarding flow")
-            self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+//        if !UserDefaultsManager.loggedIn() {
+//            print("Not logged in -- moving to onboarding flow")
+//            self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+//        }
+        
+        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+            if let currentUser = user {
+                // User is signed in.
+                print("\(currentUser) is logged in")
+            } else {
+                // No user is signed in.
+                print("No user is signed in -- moving to onboarding flow")
+                self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if UserDefaultsManager.loggedIn() {
+            loadContacts()
         }
     }
 

@@ -184,6 +184,9 @@
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="0.93725490199999995" green="0.25794908220000001" blue="0.24396306819999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancelLogin:" destination="dEd-h1-zPp" eventType="touchUpInside" id="H3s-Z6-YML"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

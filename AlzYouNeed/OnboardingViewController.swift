@@ -50,11 +50,34 @@ class OnboardingViewController: UIViewController {
             showLoginView()
         }
         else {
-            print("Trying to login")
+            if validateLogin() {
+                FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+                    if error == nil {
+                        print("Login successful")
+                        UserDefaultsManager.login()
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    else {
+                        print(error)
+                    }
+                })
+            }
         }
     }
     
-    func cancelLogin() {
+    func validateLogin() -> Bool {
+        if emailTextField.text!.isEmpty {
+            print("Missing email")
+            return false
+        }
+        if passwordTextField.text!.isEmpty {
+            print("Missing password")
+            return false
+        }
+        return true
+    }
+
+    @IBAction func cancelLogin(sender: UIButton) {
         hideLoginView()
     }
     
