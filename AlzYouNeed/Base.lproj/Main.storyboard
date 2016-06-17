@@ -245,7 +245,7 @@
                     <connections>
                         <segue destination="qfV-xL-rPd" kind="relationship" relationship="viewControllers" id="oxl-2Q-pEy"/>
                         <segue destination="d6k-9s-Qi8" kind="relationship" relationship="viewControllers" id="ePP-cs-mQB"/>
-                        <segue destination="Ps2-PZ-45a" kind="presentation" identifier="Onboarding" id="AzE-0s-3y4"/>
+                        <segue destination="Ps2-PZ-45a" kind="presentation" identifier="Onboarding" modalPresentationStyle="overFullScreen" id="AzE-0s-3y4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIH-IG-nN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -396,7 +396,7 @@
                     <connections>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
-                        <segue destination="Ps2-PZ-45a" kind="presentation" identifier="Logout" id="kDj-2T-COj"/>
+                        <segue destination="Ps2-PZ-45a" kind="presentation" identifier="Logout2" id="kDj-2T-COj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCy-rb-sTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -416,6 +416,7 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="fTz-C2-Fo8" kind="relationship" relationship="rootViewController" id="F1V-Ua-jUM"/>
+                        <segue destination="Ps2-PZ-45a" kind="presentation" identifier="Logout" modalPresentationStyle="overFullScreen" id="AV8-bh-jKc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KDs-EP-9PX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -442,6 +443,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="kDj-2T-COj"/>
+        <segue reference="AV8-bh-jKc"/>
     </inferredMetricsTieBreakers>
 </document>

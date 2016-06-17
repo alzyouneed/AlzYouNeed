@@ -19,8 +19,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
+        // Check if logged in
+//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+//            if let currentUser = user {
+//                // User is signed in.
+//                print("\(currentUser) is logged in")
+//            } else {
+//                // No user is signed in.
+//                print("No user is signed in -- moving to onboarding flow")
+//                self.showLoginView()
+//            }
+//        }
+        
         return true
     }
+    
+//    func showLoginView() {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let onboardingVC: OnboardingViewController = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
+//        self.window?.makeKeyAndVisible()
+//        self.window?.rootViewController?.presentViewController(onboardingVC, animated: true, completion: nil)
+//    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

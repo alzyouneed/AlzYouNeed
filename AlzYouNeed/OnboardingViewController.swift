@@ -54,7 +54,6 @@ class OnboardingViewController: UIViewController {
                 FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                     if error == nil {
                         print("Login successful")
-                        UserDefaultsManager.login()
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     else {
@@ -129,4 +128,12 @@ class OnboardingViewController: UIViewController {
         }
     }
     
+//    func openApp() {
+//        func showLoginView() {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let onboardingVC: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+//            self.window?.makeKeyAndVisible()
+//            self.window?.rootViewController?.presentViewController(onboardingVC, animated: true, completion: nil)
+//        }
+//    }
 }

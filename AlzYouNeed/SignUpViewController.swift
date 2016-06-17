@@ -33,7 +33,7 @@ class SignUpViewController: UIViewController {
             FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                 if error == nil {
                     print("Sign up successful")
-                    UserDefaultsManager.login()
+//                    UserDefaultsManager.login()
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 else {

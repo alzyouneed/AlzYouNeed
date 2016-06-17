@@ -43,7 +43,18 @@ class DashboardViewController: UIViewController {
         
         try! FIRAuth.auth()?.signOut()
         
-        self.performSegueWithIdentifier("Logout", sender: self)
+//        self.parentViewController?.performSegueWithIdentifier("Logout", sender: self)
+//        self.performSegueWithIdentifier("Logout", sender: self)
+        self.navigationController?.performSegueWithIdentifier("Logout", sender: self)
+//        self.parentViewController?.parentViewController?.performSegueWithIdentifier("Onboarding", sender: self)
+        
+//        let next = self.storyboard?.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
+//        self.tabBarController!.presentViewController(next, animated: true, completion: nil)
+        
+//        let topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+//        topVC?.performSegueWithIdentifier("Onboarding", sender: self)
+        
+//        self.performSegueWithIdentifier("Logout", sender: self)
         
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        let onboardingVC = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
@@ -56,5 +67,6 @@ class DashboardViewController: UIViewController {
 //            appDelegate.window?.rootViewController = onboardingVC
 //            }, completion: nil)
     }
+    
 
 }
