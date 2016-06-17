@@ -7,11 +7,18 @@
 //
 
 import UIKit
+import Firebase
 
 class OnboardingViewController: UIViewController {
     
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var signUpButton: UIButton!
+    
+    var loginMode = false
+    
+    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var cancelButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +43,67 @@ class OnboardingViewController: UIViewController {
     }
     
     @IBAction func login(sender: UIButton) {
-        UserDefaultsManager.login()
-        self.dismissViewControllerAnimated(true, completion: nil)
+//        UserDefaultsManager.login()
+//        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        if !loginMode {
+            showLoginView()
+        }
+        else {
+            print("Trying to login")
+        }
+    }
+    
+    func cancelLogin() {
+        hideLoginView()
+    }
+    
+    func showLoginView() {
+        if !loginMode {
+            loginMode = true
+            
+            self.emailTextField.hidden = false
+            self.passwordTextField.hidden = false
+            self.cancelButton.hidden = false
+            self.emailTextField.alpha = 0
+            self.passwordTextField.alpha = 0
+            self.cancelButton.alpha = 0
+            
+            UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                self.signUpButton.alpha = 0
+                
+                self.emailTextField.alpha = 1
+                self.passwordTextField.alpha = 1
+                self.cancelButton.alpha = 1
+            }) { (completed) in
+                self.signUpButton.hidden = true
+            }
+        }
+        else {
+            hideLoginView()
+        }
+    }
+    
+    func hideLoginView() {
+        if loginMode {
+            
+            self.signUpButton.hidden = false
+            
+            UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                self.signUpButton.alpha = 1
+                
+                self.emailTextField.alpha = 0
+                self.passwordTextField.alpha = 0
+                self.cancelButton.alpha = 0
+                
+            }) { (completed) in
+                self.emailTextField.hidden = true
+                self.passwordTextField.hidden = true
+                self.cancelButton.hidden = true
+                
+                self.loginMode = false
+            }
+        }
     }
     
 }
