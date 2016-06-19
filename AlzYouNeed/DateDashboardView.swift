@@ -62,7 +62,7 @@ import UIKit
 //        print(fullDateString)
         
         let timeFormatter = NSDateFormatter()
-        timeFormatter.dateFormat = "H:mm a"
+        timeFormatter.dateFormat = "h:mm a"
         let timeString = timeFormatter.stringFromDate(date)
 //        print(timeString)
 
