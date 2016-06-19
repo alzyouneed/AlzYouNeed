@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -21,10 +21,37 @@ class SignUpViewController: UIViewController {
         super.viewDidLoad()
 
         signUpButton.layer.cornerRadius = signUpButton.frame.size.width * 0.05
+        
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmPasswordTextField.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Present keyboard
+        self.emailTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Switch between textFields by using return key
+        switch textField.tag {
+        case 0:
+            if !emailTextField.text!.isEmpty {
+                passwordTextField.becomeFirstResponder()
+            }
+        case 1:
+            if !passwordTextField.text!.isEmpty {
+                confirmPasswordTextField.becomeFirstResponder()
+            }
+        default:
+            break
+        }
+        return true
     }
     
 
@@ -33,7 +60,7 @@ class SignUpViewController: UIViewController {
             FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                 if error == nil {
                     print("Sign up successful")
-//                    UserDefaultsManager.login()
+                    self.view.endEditing(true)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
                 else {

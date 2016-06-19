@@ -66,26 +66,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func login(sender: UIButton) {
         loginUser()
-        
-//        UserDefaultsManager.login()
-//        self.dismissViewControllerAnimated(true, completion: nil)
-        
-//        if !loginMode {
-//            showLoginView()
-//        }
-//        else {
-//            if validateLogin() {
-//                FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
-//                    if error == nil {
-//                        print("Login successful")
-//                        self.dismissViewControllerAnimated(true, completion: nil)
-//                    }
-//                    else {
-//                        print(error)
-//                    }
-//                })
-//            }
-//        }
     }
     
     func validateLogin() -> Bool {
@@ -161,21 +141,17 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.tag == 0 {
-            self.passwordTextField.becomeFirstResponder()
-        }
-        else if textField.tag == 1 {
+        switch textField.tag {
+        case 0:
+            if !emailTextField.text!.isEmpty {
+                self.passwordTextField.becomeFirstResponder()
+            }
+        case 1:
             loginUser()
+        default:
+            break
         }
         return true
     }
-    
-//    func openApp() {
-//        func showLoginView() {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let onboardingVC: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
-//            self.window?.makeKeyAndVisible()
-//            self.window?.rootViewController?.presentViewController(onboardingVC, animated: true, completion: nil)
-//        }
-//    }
+
 }
