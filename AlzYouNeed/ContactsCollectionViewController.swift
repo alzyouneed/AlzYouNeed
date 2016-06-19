@@ -23,18 +23,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Create observer for CNContactPicker selection
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
-//        if UserDefaultsManager.loggedIn() {
-//            loadContacts()
-//        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        // Check if logged in
-//        if !UserDefaultsManager.loggedIn() {
-//            print("Not logged in -- moving to onboarding flow")
-//            self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
-//        }
-        
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
             if let currentUser = user {
                 // User is signed in.
@@ -46,6 +34,9 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
             }
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -148,14 +139,14 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         cell.contactView.rightButton.tag = indexPath.row
         
         // Check for saved image to load -- will only load first time cell appears in view
-        if cell.contactView.contactImageView.image == nil {
+//        if cell.contactView.contactImageView.image == nil {
             if let imagePhotoPath = person.photoPath {
                 // Only load if real image path exists
                 if imagePhotoPath != "" {
                     cell.contactView.setImageWithPath(imagePhotoPath)
                 }
             }
-        }
+//        }
     
         return cell
     }

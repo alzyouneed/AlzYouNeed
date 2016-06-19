@@ -39,33 +39,7 @@ class DashboardViewController: UIViewController {
     }
     
     @IBAction func logout(sender: UIBarButtonItem) {
-//        UserDefaultsManager.logout()
-        
         try! FIRAuth.auth()?.signOut()
-        
-//        self.parentViewController?.performSegueWithIdentifier("Logout", sender: self)
-//        self.performSegueWithIdentifier("Logout", sender: self)
-        self.navigationController?.performSegueWithIdentifier("Logout", sender: self)
-//        self.parentViewController?.parentViewController?.performSegueWithIdentifier("Onboarding", sender: self)
-        
-//        let next = self.storyboard?.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
-//        self.tabBarController!.presentViewController(next, animated: true, completion: nil)
-        
-//        let topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
-//        topVC?.performSegueWithIdentifier("Onboarding", sender: self)
-        
-//        self.performSegueWithIdentifier("Logout", sender: self)
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let onboardingVC = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
-//        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        appDelegate.window?.rootViewController = onboardingVC
-//
-////        self.showDetailViewController(onboardingVC, sender: self)
-//        
-//        UIView.transitionWithView(appDelegate.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionFlipFromRight, animations: {
-//            appDelegate.window?.rootViewController = onboardingVC
-//            }, completion: nil)
     }
     
 
