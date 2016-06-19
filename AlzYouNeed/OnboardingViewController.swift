@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class OnboardingViewController: UIViewController {
+class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var signUpButton: UIButton!
@@ -26,6 +26,8 @@ class OnboardingViewController: UIViewController {
         loginButton.layer.cornerRadius = loginButton.frame.size.width * 0.05
         signUpButton.layer.cornerRadius = signUpButton.frame.size.width * 0.05
         
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -42,10 +44,7 @@ class OnboardingViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func login(sender: UIButton) {
-//        UserDefaultsManager.login()
-//        self.dismissViewControllerAnimated(true, completion: nil)
-        
+    func loginUser() {
         if !loginMode {
             showLoginView()
         }
@@ -54,6 +53,7 @@ class OnboardingViewController: UIViewController {
                 FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
                     if error == nil {
                         print("Login successful")
+                        self.view.endEditing(true)
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     else {
@@ -62,6 +62,30 @@ class OnboardingViewController: UIViewController {
                 })
             }
         }
+    }
+    
+    @IBAction func login(sender: UIButton) {
+        loginUser()
+        
+//        UserDefaultsManager.login()
+//        self.dismissViewControllerAnimated(true, completion: nil)
+        
+//        if !loginMode {
+//            showLoginView()
+//        }
+//        else {
+//            if validateLogin() {
+//                FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+//                    if error == nil {
+//                        print("Login successful")
+//                        self.dismissViewControllerAnimated(true, completion: nil)
+//                    }
+//                    else {
+//                        print(error)
+//                    }
+//                })
+//            }
+//        }
     }
     
     func validateLogin() -> Bool {
@@ -78,6 +102,7 @@ class OnboardingViewController: UIViewController {
 
     @IBAction func cancelLogin(sender: UIButton) {
         hideLoginView()
+        self.view.endEditing(true)
     }
     
     func showLoginView() {
@@ -99,6 +124,9 @@ class OnboardingViewController: UIViewController {
                 self.cancelButton.alpha = 1
             }) { (completed) in
                 self.signUpButton.hidden = true
+                
+                // Present keyboard
+                self.emailTextField.becomeFirstResponder()
             }
         }
         else {
@@ -110,6 +138,8 @@ class OnboardingViewController: UIViewController {
         if loginMode {
             
             self.signUpButton.hidden = false
+            
+            self.resignFirstResponder()
             
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 self.signUpButton.alpha = 1
@@ -126,6 +156,18 @@ class OnboardingViewController: UIViewController {
                 self.loginMode = false
             }
         }
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.tag == 0 {
+            self.passwordTextField.becomeFirstResponder()
+        }
+        else if textField.tag == 1 {
+            loginUser()
+        }
+        return true
     }
     
 //    func openApp() {
