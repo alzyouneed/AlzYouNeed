@@ -252,7 +252,7 @@
             </objects>
             <point key="canvasLocation" x="-757" y="658"/>
         </scene>
-        <!--Sign Up View Controller-->
+        <!--New Account-->
         <scene sceneID="frm-3x-Exa">
             <objects>
                 <viewController id="51G-C2-D98" customClass="SignUpViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
@@ -265,7 +265,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3hc-8K-oWp">
-                                <rect key="frame" x="25" y="80" width="555" height="46"/>
+                                <rect key="frame" x="25" y="84" width="555" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="yen-Mx-j3U"/>
                                 </constraints>
@@ -274,7 +274,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m5a-9E-GYO">
-                                <rect key="frame" x="25" y="134" width="555" height="46"/>
+                                <rect key="frame" x="25" y="138" width="555" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="yp9-MO-bE4"/>
                                 </constraints>
@@ -283,7 +283,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xll-Y4-ry2">
-                                <rect key="frame" x="25" y="188" width="555" height="46"/>
+                                <rect key="frame" x="25" y="192" width="555" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="Adu-wU-NVm"/>
                                 </constraints>
@@ -292,7 +292,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mkI-dj-3Rj">
-                                <rect key="frame" x="214" y="242" width="173" height="47"/>
+                                <rect key="frame" x="214" y="246" width="173" height="47"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="173" id="Vfd-ex-uTG"/>
@@ -317,10 +317,16 @@
                             <constraint firstItem="3hc-8K-oWp" firstAttribute="leading" secondItem="Nee-Gh-p7i" secondAttribute="leadingMargin" constant="5" id="a3v-Wf-6GB"/>
                             <constraint firstItem="m5a-9E-GYO" firstAttribute="top" secondItem="3hc-8K-oWp" secondAttribute="bottom" constant="8" id="aLt-G9-Qkt"/>
                             <constraint firstItem="3hc-8K-oWp" firstAttribute="top" secondItem="kdg-qp-hGW" secondAttribute="bottom" constant="60" id="m9N-Nj-wE0"/>
+                            <constraint firstItem="3hc-8K-oWp" firstAttribute="top" secondItem="kdg-qp-hGW" secondAttribute="bottom" constant="20" id="ySW-qb-SBU"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="m9N-Nj-wE0"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="T09-DW-WuX"/>
-                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationItem key="navigationItem" title="New Account" id="T09-DW-WuX"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="Xll-Y4-ry2" id="sn4-XU-jIb"/>
                         <outlet property="emailTextField" destination="3hc-8K-oWp" id="EZv-5I-nRR"/>

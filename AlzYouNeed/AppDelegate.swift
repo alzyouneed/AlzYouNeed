@@ -17,19 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        // Configure Firebase
         FIRApp.configure()
-        
-        // Check if logged in
-//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-//            if let currentUser = user {
-//                // User is signed in.
-//                print("\(currentUser) is logged in")
-//            } else {
-//                // No user is signed in.
-//                print("No user is signed in -- moving to onboarding flow")
-//                self.showLoginView()
-//            }
-//        }
         
         return true
     }
