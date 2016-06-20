@@ -15,6 +15,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var confirmPasswordTextField: UITextField!
     
+    @IBOutlet var emailValidateTextFieldView: validateTextFieldView!
+    @IBOutlet var passwordValidateTextFieldView: validateTextFieldView!
+    @IBOutlet var confirmPasswordValidateTextFieldView: validateTextFieldView!
+    
+    
     @IBOutlet var signUpButton: UIButton!
 
     override func viewDidLoad() {
@@ -22,19 +27,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
         signUpButton.layer.cornerRadius = signUpButton.frame.size.width * 0.05
         
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        confirmPasswordTextField.delegate = self
+        emailValidateTextFieldView.textField.delegate = self
+        passwordValidateTextFieldView.textField.delegate = self
+        confirmPasswordValidateTextFieldView.textField.delegate = self
         
         configureView()
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.translucent = true
     }
     
     override func viewDidAppear(animated: Bool) {
         // Present keyboard
-        self.emailTextField.becomeFirstResponder()
+        self.emailValidateTextFieldView.textField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,14 +46,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Switch between textFields by using return key
-        switch textField.tag {
+        let tag = textField.superview!.superview!.tag
+        switch tag {
         case 0:
-            if !emailTextField.text!.isEmpty {
-                passwordTextField.becomeFirstResponder()
+            if !emailValidateTextFieldView.textField.text!.isEmpty {
+                passwordValidateTextFieldView.textField.becomeFirstResponder()
             }
         case 1:
-            if !passwordTextField.text!.isEmpty {
-                confirmPasswordTextField.becomeFirstResponder()
+            if !passwordValidateTextFieldView.textField.text!.isEmpty {
+                confirmPasswordValidateTextFieldView.textField.becomeFirstResponder()
+            }
+        case 2:
+            if !confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
+                signUpUser()
             }
         default:
             break
@@ -61,8 +68,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
 
     @IBAction func signUp(sender: UIButton) {
+        signUpUser()
+    }
+    
+    func signUpUser() {
         if validateEmail() && validatePassword() {
-            FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+            FIRAuth.auth()?.createUserWithEmail(emailValidateTextFieldView.textField.text!, password: passwordValidateTextFieldView.textField.text!, completion: { (user, error) in
                 if error == nil {
                     print("Sign up successful")
                     self.view.endEditing(true)
@@ -78,13 +89,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func validateEmail() -> Bool {
         // Check empty
-        if emailTextField.text!.isEmpty {
+        if emailValidateTextFieldView.textField.text!.isEmpty {
             print("Email field empty")
             return false
         }
         else {
             // Check valid
-            let userEmailAddress = emailTextField.text
+            let userEmailAddress = emailValidateTextFieldView.textField.text
             let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
             let emailValid = NSPredicate(format: "SELF MATCHES %@", regex).evaluateWithObject(userEmailAddress)
             
@@ -100,22 +111,22 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func validatePassword() -> Bool {
-        if passwordTextField.text!.isEmpty {
+        if passwordValidateTextFieldView.textField.text!.isEmpty {
             print("Password field empty")
             return false
         }
-        if confirmPasswordTextField.text!.isEmpty {
+        if confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
             print("Confirm password field empty")
             return false
         }
         
-        if passwordTextField.text?.characters.count < 6 {
+        if passwordValidateTextFieldView.textField.text?.characters.count < 6 {
             print("Password not long enough")
             return false
         }
         
-        let passwordText = passwordTextField.text
-        let confirmPasswordText = confirmPasswordTextField.text
+        let passwordText = passwordValidateTextFieldView.textField.text
+        let confirmPasswordText = confirmPasswordValidateTextFieldView.textField.text
         let passwordsMatch = passwordText == confirmPasswordText
         
         // For debugging
@@ -136,6 +147,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        // Setup validateTextFieldViews
+        self.emailValidateTextFieldView.emailMode()
+        self.passwordValidateTextFieldView.passwordMode(false)
+        self.confirmPasswordValidateTextFieldView.passwordMode(true)
     }
     
     /*
