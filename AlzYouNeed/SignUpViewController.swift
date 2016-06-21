@@ -11,10 +11,6 @@ import Firebase
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet var emailTextField: UITextField!
-    @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var confirmPasswordTextField: UITextField!
-    
     @IBOutlet var emailValidateTextFieldView: validateTextFieldView!
     @IBOutlet var passwordValidateTextFieldView: validateTextFieldView!
     @IBOutlet var confirmPasswordValidateTextFieldView: validateTextFieldView!

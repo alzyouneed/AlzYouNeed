@@ -40,6 +40,7 @@ import UIKit
         addSubview(view)
         
         textField.delegate = self
+        textField.textColor = UIColor.whiteColor()
         imageView.hidden = true
     }
     
