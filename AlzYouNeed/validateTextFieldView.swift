@@ -78,25 +78,26 @@ import UIKit
     }
     
     func isValid(valid: Bool) {
-        imageView.hidden = true
+        imageView.image = UIImage(named: "validEntry")
         
         switch valid {
         case true:
-            // Valid image
-            imageView.image = UIImage(named: "validEntry")
-
+            if imageView.hidden {
+                imageView.hidden = false
+                imageView.alpha = 0
+                
+                UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                    self.imageView.alpha = 1
+                    }, completion: { (completed) in
+                })
+            }
         case false:
-            // Invalid image
-            imageView.image = UIImage(named: "invalidEntry")
-
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                self.imageView.alpha = 0
+                }, completion: { (completed) in
+                    self.imageView.hidden = true
+            })
         }
-        imageView.hidden = false
-        imageView.alpha = 0
-        
-        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.imageView.alpha = 1
-            }, completion: { (completed) in
-        })
     }
 
 }

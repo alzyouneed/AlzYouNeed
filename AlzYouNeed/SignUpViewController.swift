@@ -68,6 +68,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidChange(textField: UITextField) {
         let tag = textField.superview!.superview!.tag
+        
         switch tag {
         // Email textField
         case 0:
