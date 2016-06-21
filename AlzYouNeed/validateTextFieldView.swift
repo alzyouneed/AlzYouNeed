@@ -83,11 +83,11 @@ import UIKit
         switch valid {
         case true:
             // Valid image
-            imageView.image = UIImage(named: "")
+            imageView.image = UIImage(named: "validEntry")
 
         case false:
             // Invalid image
-            imageView.image = UIImage(named: "")
+            imageView.image = UIImage(named: "invalidEntry")
 
         }
         imageView.hidden = false

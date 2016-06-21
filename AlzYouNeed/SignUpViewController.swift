@@ -66,6 +66,23 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidChange(textField: UITextField) {
+        let tag = textField.superview!.superview!.tag
+        switch tag {
+        // Email textField
+        case 0:
+            validateEmail()
+        // Password textField
+        case 1:
+            validatePassword()
+        // Confirm password textField
+        case 2:
+            validateConfirmPassword()
+        default:
+            break
+        }
+    }
+    
 
     @IBAction func signUp(sender: UIButton) {
         signUpUser()
@@ -87,10 +104,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Validation
+    
     func validateEmail() -> Bool {
         // Check empty
         if emailValidateTextFieldView.textField.text!.isEmpty {
             print("Email field empty")
+            emailValidateTextFieldView.isValid(false)
             return false
         }
         else {
@@ -101,10 +121,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             
             // For debugging
             if emailValid {
+                emailValidateTextFieldView.isValid(true)
                 return true
             }
             else {
                 print("Email is invalid")
+                emailValidateTextFieldView.isValid(false)
                 return false
             }
         }
@@ -113,15 +135,24 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     func validatePassword() -> Bool {
         if passwordValidateTextFieldView.textField.text!.isEmpty {
             print("Password field empty")
-            return false
-        }
-        if confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
-            print("Confirm password field empty")
+            passwordValidateTextFieldView.isValid(false)
             return false
         }
         
         if passwordValidateTextFieldView.textField.text?.characters.count < 6 {
             print("Password not long enough")
+            passwordValidateTextFieldView.isValid(false)
+            return false
+        }
+        
+        passwordValidateTextFieldView.isValid(true)
+        return true
+    }
+    
+    func validateConfirmPassword() -> Bool {
+        if confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
+            print("Confirm password field empty")
+            confirmPasswordValidateTextFieldView.isValid(false)
             return false
         }
         
@@ -129,14 +160,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let confirmPasswordText = confirmPasswordValidateTextFieldView.textField.text
         let passwordsMatch = passwordText == confirmPasswordText
         
-        // For debugging
-        if passwordsMatch {
-            return true
-        }
-        else {
-            print("Passwords don't match")
-            return false
-        }
+        confirmPasswordValidateTextFieldView.isValid(passwordsMatch)
+        
+        return passwordsMatch
     }
     
     // MARK: - Configure View
@@ -152,6 +178,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         self.emailValidateTextFieldView.emailMode()
         self.passwordValidateTextFieldView.passwordMode(false)
         self.confirmPasswordValidateTextFieldView.passwordMode(true)
+        
+        self.emailValidateTextFieldView.textField.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.passwordValidateTextFieldView.textField.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.confirmPasswordValidateTextFieldView.textField.addTarget(self, action: #selector(SignUpViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
     }
     
     /*
