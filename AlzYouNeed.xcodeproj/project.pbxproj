@@ -12,6 +12,7 @@
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
 		2D66D24C1D14595E00A48F05 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */; };
+		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
 		2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */; };
 		2D7948471D1248F000FF1E51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D7948461D1248F000FF1E51 /* .gitignore */; };
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
@@ -29,6 +30,7 @@
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
+		2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */; };
 		54ABEE52BD1867E0724C87F4 /* libPods-AlzYouNeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09554C3A3CAFAB415E229CB7 /* libPods-AlzYouNeed.a */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +43,7 @@
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = validateTextFieldView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,24 @@
 			children = (
 				2D2244F21D0FAD93005D9DF5 /* ContactView.xib */,
 				2D2244F51D0FB11D005D9DF5 /* ContactView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2D6D2FBB1D186B7F0050589C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
+				2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2D6D2FBE1D186BCB0050589C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */,
+				2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -210,8 +232,8 @@
 		2DC8D5C91D12EAAF00952483 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
-				2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */,
+				2D6D2FBE1D186BCB0050589C /* View */,
+				2D6D2FBB1D186B7F0050589C /* Controller */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -303,6 +325,7 @@
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
+				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
 				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
@@ -380,6 +403,7 @@
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
+				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
