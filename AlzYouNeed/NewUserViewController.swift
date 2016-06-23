@@ -54,6 +54,19 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         self.passwordValidateTextFieldView.passwordMode(false)
         self.confirmPasswordValidateTextFieldView.passwordMode(true)
         
+        // Set delegates
+        self.nameValidateTextFieldView.textField.delegate = self
+        self.phoneNumberValidateTextFieldView.textField.delegate = self
+        self.emailValidateTextFieldView.textField.delegate = self
+        self.passwordValidateTextFieldView.textField.delegate = self
+        self.confirmPasswordValidateTextFieldView.textField.delegate = self
+        
+        self.nameValidateTextFieldView.textField.addTarget(self, action: #selector(NewUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.phoneNumberValidateTextFieldView.textField.addTarget(self, action: #selector(NewUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.emailValidateTextFieldView.textField.addTarget(self, action: #selector(NewUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.passwordValidateTextFieldView.textField.addTarget(self, action: #selector(NewUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.confirmPasswordValidateTextFieldView.textField.addTarget(self, action: #selector(NewUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        
         self.imagePicker.delegate = self
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
@@ -68,10 +81,12 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     func validateName() -> Bool {
         let valid = !nameValidateTextFieldView.textField.text!.isEmpty
         if valid {
+            nameValidateTextFieldView.isValid(true)
             return true
         }
         else {
             print("Name field empty")
+            nameValidateTextFieldView.isValid(false)
             return false
         }
     }
@@ -83,10 +98,12 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
         let valid = phoneTest.evaluateWithObject(phoneNumberValidateTextFieldView.textField.text!)
         if valid {
+            phoneNumberValidateTextFieldView.isValid(true)
             return true
         }
         else {
             print("Invalid phone number")
+            phoneNumberValidateTextFieldView.isValid(false)
             return false
         }
     }
@@ -180,6 +197,63 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     
     @IBAction func addPhoto(sender: AnyObject) {
         selectPhoto()
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Switch between textFields by using return key
+        let tag = textField.superview!.superview!.tag
+        switch tag {
+        case 0:
+            if !nameValidateTextFieldView.textField.text!.isEmpty {
+                phoneNumberValidateTextFieldView.textField.becomeFirstResponder()
+            }
+        case 1:
+            if !phoneNumberValidateTextFieldView.textField.text!.isEmpty {
+                emailValidateTextFieldView.textField.becomeFirstResponder()
+            }
+        case 2:
+            if !emailValidateTextFieldView.textField.text!.isEmpty {
+                passwordValidateTextFieldView.textField.becomeFirstResponder()
+            }
+        case 3:
+            if !passwordValidateTextFieldView.textField.text!.isEmpty {
+                confirmPasswordValidateTextFieldView.textField.becomeFirstResponder()
+            }
+        case 4:
+            if !confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
+                self.view.endEditing(true)
+                signUp()
+            }
+        default:
+            break
+        }
+        return true
+    }
+    
+    func textFieldDidChange(textField: UITextField) {
+        let tag = textField.superview!.superview!.tag
+        
+        switch tag {
+        // Name textField
+        case 0:
+            validateName()
+        // Phone number textField
+        case 1:
+            validatePhoneNumber()
+        // Email textField
+        case 2:
+            validateEmail()
+        // Password textField
+        case 3:
+            validatePassword()
+        // Confirm password textField
+        case 4:
+            validateConfirmPassword()
+        default:
+            break
+        }
     }
     
     /*
