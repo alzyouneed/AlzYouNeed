@@ -17,7 +17,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        uploadPicture()
+//        uploadPicture()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,7 +54,7 @@ class DashboardViewController: UIViewController {
                     print("Error occurred while uploading picture: \(error)")
                 }
                 else {
-                    print("Successfully uploaded picture")
+                    print("Successfully uploaded picture: \(metadata!.downloadURL())")
                 }
             }
         }
