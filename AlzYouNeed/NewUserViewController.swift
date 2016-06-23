@@ -60,13 +60,13 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         self.userImageView.clipsToBounds = true
     }
 
-    // MARK: - Validation : TODO
+    // MARK: - Validation
     func validFields() -> Bool {
         return validateName() && validatePhoneNumber() && validateEmail() && validatePassword() && validateConfirmPassword()
     }
     
     func validateName() -> Bool {
-        let valid = nameValidateTextFieldView.textField.text!.isEmpty
+        let valid = !nameValidateTextFieldView.textField.text!.isEmpty
         if valid {
             return true
         }
@@ -77,7 +77,9 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     func validatePhoneNumber() -> Bool {
-        let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
+//        let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
+        // Supports phone number entry without hyphens
+        let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
         let valid = phoneTest.evaluateWithObject(phoneNumberValidateTextFieldView.textField.text!)
         if valid {
@@ -162,6 +164,10 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             self.userImageView.image = pickedImage
             addPhotoButton.hidden = true
         }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
 
