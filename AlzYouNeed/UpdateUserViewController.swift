@@ -144,10 +144,11 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     }
                     else {
                         print("User display name updated successfully")
+                        self.saveUserToRealTimeDatabase()
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 })
             }
-            saveUserToRealTimeDatabase()
         }
     }
     
@@ -162,15 +163,20 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     print("An error happened: \(error)")
                 }
                 else {
-                    print("User photo URL updated successfully: \(url)")
+                    print("User photo URL updated successfully")
                 }
             })
         }
     }
     
     @IBAction func completeSetup(sender: UIButton) {
-        updateUserAccount()
-        self.view.endEditing(true)
+        if validFields() {
+            if let cancelButton = (self.navigationItem.rightBarButtonItems?.first) {
+                cancelButton.enabled = false
+            }
+            updateUserAccount()
+            self.view.endEditing(true)
+        }
     }
     
     func uploadPicture() {
@@ -220,6 +226,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func saveUserToRealTimeDatabase() {
         if let user = FIRAuth.auth()?.currentUser {
+            print("Saving user to realtime DB")
+            
             let databaseRef = FIRDatabase.database().reference()
             
             let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyID": "", "patient": "false", "completedSignup": "false"]
