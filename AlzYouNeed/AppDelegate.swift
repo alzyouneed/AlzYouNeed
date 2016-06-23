@@ -19,16 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configure Firebase
         FIRApp.configure()
-
+        
         return true
     }
-    
-//    func showLoginView() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let onboardingVC: OnboardingViewController = storyboard.instantiateViewControllerWithIdentifier("OnboardingVC") as! OnboardingViewController
-//        self.window?.makeKeyAndVisible()
-//        self.window?.rootViewController?.presentViewController(onboardingVC, animated: true, completion: nil)
-//    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

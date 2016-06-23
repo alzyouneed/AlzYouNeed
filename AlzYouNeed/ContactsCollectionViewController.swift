@@ -19,7 +19,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Create observer for CNContactPicker selection
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
