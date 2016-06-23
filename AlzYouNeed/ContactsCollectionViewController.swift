@@ -27,7 +27,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
             if let currentUser = user {
                 // User is signed in.
                 print("\(currentUser) is logged in")
-                self.loadContacts()
+//                self.loadContacts()
             } else {
                 // No user is signed in.
                 print("No user is signed in -- moving to onboarding flow")

@@ -17,15 +17,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-//            if let currentUser = user {
-//                // User is signed in.
-//                print("\(currentUser) is logged in")
-//            } else {
-//                // No user is signed in.
-//                print("No user is signed in")
-//            }
-//        }
+        uploadPicture()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -42,5 +34,30 @@ class DashboardViewController: UIViewController {
         try! FIRAuth.auth()?.signOut()
     }
     
+    // MARK: - Firebase
+    
+    func uploadPicture() {
+        if let user = FIRAuth.auth()?.currentUser {
+            
+            let storage = FIRStorage.storage()
+            let storageRef = storage.reference()
+            
+            //        let pictureRef = storageRef.child("test.jpg")
+            //        let pictureImagesRef = storageRef.child("images/test.jpg")
+            
+            let data = UIImageJPEGRepresentation(UIImage(named: "validEntry")!, 1)
+            
+            let imageRef = storageRef.child("userImages/\(user.uid)")
+            
+            let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
+                if (error != nil) {
+                    print("Error occurred while uploading picture: \(error)")
+                }
+                else {
+                    print("Successfully uploaded picture")
+                }
+            }
+        }
+    }
 
 }

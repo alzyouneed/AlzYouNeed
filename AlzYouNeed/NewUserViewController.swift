@@ -30,12 +30,36 @@ class NewUserViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         super.viewDidLoad()
 
         configureView()
+        
+//        uploadPicture()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+//    // MARK: - Firebase
+//    
+//    func uploadPicture() {
+//        let storage = FIRStorage.storage()
+//        let storageRef = storage.reference()
+//        
+//        //        let pictureRef = storageRef.child("test.jpg")
+//        //        let pictureImagesRef = storageRef.child("images/test.jpg")
+//        
+//        let data = UIImageJPEGRepresentation(UIImage(named: "validEntry")!, 1)
+//        let imageRef = storageRef.child("images/test.jpg")
+//        
+//        let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
+//            if (error != nil) {
+//                print("Error occurred while uploading picture: \(error)")
+//            }
+//            else {
+//                print("Successfully uploaded picture at URL: \(metadata!.downloadURL)")
+//            }
+//        }
+//    }
     
     func signUp() {
         if validFields() {
