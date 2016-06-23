@@ -132,19 +132,22 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     // MARK: - Firebase
     func updateUserAccount() {
-        let user = FIRAuth.auth()?.currentUser
-        uploadPicture()
-        if let user = user {
-            let changeRequest = user.profileChangeRequest()
-            changeRequest.displayName = nameVTFView.textField.text
-            changeRequest.commitChangesWithCompletion({ (error) in
-                if let error = error {
-                    print("An error happened: \(error)")
-                }
-                else {
-                    print("User display name updated successfully")
-                }
-            })
+        if validFields() {
+            let user = FIRAuth.auth()?.currentUser
+            uploadPicture()
+            if let user = user {
+                let changeRequest = user.profileChangeRequest()
+                changeRequest.displayName = nameVTFView.textField.text
+                changeRequest.commitChangesWithCompletion({ (error) in
+                    if let error = error {
+                        print("An error happened: \(error)")
+                    }
+                    else {
+                        print("User display name updated successfully")
+                    }
+                })
+            }
+            saveUserToRealTimeDatabase()
         }
     }
     
@@ -167,6 +170,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func completeSetup(sender: UIButton) {
         updateUserAccount()
+        self.view.endEditing(true)
     }
     
     func uploadPicture() {
@@ -211,6 +215,16 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     print("File deleted successfully")
                 }
             })
+        }
+    }
+    
+    func saveUserToRealTimeDatabase() {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyID": "", "patient": "false", "completedSignup": "false"]
+            
+            databaseRef.child("users/\(user.uid)").setValue(userToSave)
         }
     }
     
