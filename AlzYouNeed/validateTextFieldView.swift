@@ -78,6 +78,16 @@ import UIKit
         }
     }
     
+    func familyIdMode() {
+        textField.placeholder = "Family ID"
+        textField.autocapitalizationType = UITextAutocapitalizationType.None
+        textField.autocorrectionType = UITextAutocorrectionType.No
+        textField.spellCheckingType = UITextSpellCheckingType.No
+        textField.keyboardType = UIKeyboardType.Default
+        textField.returnKeyType = UIReturnKeyType.Next
+        textField.secureTextEntry = false
+    }
+    
     func isValid(valid: Bool) {
         imageView.image = UIImage(named: "validEntry")
         
