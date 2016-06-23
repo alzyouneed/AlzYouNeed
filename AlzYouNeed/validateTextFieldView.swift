@@ -40,7 +40,8 @@ import UIKit
         addSubview(view)
         
         textField.delegate = self
-        textField.textColor = UIColor.whiteColor()
+//        textField.textColor = UIColor.whiteColor()
+        textField.textColor = UIColor.blackColor()
         imageView.hidden = true
     }
     
@@ -81,6 +82,26 @@ import UIKit
     func familyIdMode() {
         textField.placeholder = "Family ID"
         textField.autocapitalizationType = UITextAutocapitalizationType.None
+        textField.autocorrectionType = UITextAutocorrectionType.No
+        textField.spellCheckingType = UITextSpellCheckingType.No
+        textField.keyboardType = UIKeyboardType.Default
+        textField.returnKeyType = UIReturnKeyType.Next
+        textField.secureTextEntry = false
+    }
+    
+    func phoneNumberMode() {
+        textField.placeholder = "Phone Number"
+        textField.autocapitalizationType = UITextAutocapitalizationType.None
+        textField.autocorrectionType = UITextAutocorrectionType.No
+        textField.spellCheckingType = UITextSpellCheckingType.No
+        textField.keyboardType = UIKeyboardType.PhonePad
+        textField.returnKeyType = UIReturnKeyType.Next
+        textField.secureTextEntry = false
+    }
+    
+    func nameMode() {
+        textField.placeholder = "Full Name"
+        textField.autocapitalizationType = UITextAutocapitalizationType.Words
         textField.autocorrectionType = UITextAutocorrectionType.No
         textField.spellCheckingType = UITextSpellCheckingType.No
         textField.keyboardType = UIKeyboardType.Default

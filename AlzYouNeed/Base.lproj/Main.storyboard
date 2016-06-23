@@ -233,6 +233,21 @@
                                 <state key="normal" title="Sign up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUpUser:" destination="caQ-wa-HuB" eventType="touchUpInside" id="be7-vx-uGq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tIZ-cT-LoG">
+                                <rect key="frame" x="280" y="58" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="8FY-BN-DNi"/>
+                                    <constraint firstAttribute="width" constant="40" id="Dc9-od-97W"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="addPhoto:" destination="caQ-wa-HuB" eventType="touchUpInside" id="1sc-aF-70C"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,11 +255,13 @@
                             <constraint firstItem="k0S-LR-vW1" firstAttribute="top" secondItem="Xsg-sv-Yrq" secondAttribute="bottom" constant="8" id="0Mq-im-Kqg"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ETP-Dj-Xur" secondAttribute="leading" id="10y-V1-3h9"/>
                             <constraint firstAttribute="leadingMargin" secondItem="gT1-Gn-dtO" secondAttribute="leading" id="7RE-Tz-1eY"/>
+                            <constraint firstItem="tIZ-cT-LoG" firstAttribute="centerX" secondItem="7Jc-EW-pW0" secondAttribute="centerX" id="7tE-N5-Uv3"/>
                             <constraint firstAttribute="leadingMargin" secondItem="DMH-L9-AGH" secondAttribute="leading" id="EY7-9p-l4y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gT1-Gn-dtO" secondAttribute="trailing" id="JT8-DD-RrQ"/>
                             <constraint firstItem="ED7-Yp-LsH" firstAttribute="top" secondItem="7Jc-EW-pW0" secondAttribute="bottom" constant="8" id="K8v-ob-4yt"/>
                             <constraint firstItem="7Jc-EW-pW0" firstAttribute="centerX" secondItem="0pZ-kA-Hdm" secondAttribute="centerX" id="MhE-zv-6vn"/>
                             <constraint firstItem="ETP-Dj-Xur" firstAttribute="top" secondItem="ED7-Yp-LsH" secondAttribute="bottom" constant="8" id="UgX-Pd-Nu9"/>
+                            <constraint firstItem="tIZ-cT-LoG" firstAttribute="centerY" secondItem="7Jc-EW-pW0" secondAttribute="centerY" id="VAJ-QJ-Qqe"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Xsg-sv-Yrq" secondAttribute="leading" id="aFs-kQ-YQP"/>
                             <constraint firstItem="Xsg-sv-Yrq" firstAttribute="top" secondItem="DMH-L9-AGH" secondAttribute="bottom" constant="8" id="aqB-Bc-cm9"/>
                             <constraint firstItem="DMH-L9-AGH" firstAttribute="top" secondItem="gT1-Gn-dtO" secondAttribute="bottom" constant="8" id="dE3-gB-hNC"/>
@@ -259,7 +276,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="confirmPasswordValidateTextField" destination="Xsg-sv-Yrq" id="Zky-4W-Xv1"/>
+                        <outlet property="addPhotoButton" destination="tIZ-cT-LoG" id="ebg-TN-tXy"/>
+                        <outlet property="confirmPasswordValidateTextFieldView" destination="Xsg-sv-Yrq" id="lHm-PY-C0I"/>
                         <outlet property="emailValidateTextFieldView" destination="gT1-Gn-dtO" id="STb-uh-uVo"/>
                         <outlet property="nameValidateTextFieldView" destination="ED7-Yp-LsH" id="0d8-dr-20R"/>
                         <outlet property="passwordValidateTextFieldView" destination="DMH-L9-AGH" id="2OA-sE-kck"/>
@@ -380,7 +398,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="51G-C2-D98" kind="show" id="WFK-HZ-JMv"/>
+                                    <segue destination="caQ-wa-HuB" kind="show" id="XXe-ef-ZSr"/>
                                 </connections>
                             </button>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cvj-QR-MgC">
