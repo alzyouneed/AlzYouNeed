@@ -8,6 +8,7 @@ target 'AlzYouNeed' do
 pod 'Firebase'
 pod ‘Firebase/Crash’
 pod ‘Firebase/Auth’
+pod 'Firebase/Database'
 
 end
 
