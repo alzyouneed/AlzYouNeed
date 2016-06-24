@@ -127,9 +127,7 @@
 		2D57C5EF1D1C4A2D00004B8E /* New - Old */ = {
 			isa = PBXGroup;
 			children = (
-				2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */,
 				2D57C5F01D1C4A4800004B8E /* NewUserViewController.swift */,
-				2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */,
 			);
 			name = "New - Old";
 			sourceTree = "<group>";
@@ -169,6 +167,8 @@
 			children = (
 				2D70C3831D1C88F90048333C /* CreateUserViewController.swift */,
 				2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */,
+				2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */,
+				2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */,
 			);
 			name = New;
 			sourceTree = "<group>";

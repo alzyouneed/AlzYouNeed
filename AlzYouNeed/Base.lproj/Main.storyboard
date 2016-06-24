@@ -160,14 +160,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="confirmPasswordValidateTextFieldView" destination="tbZ-PY-koH" id="yLk-o5-vhE"/>
-                        <outlet property="familyIdValidateTextFieldView" destination="jqI-9Z-ILZ" id="NV8-tt-SIc"/>
-                        <outlet property="passwordValidateTextFieldView" destination="5N5-aV-aQM" id="bV4-F4-oLS"/>
+                        <outlet property="confirmPasswordVTFView" destination="tbZ-PY-koH" id="zvv-8k-UId"/>
+                        <outlet property="familyIdVTFView" destination="jqI-9Z-ILZ" id="vuG-fb-gE8"/>
+                        <outlet property="passwordVTFView" destination="5N5-aV-aQM" id="88L-8v-3YF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rug-3z-N9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="826" y="-759"/>
+            <point key="canvasLocation" x="1442" y="-1436"/>
         </scene>
         <!--New User-->
         <scene sceneID="346-aL-I3p">
@@ -434,6 +434,7 @@
                                 </state>
                                 <connections>
                                     <action selector="completeSetup:" destination="vu3-xn-OOF" eventType="touchUpInside" id="5bN-2M-r2S"/>
+                                    <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="1Dy-Bz-OGC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
@@ -527,10 +528,13 @@
                             <constraint firstItem="98z-69-oIU" firstAttribute="centerX" secondItem="pRK-BY-SMm" secondAttribute="centerX" id="lQ2-wk-vYD"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="dEd-h1-zPp" kind="show" identifier="startOverFamily" id="LkY-EQ-OgT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOV-ro-sZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="56" y="-761"/>
+            <point key="canvasLocation" x="758" y="-1436"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="6dU-ax-Uhd">
@@ -884,7 +888,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="AzE-0s-3y4"/>
-        <segue reference="A0r-u6-ln8"/>
-        <segue reference="d61-Gb-xHV"/>
+        <segue reference="LkY-EQ-OgT"/>
+        <segue reference="EcC-cZ-4XJ"/>
     </inferredMetricsTieBreakers>
 </document>

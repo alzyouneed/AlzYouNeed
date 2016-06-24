@@ -20,6 +20,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     // MARK: - Properties
     let imagePicker = UIImagePickerController()
+    var stepCompleted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +146,12 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     else {
                         print("User display name updated successfully")
                         self.saveUserToRealTimeDatabase()
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        
+                        self.stepCompleted = true
+                        if self.shouldPerformSegueWithIdentifier("familyStage", sender: self) {
+                            self.performSegueWithIdentifier("familyStage", sender: self)
+                        }
+//                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 })
             }
@@ -270,7 +276,14 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "familyStage" {
+            if stepCompleted {
+                return true
+            }
+        }
+        return false
+    }
     /*
     // MARK: - Navigation
 

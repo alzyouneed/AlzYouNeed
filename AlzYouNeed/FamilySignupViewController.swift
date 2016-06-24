@@ -17,9 +17,10 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UI Elements
     
-    @IBOutlet var familyIdValidateTextFieldView: validateTextFieldView!
-    @IBOutlet var passwordValidateTextFieldView: validateTextFieldView!
-    @IBOutlet var confirmPasswordValidateTextFieldView: validateTextFieldView!
+    
+    @IBOutlet var familyIdVTFView: validateTextFieldView!
+    @IBOutlet var passwordVTFView: validateTextFieldView!
+    @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,27 +35,40 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Firebase
     func createNewFamily() {
-        
+        if newFamily {
+            if let user = FIRAuth.auth()?.currentUser {
+                print("Saving new family to realtime DB")
+                
+                let databaseRef = FIRDatabase.database().reference()
+                
+//                let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyID": "", "patient": "false", "completedSignup": "false"]
+                
+//                databaseRef.child("users/\(user.uid)").setValue(userToSave)
+            }
+            
+            
+        }
     }
     
     func configureView() {
         if newFamily {
-          confirmPasswordValidateTextFieldView.hidden = false
+          confirmPasswordVTFView.hidden = false
         }
         else {
-            confirmPasswordValidateTextFieldView.hidden = true
+            confirmPasswordVTFView.hidden = true
         }
         configureTextFieldViews()
     }
     
     func configureTextFieldViews() {
-        self.familyIdValidateTextFieldView.familyIdMode()
-        self.passwordValidateTextFieldView.passwordMode(false)
-        self.confirmPasswordValidateTextFieldView.passwordMode(true)
+        self.familyIdVTFView.familyIdMode()
+        self.passwordVTFView.passwordMode(false)
+        self.confirmPasswordVTFView.passwordMode(true)
         
-        self.passwordValidateTextFieldView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.confirmPasswordValidateTextFieldView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
     }
     
     // MARK: - UITextFieldDelegate
