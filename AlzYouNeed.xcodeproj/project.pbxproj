@@ -11,9 +11,14 @@
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
+		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
+		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
+		2D57C5F11D1C4A4800004B8E /* NewUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5F01D1C4A4800004B8E /* NewUserViewController.swift */; };
 		2D66D24C1D14595E00A48F05 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */; };
 		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
 		2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */; };
+		2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3831D1C88F90048333C /* CreateUserViewController.swift */; };
+		2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */; };
 		2D7948471D1248F000FF1E51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D7948461D1248F000FF1E51 /* .gitignore */; };
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
 		2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9834D71D0C4A91000977DC /* AppDelegate.swift */; };
@@ -42,9 +47,14 @@
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
+		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
+		2D57C5F01D1C4A4800004B8E /* NewUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewUserViewController.swift; sourceTree = "<group>"; };
 		2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
+		2D70C3831D1C88F90048333C /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,11 +124,21 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		2D57C5EF1D1C4A2D00004B8E /* New - Old */ = {
+			isa = PBXGroup;
+			children = (
+				2D57C5F01D1C4A4800004B8E /* NewUserViewController.swift */,
+			);
+			name = "New - Old";
+			sourceTree = "<group>";
+		};
 		2D6D2FBB1D186B7F0050589C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
 				2D66D24B1D14595E00A48F05 /* SignUpViewController.swift */,
+				2D70C3851D1C89050048333C /* New */,
+				2D57C5EF1D1C4A2D00004B8E /* New - Old */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -140,6 +160,17 @@
 				2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		2D70C3851D1C89050048333C /* New */ = {
+			isa = PBXGroup;
+			children = (
+				2D70C3831D1C88F90048333C /* CreateUserViewController.swift */,
+				2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */,
+				2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */,
+				2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */,
+			);
+			name = New;
 			sourceTree = "<group>";
 		};
 		2D9834CB1D0C4A91000977DC = {
@@ -376,7 +407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE= \"/Users/Cwybro/Desktop/Xcode/Wybro/Alz You need/Extra Files/Alz You Need-553ddc782b1f.json\"\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID= 1:637933247383:ios:8a900da39dc609e7\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
+			shellScript = "# Replace this path with the path to the key you just downloaded\n#JSON_FILE= \"/Users/Cwybro/Desktop/Xcode/Wybro/Alz You need/Extra Files/Alz You Need-553ddc782b1f.json\"\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\n#GOOGLE_APP_ID= 1:637933247383:ios:8a900da39dc609e7\n\n#defaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\n#JSON=$(cat \"${JSON_FILE}\")\n#/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n#\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
 		};
 		970742233F8807B73E7BAD00 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -404,16 +435,21 @@
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
+				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
+				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
+				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D66D24C1D14595E00A48F05 /* SignUpViewController.swift in Sources */,
+				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
+				2D57C5F11D1C4A4800004B8E /* NewUserViewController.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

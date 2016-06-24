@@ -1,0 +1,206 @@
+//
+//  CreateUserViewController.swift
+//  AlzYouNeed
+//
+//  Created by Connor Wybranowski on 6/23/16.
+//  Copyright © 2016 Alz You Need. All rights reserved.
+//
+
+import UIKit
+import Firebase
+
+class CreateUserViewController: UIViewController, UITextFieldDelegate {
+    
+    // MARK: - UI Elements
+    @IBOutlet var emailVTFView: validateTextFieldView!
+    @IBOutlet var passwordVTFView: validateTextFieldView!
+    @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
+    @IBOutlet var nextButton: UIButton!
+    
+    // MARK: - Properties
+    var userSignedUp = false
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.emailVTFView.textField.becomeFirstResponder()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    func configureView() {
+        self.emailVTFView.emailMode()
+        self.passwordVTFView.passwordMode(false)
+        self.confirmPasswordVTFView.passwordMode(true)
+        
+        self.emailVTFView.textField.delegate = self
+        self.passwordVTFView.textField.delegate = self
+        self.confirmPasswordVTFView.textField.delegate = self
+        
+        self.emailVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.passwordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+    }
+    
+    @IBAction func presentNextView(sender: UIButton) {
+        signUpUser()
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "updateUser" {
+//            print("Should perform segue: \(userSignedUp)")
+            if userSignedUp {
+                return true
+            }
+        }
+        return false
+    }
+    
+    // MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        // Switch between textFields by using return key
+        let tag = textField.superview!.superview!.tag
+        switch tag {
+        case 0:
+            if !emailVTFView.textField.text!.isEmpty {
+                passwordVTFView.textField.becomeFirstResponder()
+            }
+        case 1:
+            if !passwordVTFView.textField.text!.isEmpty {
+                confirmPasswordVTFView.textField.becomeFirstResponder()
+            }
+        case 2:
+            if !confirmPasswordVTFView.textField.text!.isEmpty {
+                signUpUser()
+            }
+        default:
+            break
+        }
+        return true
+    }
+    
+    func textFieldDidChange(textField: UITextField) {
+        let tag = textField.superview!.superview!.tag
+        
+        switch tag {
+        // Email textField
+        case 0:
+            validateEmail()
+        // Password textField
+        case 1:
+            validatePassword()
+        // Confirm password textField
+        case 2:
+            validateConfirmPassword()
+        default:
+            break
+        }
+    }
+    
+    // MARK: - Firebase
+    func signUpUser() {
+        if validFields() {
+            FIRAuth.auth()?.createUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completion: { (user, error) in
+                if error == nil {
+                    print("Sign up successful")
+                    self.view.endEditing(true)
+                    self.userSignedUp = true
+                    if self.shouldPerformSegueWithIdentifier("updateUser", sender: self) {
+                        self.performSegueWithIdentifier("updateUser", sender: self)
+                    }
+                }
+                else {
+                    print(error)
+                }
+            })
+        }
+    }
+    
+    // MARK: - Validation
+    func validFields() -> Bool {
+        return validateEmail() && validatePassword() && validateConfirmPassword()
+    }
+    
+    func validateEmail() -> Bool {
+        // Check empty
+        if emailVTFView.textField.text!.isEmpty {
+            print("Email field empty")
+            emailVTFView.isValid(false)
+            return false
+        }
+        else {
+            // Check valid
+            let userEmailAddress = emailVTFView.textField.text
+            let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+            let valid = NSPredicate(format: "SELF MATCHES %@", regex).evaluateWithObject(userEmailAddress)
+            
+            // For debugging
+            if valid {
+                emailVTFView.isValid(true)
+                return true
+            }
+            else {
+                print("Invalid email")
+                emailVTFView.isValid(false)
+                return false
+            }
+        }
+    }
+    
+    func validatePassword() -> Bool {
+        if passwordVTFView.textField.text!.isEmpty {
+            print("Password field empty")
+            passwordVTFView.isValid(false)
+            return false
+        }
+        
+        if passwordVTFView.textField.text?.characters.count < 6 {
+            print("Password not long enough")
+            passwordVTFView.isValid(false)
+            return false
+        }
+        
+        passwordVTFView.isValid(true)
+        return true
+    }
+    
+    func validateConfirmPassword() -> Bool {
+        if confirmPasswordVTFView.textField.text!.isEmpty {
+            print("Confirm password field empty")
+            confirmPasswordVTFView.isValid(false)
+            return false
+        }
+        
+        let passwordText = passwordVTFView.textField.text
+        let confirmPasswordText = confirmPasswordVTFView.textField.text
+        let passwordsMatch = passwordText == confirmPasswordText
+        
+        if passwordsMatch {
+            confirmPasswordVTFView.isValid(true)
+            return true
+        }
+        else {
+            print("Passwords do not match")
+            confirmPasswordVTFView.isValid(false)
+            return false
+        }
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
