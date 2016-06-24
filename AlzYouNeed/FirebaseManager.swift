@@ -96,10 +96,11 @@ class FirebaseManager: NSObject {
     // MARK: - Family Group Management
     class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            let databaseRef = FIRDatabase.database().reference()
             
             getUserPatientStatus({ (status, error) in
                 if let patientStatus = status {
+                    let databaseRef = FIRDatabase.database().reference()
+                    
                     let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
                     
                     // Update current user and new family
@@ -121,8 +122,66 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func joinFamilyGroup(familyId: String, password; String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func joinFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            
+            getFamilyPassword(familyId, completionHandler: { (password, error) in
+                if let actualFamilyPassword = password {
+                    
+                    if actualFamilyPassword == password {
+                        
+                        getUserPatientStatus({ (status, error) in
+                            if let patientStatus = status {
+                                let databaseRef = FIRDatabase.database().reference()
+                                
+                                let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
+                                
+                                // Update current user and new family
+                                let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true"]
+                                databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
+                                databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd)
+                                
+                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                    if let error = error {
+                                        print("Error occurred while updating user with new family group values")
+                                        completionHandler(error: error, newDatabaseRef: databaseRef)
+                                    }
+                                    else {
+                                        print("User family group values updated")
+                                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                            if let error = error {
+                                                print("Error occurred while adding user to family")
+                                                completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)
+                                            }
+                                            else {
+                                                print("User added to family")
+                                                completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    print("Incorrect password to join family: \(familyId)")
+                    completionHandler(error: nil, newDatabaseRef: nil)
+                }
+            })
+        }
+    }
+    
+    class func getFamilyPassword(familyId: String, completionHandler: (password: String?, error: NSError?) -> Void) {
+        let databaseRef = FIRDatabase.database().reference()
         
+        databaseRef.child("families").child(familyId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let familyPassword = snapshot.value!["password"] as? String {
+                print("Family password retrieved")
+                completionHandler(password: familyPassword, error: nil)
+            }
+        }) { (error) in
+            print("Error occurred while retrieving family password")
+            completionHandler(password: nil, error: error)
+        }
     }
     
     // MARK: - Database Management
