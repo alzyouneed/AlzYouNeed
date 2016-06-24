@@ -25,6 +25,59 @@ class FirebaseManager: NSObject {
         })
     }
     
+    class func updateUserDisplayName(name: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let changeRequest = user.profileChangeRequest()
+            
+            changeRequest.displayName = name
+            changeRequest.commitChangesWithCompletion({ (error) in
+                if let error = error {
+                    print("Error occurred while updating user display name")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("User display name updated")
+                    completionHandler(error: error)
+                }
+            })
+        }
+    }
+    
+    class func updateUserPhotoURL(url: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let changeRequest = user.profileChangeRequest()
+            
+            changeRequest.photoURL = NSURL(string: url)
+            changeRequest.commitChangesWithCompletion({ (error) in
+                if let error = error {
+                    print("Error occurred while updating user photo URL")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("User photo URL updated")
+                    completionHandler(error: error)
+                }
+            })
+        }
+    }
+    
+    class func getUserPatientStatus(completionHandler: (status: String?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let userId = user.uid
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let patientStatus = snapshot.value!["patient"] as? String {
+                    print("User patient status retrieved")
+                    completionHandler(status: patientStatus, error: nil)
+                }
+            }) { (error) in
+                print("Error occurred while retrieving user patient status")
+                completionHandler(status: nil, error: error)
+            }
+        }
+    }
+    
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             user.deleteWithCompletion({ (error) in
@@ -38,6 +91,38 @@ class FirebaseManager: NSObject {
                 }
             })
         }
+    }
+    
+    // MARK: - Family Group Management
+    class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            getUserPatientStatus({ (status, error) in
+                if let patientStatus = status {
+                    let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
+                    
+                    // Update current user and new family
+                    let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true", "/families/\(familyId)": familyToSave]
+                    databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
+                    
+                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                        if let error = error {
+                            print("Error creating new family group")
+                            completionHandler(error: error, newDatabaseRef: databaseRef)
+                        }
+                        else {
+                            print("New family group created")
+                            completionHandler(error: error, newDatabaseRef: databaseRef)
+                        }
+                    })
+                }
+            })
+        }
+    }
+    
+    class func joinFamilyGroup(familyId: String, password; String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+        
     }
     
     // MARK: - Database Management
@@ -105,6 +190,5 @@ class FirebaseManager: NSObject {
             })
         }
     }
-    
 
 }
