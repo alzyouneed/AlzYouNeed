@@ -16,13 +16,15 @@ class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        uploadPicture()
     }
     
     override func viewDidAppear(animated: Bool) {
         let now = NSDate()
         dateView.configureView(now)
+        
+        getCurrentFamily { (familyId) in
+            print("Current family: \(familyId)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +59,19 @@ class DashboardViewController: UIViewController {
                     print("Successfully uploaded picture: \(metadata!.downloadURL())")
                 }
             }
+        }
+    }
+    
+    func getCurrentFamily(completionHandler:(String)->()){
+        let userId = FIRAuth.auth()?.currentUser?.uid
+        let databaseRef = FIRDatabase.database().reference()
+        
+        databaseRef.child("users").child(userId!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let familyId = snapshot.value!["familyId"] as? String {
+                completionHandler(familyId)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
 

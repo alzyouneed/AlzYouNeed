@@ -44,8 +44,12 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                     let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
                     
                     // Update current user and new family
-                    let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/families/\(familyId)": familyToSave]
+                    let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true", "/families/\(familyId)": familyToSave]
                     databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
+                    
+                    // Signup Complete
+                    self.view.endEditing(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
         }
@@ -64,9 +68,13 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                         let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
                         
                         // Update current user and new family
-                        let childUpdates = ["/users/\(user.uid)/familyId": familyId]
+                        let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true"]
                         databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
                         databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd)
+                        
+                        // Signup Complete
+                        self.view.endEditing(true)
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     })
                 }
                 else {
@@ -85,22 +93,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         else {
             joinFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
         }
-    }
-    
-    func getUserPatientStatus() -> String {
-        var status = "false"
-        
-        let userId = FIRAuth.auth()?.currentUser?.uid
-        let databaseRef = FIRDatabase.database().reference()
-        
-        databaseRef.child("users").child(userId!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            if let patientStatus = snapshot.value!["patient"] as? String {
-                status = patientStatus
-            }
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-        return status
     }
     
     func getUserPatientStatus(completionHandler:(String)->()){
