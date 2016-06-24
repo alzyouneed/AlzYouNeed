@@ -201,6 +201,26 @@ class FirebaseManager: NSObject {
                     }
                     else {
                         print("User image file uploaded")
+                        
+                        if let photoUrl = metadata?.downloadURL()?.absoluteString {
+                            updateUserPhotoURL(photoUrl, completionHandler: { (error) in
+                                if error != nil {
+                                    // Failed to update user photo url
+                                }
+                                else {
+                                    // Successfully updated user photo url
+                                    updateUserPhotoURLInRealTimeDatabase(photoUrl, completionHandler: { (error) in
+                                        if error != nil {
+                                            // Failed to update user photo url in realTime database
+                                        }
+                                        else {
+                                            // Successfully updated user photo url in realtTIme database
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                        
                         completionHandler(metadata: metadata, error: error)
                     }
                 })
@@ -247,6 +267,24 @@ class FirebaseManager: NSObject {
                     completionHandler(error: error, newDatabaseRef: newDatabaseRef)
                 }
             })
+        }
+    }
+    
+    class func updateUserPhotoURLInRealTimeDatabase(url: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users/\(user.uid)").child("photoURL").setValue(url, withCompletionBlock: { (error, newDatabaseRef) in
+                if error != nil {
+                    print("Error updating user photo URL in realTime database")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("User photo URL updated in realTime database")
+                    completionHandler(error: error)
+                }
+            })
+            
         }
     }
     

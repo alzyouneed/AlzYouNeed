@@ -151,17 +151,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    func updateUserPhotoURL(url: String) {
-        FirebaseManager.updateUserPhotoURL(url) { (error) in
-            if error != nil {
-               // Failed to upload photo URL
-            }
-            else {
-                // Uploaded photo URL successfully
-            }
-        }
-    }
-    
     @IBAction func completeSetup(sender: UIButton) {
         if validFields() {
             if let cancelButton = (self.navigationItem.rightBarButtonItems?.first) {
@@ -182,6 +171,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     if metadata != nil {
                         // Picture uploaded successfully
                         self.stepCompleted = true
+                        
+                        // STILL NEEDS WORK -- Currently performs segue twice
                         self.performSegueWithIdentifier("familyStage", sender: self)
                     }
                 }
