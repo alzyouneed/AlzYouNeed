@@ -113,14 +113,17 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         if validFields() {
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
+                    // Sign up failed
+                }
+                else {
+                    // Successfully signed up
                     if user != nil {
                         self.view.endEditing(true)
                         self.userSignedUp = true
+                        
                         self.performSegueWithIdentifier("updateUser", sender: self)
                     }
-                }
-                else {
-                    // Sign up failed
+
                 }
             })
         }
@@ -196,12 +199,12 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-//        if identifier == "updateUser" {
-//            return userSignedUp
-//        }
-//        return false
-//    }
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "updateUser" {
+            return userSignedUp
+        }
+        return false
+    }
     
     /*
     // MARK: - Navigation
