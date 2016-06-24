@@ -46,6 +46,8 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         self.emailVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.passwordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        
+        nextButtonEnabled()
     }
     
     @IBAction func presentNextView(sender: UIButton) {
@@ -91,6 +93,19 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         default:
             break
         }
+        
+        nextButtonEnabled()
+    }
+    
+    func nextButtonEnabled() {
+        if validFields() {
+            nextButton.enabled = true
+            nextButton.alpha = 1
+        }
+        else {
+            nextButton.enabled = false
+            nextButton.alpha = 0.5
+        }
     }
     
     // MARK: - Firebase
@@ -119,7 +134,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     func validateEmail() -> Bool {
         // Check empty
         if emailVTFView.textField.text!.isEmpty {
-            print("Email field empty")
+//            print("Email field empty")
             emailVTFView.isValid(false)
             return false
         }
@@ -144,7 +159,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func validatePassword() -> Bool {
         if passwordVTFView.textField.text!.isEmpty {
-            print("Password field empty")
+//            print("Password field empty")
             passwordVTFView.isValid(false)
             return false
         }
@@ -161,7 +176,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func validateConfirmPassword() -> Bool {
         if confirmPasswordVTFView.textField.text!.isEmpty {
-            print("Confirm password field empty")
+//            print("Confirm password field empty")
             confirmPasswordVTFView.isValid(false)
             return false
         }
@@ -180,6 +195,13 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             return false
         }
     }
+    
+//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+//        if identifier == "updateUser" {
+//            return userSignedUp
+//        }
+//        return false
+//    }
     
     /*
     // MARK: - Navigation

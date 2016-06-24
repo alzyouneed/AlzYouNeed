@@ -118,14 +118,14 @@
                                     <constraint firstAttribute="height" constant="46" id="cBb-qZ-WJz"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5N5-aV-aQM" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5N5-aV-aQM" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="126" width="560" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="zX0-gU-kHn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbZ-PY-koH" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbZ-PY-koH" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="180" width="560" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -164,6 +164,7 @@
                     </view>
                     <connections>
                         <outlet property="confirmPasswordVTFView" destination="tbZ-PY-koH" id="zvv-8k-UId"/>
+                        <outlet property="createJoinFamilyButton" destination="eFR-c8-gcw" id="RPv-3T-rAm"/>
                         <outlet property="familyIdVTFView" destination="jqI-9Z-ILZ" id="vuG-fb-gE8"/>
                         <outlet property="passwordVTFView" destination="5N5-aV-aQM" id="88L-8v-3YF"/>
                     </connections>

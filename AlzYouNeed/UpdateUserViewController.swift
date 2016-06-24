@@ -49,6 +49,19 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
+        
+        signUpButtonEnabled()
+    }
+    
+    func signUpButtonEnabled() {
+        if validFields() {
+            signUpButton.enabled = true
+            signUpButton.alpha = 1
+        }
+        else {
+            signUpButton.enabled = false
+            signUpButton.alpha = 0.5
+        }
     }
 
     // MARK: - UIImagePickerController Delegate
@@ -91,7 +104,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             return true
         }
         else {
-            print("Name field empty")
+//            print("Name field empty")
             nameVTFView.isValid(false)
             return false
         }
@@ -246,7 +259,16 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         default:
             break
         }
+        
+        signUpButtonEnabled()
     }
+    
+//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+//        if identifier == "familyStage" {
+//            return stepCompleted
+//        }
+//        return false
+//    }
 
     /*
     // MARK: - Navigation

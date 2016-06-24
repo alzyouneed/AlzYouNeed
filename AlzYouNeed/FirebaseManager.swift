@@ -164,7 +164,8 @@ class FirebaseManager: NSObject {
                         })
                     }
                     print("Incorrect password to join family: \(familyId)")
-                    completionHandler(error: nil, newDatabaseRef: nil)
+                    let wrongPasswordError = NSError(domain: "Incorrect password", code: 0, userInfo: nil)
+                    completionHandler(error: wrongPasswordError, newDatabaseRef: nil)
                 }
             })
         }
