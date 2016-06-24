@@ -236,7 +236,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             
             let databaseRef = FIRDatabase.database().reference()
             
-            let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyID": "", "patient": "false", "completedSignup": "false", "photoURL":""]
+            let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyId": "", "patient": "false", "completedSignup": "false", "photoURL":""]
             
             databaseRef.child("users/\(user.uid)").setValue(userToSave)
         }

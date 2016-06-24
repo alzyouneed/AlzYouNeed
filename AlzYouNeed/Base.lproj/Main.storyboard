@@ -142,6 +142,9 @@
                                 <state key="normal" title="Create Family">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="createOrJoinFamily:" destination="cPi-aJ-y8T" eventType="touchUpInside" id="7fN-jL-zrN"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
