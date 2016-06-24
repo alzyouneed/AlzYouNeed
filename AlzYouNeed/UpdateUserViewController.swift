@@ -63,6 +63,17 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             signUpButton.alpha = 0.5
         }
     }
+    
+    func signUpButtonEnabled(enabled: Bool) {
+        if enabled {
+            signUpButton.enabled = true
+            signUpButton.alpha = 1
+        }
+        else {
+            signUpButton.enabled = false
+            signUpButton.alpha = 0.5
+        }
+    }
 
     // MARK: - UIImagePickerController Delegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -130,16 +141,19 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     // MARK: - Firebase
     func updateUserAccount() {
         if validFields() {
+            
+            // Disable button to avoid multiple taps
+            signUpButtonEnabled(false)
             FirebaseManager.updateUserDisplayName(nameVTFView.textField.text!, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update display name
+                    self.signUpButtonEnabled(true)
                 }
                 else {
-//                    self.uploadPicture()
-                    
                     FirebaseManager.saveUserToRealTimeDatabase(self.nameVTFView.textField.text!, phoneNumber: self.phoneNumberVTFView.textField.text!, completionHandler: { (error, newDatabaseRef) in
                         if error != nil {
                             // Failed to save to realTime database
+                            self.signUpButtonEnabled(true)
                         }
                         else {
                             
@@ -147,6 +161,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                                 FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
                                     if error != nil {
                                         // Error uploading picture
+                                        self.signUpButtonEnabled(true)
                                     }
                                     else {
                                         if metadata != nil {
@@ -263,12 +278,12 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         signUpButtonEnabled()
     }
     
-//    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-//        if identifier == "familyStage" {
-//            return stepCompleted
-//        }
-//        return false
-//    }
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "familyStage" {
+            return stepCompleted
+        }
+        return false
+    }
 
     /*
     // MARK: - Navigation

@@ -215,14 +215,15 @@ class FirebaseManager: NSObject {
                                             // Failed to update user photo url in realTime database
                                         }
                                         else {
-                                            // Successfully updated user photo url in realtTIme database
+                                            // Successfully updated user photo url in realtTime database
+                                            completionHandler(metadata: metadata, error: error)
                                         }
                                     })
                                 }
                             })
                         }
                         
-                        completionHandler(metadata: metadata, error: error)
+//                        completionHandler(metadata: metadata, error: error)
                     }
                 })
             }
