@@ -135,7 +135,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                 return true
             }
             else {
-                print("Invalid email")
+//                print("Invalid email")
                 emailVTFView.isValid(false)
                 return false
             }
@@ -150,7 +150,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         }
         
         if passwordVTFView.textField.text?.characters.count < 6 {
-            print("Password not long enough")
+//            print("Password not long enough")
             passwordVTFView.isValid(false)
             return false
         }
@@ -175,13 +175,12 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             return true
         }
         else {
-            print("Passwords do not match")
+//            print("Passwords do not match")
             confirmPasswordVTFView.isValid(false)
             return false
         }
     }
     
-
     /*
     // MARK: - Navigation
 

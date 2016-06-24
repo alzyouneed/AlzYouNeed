@@ -108,7 +108,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             return true
         }
         else {
-            print("Invalid phone number")
+//            print("Invalid phone number")
             phoneNumberVTFView.isValid(false)
             return false
         }
