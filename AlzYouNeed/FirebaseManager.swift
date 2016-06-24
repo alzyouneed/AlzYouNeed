@@ -31,7 +31,7 @@ class FirebaseManager: NSObject {
             
             changeRequest.displayName = name
             changeRequest.commitChangesWithCompletion({ (error) in
-                if let error = error {
+                if error != nil {
                     print("Error occurred while updating user display name")
                     completionHandler(error: error)
                 }
@@ -49,7 +49,7 @@ class FirebaseManager: NSObject {
             
             changeRequest.photoURL = NSURL(string: url)
             changeRequest.commitChangesWithCompletion({ (error) in
-                if let error = error {
+                if error != nil {
                     print("Error occurred while updating user photo URL")
                     completionHandler(error: error)
                 }
@@ -81,7 +81,7 @@ class FirebaseManager: NSObject {
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             user.deleteWithCompletion({ (error) in
-                if let error = error {
+                if error != nil {
                     print("Error occurred while deleting account")
                     completionHandler(error: error)
                 }
@@ -108,7 +108,7 @@ class FirebaseManager: NSObject {
                     databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
                     
                     databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                        if let error = error {
+                        if error != nil {
                             print("Error creating new family group")
                             completionHandler(error: error, newDatabaseRef: databaseRef)
                         }
@@ -142,14 +142,14 @@ class FirebaseManager: NSObject {
                                 databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd)
                                 
                                 databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                    if let error = error {
+                                    if error != nil {
                                         print("Error occurred while updating user with new family group values")
                                         completionHandler(error: error, newDatabaseRef: databaseRef)
                                     }
                                     else {
                                         print("User family group values updated")
                                         databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd, withCompletionBlock: { (secondError, secondDatabaseRef) in
-                                            if let error = error {
+                                            if error != nil {
                                                 print("Error occurred while adding user to family")
                                                 completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)
                                             }
@@ -195,7 +195,7 @@ class FirebaseManager: NSObject {
                 let imageRef = storageRef.child("userImages/\(user.uid)")
                 
                 let uploadTask = imageRef.putData(data!, metadata: nil, completion: { (metadata, error) in
-                    if let error = error {
+                    if error != nil {
                         print("Error occurred while uploading user image file")
                         completionHandler(metadata: metadata, error: error)
                     }
@@ -219,7 +219,7 @@ class FirebaseManager: NSObject {
             let userImageRef = storageRef.child("userImages/\(user.uid)")
             
             userImageRef.deleteWithCompletion({ (error) in
-                if let error = error {
+                if error != nil {
                     print("Error occurred while deleting user image file")
                     completionHandler(error: error)
                 }
@@ -238,7 +238,7 @@ class FirebaseManager: NSObject {
             let userToSave = ["name": name, "email": "\(user.email!)", "phoneNumber": phoneNumber, "familyId": "", "patient": "false", "completedSignup": "false", "photoURL":""]
             
             databaseRef.child("users/\(user.uid)").setValue(userToSave, withCompletionBlock: { (error, newDatabaseRef) in
-                if let error = error {
+                if error != nil {
                     print("Error occurred while saving user to realTime database")
                     completionHandler(error: error, newDatabaseRef: newDatabaseRef)
                 }
