@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */; };
 		2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244EF1D0FA12B005D9DF5 /* Person.swift */; };
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
@@ -43,6 +44,7 @@
 		09554C3A3CAFAB415E229CB7 /* libPods-AlzYouNeed.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlzYouNeed.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
 		1E3258817A8CCC0657AA5166 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
+		2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		2D2244EF1D0FA12B005D9DF5 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
@@ -95,6 +97,14 @@
 				096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2D1BCD3A1D1D70280060B55C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		2D2244EE1D0F994E005D9DF5 /* ContactList */ = {
@@ -263,6 +273,7 @@
 		2DC8D5C91D12EAAF00952483 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				2D1BCD3A1D1D70280060B55C /* Model */,
 				2D6D2FBE1D186BCB0050589C /* View */,
 				2D6D2FBB1D186B7F0050589C /* Controller */,
 			);
@@ -440,6 +451,7 @@
 				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
+				2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
