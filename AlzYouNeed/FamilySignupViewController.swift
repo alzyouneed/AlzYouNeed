@@ -128,11 +128,11 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         let tag = textField.superview!.superview!.tag
         switch tag {
         case 0:
-            if !familyIdVTFView.textField.text!.isEmpty {
+            if validateFamilyId() {
                 passwordVTFView.textField.becomeFirstResponder()
             }
         case 1:
-            if !passwordVTFView.textField.text!.isEmpty {
+            if validatePassword() {
                 if newFamily {
                     confirmPasswordVTFView.textField.becomeFirstResponder()
                 }
@@ -143,7 +143,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         case 2:
-            if !confirmPasswordVTFView.textField.text!.isEmpty {
+            if validateConfirmPassword() {
                 self.view.endEditing(true)
                 // create family here
                 print("Create family")

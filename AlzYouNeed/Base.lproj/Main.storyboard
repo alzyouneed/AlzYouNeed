@@ -412,7 +412,7 @@
                                     <constraint firstAttribute="height" constant="46" id="Jqc-aT-RJa"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="izc-Mh-V7d">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="izc-Mh-V7d">
                                 <rect key="frame" x="250" y="34" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="7CN-vf-NCS"/>
@@ -442,13 +442,16 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
-                                <rect key="frame" x="280" y="64" width="40" height="40"/>
+                                <rect key="frame" x="320" y="24" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="Vf9-Xy-1Ux"/>
                                     <constraint firstAttribute="height" constant="40" id="sY2-Gv-N8m"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                <state key="normal" title="+"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="addPhoto:" destination="vu3-xn-OOF" eventType="touchUpInside" id="9gY-RV-owb"/>
                                 </connections>
@@ -460,15 +463,23 @@
                             <constraint firstAttribute="leadingMargin" secondItem="xLf-c8-Ma4" secondAttribute="leading" id="41N-Za-zcZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xLf-c8-Ma4" secondAttribute="trailing" id="4RV-Tn-ssD"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="Cir-fR-aqX"/>
+                            <constraint firstItem="8v1-4n-gli" firstAttribute="top" secondItem="izc-Mh-V7d" secondAttribute="top" constant="-10" id="FWf-wx-eYD"/>
                             <constraint firstItem="izc-Mh-V7d" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" constant="14" id="SJT-k9-yRP"/>
                             <constraint firstItem="8v1-4n-gli" firstAttribute="centerX" secondItem="izc-Mh-V7d" secondAttribute="centerX" id="er7-O9-ewO"/>
                             <constraint firstItem="8v1-4n-gli" firstAttribute="centerY" secondItem="izc-Mh-V7d" secondAttribute="centerY" id="exN-KP-h9m"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ccO-ou-Rs8" secondAttribute="leading" id="iaz-iL-vzZ"/>
                             <constraint firstItem="xLf-c8-Ma4" firstAttribute="top" secondItem="ccO-ou-Rs8" secondAttribute="bottom" constant="8" id="pcF-w4-Pms"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ccO-ou-Rs8" secondAttribute="trailing" id="rqX-Tg-RrZ"/>
+                            <constraint firstItem="8v1-4n-gli" firstAttribute="trailing" secondItem="izc-Mh-V7d" secondAttribute="trailing" constant="10" id="tXe-NJ-blw"/>
                             <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="izc-Mh-V7d" secondAttribute="bottom" constant="8" id="xfu-Qh-gsk"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="yX7-2a-dTC"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="er7-O9-ewO"/>
+                                <exclude reference="exN-KP-h9m"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="addPhotoButton" destination="8v1-4n-gli" id="Usq-6q-GDB"/>
@@ -890,6 +901,9 @@
             <point key="canvasLocation" x="-757" y="-83"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="defaultImage" width="100" height="100"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="A0r-u6-ln8"/>
         <segue reference="EcC-cZ-4XJ"/>

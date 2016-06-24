@@ -49,6 +49,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
+        self.userImageView.layer.borderWidth = 2
+        self.userImageView.layer.borderColor = UIColor.grayColor().CGColor
+        
+        self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
         signUpButtonEnabled()
     }
@@ -83,7 +87,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 self.userImageView.image = pickedImage
             })
 //            self.userImageView.image = pickedImage
-            addPhotoButton.hidden = true
+//            addPhotoButton.hidden = true
         }
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -248,11 +252,11 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         let tag = textField.superview!.superview!.tag
         switch tag {
         case 0:
-            if !nameVTFView.textField.text!.isEmpty {
+            if validateName() {
                 phoneNumberVTFView.textField.becomeFirstResponder()
             }
         case 1:
-            if !phoneNumberVTFView.textField.text!.isEmpty {
+            if validatePhoneNumber() {
                 updateUserAccount()
             }
         default:

@@ -60,15 +60,15 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         let tag = textField.superview!.superview!.tag
         switch tag {
         case 0:
-            if !emailVTFView.textField.text!.isEmpty {
+            if validateEmail() {
                 passwordVTFView.textField.becomeFirstResponder()
             }
         case 1:
-            if !passwordVTFView.textField.text!.isEmpty {
+            if validatePassword() {
                 confirmPasswordVTFView.textField.becomeFirstResponder()
             }
         case 2:
-            if !confirmPasswordVTFView.textField.text!.isEmpty {
+            if validateConfirmPassword(){
                 signUpUser()
             }
         default:
@@ -108,12 +108,27 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func nextButtonEnabled(enabled: Bool) {
+        if enabled {
+            nextButton.enabled = true
+            nextButton.alpha = 1
+        }
+        else {
+            nextButton.enabled = false
+            nextButton.alpha = 0.5
+        }
+    }
+    
     // MARK: - Firebase
     func signUpUser() {
         if validFields() {
+            
+            // Disable button to avoid multiple taps
+            nextButtonEnabled(false)
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed
+                    self.nextButtonEnabled(true)
                 }
                 else {
                     // Successfully signed up
