@@ -52,16 +52,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         signUpUser()
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "updateUser" {
-//            print("Should perform segue: \(userSignedUp)")
-            if userSignedUp {
-                return true
-            }
-        }
-        return false
-    }
-    
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Switch between textFields by using return key
@@ -106,17 +96,16 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Firebase
     func signUpUser() {
         if validFields() {
-            FIRAuth.auth()?.createUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completion: { (user, error) in
-                if error == nil {
-                    print("Sign up successful")
-                    self.view.endEditing(true)
-                    self.userSignedUp = true
-                    if self.shouldPerformSegueWithIdentifier("updateUser", sender: self) {
+            FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
+                if error != nil {
+                    if user != nil {
+                        self.view.endEditing(true)
+                        self.userSignedUp = true
                         self.performSegueWithIdentifier("updateUser", sender: self)
                     }
                 }
                 else {
-                    print(error)
+                    // Sign up failed
                 }
             })
         }

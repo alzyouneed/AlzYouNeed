@@ -14,12 +14,12 @@ class FirebaseManager: NSObject {
     // MARK: - User Management
     class func createNewUserWithEmail(email: String, password: String, completionHandler: (user:FIRUser?, error: NSError?) -> Void) {
         FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user, error) in
-            if error == nil {
-                print("Sign up successful")
+            if error != nil {
+                print("There was an error creating user")
                 completionHandler(user: user, error: error)
             }
             else {
-                print("There was an error creating user")
+                print("New user created successfully")
                 completionHandler(user: user, error: error)
             }
         })
@@ -125,8 +125,8 @@ class FirebaseManager: NSObject {
     class func joinFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             
-            getFamilyPassword(familyId, completionHandler: { (password, error) in
-                if let actualFamilyPassword = password {
+            getFamilyPassword(familyId, completionHandler: { (familyPassword, error) in
+                if let actualFamilyPassword = familyPassword {
                     
                     if actualFamilyPassword == password {
                         
@@ -245,6 +245,22 @@ class FirebaseManager: NSObject {
                 else {
                     print("User saved to realTime database")
                     completionHandler(error: error, newDatabaseRef: newDatabaseRef)
+                }
+            })
+        }
+    }
+    
+    class func deleteUserFromRealTimeDatabase(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            databaseRef.child("users/\(user.uid)").removeValueWithCompletionBlock({ (error, oldDatabaseRef) in
+                if error != nil {
+                    print("Error deleting user from realTime database")
+                    completionHandler(error: error, databaseRef: oldDatabaseRef)
+                }
+                else {
+                    print("User deleted from realTime database")
+                    completionHandler(error: error, databaseRef: oldDatabaseRef)
                 }
             })
         }

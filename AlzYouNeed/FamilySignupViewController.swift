@@ -34,53 +34,28 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Firebase
     func createNewFamily(familyId: String, password: String) {
-        if newFamily {
-            if let user = FIRAuth.auth()?.currentUser {
-                print("Saving new family to realtime DB")
-                let databaseRef = FIRDatabase.database().reference()
-                
-                // Add current user as first family member
-                self.getUserPatientStatus({ (patientStatus) in
-                    let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
-                    
-                    // Update current user and new family
-                    let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true", "/families/\(familyId)": familyToSave]
-                    databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
-                    
-                    // Signup Complete
-                    self.view.endEditing(true)
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
+        FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
+            if error != nil {
+                // Error creating new family
+            }
+            else {
+                // Successfully created new family
+                self.view.endEditing(true)
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
     }
     
     func joinFamily(familyId: String, password: String) {
-        if let user = FIRAuth.auth()?.currentUser {
-            
-            getFamilyPassword(familyId, completionHandler: { (familyPassword) -> Void in
-                if familyPassword == password {
-                    print("Joining family: \(familyId)")
-                    
-                    let databaseRef = FIRDatabase.database().reference()
-                    
-                    self.getUserPatientStatus({ (patientStatus) in
-                        let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
-                        
-                        // Update current user and new family
-                        let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true"]
-                        databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
-                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd)
-                        
-                        // Signup Complete
-                        self.view.endEditing(true)
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    })
-                }
-                else {
-                   print("Incorrect password to join family: \(familyId)")
-                }
-            })
+        FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
+            if error != nil {
+                // Error joining family
+            }
+            else {
+                // Successfully joined family
+                self.view.endEditing(true)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
     }
     
@@ -92,40 +67,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Join family
         else {
             joinFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
-        }
-    }
-    
-    func getUserPatientStatus(completionHandler:(String)->()){
-        var status = "false"
-        
-        let userId = FIRAuth.auth()?.currentUser?.uid
-        let databaseRef = FIRDatabase.database().reference()
-        
-        databaseRef.child("users").child(userId!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            if let patientStatus = snapshot.value!["patient"] as? String {
-                status = patientStatus
-                completionHandler(status)
-            }
-        }) { (error) in
-            completionHandler(status)
-            print(error.localizedDescription)
-        }
-    }
-    
-    // Retrieve password to family group for comparison
-    func getFamilyPassword(familyId: String, completionHandler:(String)->()){
-        var familyPassword = ""
-        
-        let databaseRef = FIRDatabase.database().reference()
-        
-        databaseRef.child("families").child(familyId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            if let password = snapshot.value!["password"] as? String {
-                familyPassword = password
-                completionHandler(familyPassword)
-            }
-        }) { (error) in
-            completionHandler(familyPassword)
-            print(error.localizedDescription)
         }
     }
     

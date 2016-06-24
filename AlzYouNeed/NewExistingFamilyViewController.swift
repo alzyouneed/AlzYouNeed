@@ -29,47 +29,40 @@ class NewExistingFamilyViewController: UIViewController {
     
     // MARK: - Firebase
     func cancelAccountCreation(sender: UIBarButtonItem) {
-        // Delete user
-        let user = FIRAuth.auth()?.currentUser
-        
-        user?.deleteWithCompletion({ (error) in
-            if let error = error {
-                print("Error occurred while deleting account: \(error)")
+        FirebaseManager.deleteCurrentUser { (error) in
+            if error != nil {
+                // Error deleting current user
             }
             else {
-                print("Account deleted")
+                // Successfully deleted current user
+                
                 self.performSegueWithIdentifier("startOverFamily", sender: self)
             }
-        })
+        }
         // Clean up partially finished account creation entries
         deleteUserFromRealTimeDatabase()
         deletePictureFromDatabase()
     }
     
     func deletePictureFromDatabase() {
-        if let user = FIRAuth.auth()?.currentUser {
-            let storage = FIRStorage.storage()
-            let storageRef = storage.reference()
-            
-            let userImageRef = storageRef.child("userImages/\(user.uid)")
-            
-            userImageRef.deleteWithCompletion({ (error) in
-                if (error != nil) {
-                    print("Error deleting file: \(error)")
-                }
-                else {
-                    print("File deleted successfully")
-                }
-            })
+        FirebaseManager.deletePictureFromDatabase { (error) in
+            if error != nil {
+                // Error deleting user picture from database
+            }
+            else {
+                // Successfully deleted user picture from database
+            }
         }
     }
     
     func deleteUserFromRealTimeDatabase() {
-        if let user = FIRAuth.auth()?.currentUser {
-            print("Deleting user from realtime DB")
-            
-            let databaseRef = FIRDatabase.database().reference()
-            databaseRef.child("users/\(user.uid)").removeValue()
+        FirebaseManager.deleteUserFromRealTimeDatabase { (error, databaseRef) in
+            if error != nil {
+                // Error deleting user from realTime database
+            }
+            else {
+                // Successfully deleted user from realTime database
+            }
         }
     }
     

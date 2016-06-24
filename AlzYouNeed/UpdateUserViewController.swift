@@ -50,23 +50,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
     }
-    
-    func cancelAccountCreation(sender: UIBarButtonItem) {
-        // Delete user
-        let user = FIRAuth.auth()?.currentUser
-        
-        user?.deleteWithCompletion({ (error) in
-            if let error = error {
-                print("Error occurred while deleting account: \(error)")
-            }
-            else {
-                print("Account deleted")
-                self.performSegueWithIdentifier("startOver", sender: self)
-            }
-        })
-        deletePictureFromDatabase()
-//        self.performSegueWithIdentifier("startOver", sender: self)
-    }
 
     // MARK: - UIImagePickerController Delegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -134,44 +117,48 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     // MARK: - Firebase
     func updateUserAccount() {
         if validFields() {
-            let user = FIRAuth.auth()?.currentUser
-            uploadPicture()
-            if let user = user {
-                let changeRequest = user.profileChangeRequest()
-                changeRequest.displayName = nameVTFView.textField.text
-                changeRequest.commitChangesWithCompletion({ (error) in
-                    if let error = error {
-                        print("An error happened: \(error)")
-                    }
-                    else {
-                        print("User display name updated successfully")
-                        self.saveUserToRealTimeDatabase()
-                        
-                        self.stepCompleted = true
-                        if self.shouldPerformSegueWithIdentifier("familyStage", sender: self) {
-                            self.performSegueWithIdentifier("familyStage", sender: self)
+            FirebaseManager.updateUserDisplayName(nameVTFView.textField.text!, completionHandler: { (error) in
+                if error != nil {
+                    // Failed to update display name
+                }
+                else {
+//                    self.uploadPicture()
+                    
+                    FirebaseManager.saveUserToRealTimeDatabase(self.nameVTFView.textField.text!, phoneNumber: self.phoneNumberVTFView.textField.text!, completionHandler: { (error, newDatabaseRef) in
+                        if error != nil {
+                            // Failed to save to realTime database
                         }
-//                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }
-                })
-            }
+                        else {
+                            
+                            if let userImage = self.userImageView.image {
+                                FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
+                                    if error != nil {
+                                        // Error uploading picture
+                                    }
+                                    else {
+                                        if metadata != nil {
+                                            // Picture uploaded successfully
+                                            self.stepCompleted = true
+                                            self.performSegueWithIdentifier("familyStage", sender: self)
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+            })
         }
     }
     
     func updateUserPhotoURL(url: String) {
-        let user = FIRAuth.auth()?.currentUser
-        if let user = user {
-            let changeRequest = user.profileChangeRequest()
-            changeRequest.photoURL = NSURL(string: url)
-            
-            changeRequest.commitChangesWithCompletion({ (error) in
-                if let error = error {
-                    print("An error happened: \(error)")
-                }
-                else {
-                    print("User photo URL updated successfully")
-                }
-            })
+        FirebaseManager.updateUserPhotoURL(url) { (error) in
+            if error != nil {
+               // Failed to upload photo URL
+            }
+            else {
+                // Uploaded photo URL successfully
+            }
         }
     }
     
@@ -186,59 +173,53 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func uploadPicture() {
-        if let user = FIRAuth.auth()?.currentUser {
-            if let userImage = userImageView.image {
-                let storage = FIRStorage.storage()
-                let storageRef = storage.reference()
-                
-                let data = UIImageJPEGRepresentation(userImage, 1)
-                
-                let imageRef = storageRef.child("userImages/\(user.uid)")
-                
-                let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
-                    if (error != nil) {
-                        print("Error occurred while uploading picture: \(error)")
-                    }
-                    else {
-                        print("Successfully uploaded picture")
-                        if let url = metadata!.downloadURL()?.absoluteString {
-                            // Update photo URL
-                            self.updateUserPhotoURL(url)
-                        }
-                    }
-                }
-                print("No image to upload")
-            }
-        }
-    }
-    
-    func deletePictureFromDatabase() {
-        if let user = FIRAuth.auth()?.currentUser {
-            let storage = FIRStorage.storage()
-            let storageRef = storage.reference()
-        
-            let userImageRef = storageRef.child("userImages/\(user.uid)")
-            
-            userImageRef.deleteWithCompletion({ (error) in
-                if (error != nil) {
-                    print("Error deleting file: \(error)")
+        if let userImage = userImageView.image {
+            FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
+                if error != nil {
+                    // Error uploading picture
                 }
                 else {
-                    print("File deleted successfully")
+                    if metadata != nil {
+                        // Picture uploaded successfully
+                        self.stepCompleted = true
+                        self.performSegueWithIdentifier("familyStage", sender: self)
+                    }
                 }
             })
         }
     }
     
+    func deletePictureFromDatabase() {
+        FirebaseManager.deletePictureFromDatabase { (error) in
+            if error != nil {
+                // Failed to delete picture from database
+            }
+            else {
+                // Successfully deleted picture from database
+            }
+        }
+    }
+    
     func saveUserToRealTimeDatabase() {
-        if let user = FIRAuth.auth()?.currentUser {
-            print("Saving user to realtime DB")
-            
-            let databaseRef = FIRDatabase.database().reference()
-            
-            let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyId": "", "patient": "false", "completedSignup": "false", "photoURL":""]
-            
-            databaseRef.child("users/\(user.uid)").setValue(userToSave)
+        FirebaseManager.saveUserToRealTimeDatabase(nameVTFView.textField.text!, phoneNumber: phoneNumberVTFView.textField.text!) { (error, newDatabaseRef) in
+            if error != nil {
+                // Error saving user to realTime database
+            }
+            else {
+                // Successfully saved user to realTime database
+            }
+        }
+    }
+    
+    func cancelAccountCreation(sender: UIBarButtonItem) {
+        FirebaseManager.deleteCurrentUser { (error) in
+            if error != nil {
+                // Error deleting current user
+            }
+            else {
+                // Successfully deleted current user
+                self.performSegueWithIdentifier("startOver", sender: self)
+            }
         }
     }
     
@@ -275,15 +256,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             break
         }
     }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "familyStage" {
-            if stepCompleted {
-                return true
-            }
-        }
-        return false
-    }
+
     /*
     // MARK: - Navigation
 
