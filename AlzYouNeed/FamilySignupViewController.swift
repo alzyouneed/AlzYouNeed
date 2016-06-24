@@ -24,12 +24,14 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         configureView()
+        
+        createNewFamily()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -40,21 +42,47 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         if newFamily {
             if let user = FIRAuth.auth()?.currentUser {
                 print("Saving new family to realtime DB")
+//                getCurrentUserInfo(user.uid)
                 
                 let databaseRef = FIRDatabase.database().reference()
                 
-//                let userToSave = ["name": nameVTFView.textField.text!, "email": "\(user.email!)", "phoneNumber": phoneNumberVTFView.textField.text!, "familyID": "", "patient": "false", "completedSignup": "false"]
+                // Add current user as first family member
+                let currentUser = getCurrentUserInfo(user.uid)
+                let memberArray = NSArray(array: [currentUser])
                 
-//                databaseRef.child("users/\(user.uid)").setValue(userToSave)
+                let familyToSave = ["id":familyIdVTFView.textField.text! ,"members":memberArray, "password": passwordVTFView.textField.text!]
+                
+//                databaseRef.child("families").childByAutoId().setValue(familyToSave)
+                databaseRef.child("families").child(familyIdVTFView.textField.text!).setValue(familyToSave)
             }
             
             
         }
     }
     
+    func getCurrentUserInfo(userId: String) -> NSDictionary {
+        var user = NSDictionary()
+        if userId != "" {
+            let databaseRef = FIRDatabase.database().reference()
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                
+                let userFromDB = snapshot.value
+//                user = userFromDB as! [String: String]
+                user = NSDictionary(dictionary: userFromDB! as! [NSObject : AnyObject])
+                
+                print(user)
+                
+                
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+        return user
+    }
+    
     func configureView() {
         if newFamily {
-          confirmPasswordVTFView.hidden = false
+            confirmPasswordVTFView.hidden = false
         }
         else {
             confirmPasswordVTFView.hidden = true
@@ -67,61 +95,61 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         self.passwordVTFView.passwordMode(false)
         self.confirmPasswordVTFView.passwordMode(true)
         
-        self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        //        self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        //        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
     }
     
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Switch between textFields by using return key
-//        let tag = textField.superview!.superview!.tag
-//        switch tag {
-//        case 0:
-//            if !emailValidateTextFieldView.textField.text!.isEmpty {
-//                passwordValidateTextFieldView.textField.becomeFirstResponder()
-//            }
-//        case 1:
-//            if !passwordValidateTextFieldView.textField.text!.isEmpty {
-//                confirmPasswordValidateTextFieldView.textField.becomeFirstResponder()
-//            }
-//        case 2:
-//            if !confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
-//                signUpUser()
-//            }
-//        default:
-//            break
-//        }
+        //        let tag = textField.superview!.superview!.tag
+        //        switch tag {
+        //        case 0:
+        //            if !emailValidateTextFieldView.textField.text!.isEmpty {
+        //                passwordValidateTextFieldView.textField.becomeFirstResponder()
+        //            }
+        //        case 1:
+        //            if !passwordValidateTextFieldView.textField.text!.isEmpty {
+        //                confirmPasswordValidateTextFieldView.textField.becomeFirstResponder()
+        //            }
+        //        case 2:
+        //            if !confirmPasswordValidateTextFieldView.textField.text!.isEmpty {
+        //                signUpUser()
+        //            }
+        //        default:
+        //            break
+        //        }
         return true
     }
     
     func textFieldDidChange(textField: UITextField) {
-//        let tag = textField.superview!.superview!.tag
-//        
-//        switch tag {
-//        // Email textField
-//        case 0:
-//            validateEmail()
-//        // Password textField
-//        case 1:
-//            validatePassword()
-//        // Confirm password textField
-//        case 2:
-//            validateConfirmPassword()
-//        default:
-//            break
-//        }
+        //        let tag = textField.superview!.superview!.tag
+        //
+        //        switch tag {
+        //        // Email textField
+        //        case 0:
+        //            validateEmail()
+        //        // Password textField
+        //        case 1:
+        //            validatePassword()
+        //        // Confirm password textField
+        //        case 2:
+        //            validateConfirmPassword()
+        //        default:
+        //            break
+        //        }
     }
-
-
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -83,6 +83,7 @@ class NewExistingFamilyViewController: UIViewController {
             // New family
             if sender?.tag == 0 {
                destinationVC.newFamily = true
+                
             }
             // Existing family
             else {
