@@ -20,6 +20,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure Firebase
         FIRApp.configure()
         
+//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+//            if let currentUser = user {
+//                // User is signed in.
+//                print("\(currentUser) is logged in")
+//                
+//                // Check if current user has completed signup
+//                FirebaseManager.getUserSignUpStatus({ (status, error) in
+//                    if error == nil {
+//                        if let signupStatus = status {
+//                            if signupStatus == "false" {
+//                                print("User has not completed signup -- moving to family VC")
+//                                var storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                                var familyVC = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
+//                                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//                                self.window?.rootViewController = familyVC
+//                                self.window?.makeKeyAndVisible()
+//                            }
+//                        }
+//                    }
+//                })
+//                
+//            } else {
+//                // No user is signed in.
+//                print("No user is signed in -- moving to onboarding flow")
+//                var storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                var familyVC = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
+//                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//                self.window?.rootViewController = familyVC
+//                self.window?.makeKeyAndVisible()
+//                
+////                self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+//            }
+//        }
+
+        
 //        FIRDatabase.database().persistenceEnabled = true
         
         return true

@@ -497,7 +497,7 @@
         <!--New Existing Family View Controller-->
         <scene sceneID="YSS-HU-EBv">
             <objects>
-                <viewController id="3ZR-OR-iiB" customClass="NewExistingFamilyViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="familyVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3ZR-OR-iiB" customClass="NewExistingFamilyViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6II-VX-mYd"/>
                         <viewControllerLayoutGuide type="bottom" id="laD-zr-WzV"/>
@@ -885,7 +885,7 @@
         <!--Navigation Controller-->
         <scene sceneID="L8o-Gi-PWo">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ps2-PZ-45a" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -905,8 +905,8 @@
         <image name="defaultImage" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="A0r-u6-ln8"/>
-        <segue reference="EcC-cZ-4XJ"/>
         <segue reference="AzE-0s-3y4"/>
+        <segue reference="uXE-Pa-wAp"/>
+        <segue reference="EcC-cZ-4XJ"/>
     </inferredMetricsTieBreakers>
 </document>

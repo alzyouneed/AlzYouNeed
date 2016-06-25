@@ -16,6 +16,14 @@ class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FirebaseManager.getUserSignUpStatus { (status, error) in
+            if error == nil {
+                if let signupStatus = status {
+                    print("Sign up completed: \(signupStatus)")
+                }
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

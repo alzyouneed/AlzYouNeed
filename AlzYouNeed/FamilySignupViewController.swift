@@ -137,16 +137,16 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                     confirmPasswordVTFView.textField.becomeFirstResponder()
                 }
                 else {
-                    // Join family here
-                    print("Join family")
+                    // Join family
+//                    print("Join family")
                     joinFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
                 }
             }
         case 2:
             if validateConfirmPassword() {
                 self.view.endEditing(true)
-                // create family here
-                print("Create family")
+                // create family
+//                print("Create family")
                 createNewFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
             }
         default:

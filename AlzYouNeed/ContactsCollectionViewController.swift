@@ -27,7 +27,19 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
             if let currentUser = user {
                 // User is signed in.
                 print("\(currentUser) is logged in")
-//                self.loadContacts()
+                
+                // Check if current user has completed signup
+                FirebaseManager.getUserSignUpStatus({ (status, error) in
+                    if error == nil {
+                        if let signupStatus = status {
+                            if signupStatus == "false" {
+                                print("User has not completed signup -- moving to family VC")
+//                                self.performSegueWithIdentifier("finishSignup", sender: self)
+                            }
+                        }
+                    }
+                })
+                
             } else {
                 // No user is signed in.
                 print("No user is signed in -- moving to onboarding flow")

@@ -78,6 +78,23 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func getUserSignUpStatus(completionHandler: (status: String?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let userId = user.uid
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let signupStatus = snapshot.value!["completedSignup"] as? String {
+                    print("User signup status retrieved")
+                    completionHandler(status: signupStatus, error: nil)
+                }
+            }) { (error) in
+                print("Error occurred while retrieving user signup status")
+                completionHandler(status: nil, error: error)
+            }
+        }
+    }
+    
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             user.deleteWithCompletion({ (error) in
@@ -103,7 +120,7 @@ class FirebaseManager: NSObject {
                     
                     let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
                     
-                    // Update current user and new family
+                    // Update current user and new family, and signup Status
                     let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true", "/families/\(familyId)": familyToSave]
                     databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
                     
@@ -136,7 +153,7 @@ class FirebaseManager: NSObject {
                                 
                                 let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
                                 
-                                // Update current user and new family
+                                // Update current user and new family, and signUp status
                                 let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true"]
                                 databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
                                 databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userToAdd)
