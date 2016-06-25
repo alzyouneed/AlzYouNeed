@@ -35,8 +35,11 @@ class NewExistingFamilyViewController: UIViewController {
             }
             else {
                 // Successfully deleted current user
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
+                self.presentViewController(onboardingVC, animated: true, completion: nil)
                 
-                self.performSegueWithIdentifier("startOverFamily", sender: self)
+//                self.performSegueWithIdentifier("startOverFamily", sender: self)
             }
         }
         // Clean up partially finished account creation entries

@@ -249,8 +249,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
     /*
      // MARK: - Navigation
      

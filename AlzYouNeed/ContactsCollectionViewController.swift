@@ -33,8 +33,12 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                     if error == nil {
                         if let signupStatus = status {
                             if signupStatus == "false" {
+                                // Signup not complete -- Switch to family VC
                                 print("User has not completed signup -- moving to family VC")
-//                                self.performSegueWithIdentifier("finishSignup", sender: self)
+                                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
+                                let navController = UINavigationController(rootViewController: onboardingVC)
+                                self.presentViewController(navController, animated: true, completion: nil)
                             }
                         }
                     }
@@ -43,7 +47,9 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
             } else {
                 // No user is signed in.
                 print("No user is signed in -- moving to onboarding flow")
-                self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
+                self.presentViewController(onboardingVC, animated: true, completion: nil)
             }
         }
     }
@@ -218,79 +224,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
     
     }
-     
-    // MARK: - Unused
-     
-     func getContacts() {
-     let store = CNContactStore()
-     
-     // Check if use of contacts is authorized
-     if CNContactStore.authorizationStatusForEntityType(.Contacts) == .NotDetermined {
-     store.requestAccessForEntityType(.Contacts, completionHandler: { (authorized: Bool, error: NSError?) in
-     if authorized {
-     //                    self.retrieveContactsWithStore(store)
-     }
-     })
-     }
-     // Immediately retrieve contacts
-     else if CNContactStore.authorizationStatusForEntityType(.Contacts) == .Authorized {
-     //            self.retrieveContactsWithStore(store)
-     }
-     }
-     
-     func retrieveContactsWithStore(store: CNContactStore) {
-     do {
-     // Predicate matches all groups
-     let groups = try store.groupsMatchingPredicate(nil)
-     let predicate = CNContact.predicateForContactsInGroupWithIdentifier(groups[0].identifier)
-     
-     let keysToFetch = [CNContactFormatter.descriptorForRequiredKeysForStyle(.FullName), CNContactEmailAddressesKey, CNContactPhoneNumbersKey, CNContactImageDataAvailableKey, CNContactImageDataKey]
-     
-     let contacts = try store.unifiedContactsMatchingPredicate(predicate, keysToFetch: keysToFetch)
-     
-     userContacts.removeAll()
-     
-     for contact in contacts {
-     //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).stringValue)
-     
-     // Create image for saving (if one exists)
-     var contactImage = UIImage()
-     if contact.imageDataAvailable {
-     if let data = contact.imageData {
-     contactImage = UIImage(data: data)!
-     }
-     }
-     let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
-     
-     //                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photoPath: "", phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
-     userContacts.append(person)
-     
-     //                print("NUMBER: \((contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as! String)")
-     }
-     
-     // Update tableview on main thread
-     dispatch_async(dispatch_get_main_queue(), {
-     self.tableView.reloadData()
-     })
-     }
-     catch {
-     print(error)
-     }
-     }
-     
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     if segue.identifier == "showDetail" {
-     if let indexPath = self.tableView.indexPathForSelectedRow {
-     let contactObject = userContacts[indexPath.row]
-     let controller = segue.destinationViewController as! ContactDetailViewController
-     //                controller.contactItem = contactObject
-     controller.person = contactObject
-     //                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-     //                controller.navigationItem.leftItemsSupplementBackButton = true
-     }
-     }
-     }
-     
     */
 
 }

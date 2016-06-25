@@ -241,7 +241,9 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             }
             else {
                 // Successfully deleted current user
-                self.performSegueWithIdentifier("startOver", sender: self)
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
+                self.presentViewController(onboardingVC, animated: true, completion: nil)
             }
         }
     }

@@ -64,6 +64,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func signUp(sender: UIButton) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("creatUserVC") as! CreateUserViewController
+        self.navigationController?.pushViewController(createUserVC, animated: true)
+    }
+    
     @IBAction func login(sender: UIButton) {
         loginUser()
     }
@@ -152,13 +158,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             break
         }
         return true
-    }
-    
-    
-    @IBAction func newFlow(sender: UIButton) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("creatUserVC") as! CreateUserViewController
-        self.navigationController?.pushViewController(createUserVC, animated: true)
     }
 
 }
