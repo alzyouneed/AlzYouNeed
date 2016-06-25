@@ -153,5 +153,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
+    
+    
+    @IBAction func newFlow(sender: UIButton) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("creatUserVC") as! CreateUserViewController
+        self.navigationController?.pushViewController(createUserVC, animated: true)
+    }
 
 }

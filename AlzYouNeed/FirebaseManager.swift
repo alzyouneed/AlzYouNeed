@@ -130,7 +130,7 @@ class FirebaseManager: NSObject {
                             completionHandler(error: error, newDatabaseRef: databaseRef)
                         }
                         else {
-                            print("New family group created")
+                            print("New family group created -- joined Family: \(familyId)")
                             completionHandler(error: error, newDatabaseRef: databaseRef)
                         }
                     })

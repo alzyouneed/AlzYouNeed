@@ -20,8 +20,10 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var familyIdVTFView: validateTextFieldView!
     @IBOutlet var passwordVTFView: validateTextFieldView!
     @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
-    
     @IBOutlet var createJoinFamilyButton: UIButton!
+    
+    // MARK: - Constraints
+    @IBOutlet var createJoinFamilyButtonTopLayoutConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +82,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     func configureView() {
         configureTextFieldViews()
+        configureButton()
         createJoinFamilyButtonEnabled()
     }
     
@@ -95,18 +98,27 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         self.familyIdVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        
+
+    }
+    
+    func configureButton() {
         if newFamily {
             confirmPasswordVTFView.hidden = false
             // set button title
             createJoinFamilyButton.setTitle("Create Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Next
+            
+            // Set layout constraint
+            createJoinFamilyButtonTopLayoutConstraint.constant = 8
         }
         else {
             confirmPasswordVTFView.hidden = true
             // set button title
             createJoinFamilyButton.setTitle("Join Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Done
+            
+            // Set layout constraint
+            createJoinFamilyButtonTopLayoutConstraint.constant -= confirmPasswordVTFView.frame.height + 8
         }
     }
     
@@ -236,6 +248,8 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             return false
         }
     }
+    
+    
     
     /*
      // MARK: - Navigation
