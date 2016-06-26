@@ -30,44 +30,47 @@ class DashboardViewController: UIViewController {
         let now = NSDate()
         dateView.configureView(now)
         
-        getCurrentFamily { (familyId) in
-            print("Current family: \(familyId)")
-            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
-                if let contactsArr = contacts {
-                    for contact in contactsArr {
-                        for (key, value) in contact {
-                            FirebaseManager.getUserByID(key, completionHandler: { (contact, error) in
-                                if let userContact = contact {
-                                    print("Contact: \(userContact.description)")
-                                    FirebaseManager.downloadPictureWithURL(userContact.userId, url: userContact.photoURL, completionHandler: { (image, error) in
-                                        
-//                                    })
-//                                    FirebaseManager.downloadPictureWithURL(userContact.photoURL, completionHandler: { (image, error) in
-                                        if let userImage = image {
-                                            dispatch_async(dispatch_get_main_queue(), { 
-                                                self.userView.userImageView.image = userImage
-                                            })
-                                        }
-                                    })
-                                }
-                            })
-                        }
-                    }
-                }
-            })
-        }
-        
 //        getCurrentFamily { (familyId) in
 //            print("Current family: \(familyId)")
 //            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
 //                if let contactsArr = contacts {
 //                    for contact in contactsArr {
-//                      
+//                        for (key, value) in contact {
+//                            FirebaseManager.getUserByID(key, completionHandler: { (contact, error) in
+//                                if let userContact = contact {
+//                                    print("Contact: \(userContact.description)")
+//                                    FirebaseManager.downloadPictureWithURL(userContact.userId, url: userContact.photoURL, completionHandler: { (image, error) in
+//                                        
+////                                    })
+////                                    FirebaseManager.downloadPictureWithURL(userContact.photoURL, completionHandler: { (image, error) in
+//                                        if let userImage = image {
+//                                            dispatch_async(dispatch_get_main_queue(), { 
+//                                                self.userView.userImageView.image = userImage
+//                                            })
+//                                        }
+//                                    })
+//                                }
+//                            })
+//                        }
 //                    }
 //                }
 //            })
-//            
 //        }
+        
+        
+        getCurrentFamily { (familyId) in
+            print("Current family: \(familyId)")
+            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
+                if error == nil {
+                    if let userContacts = contacts {
+                        print("Contacts:")
+                        for person in userContacts {
+                            print(person)
+                        }
+                    }
+                }
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
