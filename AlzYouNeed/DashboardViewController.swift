@@ -58,19 +58,19 @@ class DashboardViewController: UIViewController {
 //        }
         
         
-        getCurrentFamily { (familyId) in
-            print("Current family: \(familyId)")
-            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
-                if error == nil {
-                    if let userContacts = contacts {
-                        print("Contacts:")
-                        for person in userContacts {
-                            print(person)
-                        }
-                    }
-                }
-            })
-        }
+//        getCurrentFamily { (familyId) in
+//            print("Current family: \(familyId)")
+//            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
+//                if error == nil {
+//                    if let userContacts = contacts {
+//                        print("Contacts:")
+//                        for person in userContacts {
+//                            print(person)
+//                        }
+//                    }
+//                }
+//            })
+//        }
     }
 
     override func didReceiveMemoryWarning() {

@@ -341,11 +341,11 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func saveUserToRealTimeDatabase(name: String, phoneNumber: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func saveUserToRealTimeDatabase(name: String, phoneNumber: String, patientStatus: String, avatarId: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let databaseRef = FIRDatabase.database().reference()
             
-            let userToSave = ["name": name, "email": "\(user.email!)", "phoneNumber": phoneNumber, "familyId": "", "patient": "false", "completedSignup": "false", "photoURL":""]
+            let userToSave = ["name": name, "email": "\(user.email!)", "phoneNumber": phoneNumber, "familyId": "", "patient": patientStatus, "completedSignup": "false", "photoURL":"", "avatarId": avatarId]
             
             databaseRef.child("users/\(user.uid)").setValue(userToSave, withCompletionBlock: { (error, newDatabaseRef) in
                 if error != nil {

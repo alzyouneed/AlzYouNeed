@@ -17,6 +17,8 @@ class Contact: NSObject {
     var photoURL: String!
     var patient: String!
     
+    var avatarId: String!
+    
     init(uID: String, userDict: NSMutableDictionary) {
 //    init(uID: String, userDict: [String:String]) {
         super.init()
@@ -32,10 +34,12 @@ class Contact: NSObject {
         self.photoURL = userDict.valueForKey("photoURL") as! String
 //        self.patient = userDict["patient"]
         self.patient = userDict.valueForKey("patient") as! String
+        
+        self.avatarId = userDict.valueForKey("avatarId") as! String
     }
     
     override var description: String {
-        return "userId: \(userId) | fullName: \(fullName) | email: \(email) | phoneNumber: \(phoneNumber) | patient: \(patient) | photoURL: \(photoURL)"
+        return "userId: \(userId) | fullName: \(fullName) | email: \(email) | phoneNumber: \(phoneNumber) | patient: \(patient) | photoURL: \(photoURL) | avatarId: \(avatarId)"
     }
 
 }
