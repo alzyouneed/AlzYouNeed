@@ -95,6 +95,26 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func getUserByID(userId: String, completionHandler: (contact: Contact?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let user = snapshot.value! as? [String:String] {
+                    print("User retrieved")
+//                    print("user: \(user)")
+                    let newContact = Contact(uID: userId, userDict: user)
+                    completionHandler(contact: newContact, error: nil)
+                    
+//                    completionHandler(status: signupStatus, error: nil)
+                }
+            }) { (error) in
+                print("Error occurred while retrieving user")
+                completionHandler(contact: nil, error: error)
+            }
+        }
+    }
+    
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             user.deleteWithCompletion({ (error) in
@@ -209,7 +229,7 @@ class FirebaseManager: NSObject {
                 let storage = FIRStorage.storage()
                 let storageRef = storage.reference()
                 
-                let data = UIImageJPEGRepresentation(userImage, 1)
+                let data = UIImageJPEGRepresentation(userImage, 0.8)
                 let imageRef = storageRef.child("userImages/\(user.uid)")
                 
                 let uploadTask = imageRef.putData(data!, metadata: nil, completion: { (metadata, error) in
@@ -246,6 +266,57 @@ class FirebaseManager: NSObject {
             }
             else {
                 print("No iamge to upload")
+            }
+        }
+    }
+    
+    class func downloadPictureWithURL(userId: String, url: String, completionHandler: (image: UIImage?, error: NSError?) -> Void) {
+
+//        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+//        let docsDir = "\(dirPaths[0] as String)/" // Document directory
+//        
+//        let completePath = "\(docsDir)\(userId)"
+//        
+//        let imageHttpsRef = FIRStorage.storage().referenceForURL(url)
+////        let localURL: NSURL! = NSURL(string: completePath)
+////        let localURL: NSURL! = NSURL(string: "file://local/images/\(userId)")
+//        
+//        let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory())
+//        let localURL = tempDirectory.URLByAppendingPathComponent(userId) //.URLByAppendingPathExtension("jpg")
+//        
+//        let downloadTask = imageHttpsRef.writeToFile(localURL) { (url, error) in
+//            if error != nil {
+//                print("Error occurred while downloading image: \(error!)")
+//                completionHandler(image: nil, error: error)
+//            }
+//            else {
+//                print("Image downloaded successfully at: \(localURL)")
+//                if let userImage = UIImage(contentsOfFile: (localURL.absoluteString)) {
+////                if let userImage = UIImage(contentsOfFile: (url?.absoluteString)!) {
+//                    print("Image retrieved for use")
+//                    completionHandler(image: userImage, error: nil)
+//                }
+//            }
+//        }
+        
+        let storage = FIRStorage.storage()
+        let storageRef = storage.reference()
+        let imageRef = storageRef.child("userImages").child(userId)
+        
+        imageRef.dataWithMaxSize(5 * 1024 * 1024) { (data, error) in
+            if error != nil {
+                // Error
+                print("Error occurred while downloading image file -- error: \(error)")
+                completionHandler(image: nil, error: error)
+            }
+            else {
+                // Success
+                if let imageData = data {
+                    if let image = UIImage(data: imageData) {
+                        print("Successfully downlaoded image file")
+                        completionHandler(image: image, error: nil)
+                    }
+                }
             }
         }
     }
@@ -320,6 +391,38 @@ class FirebaseManager: NSObject {
                     completionHandler(error: error, databaseRef: oldDatabaseRef)
                 }
             })
+        }
+    }
+
+    class func getFamilyMembers(familyId: String, completionHandler: (contacts: [[String:[String:String]]]?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("families").child(familyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                
+                if let familyMembers = snapshot.value! as? NSMutableDictionary {
+                    print("Family members retrieved")
+                    
+                    var contactsArr = [[String:[String:String]]]()
+                    
+                    // Add dictionary entries to array
+                    for (key,value) in familyMembers {
+                        // Check that values exist
+                        if let keyItem = key as? String {
+                            if let valueItem = value as? Dictionary<String, String> {
+                                // Make sure current user is not included
+                                if keyItem != user.uid {
+                                    contactsArr.append([keyItem : valueItem])
+                                }
+                            }
+                        }
+                    }
+                    completionHandler(contacts: contactsArr, error: nil)
+                }
+            }) { (error) in
+                print("Error occurred while retrieving family members")
+                completionHandler(contacts: nil, error: error)
+            }
         }
     }
 

@@ -16,6 +16,8 @@ private let reuseIdentifier = "ContactCell"
 class ContactsCollectionViewController: UICollectionViewController, CNContactPickerDelegate {
     
     var userContacts: [Person] = []
+    
+    var contacts: [Contact] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +57,24 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+//        getCurrentFamily { (familyId) in
+//            print("Current family: \(familyId)")
+//            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
+//                if let contactsArr = contacts {
+//                    for contact in contactsArr {
+//                        for (key, value) in contact {
+//                            FirebaseManager.getUserByID(key, completionHandler: { (contact, error) in
+//                                if let userContact = contact {
+//                                    print("Contact: \(userContact.description)")
+//                                }
+//                            })
+//                        }
+//                    }
+//                }
+//            })
+//        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -183,6 +203,19 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     
     func rightButtonPressed(sender: UIButton) {
         print("Right button pressed -- row: \(sender.tag)")
+    }
+    
+    func getCurrentFamily(completionHandler:(String)->()){
+        let userId = FIRAuth.auth()?.currentUser?.uid
+        let databaseRef = FIRDatabase.database().reference()
+        
+        databaseRef.child("users").child(userId!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let familyId = snapshot.value!["familyId"] as? String {
+                completionHandler(familyId)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     /*
