@@ -12,6 +12,8 @@
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
+		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
+		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
 		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
 		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
 		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
@@ -48,6 +50,8 @@
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
+		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
 		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
 		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
 		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
@@ -133,6 +137,24 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		2D417BED1D2187540045C80F /* validateTextField */ = {
+			isa = PBXGroup;
+			children = (
+				2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */,
+				2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */,
+			);
+			name = validateTextField;
+			sourceTree = "<group>";
+		};
+		2D417BF01D2187770045C80F /* avatarSelection */ = {
+			isa = PBXGroup;
+			children = (
+				2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */,
+				2D417BF11D21878E0045C80F /* avatarSelectionView.swift */,
+			);
+			name = avatarSelection;
+			sourceTree = "<group>";
+		};
 		2D6D2FBB1D186B7F0050589C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,8 +170,8 @@
 		2D6D2FBE1D186BCB0050589C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */,
-				2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */,
+				2D417BED1D2187540045C80F /* validateTextField */,
+				2D417BF01D2187770045C80F /* avatarSelection */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -347,6 +369,7 @@
 				2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */,
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
+				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
@@ -439,6 +462,7 @@
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
+				2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,

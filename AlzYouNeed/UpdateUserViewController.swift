@@ -21,12 +21,11 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBOutlet var avatarImageView: UIImageView!
     
+    @IBOutlet var selectionView: avatarSelectionView!
+    
     // MARK: - Properties
     let imagePicker = UIImagePickerController()
     var stepCompleted = false
-    
-    let avatarImages = [UIImage(named: "avatarOne"), UIImage(named: "avatarTwo"), UIImage(named: "avatarThree"), UIImage(named: "avatarFour"), UIImage(named: "avatarFive")]
-    var avatarImageIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,20 +51,9 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
         self.imagePicker.delegate = self
-        self.userImageView.layer.masksToBounds = true
-        self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
-        self.userImageView.clipsToBounds = true
-        self.userImageView.layer.borderWidth = 2
-        self.userImageView.layer.borderColor = UIColor.grayColor().CGColor
-        
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
         signUpButtonEnabled()
-        
-        self.avatarImageView.image = avatarImages[avatarImageIndex]
-        self.avatarImageView.layer.masksToBounds = true
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height/2
-        self.avatarImageView.clipsToBounds = true
     }
     
     func signUpButtonEnabled() {
@@ -118,31 +106,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         selectPhoto()
     }
     
-    // MARK: - Avatar Selection
-    
-    @IBAction func previousAvatarImage(sender: UIButton) {
-        
-        if self.avatarImageIndex > 0 {
-            self.avatarImageIndex -= 1
-        }
-        else {
-            self.avatarImageIndex = 4
-        }
-        
-        self.avatarImageView.image = self.avatarImages[self.avatarImageIndex]
-    }
-    
-    @IBAction func nextAvatarImage(sender: UIButton) {
-        if self.avatarImageIndex < 4 {
-            self.avatarImageIndex += 1
-        }
-        else {
-            self.avatarImageIndex = 0
-        }
-        
-        self.avatarImageView.image = self.avatarImages[self.avatarImageIndex]
-    }
-    
     // MARK: - Validation
     func validFields() -> Bool {
         return validateName() && validatePhoneNumber()
@@ -190,28 +153,30 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     self.signUpButtonEnabled(true)
                 }
                 else {
-                    FirebaseManager.saveUserToRealTimeDatabase(self.nameVTFView.textField.text!, phoneNumber: self.phoneNumberVTFView.textField.text!, patientStatus: self.patientStatus(), avatarId: self.avatarId(), completionHandler: { (error, newDatabaseRef) in
+                    FirebaseManager.saveUserToRealTimeDatabase(self.nameVTFView.textField.text!, phoneNumber: self.phoneNumberVTFView.textField.text!, patientStatus: self.patientStatus(), avatarId: self.selectionView.avatarId(), completionHandler: { (error, newDatabaseRef) in
                         if error != nil {
                             // Failed to save to realTime database
                             self.signUpButtonEnabled(true)
                         }
                         else {
+                            self.stepCompleted = true
+                            self.performSegueWithIdentifier("familyStage", sender: self)
                             
-                            if let userImage = self.userImageView.image {
-                                FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
-                                    if error != nil {
-                                        // Error uploading picture
-                                        self.signUpButtonEnabled(true)
-                                    }
-                                    else {
-                                        if metadata != nil {
-                                            // Picture uploaded successfully
-                                            self.stepCompleted = true
-                                            self.performSegueWithIdentifier("familyStage", sender: self)
-                                        }
-                                    }
-                                })
-                            }
+//                            if let userImage = self.userImageView.image {
+//                                FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
+//                                    if error != nil {
+//                                        // Error uploading picture
+//                                        self.signUpButtonEnabled(true)
+//                                    }
+//                                    else {
+//                                        if metadata != nil {
+//                                            // Picture uploaded successfully
+//                                            self.stepCompleted = true
+//                                            self.performSegueWithIdentifier("familyStage", sender: self)
+//                                        }
+//                                    }
+//                                })
+//                            }
                         }
                     })
                 }
@@ -225,23 +190,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         else {
             return "false"
-        }
-    }
-    
-    func avatarId() -> String {
-        switch avatarImageIndex {
-        case 0:
-            return "avatarOne"
-        case 1:
-            return "avatarTwo"
-        case 2:
-            return "avatarThree"
-        case 3:
-            return "avatarFour"
-        case 4:
-            return "avatarFive"
-        default:
-            return "avatarOne"
         }
     }
     
