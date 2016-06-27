@@ -38,6 +38,13 @@ class Contact: NSObject {
         self.avatarId = userDict.valueForKey("avatarId") as! String
     }
     
+//    init(uID: String, userDict: NSMutableDictionary) {
+//        super.init()
+//        
+//        self.userId = uID
+//        
+//    }
+    
     override var description: String {
         return "userId: \(userId) | fullName: \(fullName) | email: \(email) | phoneNumber: \(phoneNumber) | patient: \(patient) | photoURL: \(photoURL) | avatarId: \(avatarId)"
     }
