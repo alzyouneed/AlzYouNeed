@@ -40,7 +40,7 @@ class Contact: NSObject {
 //        self.avatarId = userDict.valueForKey("avatarId") as! String
 //    }
     
-    init?(uID: String, userDict: NSMutableDictionary) {
+    init?(uID: String, userDict: NSDictionary) {
         super.init()
         
         self.userId = uID

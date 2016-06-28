@@ -54,6 +54,8 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 self.presentViewController(onboardingVC, animated: true, completion: nil)
             }
         }
+        
+        contacts.removeAll()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,9 +77,20 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
 //            })
 //        }
         
-        FirebaseManager.getCurrentUser { (userDict, error) in
+//        FirebaseManager.getCurrentUser { (userDict, error) in
+//            if error == nil {
+//                print("Current user: \(userDict)")
+//            }
+//        }
+        
+        FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
-                print("Current user: \(userDict)")
+                if let members = members {
+                    print("Members: \(members)")
+                    self.contacts.removeAll()
+                    self.contacts = members
+                    self.collectionView?.reloadData()
+                }
             }
         }
         
@@ -173,10 +186,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         let person = contacts[indexPath.row]
         
         // Configure cell
-//        cell.contactView.nameLabel.text = "\(person.firstName) \(person.lastName)"
-//        cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
-//        cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
-        
         cell.contactView.nameLabel.text = "\(person.fullName)"
         cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
         cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
@@ -192,16 +201,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Saves row in tag for contact-specific actions
         cell.contactView.leftButton.tag = indexPath.row
         cell.contactView.rightButton.tag = indexPath.row
-        
-        // Check for saved image to load -- will only load first time cell appears in view
-//        if cell.contactView.contactImageView.image == nil {
-//            if let imagePhotoPath = person.photoPath {
-//                // Only load if real image path exists
-//                if imagePhotoPath != "" {
-//                    cell.contactView.setImageWithPath(imagePhotoPath)
-//                }
-//            }
-//        }
     
         return cell
     }
@@ -210,7 +209,9 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     
     func leftButtonPressed(sender: UIButton) {
         
-        let phoneNumber = userContacts[sender.tag].phoneNumber
+//        let phoneNumber = userContacts[sender.tag].phoneNumber
+        
+        let phoneNumber = contacts[sender.tag].phoneNumber
         print("Left button pressed -- row: \(sender.tag) -- Calling: \(phoneNumber) \n")
 
         let url: NSURL = NSURL(string: "tel://\(phoneNumber)")!

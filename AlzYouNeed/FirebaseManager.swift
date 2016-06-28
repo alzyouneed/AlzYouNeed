@@ -126,6 +126,7 @@ class FirebaseManager: NSObject {
     }
     
     // MARK: - Family Group Management
+    
     // NEW
     class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -222,6 +223,48 @@ class FirebaseManager: NSObject {
         }) { (error) in
             print("Error occurred while retrieving family password")
             completionHandler(password: nil, error: error)
+        }
+    }
+    
+    // NEW
+    class func getFamilyMembers(completionHandler: (members: [Contact]?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser{
+            getCurrentUser { (userDict, error) in
+                if error != nil {
+                    // Error
+                    completionHandler(members: nil, error: error)
+                }
+                else {
+                    let userId = user.uid
+                    // Search for members using current user's familyId
+                    if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                        let databaseRef = FIRDatabase.database().reference()
+                        var membersArr = [Contact]()
+                        
+                        databaseRef.child("families").child(userFamilyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                            if let dict = snapshot.value! as? NSDictionary {
+                                for (key, value) in dict {
+                                    if let uId = key as? String {
+                                        // Prevent adding current user to array
+                                        if uId != userId {
+                                            if let memberDict = value as? NSDictionary {
+                                                if let contact = Contact(uID: uId, userDict: memberDict) {
+                                                    membersArr.append(contact)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                print("Family members retrieved")
+                                completionHandler(members: membersArr, error: nil)
+                            }
+                        }) { (error) in
+                            print("Error occurred while retrieving family members")
+                            
+                        }
+                    }
+                }
+            }
         }
     }
     
