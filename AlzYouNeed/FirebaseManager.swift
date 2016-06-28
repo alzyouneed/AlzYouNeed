@@ -151,7 +151,19 @@ class FirebaseManager: NSObject {
     }
     
     class func deleteUserFromRTDB(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
-        
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            databaseRef.child("users").child(user.uid).removeValueWithCompletionBlock({ (error, oldRef) in
+                if error != nil {
+                    print("Error deleting user from realTime database")
+                    completionHandler(error: error, databaseRef: nil)
+                }
+                else {
+                    print("User deleted from realTime database")
+                    completionHandler(error: nil, databaseRef: oldRef)
+                }
+            })
+        }
     }
     
     // MARK: - Family Group Management
@@ -416,43 +428,6 @@ class FirebaseManager: NSObject {
 //                                // Make sure current user is not included
 //                                if keyItem != user.uid {
 //                                    contactsArr.append([keyItem : valueItem])
-//                                }
-//                            }
-//                        }
-//                    }
-//                    completionHandler(contacts: contactsArr, error: nil)
-//                }
-//            }) { (error) in
-//                print("Error occurred while retrieving family members")
-//                completionHandler(contacts: nil, error: error)
-//            }
-//        }
-//    }
-    
-//    class func getFamilyMembers(familyId: String, completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
-//        if let user = FIRAuth.auth()?.currentUser {
-//            let databaseRef = FIRDatabase.database().reference()
-//            
-//            databaseRef.child("families").child(familyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//                
-//                if let familyMembers = snapshot.value! as? NSMutableDictionary {
-//                    print("Family members retrieved")
-//                    
-//                    var contactsArr = [Contact]()
-//                    
-//                    // Add dictionary entries to array
-//                    for (key,value) in familyMembers {
-//                        // Check that values exist
-//                        if let keyItem = key as? String {
-////                            if let valueItem = value as? Dictionary<String, String> {
-//                            if let valueItem = value as? NSMutableDictionary {
-//                                print("key: \(keyItem) | value: \(valueItem)")
-//                                
-//                                // Make sure current user is not included
-//                                if keyItem != user.uid {
-//                                    let newUser = Contact(uID: keyItem, userDict: valueItem)
-//                                    
-//                                    contactsArr.append(newUser)
 //                                }
 //                            }
 //                        }
