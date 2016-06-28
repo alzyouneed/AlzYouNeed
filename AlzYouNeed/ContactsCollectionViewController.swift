@@ -92,6 +92,12 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
             })
         }
         
+        FirebaseManager.getCurrentUser { (userDict, error) in
+            if error == nil {
+                print("Current user: \(userDict)")
+            }
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -234,15 +240,17 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     }
     
     func getCurrentFamily(completionHandler:(String)->()){
-        let userId = FIRAuth.auth()?.currentUser?.uid
-        let databaseRef = FIRDatabase.database().reference()
-        
-        databaseRef.child("users").child(userId!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-            if let familyId = snapshot.value!["familyId"] as? String {
-                completionHandler(familyId)
+        if let currentUser = FIRAuth.auth()?.currentUser {
+            let userId = currentUser.uid
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let familyId = snapshot.value!["familyId"] as? String {
+                    completionHandler(familyId)
+                }
+            }) { (error) in
+                print(error.localizedDescription)
             }
-        }) { (error) in
-            print(error.localizedDescription)
         }
     }
     

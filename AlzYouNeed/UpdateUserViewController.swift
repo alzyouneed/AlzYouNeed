@@ -217,10 +217,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     func cancelAccountCreation(sender: UIBarButtonItem) {
         FirebaseManager.deleteCurrentUser { (error) in
             if error != nil {
-                // Error deleting current user
+                // Error deleting user
             }
             else {
-                // Successfully deleted current user
+                // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
                 self.presentViewController(onboardingVC, animated: true, completion: nil)

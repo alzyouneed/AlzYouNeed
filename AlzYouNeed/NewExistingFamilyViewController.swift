@@ -43,7 +43,7 @@ class NewExistingFamilyViewController: UIViewController {
             }
         }
         // Clean up partially finished account creation entries
-        deleteUserFromRealTimeDatabase()
+//        deleteUserFromRealTimeDatabase()
 //        deletePictureFromDatabase()
     }
     
@@ -58,16 +58,16 @@ class NewExistingFamilyViewController: UIViewController {
 //        }
 //    }
     
-    func deleteUserFromRealTimeDatabase() {
-        FirebaseManager.deleteUserFromRealTimeDatabase { (error, databaseRef) in
-            if error != nil {
-                // Error deleting user from realTime database
-            }
-            else {
-                // Successfully deleted user from realTime database
-            }
-        }
-    }
+//    func deleteUserFromRealTimeDatabase() {
+//        FirebaseManager.deleteUserFromRealTimeDatabase { (error, databaseRef) in
+//            if error != nil {
+//                // Error deleting user from realTime database
+//            }
+//            else {
+//                // Successfully deleted user from realTime database
+//            }
+//        }
+//    }
     
     // MARK: - Navigation
 

@@ -48,7 +48,7 @@ class Contact: NSObject {
         self.fullName = userDict.valueForKey("name") as! String
         self.email = userDict.valueForKey("email") as! String
         self.phoneNumber = userDict.valueForKey("phoneNumber") as! String
-        self.patient = userDict.valueForKey("patient") as! String
+        self.patient = userDict.valueForKey("patientStatus") as! String
         
         self.avatarId = userDict.valueForKey("avatarId") as! String
         
