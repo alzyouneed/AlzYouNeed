@@ -44,19 +44,19 @@ class NewExistingFamilyViewController: UIViewController {
         }
         // Clean up partially finished account creation entries
         deleteUserFromRealTimeDatabase()
-        deletePictureFromDatabase()
+//        deletePictureFromDatabase()
     }
     
-    func deletePictureFromDatabase() {
-        FirebaseManager.deletePictureFromDatabase { (error) in
-            if error != nil {
-                // Error deleting user picture from database
-            }
-            else {
-                // Successfully deleted user picture from database
-            }
-        }
-    }
+//    func deletePictureFromDatabase() {
+//        FirebaseManager.deletePictureFromDatabase { (error) in
+//            if error != nil {
+//                // Error deleting user picture from database
+//            }
+//            else {
+//                // Successfully deleted user picture from database
+//            }
+//        }
+//    }
     
     func deleteUserFromRealTimeDatabase() {
         FirebaseManager.deleteUserFromRealTimeDatabase { (error, databaseRef) in

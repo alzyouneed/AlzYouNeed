@@ -67,7 +67,7 @@ class FirebaseManager: NSObject {
             let databaseRef = FIRDatabase.database().reference()
             
             databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let patientStatus = snapshot.value!["patient"] as? String {
+                if let patientStatus = snapshot.value!["patientStatus"] as? String {
                     print("User patient status retrieved")
                     completionHandler(status: patientStatus, error: nil)
                 }
@@ -92,6 +92,26 @@ class FirebaseManager: NSObject {
                 print("Error occurred while retrieving user signup status")
                 completionHandler(status: nil, error: error)
             }
+        }
+    }
+    
+    // Update user in real-time database with dictionary of changes
+    class func updateUser(updates: NSDictionary, completionHandler: (error: NSError?) -> Void ) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let userId = user.uid
+            let databaseRef = FIRDatabase.database().reference()
+            
+            let updatesDict = updates as [NSObject : AnyObject]
+            databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                if error != nil {
+                    print("Error updating user")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("Successfully updated user")
+                    completionHandler(error: nil)
+                }
+            })
         }
     }
     
@@ -130,6 +150,10 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func deleteUserFromRTDB(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
+        
+    }
+    
     // MARK: - Family Group Management
     class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -138,7 +162,8 @@ class FirebaseManager: NSObject {
                 if let patientStatus = status {
                     let databaseRef = FIRDatabase.database().reference()
                     
-                    let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
+//                    let familyToSave = ["password": password, "members":[user.uid: ["name":user.displayName!, "admin": "true", "patient": patientStatus]]]
+                    let familyToSave = ["password": password, "members":[user.uid: ["admin": "true", "patient": patientStatus]]]
                     
                     // Update current user and new family, and signup Status
                     let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true", "/families/\(familyId)": familyToSave]
@@ -165,13 +190,15 @@ class FirebaseManager: NSObject {
             getFamilyPassword(familyId, completionHandler: { (familyPassword, error) in
                 if let actualFamilyPassword = familyPassword {
                     
+                    // Check that passwords match
                     if actualFamilyPassword == password {
                         
                         getUserPatientStatus({ (status, error) in
                             if let patientStatus = status {
                                 let databaseRef = FIRDatabase.database().reference()
                                 
-                                let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
+//                                let userToAdd = ["name":user.displayName!, "admin": "false", "patient": patientStatus]
+                                let userToAdd = ["admin": "false", "patient": patientStatus]
                                 
                                 // Update current user and new family, and signUp status
                                 let childUpdates = ["/users/\(user.uid)/familyId": familyId, "/users/\(user.uid)/completedSignup": "true"]
@@ -223,6 +250,7 @@ class FirebaseManager: NSObject {
     }
     
     // MARK: - Database Management
+    /*
     class func uploadPictureToDatabase(image: UIImage?, completionHandler: (metadata: FIRStorageMetadata?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             if let userImage = image {
@@ -271,33 +299,6 @@ class FirebaseManager: NSObject {
     }
     
     class func downloadPictureWithURL(userId: String, url: String, completionHandler: (image: UIImage?, error: NSError?) -> Void) {
-
-//        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-//        let docsDir = "\(dirPaths[0] as String)/" // Document directory
-//        
-//        let completePath = "\(docsDir)\(userId)"
-//        
-//        let imageHttpsRef = FIRStorage.storage().referenceForURL(url)
-////        let localURL: NSURL! = NSURL(string: completePath)
-////        let localURL: NSURL! = NSURL(string: "file://local/images/\(userId)")
-//        
-//        let tempDirectory = NSURL(fileURLWithPath: NSTemporaryDirectory())
-//        let localURL = tempDirectory.URLByAppendingPathComponent(userId) //.URLByAppendingPathExtension("jpg")
-//        
-//        let downloadTask = imageHttpsRef.writeToFile(localURL) { (url, error) in
-//            if error != nil {
-//                print("Error occurred while downloading image: \(error!)")
-//                completionHandler(image: nil, error: error)
-//            }
-//            else {
-//                print("Image downloaded successfully at: \(localURL)")
-//                if let userImage = UIImage(contentsOfFile: (localURL.absoluteString)) {
-////                if let userImage = UIImage(contentsOfFile: (url?.absoluteString)!) {
-//                    print("Image retrieved for use")
-//                    completionHandler(image: userImage, error: nil)
-//                }
-//            }
-//        }
         
         let storage = FIRStorage.storage()
         let storageRef = storage.reference()
@@ -377,6 +378,8 @@ class FirebaseManager: NSObject {
             
         }
     }
+ 
+    */
     
     class func deleteUserFromRealTimeDatabase(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -426,39 +429,134 @@ class FirebaseManager: NSObject {
 //        }
 //    }
     
+//    class func getFamilyMembers(familyId: String, completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
+//        if let user = FIRAuth.auth()?.currentUser {
+//            let databaseRef = FIRDatabase.database().reference()
+//            
+//            databaseRef.child("families").child(familyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+//                
+//                if let familyMembers = snapshot.value! as? NSMutableDictionary {
+//                    print("Family members retrieved")
+//                    
+//                    var contactsArr = [Contact]()
+//                    
+//                    // Add dictionary entries to array
+//                    for (key,value) in familyMembers {
+//                        // Check that values exist
+//                        if let keyItem = key as? String {
+////                            if let valueItem = value as? Dictionary<String, String> {
+//                            if let valueItem = value as? NSMutableDictionary {
+//                                print("key: \(keyItem) | value: \(valueItem)")
+//                                
+//                                // Make sure current user is not included
+//                                if keyItem != user.uid {
+//                                    let newUser = Contact(uID: keyItem, userDict: valueItem)
+//                                    
+//                                    contactsArr.append(newUser)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    completionHandler(contacts: contactsArr, error: nil)
+//                }
+//            }) { (error) in
+//                print("Error occurred while retrieving family members")
+//                completionHandler(contacts: nil, error: error)
+//            }
+//        }
+//    }
+    
     class func getFamilyMembers(familyId: String, completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let databaseRef = FIRDatabase.database().reference()
             
+            // Retrieve family member ID's for user lookup
             databaseRef.child("families").child(familyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                
                 if let familyMembers = snapshot.value! as? NSMutableDictionary {
-                    print("Family members retrieved")
+
+//                    var contactsArr = [Contact]()
                     
-                    var contactsArr = [Contact]()
-                    
-                    // Add dictionary entries to array
-                    for (key,value) in familyMembers {
-                        // Check that values exist
-                        if let keyItem = key as? String {
-//                            if let valueItem = value as? Dictionary<String, String> {
-                            if let valueItem = value as? NSMutableDictionary {
-                                print("key: \(keyItem) | value: \(valueItem)")
-                                
-                                // Make sure current user is not included
-                                if keyItem != user.uid {
-                                    let newUser = Contact(uID: keyItem, userDict: valueItem)
-                                    
-                                    contactsArr.append(newUser)
+                    if let userIds = familyMembers.allKeys as? [String] {
+                            getUsersById(userIds, completionHandler: { (contacts, error) in
+                                if error != nil {
+                                    // Error occurred
+                                    completionHandler(contacts: nil, error: error)
                                 }
-                            }
-                        }
+                                else {
+                                    // Success
+                                    completionHandler(contacts: contacts, error: nil)
+                                }
+                            })
                     }
-                    completionHandler(contacts: contactsArr, error: nil)
+//                    
+//                    // Iterate through all members to get all information for each user
+//                    for (key,value) in familyMembers {
+//                        if let userId = key as? String {
+//                            getUserById(userId, completionHandler: { (contact, error) in
+//                                if error != nil {
+//                                    // Error occurred
+//                                    completionHandler(contacts: nil, error: error)
+//                                }
+//                                else {
+//                                    if let newContact = contact {
+//                                        print("contact: \(newContact)")
+//                                        contactsArr.append(newContact)
+//                                    }
+//                                }
+//                            })
+//                        }
+//                    }
+//                    if !contactsArr.isEmpty {
+//                    print("Successfully retrieved family members -- contactsArr: \(contactsArr)")
+//                    completionHandler(contacts: contactsArr, error: nil)
+//                    }
                 }
             }) { (error) in
-                print("Error occurred while retrieving family members")
-                completionHandler(contacts: nil, error: error)
+//                print("Error occurred while retrieving family members")
+            }
+        }
+    }
+
+    private class func getUsersById(userIds: [String], completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
+//    private class func getUsersById(userIds: [String], completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            
+            var familyMembers = [Contact]()
+            
+            for id in userIds {
+                getSingleUserById(id, completionHandler: { (contact, error) in
+                    if error == nil {
+                        if let newContact = contact {
+                            familyMembers.append(newContact)
+                        }
+                    }
+                    else {
+                        // Error
+                        completionHandler(contacts: nil, error: error)
+                    }
+                })
+            }
+            print("Successfully retrieved family members -- contactsArr: \(familyMembers)")
+            completionHandler(contacts: familyMembers, error: nil)
+        }
+    }
+    
+    private class func getSingleUserById(userId: String, completionHandler: (contact: Contact?, error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                if let userFromDB = snapshot.value! as? NSMutableDictionary {
+                    if let newContact = Contact(uID: userId, userDict: userFromDB) {
+                        print("Successfully retrieved user by ID")
+                        completionHandler(contact: newContact, error: nil)
+                    }
+                    else {
+                        print("Error creating new contact")
+                    }
+                }
+            }) { (error) in
+                print("Error occurred while looking up user by ID")
             }
         }
     }

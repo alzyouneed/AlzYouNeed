@@ -147,38 +147,19 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             
             // Disable button to avoid multiple taps
             signUpButtonEnabled(false)
-            FirebaseManager.updateUserDisplayName(nameVTFView.textField.text!, completionHandler: { (error) in
+            
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId()]
+            
+            FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {
-                    // Failed to update display name
+                    // Failed to update user
                     self.signUpButtonEnabled(true)
                 }
                 else {
-                    FirebaseManager.saveUserToRealTimeDatabase(self.nameVTFView.textField.text!, phoneNumber: self.phoneNumberVTFView.textField.text!, patientStatus: self.patientStatus(), avatarId: self.selectionView.avatarId(), completionHandler: { (error, newDatabaseRef) in
-                        if error != nil {
-                            // Failed to save to realTime database
-                            self.signUpButtonEnabled(true)
-                        }
-                        else {
-                            self.stepCompleted = true
-                            self.performSegueWithIdentifier("familyStage", sender: self)
-                            
-//                            if let userImage = self.userImageView.image {
-//                                FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
-//                                    if error != nil {
-//                                        // Error uploading picture
-//                                        self.signUpButtonEnabled(true)
-//                                    }
-//                                    else {
-//                                        if metadata != nil {
-//                                            // Picture uploaded successfully
-//                                            self.stepCompleted = true
-//                                            self.performSegueWithIdentifier("familyStage", sender: self)
-//                                        }
-//                                    }
-//                                })
-//                            }
-                        }
-                    })
+                    // Updated user
+                    print("Updated user!")
+                    self.stepCompleted = true
+                    self.performSegueWithIdentifier("familyStage", sender: self)
                 }
             })
         }
@@ -203,35 +184,35 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    func uploadPicture() {
-        if let userImage = userImageView.image {
-            FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
-                if error != nil {
-                    // Error uploading picture
-                }
-                else {
-                    if metadata != nil {
-                        // Picture uploaded successfully
-                        self.stepCompleted = true
-                        
-                        // STILL NEEDS WORK -- Currently performs segue twice
-                        self.performSegueWithIdentifier("familyStage", sender: self)
-                    }
-                }
-            })
-        }
-    }
+//    func uploadPicture() {
+//        if let userImage = userImageView.image {
+//            FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
+//                if error != nil {
+//                    // Error uploading picture
+//                }
+//                else {
+//                    if metadata != nil {
+//                        // Picture uploaded successfully
+//                        self.stepCompleted = true
+//                        
+//                        // STILL NEEDS WORK -- Currently performs segue twice
+//                        self.performSegueWithIdentifier("familyStage", sender: self)
+//                    }
+//                }
+//            })
+//        }
+//    }
     
-    func deletePictureFromDatabase() {
-        FirebaseManager.deletePictureFromDatabase { (error) in
-            if error != nil {
-                // Failed to delete picture from database
-            }
-            else {
-                // Successfully deleted picture from database
-            }
-        }
-    }
+//    func deletePictureFromDatabase() {
+//        FirebaseManager.deletePictureFromDatabase { (error) in
+//            if error != nil {
+//                // Failed to delete picture from database
+//            }
+//            else {
+//                // Successfully deleted picture from database
+//            }
+//        }
+//    }
     
     func cancelAccountCreation(sender: UIBarButtonItem) {
         FirebaseManager.deleteCurrentUser { (error) in

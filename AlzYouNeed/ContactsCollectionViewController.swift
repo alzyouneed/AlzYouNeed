@@ -75,6 +75,23 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
 //            })
 //        }
         
+        getCurrentFamily { (familyId) in
+            print("Current family: \(familyId)")
+            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
+                if error == nil {
+                    if let contactsArr = contacts {
+                        for person in contactsArr {
+                            print(person)
+                        }
+                        
+                        self.contacts.removeAll()
+                        self.contacts = contactsArr
+                        self.collectionView?.reloadData()
+                    }
+                }
+            })
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -155,18 +172,29 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userContacts.count
+//        return userContacts.count
+        return contacts.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ContactCollectionViewCell
     
-        let person = userContacts[indexPath.row]
+//        let person = userContacts[indexPath.row]
+        
+        let person = contacts[indexPath.row]
         
         // Configure cell
-        cell.contactView.nameLabel.text = "\(person.firstName) \(person.lastName)"
+//        cell.contactView.nameLabel.text = "\(person.firstName) \(person.lastName)"
+//        cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
+//        cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
+        
+        cell.contactView.nameLabel.text = "\(person.fullName)"
         cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
         cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
+        
+        if let userImage = UIImage(named: person.avatarId) {
+            cell.contactView.contactImageView.image = userImage
+        }
         
         // Add targets for both buttons
         cell.contactView.leftButton.addTarget(self, action: #selector(ContactsCollectionViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
@@ -178,12 +206,12 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         
         // Check for saved image to load -- will only load first time cell appears in view
 //        if cell.contactView.contactImageView.image == nil {
-            if let imagePhotoPath = person.photoPath {
-                // Only load if real image path exists
-                if imagePhotoPath != "" {
-                    cell.contactView.setImageWithPath(imagePhotoPath)
-                }
-            }
+//            if let imagePhotoPath = person.photoPath {
+//                // Only load if real image path exists
+//                if imagePhotoPath != "" {
+//                    cell.contactView.setImageWithPath(imagePhotoPath)
+//                }
+//            }
 //        }
     
         return cell

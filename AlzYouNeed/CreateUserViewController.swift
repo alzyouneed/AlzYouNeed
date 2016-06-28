@@ -125,6 +125,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             
             // Disable button to avoid multiple taps
             nextButtonEnabled(false)
+            
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed
@@ -133,12 +134,20 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                 else {
                     // Successfully signed up
                     if user != nil {
-                        self.view.endEditing(true)
-                        self.userSignedUp = true
                         
-                        self.performSegueWithIdentifier("updateUser", sender: self)
+                        let updates = ["email": self.emailVTFView.textField.text!]
+                        
+                        FirebaseManager.updateUser(updates, completionHandler: { (error) in
+                            if error == nil {
+                                // success
+                                
+                                self.view.endEditing(true)
+                                self.userSignedUp = true
+                                
+                                self.performSegueWithIdentifier("updateUser", sender: self)
+                            }
+                        })
                     }
-
                 }
             })
         }

@@ -12,4 +12,6 @@ class ContactCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var contactView: ContactView!
     
+    
+    
 }
