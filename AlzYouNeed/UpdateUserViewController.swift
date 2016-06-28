@@ -157,7 +157,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 }
                 else {
                     // Updated user
-                    print("Updated user!")
                     self.stepCompleted = true
                     self.performSegueWithIdentifier("familyStage", sender: self)
                 }

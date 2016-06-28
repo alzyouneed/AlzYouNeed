@@ -38,13 +38,8 @@ class NewExistingFamilyViewController: UIViewController {
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
                 self.presentViewController(onboardingVC, animated: true, completion: nil)
-                
-//                self.performSegueWithIdentifier("startOverFamily", sender: self)
             }
         }
-        // Clean up partially finished account creation entries
-//        deleteUserFromRealTimeDatabase()
-//        deletePictureFromDatabase()
     }
     
 //    func deletePictureFromDatabase() {

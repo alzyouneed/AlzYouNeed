@@ -25,59 +25,6 @@ class FirebaseManager: NSObject {
         })
     }
     
-    class func updateUserDisplayName(name: String, completionHandler: (error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let changeRequest = user.profileChangeRequest()
-            
-            changeRequest.displayName = name
-            changeRequest.commitChangesWithCompletion({ (error) in
-                if error != nil {
-                    print("Error occurred while updating user display name")
-                    completionHandler(error: error)
-                }
-                else {
-                    print("User display name updated")
-                    completionHandler(error: error)
-                }
-            })
-        }
-    }
-    
-    class func updateUserPhotoURL(url: String, completionHandler: (error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let changeRequest = user.profileChangeRequest()
-            
-            changeRequest.photoURL = NSURL(string: url)
-            changeRequest.commitChangesWithCompletion({ (error) in
-                if error != nil {
-                    print("Error occurred while updating user photo URL")
-                    completionHandler(error: error)
-                }
-                else {
-                    print("User photo URL updated")
-                    completionHandler(error: error)
-                }
-            })
-        }
-    }
-    
-    class func getUserPatientStatus(completionHandler: (status: String?, error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let userId = user.uid
-            let databaseRef = FIRDatabase.database().reference()
-            
-            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let patientStatus = snapshot.value!["patientStatus"] as? String {
-                    print("User patient status retrieved")
-                    completionHandler(status: patientStatus, error: nil)
-                }
-            }) { (error) in
-                print("Error occurred while retrieving user patient status")
-                completionHandler(status: nil, error: error)
-            }
-        }
-    }
-    
     class func getUserSignUpStatus(completionHandler: (status: String?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let userId = user.uid
@@ -278,8 +225,44 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // MARK: - Database Management
+    // MARK: - Unused
     /*
+    class func updateUserDisplayName(name: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let changeRequest = user.profileChangeRequest()
+            
+            changeRequest.displayName = name
+            changeRequest.commitChangesWithCompletion({ (error) in
+                if error != nil {
+                    print("Error occurred while updating user display name")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("User display name updated")
+                    completionHandler(error: error)
+                }
+            })
+        }
+    }
+    
+    class func updateUserPhotoURL(url: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let changeRequest = user.profileChangeRequest()
+            
+            changeRequest.photoURL = NSURL(string: url)
+            changeRequest.commitChangesWithCompletion({ (error) in
+                if error != nil {
+                    print("Error occurred while updating user photo URL")
+                    completionHandler(error: error)
+                }
+                else {
+                    print("User photo URL updated")
+                    completionHandler(error: error)
+                }
+            })
+        }
+    }
+     
     class func uploadPictureToDatabase(image: UIImage?, completionHandler: (metadata: FIRStorageMetadata?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             if let userImage = image {
@@ -388,60 +371,7 @@ class FirebaseManager: NSObject {
             
         }
     }
- 
-    
-    */
-    
-    class func getFamilyMembers(familyId: String, completionHandler: (contacts: [Contact]?, error: NSError?) -> Void) {
-        if (FIRAuth.auth()?.currentUser) != nil {
-            let databaseRef = FIRDatabase.database().reference()
-            
-            // Retrieve family member ID's for user lookup
-            databaseRef.child("families").child(familyId).child("members").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let familyMembers = snapshot.value! as? NSMutableDictionary {
 
-//                    var contactsArr = [Contact]()
-                    
-                    if let userIds = familyMembers.allKeys as? [String] {
-                            getUsersById(userIds, completionHandler: { (contacts, error) in
-                                if error != nil {
-                                    // Error occurred
-                                    completionHandler(contacts: nil, error: error)
-                                }
-                                else {
-                                    // Success
-                                    completionHandler(contacts: contacts, error: nil)
-                                }
-                            })
-                    }
-//                    
-//                    // Iterate through all members to get all information for each user
-//                    for (key,value) in familyMembers {
-//                        if let userId = key as? String {
-//                            getUserById(userId, completionHandler: { (contact, error) in
-//                                if error != nil {
-//                                    // Error occurred
-//                                    completionHandler(contacts: nil, error: error)
-//                                }
-//                                else {
-//                                    if let newContact = contact {
-//                                        print("contact: \(newContact)")
-//                                        contactsArr.append(newContact)
-//                                    }
-//                                }
-//                            })
-//                        }
-//                    }
-//                    if !contactsArr.isEmpty {
-//                    print("Successfully retrieved family members -- contactsArr: \(contactsArr)")
-//                    completionHandler(contacts: contactsArr, error: nil)
-//                    }
-                }
-            }) { (error) in
-//                print("Error occurred while retrieving family members")
-            }
-        }
-    }
     
     private class func getSingleUserById(userId: String, completionHandler: (contact: Contact?, error: NSError?) -> Void) {
         if (FIRAuth.auth()?.currentUser) != nil {
@@ -462,4 +392,5 @@ class FirebaseManager: NSObject {
             }
         }
     }
+    */
 }

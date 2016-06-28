@@ -61,36 +61,19 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
 //        getCurrentFamily { (familyId) in
 //            print("Current family: \(familyId)")
 //            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
-//                if let contactsArr = contacts {
-//                    for contact in contactsArr {
-//                        for (key, value) in contact {
-//                            FirebaseManager.getUserByID(key, completionHandler: { (contact, error) in
-//                                if let userContact = contact {
-//                                    print("Contact: \(userContact.description)")
-//                                }
-//                            })
+//                if error == nil {
+//                    if let contactsArr = contacts {
+//                        for person in contactsArr {
+//                            print(person)
 //                        }
+//                        
+//                        self.contacts.removeAll()
+//                        self.contacts = contactsArr
+//                        self.collectionView?.reloadData()
 //                    }
 //                }
 //            })
 //        }
-        
-        getCurrentFamily { (familyId) in
-            print("Current family: \(familyId)")
-            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
-                if error == nil {
-                    if let contactsArr = contacts {
-                        for person in contactsArr {
-                            print(person)
-                        }
-                        
-                        self.contacts.removeAll()
-                        self.contacts = contactsArr
-                        self.collectionView?.reloadData()
-                    }
-                }
-            })
-        }
         
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
