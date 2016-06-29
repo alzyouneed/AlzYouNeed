@@ -125,7 +125,7 @@
                                     <constraint firstAttribute="height" constant="46" id="FdR-Rr-cy4"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-Ia-kPq" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-Ia-kPq" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="238" width="560" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

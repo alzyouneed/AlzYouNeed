@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UpdateProfileViewController: UIViewController {
+class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UI Elements
     
@@ -24,6 +24,8 @@ class UpdateProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        self.tabBarController?.tabBar.hidden = true
+        
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
@@ -37,10 +39,6 @@ class UpdateProfileViewController: UIViewController {
         }
         
     }
-    
-//    override func viewWillAppear(animated: Bool) {
-//        configureView()
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -48,17 +46,93 @@ class UpdateProfileViewController: UIViewController {
     }
     
     func configureView() {
-//        selectionView.userImageView.image = UIImage(named: userAvatarId)
+        selectionView.userImageView.image = UIImage(named: userAvatarId)
+        // Ensure image index is correct for switching
+        selectionView.avatarImageIndex = selectionView.avatarIndex(userAvatarId)
+        
         nameVTFView.textField.placeholder = userName
         phoneNumberVTFView.textField.placeholder = userPhoneNumber
+        
+        self.nameVTFView.textField.delegate = self
+        self.phoneNumberVTFView.textField.delegate = self
+        
+        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        
+        self.selectionView.previousButton.addTarget(self, action: #selector(UpdateProfileViewController.avatarDidChange(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        self.selectionView.nextButton.addTarget(self, action: #selector(UpdateProfileViewController.avatarDidChange(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        updatesToSave()
     }
     
     @IBAction func updateProfile(sender: UIButton) {
-        
+        if updatesToSave() {
+            // Update profile and return to previous VC
+            print("Update to save")
+        }
+        else {
+            print("No updates to save")
+        }
     }
     
     func updatesToSave() -> Bool {
-      return false
+        if nameUpdate() || phoneNumberUpdate() || avatarUpdate() {
+            enableUpdateButton(true)
+            return true
+        }
+        enableUpdateButton(false)
+        return false
+    }
+    
+    // Check for change in name
+    func nameUpdate() -> Bool {
+        if nameVTFView.textField.text != userName && validateName() {
+            return true
+        }
+        return false
+    }
+    
+    // Check for change in phone number
+    func phoneNumberUpdate() -> Bool {
+        if phoneNumberVTFView.textField.text != userPhoneNumber && validatePhoneNumber() {
+            return true
+        }
+        return false
+    }
+    
+    // Check for change in avatarId
+    func avatarUpdate() -> Bool {
+        if selectionView.avatarId() != userAvatarId {
+            return true
+        }
+        return false
+    }
+    
+    // MARK: - Validation
+    func validateName() -> Bool {
+        let valid = !nameVTFView.textField.text!.isEmpty
+        if valid {
+            nameVTFView.isValid(true)
+            return true
+        }
+        else {
+            nameVTFView.isValid(false)
+            return false
+        }
+    }
+    
+    func validatePhoneNumber() -> Bool {
+        let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let valid = phoneTest.evaluateWithObject(phoneNumberVTFView.textField.text!)
+        if valid {
+            phoneNumberVTFView.isValid(true)
+            return true
+        }
+        else {
+            phoneNumberVTFView.isValid(false)
+            return false
+        }
     }
     
     func enableUpdateButton(enable: Bool) {
@@ -72,5 +146,14 @@ class UpdateProfileViewController: UIViewController {
         }
     }
     
+    // MARK: - UITextFieldDelegate
+    func textFieldDidChange(textField: UITextField) {
+        updatesToSave()
+    }
+    
+    // MARK: - SelectionView
+    func avatarDidChange(button: UIButton) {
+        updatesToSave()
+    }
 
 }

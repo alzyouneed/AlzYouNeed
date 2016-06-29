@@ -98,4 +98,21 @@ import UIKit
             return "avatarOne"
         }
     }
+    
+    func avatarIndex(image: String) -> Int {
+        switch image {
+        case "avatarOne":
+            return 0
+        case "avatarTwo":
+            return 1
+        case "avatarThree":
+            return 2
+        case "avatarFour":
+            return 3
+        case "avatarFive":
+            return 4
+        default:
+            return 0
+        }
+    }
 }

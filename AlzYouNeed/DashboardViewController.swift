@@ -67,6 +67,9 @@ class DashboardViewController: UIViewController {
     func presentUpdateProfileVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewControllerWithIdentifier("updateProfile") as! UpdateProfileViewController
+        
+        // Hide tab bar in updateProfileVC
+        updateProfileVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
 }
