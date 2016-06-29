@@ -16,18 +16,18 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+            <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdq-70-oLI">
-                    <rect key="frame" x="0.0" y="0.0" width="200" height="225"/>
+                    <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezW-v5-SPO">
                             <rect key="frame" x="8" y="8" width="184" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" identifier="id5" id="hIZ-cQ-WsL"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
@@ -52,23 +52,24 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="SpE-Vf-aqw">
-                    <rect key="frame" x="20" y="145" width="160" height="70"/>
+                    <rect key="frame" x="20" y="134" width="160" height="70"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFO-dg-PD2">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFO-dg-PD2">
                             <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                            <color key="backgroundColor" red="0.1764705882" green="0.84705882349999995" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="Button">
+                            <state key="normal" image="phoneIcon">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-gL-iaT">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-gL-iaT">
                             <rect key="frame" x="90" y="0.0" width="70" height="70"/>
-                            <color key="backgroundColor" red="0.93725490199999995" green="0.1764705882" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="Button">
+                            <state key="normal" image="messageIcon">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="70" id="Xk2-OQ-JH8"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <constraints>
@@ -78,20 +79,26 @@
                 <constraint firstItem="hdq-70-oLI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" identifier="id12" id="G1u-cc-V3W"/>
                 <constraint firstAttribute="bottom" secondItem="SpE-Vf-aqw" secondAttribute="bottom" constant="10" identifier="id18" id="PDr-pk-gM1"/>
                 <constraint firstAttribute="trailing" secondItem="hdq-70-oLI" secondAttribute="trailing" identifier="id13" id="Zht-uD-wdf"/>
+                <constraint firstAttribute="bottom" secondItem="SpE-Vf-aqw" secondAttribute="bottom" constant="6" id="aLJ-0L-ysx"/>
                 <constraint firstItem="SpE-Vf-aqw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" identifier="id19" id="eLq-s5-Rbk"/>
                 <constraint firstItem="SpE-Vf-aqw" firstAttribute="top" secondItem="nd4-wO-RUx" secondAttribute="bottom" constant="8" identifier="id20" id="i0T-Qk-bWO"/>
                 <constraint firstItem="nd4-wO-RUx" firstAttribute="top" secondItem="ezW-v5-SPO" secondAttribute="bottom" identifier="id16" id="ltB-HW-1Al"/>
                 <constraint firstAttribute="bottom" secondItem="hdq-70-oLI" secondAttribute="bottom" identifier="id14" id="ozj-Dk-NjW"/>
-                <constraint firstItem="SpE-Vf-aqw" firstAttribute="top" secondItem="nd4-wO-RUx" secondAttribute="bottom" constant="16" identifier="id21" id="qgy-HZ-G8V"/>
+                <constraint firstItem="SpE-Vf-aqw" firstAttribute="top" secondItem="nd4-wO-RUx" secondAttribute="bottom" constant="5" identifier="id21" id="qgy-HZ-G8V"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="PDr-pk-gM1"/>
                     <exclude reference="i0T-Qk-bWO"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="458" y="150.5"/>
+            <point key="canvasLocation" x="458" y="143"/>
         </view>
     </objects>
+    <resources>
+        <image name="messageIcon" width="70" height="70"/>
+        <image name="phoneIcon" width="70" height="70"/>
+    </resources>
 </document>

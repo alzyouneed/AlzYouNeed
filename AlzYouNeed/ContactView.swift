@@ -47,7 +47,11 @@ import UIKit
         contactImageView.clipsToBounds = true
         
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
+        leftButton.layer.masksToBounds = false
+        leftButton.clipsToBounds = true
         rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
+        rightButton.layer.masksToBounds = false
+        rightButton.clipsToBounds = true
         
         backgroundView.clipsToBounds = true
         backgroundView.layer.cornerRadius = 10
@@ -60,6 +64,7 @@ import UIKit
         return view
     }
     
+    /*
     func setImageWithPath(path: String) {
         let image = loadImageFromPath(path)
         if path != "" && image != nil {
@@ -88,5 +93,6 @@ import UIKit
         }
         return image
     }
+    */
 
 }

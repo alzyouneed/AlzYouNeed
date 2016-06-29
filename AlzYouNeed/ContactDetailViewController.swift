@@ -35,9 +35,9 @@ class ContactDetailViewController: UIViewController {
         contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
         // Check if saved image to load
-        if let imagePhotoPath = person.photoPath {
-            contactCard.setImageWithPath(imagePhotoPath)
-        }
+//        if let imagePhotoPath = person.photoPath {
+//            contactCard.setImageWithPath(imagePhotoPath)
+//        }
     }
 
     override func viewDidLoad() {

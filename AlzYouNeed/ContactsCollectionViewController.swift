@@ -23,7 +23,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         super.viewDidLoad()
         
         // Create observer for CNContactPicker selection
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
         
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
             if let currentUser = user {
@@ -33,15 +33,14 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 // Check if current user has completed signup
                 FirebaseManager.getUserSignUpStatus({ (status, error) in
                     if error == nil {
-                        if let signupStatus = status {
-                            if signupStatus == "false" {
-                                // Signup not complete -- Switch to family VC
-                                print("User has not completed signup -- moving to family VC")
-                                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                                let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
-                                let navController = UINavigationController(rootViewController: onboardingVC)
-                                self.presentViewController(navController, animated: true, completion: nil)
-                            }
+                        // Check that value exists for user in RTDB
+                        if status == nil || status == "false" {
+                            // Signup not complete -- Switch to family VC
+                            print("User has not completed signup -- moving to family VC")
+                            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
+                            let navController = UINavigationController(rootViewController: onboardingVC)
+                            self.presentViewController(navController, animated: true, completion: nil)
                         }
                     }
                 })
@@ -59,30 +58,19 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-//        getCurrentFamily { (familyId) in
-//            print("Current family: \(familyId)")
-//            FirebaseManager.getFamilyMembers(familyId, completionHandler: { (contacts, error) in
-//                if error == nil {
-//                    if let contactsArr = contacts {
-//                        for person in contactsArr {
-//                            print(person)
-//                        }
-//                        
-//                        self.contacts.removeAll()
-//                        self.contacts = contactsArr
-//                        self.collectionView?.reloadData()
-//                    }
-//                }
-//            })
-//        }
-        
-//        FirebaseManager.getCurrentUser { (userDict, error) in
+//        FirebaseManager.getFamilyMembers { (members, error) in
 //            if error == nil {
-//                print("Current user: \(userDict)")
+//                if let members = members {
+//                    print("Members: \(members)")
+//                    self.contacts.removeAll()
+//                    self.contacts = members
+//                    self.collectionView?.reloadData()
+//                }
 //            }
 //        }
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
@@ -93,10 +81,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 }
             }
         }
-        
-    }
-    
-    override func viewWillAppear(animated: Bool) {
     }
 
     override func didReceiveMemoryWarning() {
@@ -113,11 +97,8 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         
         print("Loaded \(userContacts.count) contacts from UserDefaults")
     }
-
-    @IBAction func addExistingContact(sender: UIBarButtonItem) {
-        addContact()
-    }
     
+    /*
     func addContact() {
         let contactPicker = CNContactPickerViewController()
         
@@ -167,6 +148,8 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         NSNotificationCenter.defaultCenter().postNotificationName("addNewContact", object: nil, userInfo: ["contactToAdd": contact])
     }
     
+    */
+    
     // MARK: - UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -201,6 +184,9 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
         // Saves row in tag for contact-specific actions
         cell.contactView.leftButton.tag = indexPath.row
         cell.contactView.rightButton.tag = indexPath.row
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 10
     
         return cell
     }

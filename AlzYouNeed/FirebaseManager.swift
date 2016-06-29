@@ -35,6 +35,10 @@ class FirebaseManager: NSObject {
                     print("User signup status retrieved")
                     completionHandler(status: signupStatus, error: nil)
                 }
+                else {
+                    print("complatedSignup field does not exist")
+                    completionHandler(status: nil, error: nil)
+                }
             }) { (error) in
                 print("Error occurred while retrieving user signup status")
                 completionHandler(status: nil, error: error)
