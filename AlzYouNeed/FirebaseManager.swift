@@ -84,27 +84,35 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // NEW: Delete current auth user and entry in real time database
+    // NEW: Delete current auth user, and entry in real time database and in family group
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            deleteUserFromRTDB { (error, databaseRef) in
+            deleteUserFromFamily { (error, databaseRef) in
                 if error != nil {
                     // Error
-                    print("Error occurred while deleting account from RTDB")
+                    print("Error occurred while deleting account from family")
                     completionHandler(error: error)
                 }
                 else {
                     // Success
-                    user.deleteWithCompletion({ (error) in
+                    deleteUserFromRTDB({ (error, databaseRef) in
                         if error != nil {
                             // Error
-                            print("Error occurred while deleting account")
-                            completionHandler(error: error)
                         }
                         else {
                             // Success
-                            print("Account deleted")
-                            completionHandler(error: nil)
+                            user.deleteWithCompletion({ (error) in
+                                if error != nil {
+                                    // Error
+                                    print("Error occurred while deleting account")
+                                    completionHandler(error: error)
+                                }
+                                else {
+                                    // Success
+                                    print("Account deleted")
+                                    completionHandler(error: nil)
+                                }
+                            })
                         }
                     })
                 }
@@ -115,7 +123,9 @@ class FirebaseManager: NSObject {
     // NEW: Helper func for deleteCurrentUser
     private class func deleteUserFromRTDB(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
+            
             let databaseRef = FIRDatabase.database().reference()
+            
             databaseRef.child("users").child(user.uid).removeValueWithCompletionBlock({ (error, oldRef) in
                 if error != nil {
                     print("Error deleting user from real time database")
@@ -124,6 +134,30 @@ class FirebaseManager: NSObject {
                 else {
                     print("User deleted from real time database")
                     completionHandler(error: nil, databaseRef: oldRef)
+                }
+            })
+        }
+    }
+    
+    // NEW: Helper func for deleteCurrentUser
+    private class func deleteUserFromFamily(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            
+            getCurrentUser({ (userDict, error) in
+                if let userDict = userDict {
+                    let databaseRef = FIRDatabase.database().reference()
+                    let familyId = userDict.objectForKey("familyId") as! String
+                    
+                    databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValueWithCompletionBlock({ (error, oldRef) in
+                        if error != nil {
+                            print("Error deleting user from family group")
+                            completionHandler(error: error, databaseRef: nil)
+                        }
+                        else {
+                            print("User deleted from family group")
+                            completionHandler(error: nil, databaseRef: oldRef)
+                        }
+                    })
                 }
             })
         }
@@ -139,13 +173,10 @@ class FirebaseManager: NSObject {
                 if let userInfo = userDict {
                    let databaseRef = FIRDatabase.database().reference()
                     
-//                    let familyToSave = ["password": password, "members":[user.uid: ["admin": "true", "patient": patientStatus]]]
-                    
                     // Remove key for save to family group
                     let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
                     modifiedDict.removeObjectForKey("completedSignup")
                     
-//                    let familyToSave = ["password": password, "members":[user.uid: userInfo]]
                     let familyToSave = ["password": password, "members":[user.uid: modifiedDict]]
                     
                     // Update current user and new family, and signup Status
@@ -156,7 +187,7 @@ class FirebaseManager: NSObject {
 //                                        "/families/\(familyId)/members/\(user.uid)/familyId": familyId,
 //                                        "/families/\(familyId)/members/\(user.uid)/completedSignup": "true",
 //                                        "/families/\(familyId)/members/\(user.uid)/admin": "true"]
-//                    databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
+
                     databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                         if error != nil {
                             print("Error creating new family group")
