@@ -261,7 +261,7 @@
         <!--Profile-->
         <scene sceneID="tc6-aw-isc">
             <objects>
-                <viewController id="vu3-xn-OOF" customClass="UpdateUserViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="updateUserVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vu3-xn-OOF" customClass="UpdateUserViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="obU-Z5-mxt"/>
                         <viewControllerLayoutGuide type="bottom" id="iZb-5H-e9P"/>

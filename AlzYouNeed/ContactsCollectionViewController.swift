@@ -13,9 +13,7 @@ import Firebase
 
 private let reuseIdentifier = "ContactCell"
 
-class ContactsCollectionViewController: UICollectionViewController, CNContactPickerDelegate {
-    
-    var userContacts: [Person] = []
+class ContactsCollectionViewController: UICollectionViewController {
     
     var contacts: [Contact] = []
 
@@ -30,57 +28,57 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                 // User is signed in.
                 print("\(currentUser) is logged in")
                 
+                /*
                 // Check if current user has completed signup
                 FirebaseManager.getUserSignUpStatus({ (status, error) in
                     if error == nil {
-                        // Check that value exists for user in RTDB
-                        if status == nil || status == "false" {
-                            // Signup not complete -- Switch to family VC
-                            print("User has not completed signup -- moving to family VC")
-                            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                            let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
-                            let navController = UINavigationController(rootViewController: onboardingVC)
-//                            self.presentViewController(navController, animated: true, completion: nil)
+                        if let status = status {
+                            switch status {
+                            case "updateUser":
+                                self.presentUpdateUserVC()
+                            case "familySetup":
+                                self.presentFamilyVC()
+                            default:
+                                break
+                                
+                            }
                         }
                     }
                 })
+                */
                 
-            } else {
+            }
+            else {
                 // No user is signed in.
                 print("No user is signed in -- moving to onboarding flow")
-                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-                self.presentViewController(onboardingVC, animated: true, completion: nil)
+                self.presentOnboardingVC()
             }
         }
-        
-        contacts.removeAll()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-//        FirebaseManager.getFamilyMembers { (members, error) in
-//            if error == nil {
-//                if let members = members {
-//                    print("Members: \(members)")
-//                    self.contacts.removeAll()
-//                    self.contacts = members
-//                    self.collectionView?.reloadData()
-//                }
-//            }
-//        }
     }
     
     override func viewWillAppear(animated: Bool) {
-        FirebaseManager.getFamilyMembers { (members, error) in
-            if error == nil {
-                if let members = members {
-                    print("Members: \(members)")
-                    self.contacts.removeAll()
-                    self.contacts = members
-                    self.collectionView?.reloadData()
-                }
-            }
-        }
+        loadContacts()
+    }
+    
+    func presentOnboardingVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
+        self.presentViewController(onboardingVC, animated: true, completion: nil)
+    }
+    
+    func presentFamilyVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
+        let navController = UINavigationController(rootViewController: onboardingVC)
+        self.presentViewController(navController, animated: true, completion: nil)
+
+    }
+    
+    func presentUpdateUserVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let updateUserVC: UpdateUserViewController = storyboard.instantiateViewControllerWithIdentifier("updateUserVC") as! UpdateUserViewController
+        let navController = UINavigationController(rootViewController: updateUserVC)
+        self.presentViewController(navController, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,11 +89,19 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     // MARK: - Logic
     
     func loadContacts() {
-        userContacts.removeAll()
-        userContacts = UserDefaultsManager.getAllContacts()!
-        self.collectionView!.reloadData()
-        
-        print("Loaded \(userContacts.count) contacts from UserDefaults")
+        contacts.removeAll()
+        FirebaseManager.getFamilyMembers { (members, error) in
+            if error == nil {
+                if let members = members {
+                    print("Loaded \(members.count) contacts from Firebase")
+                    self.contacts = members
+                    
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.collectionView?.reloadData()
+                    })
+                }
+            }
+        }
     }
     
     /*
@@ -207,21 +213,6 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
     
     func rightButtonPressed(sender: UIButton) {
         print("Right button pressed -- row: \(sender.tag)")
-    }
-    
-    func getCurrentFamily(completionHandler:(String)->()){
-        if let currentUser = FIRAuth.auth()?.currentUser {
-            let userId = currentUser.uid
-            let databaseRef = FIRDatabase.database().reference()
-            
-            databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                if let familyId = snapshot.value!["familyId"] as? String {
-                    completionHandler(familyId)
-                }
-            }) { (error) in
-                print(error.localizedDescription)
-            }
-        }
     }
     
     /*

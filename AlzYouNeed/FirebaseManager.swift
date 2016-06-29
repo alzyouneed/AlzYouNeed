@@ -140,7 +140,13 @@ class FirebaseManager: NSObject {
                    let databaseRef = FIRDatabase.database().reference()
                     
 //                    let familyToSave = ["password": password, "members":[user.uid: ["admin": "true", "patient": patientStatus]]]
-                    let familyToSave = ["password": password, "members":[user.uid: userInfo]]
+                    
+                    // Remove key for save to family group
+                    let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
+                    modifiedDict.removeObjectForKey("completedSignup")
+                    
+//                    let familyToSave = ["password": password, "members":[user.uid: userInfo]]
+                    let familyToSave = ["password": password, "members":[user.uid: modifiedDict]]
                     
                     // Update current user and new family, and signup Status
                     let childUpdates = ["/users/\(user.uid)/familyId": familyId,
@@ -180,11 +186,16 @@ class FirebaseManager: NSObject {
                             if let userInfo = userDict {
                                 let databaseRef = FIRDatabase.database().reference()
                                 
+                                // Remove key for save to family group
+                                let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
+                                modifiedDict.removeObjectForKey("completedSignup")
+                                
                                 // Update current user and new family, and signUp status
                                 let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                    "/users/\(user.uid)/completedSignup": "true"]
+                                                    "/users/\(user.uid)/completedSignup": "true",
+                                                    "/users/\(user.uid)/admin": "false"]
 //                                databaseRef.updateChildValues(childUpdates as [NSObject : AnyObject])
-                                databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userInfo)
+//                                databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userInfo)
                                 
                                 databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                     if error != nil {
@@ -193,7 +204,7 @@ class FirebaseManager: NSObject {
                                     }
                                     else {
                                         print("User family group values updated")
-                                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userInfo, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(modifiedDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
                                             if error != nil {
                                                 print("Error occurred while adding user to family")
                                                 completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)

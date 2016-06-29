@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UpdateUserViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - UI Elements
     @IBOutlet var userImageView: UIImageView!
@@ -152,7 +152,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             // Disable button to avoid multiple taps
             signUpButtonEnabled(false)
             
-            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId()]
+//            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId()]
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
             
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {

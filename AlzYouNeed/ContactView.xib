@@ -56,20 +56,34 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFO-dg-PD2">
                             <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="DtP-Fl-fyk"/>
+                                <constraint firstAttribute="width" constant="70" id="gaQ-Al-JVU"/>
+                            </constraints>
                             <state key="normal" image="phoneIcon">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahg-gL-iaT">
                             <rect key="frame" x="90" y="0.0" width="70" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="OcJ-eK-pqA"/>
+                                <constraint firstAttribute="width" constant="70" id="uen-VX-S47"/>
+                            </constraints>
                             <state key="normal" image="messageIcon">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                     </subviews>
                     <constraints>
+                        <constraint firstAttribute="width" constant="160" id="L2H-nh-gs1"/>
                         <constraint firstAttribute="height" constant="70" id="Xk2-OQ-JH8"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="L2H-nh-gs1"/>
+                        </mask>
+                    </variation>
                 </stackView>
             </subviews>
             <constraints>

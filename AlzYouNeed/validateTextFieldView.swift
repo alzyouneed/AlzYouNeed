@@ -69,7 +69,7 @@ import UIKit
         textField.autocapitalizationType = UITextAutocapitalizationType.None
         textField.autocorrectionType = UITextAutocorrectionType.No
         textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.Default
+        textField.keyboardType = UIKeyboardType.ASCIICapable
         textField.returnKeyType = UIReturnKeyType.Next
         textField.secureTextEntry = true
         
@@ -81,10 +81,10 @@ import UIKit
     
     func familyIdMode() {
         textField.placeholder = "Family ID"
-        textField.autocapitalizationType = UITextAutocapitalizationType.None
+        textField.autocapitalizationType = UITextAutocapitalizationType.Words
         textField.autocorrectionType = UITextAutocorrectionType.No
         textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.Default
+        textField.keyboardType = UIKeyboardType.ASCIICapable
         textField.returnKeyType = UIReturnKeyType.Next
         textField.secureTextEntry = false
     }
@@ -94,7 +94,7 @@ import UIKit
         textField.autocapitalizationType = UITextAutocapitalizationType.None
         textField.autocorrectionType = UITextAutocorrectionType.No
         textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.PhonePad
+        textField.keyboardType = UIKeyboardType.NumberPad
         textField.returnKeyType = UIReturnKeyType.Next
         textField.secureTextEntry = false
     }
@@ -104,7 +104,7 @@ import UIKit
         textField.autocapitalizationType = UITextAutocapitalizationType.Words
         textField.autocorrectionType = UITextAutocorrectionType.No
         textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.Default
+        textField.keyboardType = UIKeyboardType.ASCIICapable
         textField.returnKeyType = UIReturnKeyType.Next
         textField.secureTextEntry = false
     }
