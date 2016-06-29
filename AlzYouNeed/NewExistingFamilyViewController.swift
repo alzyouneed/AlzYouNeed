@@ -29,40 +29,34 @@ class NewExistingFamilyViewController: UIViewController {
     
     // MARK: - Firebase
     func cancelAccountCreation(sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+            self.deleteUser()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Cancel button pressed
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteUser() {
         FirebaseManager.deleteCurrentUser { (error) in
             if error != nil {
-                // Error deleting current user
+                // Error deleting user
             }
             else {
-                // Successfully deleted current user
+                // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
                 self.presentViewController(onboardingVC, animated: true, completion: nil)
             }
         }
     }
-    
-//    func deletePictureFromDatabase() {
-//        FirebaseManager.deletePictureFromDatabase { (error) in
-//            if error != nil {
-//                // Error deleting user picture from database
-//            }
-//            else {
-//                // Successfully deleted user picture from database
-//            }
-//        }
-//    }
-    
-//    func deleteUserFromRealTimeDatabase() {
-//        FirebaseManager.deleteUserFromRealTimeDatabase { (error, databaseRef) in
-//            if error != nil {
-//                // Error deleting user from realTime database
-//            }
-//            else {
-//                // Successfully deleted user from realTime database
-//            }
-//        }
-//    }
     
     // MARK: - Navigation
 

@@ -24,7 +24,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet var selectionView: avatarSelectionView!
     
     // MARK: - Properties
-    let imagePicker = UIImagePickerController()
+//    let imagePicker = UIImagePickerController()
     var stepCompleted = false
     
     override func viewDidLoad() {
@@ -50,7 +50,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.nameVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
-        self.imagePicker.delegate = self
+//        self.imagePicker.delegate = self
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
         signUpButtonEnabled()
@@ -79,6 +79,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
 
     // MARK: - UIImagePickerController Delegate
+    /*
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
@@ -105,6 +106,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBAction func addPhoto(sender: UIButton) {
         selectPhoto()
     }
+    */
     
     // MARK: - Validation
     func validFields() -> Bool {
@@ -185,37 +187,23 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-//    func uploadPicture() {
-//        if let userImage = userImageView.image {
-//            FirebaseManager.uploadPictureToDatabase(userImage, completionHandler: { (metadata, error) in
-//                if error != nil {
-//                    // Error uploading picture
-//                }
-//                else {
-//                    if metadata != nil {
-//                        // Picture uploaded successfully
-//                        self.stepCompleted = true
-//                        
-//                        // STILL NEEDS WORK -- Currently performs segue twice
-//                        self.performSegueWithIdentifier("familyStage", sender: self)
-//                    }
-//                }
-//            })
-//        }
-//    }
-    
-//    func deletePictureFromDatabase() {
-//        FirebaseManager.deletePictureFromDatabase { (error) in
-//            if error != nil {
-//                // Failed to delete picture from database
-//            }
-//            else {
-//                // Successfully deleted picture from database
-//            }
-//        }
-//    }
-    
     func cancelAccountCreation(sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+            self.deleteUser()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Cancel button pressed
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteUser() {
         FirebaseManager.deleteCurrentUser { (error) in
             if error != nil {
                 // Error deleting user
