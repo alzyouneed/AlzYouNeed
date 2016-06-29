@@ -35,9 +35,27 @@ class DashboardViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
     }
-    
-    @IBAction func logout(sender: UIBarButtonItem) {
-        try! FIRAuth.auth()?.signOut()
-    }
 
+    @IBAction func showSettings(sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .ActionSheet)
+        let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
+            try! FIRAuth.auth()?.signOut()
+        }
+        let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
+            FirebaseManager.deleteCurrentUser({ (error) in
+                if error == nil {
+                    // Success
+                }
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Cancel button pressed
+        }
+        
+        alertController.addAction(logoutAction)
+        alertController.addAction(deleteAccountAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
 }

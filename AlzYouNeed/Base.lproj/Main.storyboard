@@ -632,7 +632,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.81960784310000001" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.81176470588235294" green="0.84705882352941175" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" constant="59" id="4x1-1o-ixj"/>
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="xLL-Sp-XmI" secondAttribute="centerX" id="R0i-Xl-EBf"/>
@@ -641,9 +641,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JRu-Ga-1J2">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="btF-PG-gBU">
+                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="3Dj-7z-xYC">
                             <connections>
-                                <action selector="logout:" destination="fTz-C2-Fo8" id="j9A-LP-aog"/>
+                                <action selector="showSettings:" destination="fTz-C2-Fo8" id="oVI-H1-3ce"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -694,6 +694,9 @@
             <point key="canvasLocation" x="-785" y="-287"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settingsIcon" width="22" height="22"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d61-Gb-xHV"/>
     </inferredMetricsTieBreakers>
