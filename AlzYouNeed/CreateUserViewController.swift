@@ -135,7 +135,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                     // Successfully signed up
                     if user != nil {
                         
-//                        let updates = ["email": self.emailVTFView.textField.text!, "completedSignup": "false"]
                         let updates = ["email": self.emailVTFView.textField.text!, "completedSignup": "updateUser"]
                         
                         FirebaseManager.updateUser(updates, completionHandler: { (error) in

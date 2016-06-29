@@ -152,7 +152,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
             // Disable button to avoid multiple taps
             signUpButtonEnabled(false)
             
-//            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId()]
             let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
             
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
