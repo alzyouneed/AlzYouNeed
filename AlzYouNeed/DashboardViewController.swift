@@ -38,6 +38,10 @@ class DashboardViewController: UIViewController {
 
     @IBAction func showSettings(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .ActionSheet)
+        
+        let updateAction = UIAlertAction(title: "Update Profile", style: .Default) { (action) in
+            self.presentUpdateProfileVC()
+        }
         let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
             try! FIRAuth.auth()?.signOut()
         }
@@ -52,10 +56,17 @@ class DashboardViewController: UIViewController {
             // Cancel button pressed
         }
         
+        alertController.addAction(updateAction)
         alertController.addAction(logoutAction)
         alertController.addAction(deleteAccountAction)
         alertController.addAction(cancelAction)
         
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func presentUpdateProfileVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewControllerWithIdentifier("updateProfile") as! UpdateProfileViewController
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
 }

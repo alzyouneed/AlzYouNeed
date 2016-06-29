@@ -106,6 +106,82 @@
             </objects>
             <point key="canvasLocation" x="1414" y="448"/>
         </scene>
+        <!--Update Profile-->
+        <scene sceneID="czk-Km-RBN">
+            <objects>
+                <viewController storyboardIdentifier="updateProfile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZGJ-4a-9Bt" customClass="UpdateProfileViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Tzi-hX-Abc"/>
+                        <viewControllerLayoutGuide type="bottom" id="A3E-cH-im7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nrZ-5Q-xGE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-4W-09d" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="20" y="184" width="560" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="FdR-Rr-cy4"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-Ia-kPq" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="20" y="238" width="560" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="cmU-YZ-Hj9"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUi-qn-GDA">
+                                <rect key="frame" x="214" y="292" width="173" height="46"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.66274509800000003" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="ZPW-Mw-ACP"/>
+                                    <constraint firstAttribute="width" constant="173" id="cGB-ah-1du"/>
+                                </constraints>
+                                <state key="normal" title="Update">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateProfile:" destination="ZGJ-4a-9Bt" eventType="touchUpInside" id="fAu-HG-0zK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aES-Sl-tTR" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="192" y="76" width="216" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="216" id="Pcc-mo-zJe"/>
+                                    <constraint firstAttribute="height" constant="100" id="TrT-Hu-G18"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aES-Sl-tTR" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="030-8m-pWL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="T1N-4W-09d" secondAttribute="trailing" id="1Kr-OU-jfy"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="leading" id="NYk-Pi-9PY"/>
+                            <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="aES-Sl-tTR" secondAttribute="bottom" constant="8" id="RlP-Gq-1GZ"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="T1N-4W-09d" secondAttribute="leading" id="Uph-vl-o0Y"/>
+                            <constraint firstItem="aES-Sl-tTR" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="mcp-YS-SMd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="trailing" id="oql-97-ai0"/>
+                            <constraint firstItem="JUi-qn-GDA" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="u7G-Ie-io6"/>
+                            <constraint firstItem="vJ0-Ia-kPq" firstAttribute="top" secondItem="T1N-4W-09d" secondAttribute="bottom" constant="8" id="w0a-vN-iGL"/>
+                            <constraint firstItem="JUi-qn-GDA" firstAttribute="top" secondItem="vJ0-Ia-kPq" secondAttribute="bottom" constant="8" id="w1Y-gy-kso"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Update Profile" id="WMN-d2-IDR"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="nameVTFView" destination="T1N-4W-09d" id="ADl-rY-oGh"/>
+                        <outlet property="phoneNumberVTFView" destination="vJ0-Ia-kPq" id="mBM-8i-zM5"/>
+                        <outlet property="selectionView" destination="aES-Sl-tTR" id="eag-ux-Imv"/>
+                        <outlet property="updateButton" destination="JUi-qn-GDA" id="nfP-Cy-ohj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GG9-GA-mDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1395" y="1210"/>
+        </scene>
         <!--Family Signup View Controller-->
         <scene sceneID="J92-rX-Nh6">
             <objects>

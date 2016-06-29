@@ -27,6 +27,7 @@
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
+		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */; };
 		2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */; };
 		2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */; };
@@ -67,6 +68,7 @@
 		2D9834DE1D0C4A91000977DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardView.xib; sourceTree = "<group>"; };
 		2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDashboardView.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
+				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
+				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
 				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
