@@ -125,7 +125,9 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func validatePhoneNumber() -> Bool {
-        // let PHONE_REGEX = "^\\d{3}-\\d{3}-\\d{4}$"
+        
+//        let PHONE_REGEX = "(?\\d{3})?\\s\\d{3}-\\d{4}$"
+
         // Supports phone number entry without hyphens
         let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
@@ -262,6 +264,56 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         
         signUpButtonEnabled()
     }
+    
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+//        let tag = textField.superview!.superview!.tag
+//        
+//        if (tag == 1)
+//        {
+//            let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+//            let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
+//            
+//            let decimalString = components.joinWithSeparator("") as NSString
+//            let length = decimalString.length
+//            let hasLeadingOne = length > 0 && decimalString.characterAtIndex(0) == (1 as unichar)
+//            
+//            if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
+//            {
+//                let newLength = (textField.text! as NSString).length + (string as NSString).length - range.length as Int
+//                
+//                return (newLength > 10) ? false : true
+//            }
+//            var index = 0 as Int
+//            let formattedString = NSMutableString()
+//            
+//            if hasLeadingOne
+//            {
+//                formattedString.appendString("1 ")
+//                index += 1
+//            }
+//            if (length - index) > 3
+//            {
+//                let areaCode = decimalString.substringWithRange(NSMakeRange(index, 3))
+//                formattedString.appendFormat("(%@)", areaCode)
+//                index += 3
+//            }
+//            if length - index > 3
+//            {
+//                let prefix = decimalString.substringWithRange(NSMakeRange(index, 3))
+//                formattedString.appendFormat("%@-", prefix)
+//                index += 3
+//            }
+//            
+//            let remainder = decimalString.substringFromIndex(index)
+//            formattedString.appendString(remainder)
+//            textField.text = formattedString as String
+//            return false
+//        }
+//        else
+//        {
+//            return true
+//        }
+//    }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "familyStage" {

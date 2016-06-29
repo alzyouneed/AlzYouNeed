@@ -36,7 +36,7 @@ class FirebaseManager: NSObject {
                     completionHandler(status: signupStatus, error: nil)
                 }
                 else {
-                    print("complatedSignup field does not exist")
+                    print("completedSignup field does not exist")
                     completionHandler(status: nil, error: nil)
                 }
             }) { (error) in

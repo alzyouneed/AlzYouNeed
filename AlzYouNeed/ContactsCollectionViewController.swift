@@ -40,7 +40,7 @@ class ContactsCollectionViewController: UICollectionViewController, CNContactPic
                             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                             let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
                             let navController = UINavigationController(rootViewController: onboardingVC)
-                            self.presentViewController(navController, animated: true, completion: nil)
+//                            self.presentViewController(navController, animated: true, completion: nil)
                         }
                     }
                 })
