@@ -135,6 +135,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.cancelButton.alpha = 0
                 
             }) { (completed) in
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
+                
                 self.emailTextField.hidden = true
                 self.passwordTextField.hidden = true
                 self.cancelButton.hidden = true
