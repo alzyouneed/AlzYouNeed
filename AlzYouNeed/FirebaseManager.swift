@@ -128,21 +128,6 @@ class FirebaseManager: NSObject {
                             let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
                             completionHandler(error: error)
                         }
-//                        let familyId = userDict.objectForKey("familyId") as! String
-//                        let userId = user.uid
-//                        let databaseRef = FIRDatabase.database().reference()
-//                        let updatesDict = updates as [NSObject : AnyObject]
-//                        
-//                        databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-//                            if error != nil {
-//                                print("Error updating user in family")
-//                                completionHandler(error: error)
-//                            }
-//                            else {
-//                                print("Successfully updated user in family")
-//                                completionHandler(error: nil)
-//                            }
-//                        })
                     }
                 }
             })
