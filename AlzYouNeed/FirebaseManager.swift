@@ -54,7 +54,7 @@ class FirebaseManager: NSObject {
             
             databaseRef.child("users").child(userId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 if let dict = snapshot.value! as? NSDictionary {
-                    print("Current user retrieved")
+//                    print("Current user retrieved")
                     completionHandler(userDict: dict, error: nil)
                 }
             }) { (error) in
@@ -77,8 +77,73 @@ class FirebaseManager: NSObject {
                     completionHandler(error: error)
                 }
                 else {
-                    print("Successfully updated user")
-                    completionHandler(error: nil)
+                    print("Successfully updated user -- Updating in family")
+                    updateUserInFamily(updatesDict, completionHandler: { (error) in
+                        if error != nil {
+                            // Key does not exist -- proceed normally
+                            if error?.code == 0 {
+                                completionHandler(error: nil)
+                            }
+                            else {
+                                // Error
+                                completionHandler(error: error)
+                            }
+                        }
+                        else {
+                            // Success
+                            completionHandler(error: nil)
+                        }
+                    })
+                }
+            })
+        }
+    }
+    
+    // NEW: Helper func for updateUser
+    private class func updateUserInFamily(updates: NSDictionary, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            getCurrentUser({ (userDict, error) in
+                if error == nil {
+                    if let userDict = userDict {
+                        // Check if key exists yet
+                        if let familyId = userDict.objectForKey("familyId") as? String {
+                            let userId = user.uid
+                            let databaseRef = FIRDatabase.database().reference()
+                            let updatesDict = updates as [NSObject : AnyObject]
+                            
+                            databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                                if error != nil {
+                                    print("Error updating user in family")
+                                    completionHandler(error: error)
+                                }
+                                else {
+                                    print("Successfully updated user in family")
+                                    completionHandler(error: nil)
+                                }
+                            })
+                        }
+                        // Key does not exist -- do not update
+                        else {
+                            print("familyId key does not exist -- skipping family update")
+                            let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
+                            completionHandler(error: error)
+                        }
+//                        let familyId = userDict.objectForKey("familyId") as! String
+//                        let userId = user.uid
+//                        let databaseRef = FIRDatabase.database().reference()
+//                        let updatesDict = updates as [NSObject : AnyObject]
+//                        
+//                        databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+//                            if error != nil {
+//                                print("Error updating user in family")
+//                                completionHandler(error: error)
+//                            }
+//                            else {
+//                                print("Successfully updated user in family")
+//                                completionHandler(error: nil)
+//                            }
+//                        })
+                    }
                 }
             })
         }
@@ -104,7 +169,7 @@ class FirebaseManager: NSObject {
                             user.deleteWithCompletion({ (error) in
                                 if error != nil {
                                     // Error
-                                    print("Error occurred while deleting account")
+                                    print("Error occurred while deleting account: \(error)")
                                     completionHandler(error: error)
                                 }
                                 else {

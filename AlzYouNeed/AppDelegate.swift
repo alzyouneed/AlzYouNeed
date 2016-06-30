@@ -20,41 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure Firebase
         FIRApp.configure()
         
-//        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-//            if let currentUser = user {
-//                // User is signed in.
-//                print("\(currentUser) is logged in")
-//                
-//                // Check if current user has completed signup
-//                FirebaseManager.getUserSignUpStatus({ (status, error) in
-//                    if error == nil {
-//                        if let signupStatus = status {
-//                            if signupStatus == "false" {
-//                                print("User has not completed signup -- moving to family VC")
-//                                var storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                                var familyVC = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
-//                                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//                                self.window?.rootViewController = familyVC
-//                                self.window?.makeKeyAndVisible()
-//                            }
-//                        }
-//                    }
-//                })
-//                
-//            } else {
-//                // No user is signed in.
-//                print("No user is signed in -- moving to onboarding flow")
-//                var storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                var familyVC = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-//                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//                self.window?.rootViewController = familyVC
-//                self.window?.makeKeyAndVisible()
-//                
-////                self.tabBarController?.performSegueWithIdentifier("Onboarding", sender: self)
-//            }
-//        }
-
-        
 //        FIRDatabase.database().persistenceEnabled = true
         
         return true
@@ -63,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        print("Will resign active") // Log start of call here
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
@@ -76,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("Did become active") // Log end of call here 
     }
 
     func applicationWillTerminate(application: UIApplication) {

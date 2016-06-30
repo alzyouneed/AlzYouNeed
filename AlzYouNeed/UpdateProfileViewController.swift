@@ -50,6 +50,9 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         // Ensure image index is correct for switching
         selectionView.avatarImageIndex = selectionView.avatarIndex(userAvatarId)
         
+        self.nameVTFView.nameMode()
+        self.phoneNumberVTFView.phoneNumberMode()
+        
         nameVTFView.textField.placeholder = userName
         phoneNumberVTFView.textField.placeholder = userPhoneNumber
         
@@ -69,12 +72,35 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         if updatesToSave() {
             // Update profile and return to previous VC
             print("Update to save")
+            var updates = ["name": nameVTFView.textField.text!, "phoneNumber": phoneNumberVTFView.textField.text!, "avatarId": selectionView.avatarId()]
+            
+            // Remove if no updates
+            if !nameUpdate() {
+                updates.removeValueForKey("name")
+            }
+            if !phoneNumberUpdate() {
+                updates.removeValueForKey("phoneNumber")
+            }
+            
+            if !avatarUpdate() {
+                updates.removeValueForKey("avatarId")
+            }
+            
+            FirebaseManager.updateUser(updates, completionHandler: { (error) in
+                if error == nil {
+                    // Return to previous VC
+                    print("Profile updated -- returning to VC")
+                    self.navigationController?.popToRootViewControllerAnimated(true)
+                }
+            })
+            
         }
         else {
             print("No updates to save")
         }
     }
     
+    // MARK: - Updates
     func updatesToSave() -> Bool {
         if nameUpdate() || phoneNumberUpdate() || avatarUpdate() {
             enableUpdateButton(true)
@@ -148,6 +174,19 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - UITextFieldDelegate
     func textFieldDidChange(textField: UITextField) {
+        let tag = textField.superview!.superview!.tag
+        
+        switch tag {
+        // Name textField
+        case 0:
+            validateName()
+        // Phone number textField
+        case 1:
+            validatePhoneNumber()
+        default:
+            break
+        }
+        
         updatesToSave()
     }
     

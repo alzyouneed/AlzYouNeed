@@ -17,13 +17,13 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FirebaseManager.getUserSignUpStatus { (status, error) in
-            if error == nil {
-                if let signupStatus = status {
-                    print("Sign up completed: \(signupStatus)")
-                }
-            }
-        }
+//        FirebaseManager.getUserSignUpStatus { (status, error) in
+//            if error == nil {
+//                if let signupStatus = status {
+//                    print("Sign up completed: \(signupStatus)")
+//                }
+//            }
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -46,6 +46,24 @@ class DashboardViewController: UIViewController {
             try! FIRAuth.auth()?.signOut()
         }
         let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
+            self.showDeleteAccountWarning()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // Cancel button pressed
+        }
+        
+        alertController.addAction(updateAction)
+        alertController.addAction(logoutAction)
+        alertController.addAction(deleteAccountAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func showDeleteAccountWarning() {
+        let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .ActionSheet)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
             FirebaseManager.deleteCurrentUser({ (error) in
                 if error == nil {
                     // Success
@@ -56,9 +74,7 @@ class DashboardViewController: UIViewController {
             // Cancel button pressed
         }
         
-        alertController.addAction(updateAction)
-        alertController.addAction(logoutAction)
-        alertController.addAction(deleteAccountAction)
+        alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
         presentViewController(alertController, animated: true, completion: nil)
