@@ -19,6 +19,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var loginButtons: loginButtonsView!
     @IBOutlet var loginButtonsBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet var logoImageView: UIImageView!
+    @IBOutlet var appNameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -125,6 +128,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             
             self.emailTextField.hidden = false
             self.passwordTextField.hidden = false
+            
+            self.logoImageView.hidden = true
+            self.appNameLabel.hidden = true
+            
             self.emailTextField.alpha = 0
             self.passwordTextField.alpha = 0
             
@@ -149,12 +156,16 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 self.emailTextField.alpha = 0
                 self.passwordTextField.alpha = 0
+                
             }) { (completed) in
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
                 
                 self.emailTextField.hidden = true
                 self.passwordTextField.hidden = true
+                
+                self.logoImageView.hidden = false
+                self.appNameLabel.hidden = false
 
                 self.loginMode = false
             }

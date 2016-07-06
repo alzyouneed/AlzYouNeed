@@ -523,7 +523,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cvj-QR-MgC">
-                                <rect key="frame" x="20" y="433" width="560" height="46"/>
+                                <rect key="frame" x="20" y="420" width="560" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="LBX-c4-ySl"/>
                                 </constraints>
@@ -532,7 +532,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vQA-y3-ttL">
-                                <rect key="frame" x="20" y="487" width="560" height="46"/>
+                                <rect key="frame" x="20" y="474" width="560" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="xQK-xM-XVh"/>
                                 </constraints>
@@ -540,13 +540,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-Xk-n5I" customClass="loginButtonsView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="553" width="600" height="47"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="47" id="yqy-p1-b0v"/>
-                                </constraints>
-                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bareLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pTn-uj-d6L">
                                 <rect key="frame" x="238" y="80" width="125" height="125"/>
                                 <constraints>
@@ -563,6 +556,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-Xk-n5I" customClass="loginButtonsView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="540" width="600" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="yqy-p1-b0v"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -585,9 +585,11 @@
                     <navigationItem key="navigationItem" id="ZUO-33-HWe"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="appNameLabel" destination="78x-OC-pb2" id="x6S-IE-Qfr"/>
                         <outlet property="emailTextField" destination="cvj-QR-MgC" id="zo5-vU-8z3"/>
                         <outlet property="loginButtons" destination="M7G-Xk-n5I" id="btz-jg-EMV"/>
                         <outlet property="loginButtonsBottomConstraint" destination="4nv-4a-DrL" id="UU3-ld-vfi"/>
+                        <outlet property="logoImageView" destination="pTn-uj-d6L" id="l82-TO-67u"/>
                         <outlet property="passwordTextField" destination="vQA-y3-ttL" id="HXe-X0-sJh"/>
                     </connections>
                 </viewController>
