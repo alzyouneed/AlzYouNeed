@@ -11,23 +11,31 @@ import Firebase
 
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet var loginButton: UIButton!
-    @IBOutlet var signUpButton: UIButton!
-    
     var loginMode = false
     
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
-    @IBOutlet var cancelButton: UIButton!
+    
+    @IBOutlet var loginButtons: loginButtonsView!
+    @IBOutlet var loginButtonsBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
 
-        loginButton.layer.cornerRadius = loginButton.frame.size.width * 0.05
-        signUpButton.layer.cornerRadius = signUpButton.frame.size.width * 0.05
+        configureView()
+    }
+    
+    func configureView() {
         
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        
+        loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -38,6 +46,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        loginButtons.resetState()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,14 +76,35 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func signUp(sender: UIButton) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("creatUserVC") as! CreateUserViewController
-        self.navigationController?.pushViewController(createUserVC, animated: true)
+    func leftButtonAction(sender: UIButton) {
+        switch sender.currentTitle! {
+        case "Sign up":
+            signUp()
+        case "Login":
+            loginUser()
+        default:
+            break
+        }
     }
     
-    @IBAction func login(sender: UIButton) {
-        loginUser()
+    func rightButtonAction(sender: UIButton) {
+        switch sender.currentTitle! {
+        case "Cancel":
+//            print("log in user")
+            loginUser()
+        case "Login":
+            hideLoginView()
+            self.view.endEditing(true)
+        default:
+            break
+        }
+        
+    }
+    
+    func signUp() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("createUserVC") as! CreateUserViewController
+        self.navigationController?.pushViewController(createUserVC, animated: true)
     }
     
     func validateLogin() -> Bool {
@@ -85,11 +118,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-
-    @IBAction func cancelLogin(sender: UIButton) {
-        hideLoginView()
-        self.view.endEditing(true)
-    }
     
     func showLoginView() {
         if !loginMode {
@@ -97,20 +125,13 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             
             self.emailTextField.hidden = false
             self.passwordTextField.hidden = false
-            self.cancelButton.hidden = false
             self.emailTextField.alpha = 0
             self.passwordTextField.alpha = 0
-            self.cancelButton.alpha = 0
             
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
-                self.signUpButton.alpha = 0
-                
                 self.emailTextField.alpha = 1
                 self.passwordTextField.alpha = 1
-                self.cancelButton.alpha = 1
             }) { (completed) in
-                self.signUpButton.hidden = true
-                
                 // Present keyboard
                 self.emailTextField.becomeFirstResponder()
             }
@@ -122,26 +143,19 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func hideLoginView() {
         if loginMode {
-            
-            self.signUpButton.hidden = false
-            
+
             self.resignFirstResponder()
             
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
-                self.signUpButton.alpha = 1
-                
                 self.emailTextField.alpha = 0
                 self.passwordTextField.alpha = 0
-                self.cancelButton.alpha = 0
-                
             }) { (completed) in
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
                 
                 self.emailTextField.hidden = true
                 self.passwordTextField.hidden = true
-                self.cancelButton.hidden = true
-                
+
                 self.loginMode = false
             }
         }
@@ -161,6 +175,21 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             break
         }
         return true
+    }
+    
+    // MARK: - Keyboard
+    func keyboardWillShow(sender: NSNotification) {
+        let info = sender.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        UIView.animateWithDuration(0.2) {
+            self.loginButtonsBottomConstraint.constant = keyboardFrame.size.height
+        }
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        UIView.animateWithDuration(0.2) {
+            self.loginButtonsBottomConstraint.constant = 0
+        }
     }
 
 }

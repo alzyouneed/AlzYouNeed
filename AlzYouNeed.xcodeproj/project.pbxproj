@@ -23,6 +23,8 @@
 		2D72834B1D1EF5B800389CFC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D72834A1D1EF5B800389CFC /* Contact.swift */; };
 		2D7948471D1248F000FF1E51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D7948461D1248F000FF1E51 /* .gitignore */; };
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
+		2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */; };
+		2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */; };
 		2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9834D71D0C4A91000977DC /* AppDelegate.swift */; };
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
@@ -62,6 +64,8 @@
 		2D72834A1D1EF5B800389CFC /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginButtonsView.xib; sourceTree = "<group>"; };
+		2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginButtonsView.swift; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9834D71D0C4A91000977DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D9834DC1D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 			children = (
 				2D417BED1D2187540045C80F /* validateTextField */,
 				2D417BF01D2187770045C80F /* avatarSelection */,
+				2D90E2D11D2C953200F7AFEE /* loginButtons */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -186,6 +191,15 @@
 				2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		2D90E2D11D2C953200F7AFEE /* loginButtons */ = {
+			isa = PBXGroup;
+			children = (
+				2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */,
+				2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */,
+			);
+			name = loginButtons;
 			sourceTree = "<group>";
 		};
 		2D9834CB1D0C4A91000977DC = {
@@ -341,7 +355,7 @@
 				TargetAttributes = {
 					2D9834D31D0C4A91000977DC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = M8579RUEVZ;
+						DevelopmentTeam = 472W345FWN;
 					};
 				};
 			};
@@ -369,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D7948471D1248F000FF1E51 /* .gitignore in Resources */,
+				2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */,
 				2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */,
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
@@ -470,6 +485,7 @@
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
+				2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
