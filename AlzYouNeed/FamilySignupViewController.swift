@@ -12,18 +12,14 @@ import Firebase
 class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
-    
     var newFamily = true
+    @IBOutlet var familyButtonBottomConstraint: NSLayoutConstraint!
     
     // MARK: - UI Elements
-    
     @IBOutlet var familyIdVTFView: validateTextFieldView!
     @IBOutlet var passwordVTFView: validateTextFieldView!
     @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
     @IBOutlet var createJoinFamilyButton: UIButton!
-    
-    // MARK: - Constraints
-    @IBOutlet var createJoinFamilyButtonTopLayoutConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +27,24 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         configureView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add observers
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         familyIdVTFView.textField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Remove observers
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,18 +119,12 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             // set button title
             createJoinFamilyButton.setTitle("Create Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Next
-            
-            // Set layout constraint
-            createJoinFamilyButtonTopLayoutConstraint.constant = 8
         }
         else {
             confirmPasswordVTFView.hidden = true
             // set button title
             createJoinFamilyButton.setTitle("Join Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Done
-            
-            // Set layout constraint
-            createJoinFamilyButtonTopLayoutConstraint.constant -= confirmPasswordVTFView.frame.height + 8
         }
     }
     
@@ -247,6 +253,33 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             confirmPasswordVTFView.isValid(false)
             return false
         }
+    }
+    
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        
+        if show {
+            UIView.animateWithDuration(animationDuration) {
+                self.familyButtonBottomConstraint.constant = changeInHeight
+            }
+        }
+        else {
+            UIView.animateWithDuration(animationDuration) {
+                self.familyButtonBottomConstraint.constant = 0
+            }
+        }
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender)
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        adjustingKeyboardHeight(false, notification: sender)
     }
     
     /*

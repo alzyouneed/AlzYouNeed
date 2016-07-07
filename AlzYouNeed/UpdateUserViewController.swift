@@ -24,13 +24,33 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var selectionView: avatarSelectionView!
     
     // MARK: - Properties
-//    let imagePicker = UIImagePickerController()
     var stepCompleted = false
+    @IBOutlet var nextButtonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add observers
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.nameVTFView.textField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Remove observers
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -251,6 +271,33 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         }
         
         signUpButtonEnabled()
+    }
+    
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        
+        if show {
+            UIView.animateWithDuration(animationDuration) {
+                self.nextButtonBottomConstraint.constant = changeInHeight
+            }
+        }
+        else {
+            UIView.animateWithDuration(animationDuration) {
+                self.nextButtonBottomConstraint.constant = 0
+            }
+        }
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender)
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        adjustingKeyboardHeight(false, notification: sender)
     }
     
 //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

@@ -139,19 +139,20 @@ class FirebaseManager: NSObject {
         if let user = FIRAuth.auth()?.currentUser {
             deleteUserFromFamily { (error, databaseRef) in
                 // If user does not belong to family, proceed normally
-                if error?.code != 0 {
-                    // Other error
-                    if error != nil {
+                if error != nil {
+                    if error?.code != 0 {
                         // Error
                         print("Error occurred while deleting account from family")
                         completionHandler(error: error)
                     }
+                    
                 }
                 else {
                     // Success
                     deleteUserFromRTDB({ (error, databaseRef) in
                         if error != nil {
                             // Error
+                            completionHandler(error: error)
                         }
                         else {
                             // Success
@@ -239,6 +240,7 @@ class FirebaseManager: NSObject {
                     // Remove key for save to family group
                     let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
                     modifiedDict.removeObjectForKey("completedSignup")
+                    modifiedDict["admin"] = "true"
                     
                     let familyToSave = ["password": password, "members":[user.uid: modifiedDict]]
                     

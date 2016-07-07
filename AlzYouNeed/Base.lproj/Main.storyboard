@@ -216,11 +216,10 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFR-c8-gcw">
-                                <rect key="frame" x="214" y="182" width="173" height="46"/>
+                                <rect key="frame" x="0.0" y="476" width="600" height="60"/>
                                 <color key="backgroundColor" red="0.1764705882" green="0.84705882349999995" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="173" id="GnG-yL-9bY"/>
-                                    <constraint firstAttribute="height" constant="46" id="ZWz-9D-qdZ"/>
+                                    <constraint firstAttribute="height" constant="60" id="7SJ-E2-p91"/>
                                 </constraints>
                                 <state key="normal" title="Create Family">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -233,22 +232,23 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="5N5-aV-aQM" secondAttribute="leading" id="4My-Na-6mt"/>
+                            <constraint firstAttribute="trailing" secondItem="eFR-c8-gcw" secondAttribute="trailing" id="5b8-v8-M2z"/>
                             <constraint firstItem="5N5-aV-aQM" firstAttribute="top" secondItem="jqI-9Z-ILZ" secondAttribute="bottom" constant="8" id="9mY-hV-or5"/>
                             <constraint firstAttribute="leadingMargin" secondItem="tbZ-PY-koH" secondAttribute="leading" id="DKB-PW-vDy"/>
                             <constraint firstItem="tbZ-PY-koH" firstAttribute="top" secondItem="5N5-aV-aQM" secondAttribute="bottom" constant="8" id="ESi-xu-mdF"/>
-                            <constraint firstItem="eFR-c8-gcw" firstAttribute="centerX" secondItem="BDZ-Td-4uh" secondAttribute="centerX" id="I7W-fc-OGf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jqI-9Z-ILZ" secondAttribute="trailing" id="IIT-bQ-dyo"/>
-                            <constraint firstItem="eFR-c8-gcw" firstAttribute="top" secondItem="tbZ-PY-koH" secondAttribute="bottom" constant="8" id="L0a-9g-mi5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tbZ-PY-koH" secondAttribute="trailing" id="Pmq-7V-E3Y"/>
                             <constraint firstAttribute="leadingMargin" secondItem="jqI-9Z-ILZ" secondAttribute="leading" id="VO7-Aj-EYk"/>
+                            <constraint firstItem="rzQ-2J-3C0" firstAttribute="top" secondItem="eFR-c8-gcw" secondAttribute="bottom" id="e8e-0a-aWm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5N5-aV-aQM" secondAttribute="trailing" id="h4J-vZ-ryw"/>
                             <constraint firstItem="jqI-9Z-ILZ" firstAttribute="top" secondItem="KTh-5F-ABQ" secondAttribute="bottom" constant="20" id="iQx-BK-3eX"/>
+                            <constraint firstItem="eFR-c8-gcw" firstAttribute="leading" secondItem="BDZ-Td-4uh" secondAttribute="leading" id="s9t-u3-c5c"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="confirmPasswordVTFView" destination="tbZ-PY-koH" id="zvv-8k-UId"/>
                         <outlet property="createJoinFamilyButton" destination="eFR-c8-gcw" id="RPv-3T-rAm"/>
-                        <outlet property="createJoinFamilyButtonTopLayoutConstraint" destination="L0a-9g-mi5" id="8oU-kH-3SX"/>
+                        <outlet property="familyButtonBottomConstraint" destination="e8e-0a-aWm" id="ATw-op-OD5"/>
                         <outlet property="familyIdVTFView" destination="jqI-9Z-ILZ" id="vuG-fb-gE8"/>
                         <outlet property="passwordVTFView" destination="5N5-aV-aQM" id="88L-8v-3YF"/>
                     </connections>
@@ -378,10 +378,32 @@
                                 </constraints>
                             </view>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0UK-9c-99H">
-                                <rect key="frame" x="337" y="231" width="51" height="31"/>
+                                <rect key="frame" x="102" y="231" width="51" height="31"/>
                             </switch>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-gO-k8F" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="192" y="20" width="216" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="216" id="ORh-9d-aFw"/>
+                                    <constraint firstAttribute="height" constant="100" id="we7-Px-Mko"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-Ui-83L">
+                                <rect key="frame" x="0.0" y="476" width="600" height="60"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.66274509800000003" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="0hp-mE-mZn"/>
+                                </constraints>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="completeSetup:" destination="vu3-xn-OOF" eventType="touchUpInside" id="5bN-2M-r2S"/>
+                                    <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="1Dy-Bz-OGC"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayi-9u-FXc">
-                                <rect key="frame" x="213" y="236" width="74" height="21"/>
+                                <rect key="frame" x="20" y="236" width="74" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="74" id="Rdm-El-eYb"/>
                                     <constraint firstAttribute="height" constant="21" id="f1x-Yi-9Aq"/>
@@ -405,43 +427,23 @@
                                     <action selector="addPhoto:" destination="vu3-xn-OOF" eventType="touchUpInside" id="9gY-RV-owb"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-gO-k8F" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="192" y="20" width="216" height="100"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="216" id="ORh-9d-aFw"/>
-                                    <constraint firstAttribute="height" constant="100" id="we7-Px-Mko"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-Ui-83L">
-                                <rect key="frame" x="213" y="270" width="173" height="47"/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.66274509800000003" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="47" id="bko-rV-mej"/>
-                                    <constraint firstAttribute="width" constant="173" id="fNR-ft-YUs"/>
-                                </constraints>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="completeSetup:" destination="vu3-xn-OOF" eventType="touchUpInside" id="5bN-2M-r2S"/>
-                                    <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="1Dy-Bz-OGC"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="xLf-c8-Ma4" secondAttribute="leading" id="41N-Za-zcZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xLf-c8-Ma4" secondAttribute="trailing" id="4RV-Tn-ssD"/>
-                            <constraint firstItem="kCt-Ui-83L" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="Cir-fR-aqX"/>
+                            <constraint firstItem="0UK-9c-99H" firstAttribute="leading" secondItem="ayi-9u-FXc" secondAttribute="trailing" constant="8" id="8Vb-oz-sCx"/>
+                            <constraint firstItem="iZb-5H-e9P" firstAttribute="top" secondItem="kCt-Ui-83L" secondAttribute="bottom" id="Azt-hW-EEf"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="ayi-9u-FXc" secondAttribute="bottom" constant="8" id="D8b-a9-hCb"/>
                             <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="W2J-gO-k8F" secondAttribute="bottom" constant="8" id="Iuj-je-hSg"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="ayi-9u-FXc" secondAttribute="leading" id="Lo2-0l-jGt"/>
+                            <constraint firstItem="0UK-9c-99H" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="QYx-SA-Vok"/>
                             <constraint firstItem="ayi-9u-FXc" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="Qgk-l3-gKQ"/>
-                            <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="0UK-9c-99H" secondAttribute="bottom" constant="8" id="TTl-xu-cy7"/>
-                            <constraint firstItem="0UK-9c-99H" firstAttribute="trailing" secondItem="kCt-Ui-83L" secondAttribute="trailing" id="VJK-NB-2HG"/>
+                            <constraint firstAttribute="trailing" secondItem="kCt-Ui-83L" secondAttribute="trailing" id="c7k-14-p5N"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerY" secondItem="ayi-9u-FXc" secondAttribute="centerY" id="eNQ-cj-kLC"/>
-                            <constraint firstItem="ayi-9u-FXc" firstAttribute="leading" secondItem="kCt-Ui-83L" secondAttribute="leading" id="gCF-73-VaS"/>
+                            <constraint firstItem="0UK-9c-99H" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="3" id="hNA-IB-pyY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ccO-ou-Rs8" secondAttribute="leading" id="iaz-iL-vzZ"/>
+                            <constraint firstItem="kCt-Ui-83L" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="jq3-ws-MIt"/>
                             <constraint firstItem="xLf-c8-Ma4" firstAttribute="top" secondItem="ccO-ou-Rs8" secondAttribute="bottom" constant="8" id="pcF-w4-Pms"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ccO-ou-Rs8" secondAttribute="trailing" id="rqX-Tg-RrZ"/>
                             <constraint firstItem="W2J-gO-k8F" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" constant="20" id="ssa-q0-fJ2"/>
@@ -453,6 +455,8 @@
                                 <exclude reference="8v1-4n-gli"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Qgk-l3-gKQ"/>
+                                <exclude reference="QYx-SA-Vok"/>
                                 <exclude reference="D8b-a9-hCb"/>
                                 <exclude reference="yX7-2a-dTC"/>
                             </mask>
@@ -462,6 +466,7 @@
                     <connections>
                         <outlet property="addPhotoButton" destination="8v1-4n-gli" id="Usq-6q-GDB"/>
                         <outlet property="nameVTFView" destination="ccO-ou-Rs8" id="YOM-y4-YuU"/>
+                        <outlet property="nextButtonBottomConstraint" destination="Azt-hW-EEf" id="vDN-JN-vcY"/>
                         <outlet property="patientSwitch" destination="0UK-9c-99H" id="lfP-HJ-DOn"/>
                         <outlet property="phoneNumberVTFView" destination="xLf-c8-Ma4" id="clS-7U-zZH"/>
                         <outlet property="selectionView" destination="W2J-gO-k8F" id="zMF-uY-e46"/>

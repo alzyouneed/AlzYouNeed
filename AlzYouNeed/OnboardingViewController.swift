@@ -58,6 +58,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         loginButtons.resetState()
     }
+    
+    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
