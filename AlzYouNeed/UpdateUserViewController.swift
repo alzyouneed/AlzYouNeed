@@ -52,6 +52,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
+    
+//    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return UIStatusBarStyle.LightContent
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

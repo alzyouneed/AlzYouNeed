@@ -30,7 +30,9 @@
                         <constraint firstAttribute="width" constant="50" id="Dez-nX-kgv"/>
                         <constraint firstAttribute="height" constant="50" id="J1m-nL-99G"/>
                     </constraints>
-                    <state key="normal" title="Next"/>
+                    <state key="normal" title="Next">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="selectImage:" destination="-1" eventType="touchUpInside" id="Fzx-Sf-zoQ"/>
                     </connections>
@@ -41,13 +43,14 @@
                         <constraint firstAttribute="height" constant="50" id="ef3-U3-opt"/>
                         <constraint firstAttribute="width" constant="50" id="pks-9X-uLj"/>
                     </constraints>
-                    <state key="normal" title="Last"/>
+                    <state key="normal" title="Last">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="selectImage:" destination="-1" eventType="touchUpInside" id="pQT-uR-JPw"/>
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="wou-e7-Pow" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6td-E7-B1P"/>
                 <constraint firstItem="s7E-4w-g0b" firstAttribute="centerY" secondItem="wou-e7-Pow" secondAttribute="centerY" id="fuK-A7-eTH"/>

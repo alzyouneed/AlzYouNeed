@@ -147,30 +147,30 @@ class FirebaseManager: NSObject {
                     }
                     
                 }
-                else {
-                    // Success
-                    deleteUserFromRTDB({ (error, databaseRef) in
-                        if error != nil {
-                            // Error
-                            completionHandler(error: error)
-                        }
-                        else {
-                            // Success
-                            user.deleteWithCompletion({ (error) in
-                                if error != nil {
-                                    // Error
-                                    print("Error occurred while deleting account: \(error)")
-                                    completionHandler(error: error)
-                                }
-                                else {
-                                    // Success
-                                    print("Account deleted")
-                                    completionHandler(error: nil)
-                                }
-                            })
-                        }
-                    })
-                }
+//                else {
+                // Success
+                deleteUserFromRTDB({ (error, databaseRef) in
+                    if error != nil {
+                        // Error
+                        completionHandler(error: error)
+                    }
+                    else {
+                        // Success
+                        user.deleteWithCompletion({ (error) in
+                            if error != nil {
+                                // Error
+                                print("Error occurred while deleting account: \(error)")
+                                completionHandler(error: error)
+                            }
+                            else {
+                                // Success
+                                print("Account deleted")
+                                completionHandler(error: nil)
+                            }
+                        })
+                    }
+                })
+//                }
             }
         }
     }

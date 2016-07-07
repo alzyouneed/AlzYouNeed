@@ -46,6 +46,10 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
+    
+//    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return UIStatusBarStyle.LightContent
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,6 +69,10 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
         nextButtonEnabled()
+        
+        self.navigationController?.navigationBar.titleTextAttributes = ([NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.barTintColor = backgroundPurple
     }
     
     @IBAction func presentNextView(sender: UIButton) {
