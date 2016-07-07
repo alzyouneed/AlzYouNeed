@@ -19,6 +19,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Properties
     var userSignedUp = false
+    @IBOutlet var nextButtonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +27,25 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         configureView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add observers
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         self.emailVTFView.textField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Remove observers
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -230,14 +248,31 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        
+        if show {
+            UIView.animateWithDuration(animationDuration) {
+                self.nextButtonBottomConstraint.constant = changeInHeight
+            }
+        }
+        else {
+            UIView.animateWithDuration(animationDuration) {
+                self.nextButtonBottomConstraint.constant = 0
+            }
+        }
     }
-    */
+    
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender)
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        adjustingKeyboardHeight(false, notification: sender)
+    }
 
 }

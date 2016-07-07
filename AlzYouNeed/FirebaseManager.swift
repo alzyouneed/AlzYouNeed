@@ -138,10 +138,14 @@ class FirebaseManager: NSObject {
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             deleteUserFromFamily { (error, databaseRef) in
-                if error != nil {
-                    // Error
-                    print("Error occurred while deleting account from family")
-                    completionHandler(error: error)
+                // If user does not belong to family, proceed normally
+                if error?.code != 0 {
+                    // Other error
+                    if error != nil {
+                        // Error
+                        print("Error occurred while deleting account from family")
+                        completionHandler(error: error)
+                    }
                 }
                 else {
                     // Success
@@ -196,18 +200,27 @@ class FirebaseManager: NSObject {
             getCurrentUser({ (userDict, error) in
                 if let userDict = userDict {
                     let databaseRef = FIRDatabase.database().reference()
-                    let familyId = userDict.objectForKey("familyId") as! String
                     
-                    databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValueWithCompletionBlock({ (error, oldRef) in
-                        if error != nil {
-                            print("Error deleting user from family group")
-                            completionHandler(error: error, databaseRef: nil)
-                        }
-                        else {
-                            print("User deleted from family group")
-                            completionHandler(error: nil, databaseRef: oldRef)
-                        }
-                    })
+                    // Check if key exists yet
+                    if let familyId = userDict.objectForKey("familyId") as? String {
+                        
+                        databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValueWithCompletionBlock({ (error, oldRef) in
+                            if error != nil {
+                                print("Error deleting user from family group")
+                                completionHandler(error: error, databaseRef: nil)
+                            }
+                            else {
+                                print("User deleted from family group")
+                                completionHandler(error: nil, databaseRef: oldRef)
+                            }
+                        })
+                    }
+                        // FamilyID does not exist
+                    else {
+                        print("User does not belong to family group -- skipping step")
+                        let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
+                        completionHandler(error: error, databaseRef: nil)
+                    }
                 }
             })
         }

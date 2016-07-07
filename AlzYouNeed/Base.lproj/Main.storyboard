@@ -283,21 +283,6 @@
                                     <constraint firstAttribute="height" constant="46" id="zbb-Vh-Y7V"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfQ-MJ-m4q">
-                                <rect key="frame" x="214" y="182" width="173" height="46"/>
-                                <color key="backgroundColor" red="0.22352941179999999" green="0.66274509800000003" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="173" id="Buy-Td-q4b"/>
-                                    <constraint firstAttribute="height" constant="46" id="cLd-hv-nzj"/>
-                                </constraints>
-                                <state key="normal" title="Next">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="presentNextView:" destination="QMa-Ph-dOR" eventType="touchUpInside" id="KQi-81-xDw"/>
-                                    <segue destination="vu3-xn-OOF" kind="show" identifier="updateUser" id="u3h-XE-qbp"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsc-YU-cNl" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="560" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -305,21 +290,52 @@
                                     <constraint firstAttribute="height" constant="46" id="1hX-Bk-61X"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfQ-MJ-m4q">
+                                <rect key="frame" x="0.0" y="476" width="600" height="60"/>
+                                <color key="backgroundColor" red="0.22352941179999999" green="0.66274509800000003" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="173" id="Buy-Td-q4b"/>
+                                    <constraint firstAttribute="height" constant="60" id="O6N-Rm-w7B"/>
+                                    <constraint firstAttribute="height" constant="46" id="cLd-hv-nzj"/>
+                                </constraints>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Buy-Td-q4b"/>
+                                        <exclude reference="cLd-hv-nzj"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="presentNextView:" destination="QMa-Ph-dOR" eventType="touchUpInside" id="KQi-81-xDw"/>
+                                    <segue destination="vu3-xn-OOF" kind="show" identifier="updateUser" id="u3h-XE-qbp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="tfQ-MJ-m4q" firstAttribute="top" secondItem="Y5s-1d-YtL" secondAttribute="bottom" constant="8" id="7cf-SK-9fG"/>
+                            <constraint firstItem="gk0-91-7wb" firstAttribute="top" secondItem="tfQ-MJ-m4q" secondAttribute="bottom" id="9Us-XM-0IL"/>
                             <constraint firstItem="Y5s-1d-YtL" firstAttribute="top" secondItem="shl-oi-30x" secondAttribute="bottom" constant="8" id="F3L-bx-3A5"/>
                             <constraint firstItem="vsc-YU-cNl" firstAttribute="top" secondItem="RHD-Mt-PpB" secondAttribute="bottom" constant="20" id="H6J-dF-qcd"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="top" secondItem="vsc-YU-cNl" secondAttribute="bottom" constant="8" id="OQI-26-HkW"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="trailing" secondItem="a1u-dL-OmZ" secondAttribute="trailingMargin" id="PDC-IO-8NX"/>
                             <constraint firstItem="vsc-YU-cNl" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="Xk5-qc-ymm"/>
+                            <constraint firstItem="tfQ-MJ-m4q" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leading" id="b0b-mo-Knc"/>
                             <constraint firstItem="Y5s-1d-YtL" firstAttribute="trailing" secondItem="a1u-dL-OmZ" secondAttribute="trailingMargin" id="eiR-0m-fpC"/>
                             <constraint firstItem="vsc-YU-cNl" firstAttribute="trailing" secondItem="a1u-dL-OmZ" secondAttribute="trailingMargin" id="hes-ub-YxG"/>
+                            <constraint firstAttribute="trailing" secondItem="tfQ-MJ-m4q" secondAttribute="trailing" id="mbX-lF-bLa"/>
                             <constraint firstItem="Y5s-1d-YtL" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="nkx-7c-sQi"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="ov1-7x-wEC"/>
                             <constraint firstItem="tfQ-MJ-m4q" firstAttribute="centerX" secondItem="a1u-dL-OmZ" secondAttribute="centerX" id="wLd-EL-Hu9"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7cf-SK-9fG"/>
+                                <exclude reference="wLd-EL-Hu9"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="New Account" id="uhi-v7-HaA"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -327,6 +343,7 @@
                         <outlet property="confirmPasswordVTFView" destination="Y5s-1d-YtL" id="N6E-1O-uue"/>
                         <outlet property="emailVTFView" destination="vsc-YU-cNl" id="2fb-Nf-oPs"/>
                         <outlet property="nextButton" destination="tfQ-MJ-m4q" id="gj8-5q-HG0"/>
+                        <outlet property="nextButtonBottomConstraint" destination="9Us-XM-0IL" id="Uvh-UP-Q7Q"/>
                         <outlet property="passwordVTFView" destination="shl-oi-30x" id="8Ko-jX-E55"/>
                     </connections>
                 </viewController>
