@@ -24,10 +24,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
-
         configureView()
     }
     
@@ -42,6 +38,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillDisappear(animated: Bool) {
+        // Remove observers
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
         self.navigationController?.setNavigationBarHidden(false, animated: animated);
         super.viewWillDisappear(animated)
     }
@@ -49,6 +49,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        // Add observers
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -135,7 +139,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             self.emailTextField.alpha = 0
             self.passwordTextField.alpha = 0
             
-            UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+            UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 self.emailTextField.alpha = 1
                 self.passwordTextField.alpha = 1
             }) { (completed) in
@@ -189,18 +193,34 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Keyboard
-    func keyboardWillShow(sender: NSNotification) {
-        let info = sender.userInfo!
-        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-        UIView.animateWithDuration(0.2) {
-            self.loginButtonsBottomConstraint.constant = keyboardFrame.size.height
+    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        
+        if show {
+            UIView.animateWithDuration(animationDuration) {
+                self.loginButtonsBottomConstraint.constant = changeInHeight
+            }
+        }
+        else {
+            UIView.animateWithDuration(animationDuration) {
+                self.loginButtonsBottomConstraint.constant = 0
+            }
         }
     }
     
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender)
+    }
+    
     func keyboardWillHide(sender: NSNotification) {
-        UIView.animateWithDuration(0.2) {
-            self.loginButtonsBottomConstraint.constant = 0
-        }
+        adjustingKeyboardHeight(false, notification: sender)
+        
+//        UIView.animateWithDuration(0.2) {
+//            self.loginButtonsBottomConstraint.constant = 0
+//        }
     }
 
 }

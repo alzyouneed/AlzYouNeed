@@ -523,7 +523,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cvj-QR-MgC">
-                                <rect key="frame" x="20" y="420" width="560" height="46"/>
+                                <rect key="frame" x="20" y="390" width="560" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="LBX-c4-ySl"/>
                                 </constraints>
@@ -532,7 +532,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                             </textField>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vQA-y3-ttL">
-                                <rect key="frame" x="20" y="474" width="560" height="46"/>
+                                <rect key="frame" x="20" y="444" width="560" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="xQK-xM-XVh"/>
                                 </constraints>
@@ -560,25 +560,25 @@
                                 <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="yqy-p1-b0v"/>
+                                    <constraint firstAttribute="height" constant="60" identifier="loginHeight" id="yqy-p1-b0v"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="M7G-Xk-n5I" secondAttribute="bottom" id="4nv-4a-DrL"/>
+                            <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="M7G-Xk-n5I" secondAttribute="bottom" identifier="loginBottom" id="4nv-4a-DrL"/>
                             <constraint firstAttribute="trailing" secondItem="78x-OC-pb2" secondAttribute="trailing" id="64K-ew-Sgi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vQA-y3-ttL" secondAttribute="trailing" id="Coz-Cm-pgS"/>
                             <constraint firstAttribute="leadingMargin" secondItem="cvj-QR-MgC" secondAttribute="leading" id="DSp-Qk-aUo"/>
                             <constraint firstItem="pTn-uj-d6L" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="60" id="JJd-wv-IAR"/>
                             <constraint firstItem="78x-OC-pb2" firstAttribute="top" secondItem="pTn-uj-d6L" secondAttribute="bottom" constant="8" id="M5N-vP-F7z"/>
-                            <constraint firstItem="M7G-Xk-n5I" firstAttribute="top" secondItem="vQA-y3-ttL" secondAttribute="bottom" constant="20" id="Ocq-Vd-zjh"/>
+                            <constraint firstItem="M7G-Xk-n5I" firstAttribute="top" secondItem="vQA-y3-ttL" secondAttribute="bottom" constant="50" identifier="loginTop" id="Ocq-Vd-zjh"/>
                             <constraint firstItem="pTn-uj-d6L" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="cNW-NJ-alT"/>
-                            <constraint firstItem="M7G-Xk-n5I" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="h9j-Ry-UJM"/>
+                            <constraint firstItem="M7G-Xk-n5I" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" identifier="loginLeading" id="h9j-Ry-UJM"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vQA-y3-ttL" secondAttribute="leading" id="kAd-af-F8C"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cvj-QR-MgC" secondAttribute="trailing" id="lTb-4H-rWW"/>
                             <constraint firstItem="78x-OC-pb2" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="nEk-jC-xRh"/>
-                            <constraint firstAttribute="trailing" secondItem="M7G-Xk-n5I" secondAttribute="trailing" id="rv6-hc-UkT"/>
+                            <constraint firstAttribute="trailing" secondItem="M7G-Xk-n5I" secondAttribute="trailing" identifier="loginTrailing" id="rv6-hc-UkT"/>
                             <constraint firstItem="vQA-y3-ttL" firstAttribute="top" secondItem="cvj-QR-MgC" secondAttribute="bottom" constant="8" id="wkN-6q-H5T"/>
                         </constraints>
                     </view>
