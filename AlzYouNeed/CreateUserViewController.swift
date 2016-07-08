@@ -33,10 +33,11 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+        self.emailVTFView.textField.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.emailVTFView.textField.becomeFirstResponder()
     }
     
     override func viewWillDisappear(animated: Bool) {

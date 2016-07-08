@@ -41,11 +41,11 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+        self.nameVTFView.textField.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.nameVTFView.textField.becomeFirstResponder()
-
         UIView.animateWithDuration(0.5) {
             self.progressView.setProgress(0.33, animated: true)
         }

@@ -35,11 +35,11 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+        familyIdVTFView.textField.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
-        familyIdVTFView.textField.becomeFirstResponder()
-        
         UIView.animateWithDuration(0.5) {
             self.progressView.setProgress(0.825, animated: true)
         }
