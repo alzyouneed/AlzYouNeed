@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Customize navigation bar appearance
         UINavigationBar.appearance().barTintColor = backgroundPurple
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
         
         // Set status bar to light
         UIApplication.sharedApplication().statusBarStyle = .LightContent
