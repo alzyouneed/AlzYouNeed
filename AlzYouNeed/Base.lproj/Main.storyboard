@@ -475,9 +475,16 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="eA0-p4-RM7"/>
+                    <navigationItem key="navigationItem" title="Profile" id="eA0-p4-RM7">
+                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="Wc0-Ns-kDf">
+                            <connections>
+                                <action selector="cancelOnboarding:" destination="vu3-xn-OOF" id="od4-36-PUe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addPhotoButton" destination="8v1-4n-gli" id="Usq-6q-GDB"/>
+                        <outlet property="cancelButton" destination="Wc0-Ns-kDf" id="N7v-Nv-yWQ"/>
                         <outlet property="nameVTFView" destination="ccO-ou-Rs8" id="YOM-y4-YuU"/>
                         <outlet property="nextButtonBottomConstraint" destination="Azt-hW-EEf" id="vDN-JN-vcY"/>
                         <outlet property="patientSwitch" destination="0UK-9c-99H" id="lfP-HJ-DOn"/>
@@ -547,8 +554,15 @@
                             <constraint firstItem="98z-69-oIU" firstAttribute="centerX" secondItem="pRK-BY-SMm" secondAttribute="centerX" id="lQ2-wk-vYD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV"/>
+                    <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV">
+                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="cf4-D6-ohH">
+                            <connections>
+                                <action selector="cancelOnboarding:" destination="3ZR-OR-iiB" id="dBL-aI-DNv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="cf4-D6-ohH" id="EgW-mo-ztc"/>
                         <outlet property="progressView" destination="suC-LP-9I8" id="LYc-uq-JOp"/>
                     </connections>
                 </viewController>

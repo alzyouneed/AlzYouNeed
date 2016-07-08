@@ -25,6 +25,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var progressView: UIProgressView!
     
+    @IBOutlet var cancelButton: UIBarButtonItem!
+    
     // MARK: - Properties
     var stepCompleted = false
     @IBOutlet var nextButtonBottomConstraint: NSLayoutConstraint!
@@ -73,7 +75,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     func configureView() {
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(UpdateUserViewController.cancelAccountCreation(_:)))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(UpdateUserViewController.cancelAccountCreation(_:)))
         
         self.nameVTFView.nameMode()
         self.phoneNumberVTFView.phoneNumberMode()
@@ -221,7 +223,11 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func cancelAccountCreation(sender: UIBarButtonItem) {
+    @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
+        cancelAccountCreation()
+    }
+    
+    func cancelAccountCreation() {
         
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in

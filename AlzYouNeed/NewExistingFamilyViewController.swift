@@ -13,6 +13,8 @@ class NewExistingFamilyViewController: UIViewController {
 
     @IBOutlet var progressView: UIProgressView!
     
+    @IBOutlet var cancelButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,11 +38,14 @@ class NewExistingFamilyViewController: UIViewController {
     
     func configureView() {
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(NewExistingFamilyViewController.cancelAccountCreation(_:)))
+    }
+    
+    @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
+        cancelAccountCreation()
     }
     
     // MARK: - Firebase
-    func cancelAccountCreation(sender: UIBarButtonItem) {
+    func cancelAccountCreation() {
         
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
