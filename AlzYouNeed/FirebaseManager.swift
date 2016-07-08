@@ -241,6 +241,7 @@ class FirebaseManager: NSObject {
                         // Family already exists
                         if familyExists {
                            // Don't create new family
+                            print("Family name already in use")
                             let error = NSError(domain: "ExistingFamilyGroupError", code: 00001, userInfo: nil)
                             completionHandler(error: error, newDatabaseRef: nil)
                         }
@@ -340,7 +341,7 @@ class FirebaseManager: NSObject {
         
         databaseRef.child("families").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
             if let groupExists = snapshot.hasChild(familyId) as Bool? {
-                print("Families has child: \(groupExists) -- cannot create new family")
+                print("Family group exists: \(groupExists)")
                 completionHandler(error: nil, familyExists: groupExists)
             }
         }) { (error) in

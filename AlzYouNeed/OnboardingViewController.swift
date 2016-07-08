@@ -259,7 +259,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         shadowView.hidden = false
         shadowView.alpha = 0
         
-        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animateWithDuration(0.35, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.errorPopoverView.alpha = 1
             self.shadowView.alpha = 0.2
             }, completion: { (completed) in
