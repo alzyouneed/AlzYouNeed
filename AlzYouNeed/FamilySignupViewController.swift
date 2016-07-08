@@ -275,18 +275,21 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         let userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
         let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
+        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        
         if show {
-            UIView.animateWithDuration(animationDuration) {
-                self.familyButtonBottomConstraint.constant = changeInHeight
-            }
+            self.familyButtonBottomConstraint.constant = changeInHeight
         }
         else {
-            UIView.animateWithDuration(animationDuration) {
-                self.familyButtonBottomConstraint.constant = 0
-            }
+            self.familyButtonBottomConstraint.constant = 0
         }
+        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
     }
     
     func keyboardWillShow(sender: NSNotification) {

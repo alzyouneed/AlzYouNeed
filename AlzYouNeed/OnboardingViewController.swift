@@ -219,25 +219,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
-        
-//        if show {
-//            UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
-//                self.loginButtonsBottomConstraint.constant = changeInHeight
-//                }, completion: nil)
-//            
-////            UIView.animateWithDuration(animationDuration) {
-////                self.loginButtonsBottomConstraint.constant = changeInHeight
-////            }
-//        }
-//        else {
-//            UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
-//                self.loginButtonsBottomConstraint.constant = 0
-//                }, completion: nil)
-//            
-////            UIView.animateWithDuration(animationDuration) {
-////                self.loginButtonsBottomConstraint.constant = 0
-////            }
-//        }
     }
     
     func keyboardWillShow(sender: NSNotification) {
