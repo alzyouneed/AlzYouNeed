@@ -41,6 +41,8 @@
 		2DCC3C661D301208005D0EFD /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C611D301208005D0EFD /* OpenSans-Light.ttf */; };
 		2DCC3C671D301208005D0EFD /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C621D301208005D0EFD /* OpenSans-Regular.ttf */; };
 		2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */; };
+		2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */; };
+		2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6D1D303F53005D0EFD /* popoverView.swift */; };
 		2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
@@ -89,6 +91,8 @@
 		2DCC3C611D301208005D0EFD /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		2DCC3C621D301208005D0EFD /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = popoverView.xib; sourceTree = "<group>"; };
+		2DCC3C6D1D303F53005D0EFD /* popoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = popoverView.swift; sourceTree = "<group>"; };
 		2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCollectionViewController.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 				2DC8D5C91D12EAAF00952483 /* Onboarding */,
 				2DC8D5B81D12DBDD00952483 /* Dashboard */,
 				2D2244EE1D0F994E005D9DF5 /* ContactList */,
+				2DCC3C691D303EFB005D0EFD /* PopoverView */,
 				2DE890B71D11B9B7001DC19F /* Extras */,
 				2D9834DE1D0C4A91000977DC /* Assets.xcassets */,
 				2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */,
@@ -320,6 +325,23 @@
 				2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */,
 			);
 			name = Fonts;
+			sourceTree = "<group>";
+		};
+		2DCC3C691D303EFB005D0EFD /* PopoverView */ = {
+			isa = PBXGroup;
+			children = (
+				2DCC3C6A1D303F29005D0EFD /* View */,
+			);
+			name = PopoverView;
+			sourceTree = "<group>";
+		};
+		2DCC3C6A1D303F29005D0EFD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */,
+				2DCC3C6D1D303F53005D0EFD /* popoverView.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
@@ -415,6 +437,7 @@
 				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
+				2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */,
 				2DCC3C651D301208005D0EFD /* OpenSans-ExtraBold.ttf in Resources */,
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
 				2DCC3C641D301208005D0EFD /* OpenSans-Bold.ttf in Resources */,
@@ -502,6 +525,7 @@
 				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
+				2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */,
 				2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,

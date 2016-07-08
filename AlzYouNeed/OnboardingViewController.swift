@@ -22,6 +22,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var appNameLabel: UILabel!
     
+    // MARK: - Popover View Properties
+    var errorPopoverView: popoverView!
+    var shadowView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -89,6 +93,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                     }
                     else {
                         print(error)
+                        self.showPopoverView(error!)
                     }
                 })
             }
@@ -227,6 +232,54 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
+    }
+    
+    // MARK: - Popover View
+    func showPopoverView(error: NSError) {
+        // Hide keyboard
+        self.view.endEditing(true)
+        
+        // Configure view size
+        errorPopoverView = popoverView(frame: CGRect(x: self.view.frame.width/2 - 100, y: self.view.frame.height/2 - 200, width: 200, height: 200))
+        // Add popover message
+        errorPopoverView.configureWithError(error)
+        // Add target to hide view
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(CreateUserViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // Configure shadow view
+        shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        shadowView.backgroundColor = UIColor.blackColor()
+        
+        self.view.addSubview(shadowView)
+        self.view.addSubview(errorPopoverView)
+        
+        errorPopoverView.hidden = false
+        errorPopoverView.alpha = 0
+        
+        shadowView.hidden = false
+        shadowView.alpha = 0
+        
+        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.errorPopoverView.alpha = 1
+            self.shadowView.alpha = 0.2
+            }, completion: { (completed) in
+        })
+    }
+    
+    func hidePopoverView(sender: UIButton) {
+        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.errorPopoverView.alpha = 0
+            self.shadowView.alpha = 0
+            }, completion: { (completed) in
+                self.errorPopoverView.hidden = true
+                self.shadowView.hidden = true
+                
+                self.errorPopoverView.removeFromSuperview()
+                self.shadowView.removeFromSuperview()
+                
+                // Show keyboard again
+                self.passwordVTFView.textField.becomeFirstResponder()
+        })
     }
 
 }

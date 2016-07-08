@@ -17,6 +17,9 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
     @IBOutlet var nextButton: UIButton!
     
+    var errorPopoverView: popoverView!
+    var shadowView: UIView!
+    
     // MARK: - Properties
     var userSignedUp = false
     @IBOutlet var nextButtonBottomConstraint: NSLayoutConstraint!
@@ -68,7 +71,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         self.emailVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.passwordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        
+
         nextButtonEnabled()
     }
     
@@ -150,7 +153,9 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
-                    // Sign up failed
+                    // Sign up failed -- show popoverView with reason
+                    self.showPopoverView(error!)
+                    
                     self.nextButtonEnabled(true)
                 }
                 else {
@@ -280,6 +285,54 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
+    }
+    
+    // MARK: - Popover View
+    func showPopoverView(error: NSError) {
+        // Hide keyboard
+        self.view.endEditing(true)
+        
+        // Configure view size
+        errorPopoverView = popoverView(frame: CGRect(x: self.view.frame.width/2 - 100, y: self.view.frame.height/2 - 200, width: 200, height: 200))
+        // Add popover message
+        errorPopoverView.configureWithError(error)
+        // Add target to hide view
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(CreateUserViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // Configure shadow view
+        shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        shadowView.backgroundColor = UIColor.blackColor()
+        
+        self.view.addSubview(shadowView)
+        self.view.addSubview(errorPopoverView)
+        
+        errorPopoverView.hidden = false
+        errorPopoverView.alpha = 0
+        
+        shadowView.hidden = false
+        shadowView.alpha = 0
+        
+        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.errorPopoverView.alpha = 1
+            self.shadowView.alpha = 0.2
+            }, completion: { (completed) in
+        })
+    }
+    
+    func hidePopoverView(sender: UIButton) {
+        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            self.errorPopoverView.alpha = 0
+            self.shadowView.alpha = 0
+            }, completion: { (completed) in
+                self.errorPopoverView.hidden = true
+                self.shadowView.hidden = true
+                
+                self.errorPopoverView.removeFromSuperview()
+                self.shadowView.removeFromSuperview()
+                
+                // Show keyboard again
+                self.confirmPasswordVTFView.textField.becomeFirstResponder()
+        })
     }
 
 }
