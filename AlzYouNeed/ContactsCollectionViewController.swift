@@ -98,63 +98,12 @@ class ContactsCollectionViewController: UICollectionViewController {
                     
                     dispatch_async(dispatch_get_main_queue(), { 
                         self.collectionView?.reloadData()
+                        self.checkCollectionViewEmpty()
                     })
                 }
             }
         }
     }
-    
-    /*
-    func addContact() {
-        let contactPicker = CNContactPickerViewController()
-        
-        // Only search contacts with phoneNumbers
-        contactPicker.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0", argumentArray: nil)
-        contactPicker.delegate = self
-        self.presentViewController(contactPicker, animated: true, completion: nil)
-    }
-    
-    func insertNewObject(sender: NSNotification) {
-        if let contact = sender.userInfo?["contactToAdd"] as? CNContact {
-            
-            print("Adding contact: \(contact.givenName) \(contact.familyName) \n")
-            
-            // Check that contact does not already exist
-            if !UserDefaultsManager.contactExists(contact.identifier) {
-                var contactImage = UIImage()
-                // Check for contact image
-                if contact.imageDataAvailable {
-                    // Use smaller picture to save memory
-                    if let data = contact.thumbnailImageData {
-//                    if let data = contact.imageData {
-                        contactImage = UIImage(data: data)!
-                    }
-                }
-                
-                // Create new person using contact
-                let person = Person(identifier: contact.identifier, firstName: contact.givenName, lastName: contact.familyName, photo: contactImage, phoneNumber: (contact.phoneNumbers[0].value as! CNPhoneNumber).valueForKey("digits") as? String)
-                
-                // Add contact to local array
-                userContacts.append(person)
-                // Save to defaults
-                UserDefaultsManager.saveContact(person)
-                
-                let indexPath = NSIndexPath(forRow: userContacts.count-1, inSection: 0)
-                self.collectionView?.insertItemsAtIndexPaths([indexPath])
-            }
-            else {
-                print("Contact already exists")
-            }
-        }
-    }
-    
-    // MARK: - CNContactPickerDelegate
-    
-    func contactPicker(picker: CNContactPickerViewController, didSelectContact contact: CNContact) {
-        NSNotificationCenter.defaultCenter().postNotificationName("addNewContact", object: nil, userInfo: ["contactToAdd": contact])
-    }
-    
-    */
     
     // MARK: - UICollectionViewDataSource
 
@@ -213,6 +162,25 @@ class ContactsCollectionViewController: UICollectionViewController {
     
     func rightButtonPressed(sender: UIButton) {
         print("Right button pressed -- row: \(sender.tag)")
+    }
+    
+    // Add label if table data array empty
+    func checkCollectionViewEmpty() {
+        if contacts.isEmpty {
+            let emptyLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            emptyLabel.text = "Where is everyone?"
+            emptyLabel.font = UIFont(name: "OpenSans-Semibold", size: 20)
+            emptyLabel.textColor = lightPurple
+            emptyLabel.hidden = false
+            emptyLabel.alpha = 1
+            emptyLabel.textAlignment = NSTextAlignment.Center
+            
+            self.collectionView!.backgroundView = emptyLabel
+//            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.None
+        } else {
+            self.collectionView!.backgroundView = nil
+//            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+        }
     }
     
     /*
