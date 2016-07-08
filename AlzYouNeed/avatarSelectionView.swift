@@ -48,6 +48,8 @@ import UIKit
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
+        self.userImageView.layer.borderWidth = 2
+        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
     }
     
     func loadViewFromNib() -> UIView {

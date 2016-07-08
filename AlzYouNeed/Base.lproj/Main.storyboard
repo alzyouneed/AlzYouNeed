@@ -196,21 +196,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jqI-9Z-ILZ" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="560" height="46"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cBb-qZ-WJz"/>
                                 </constraints>
                             </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5N5-aV-aQM" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="74" width="560" height="46"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="zX0-gU-kHn"/>
                                 </constraints>
                             </view>
                             <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbZ-PY-koH" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="128" width="560" height="46"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="1Lc-kf-gHB"/>
                                 </constraints>
@@ -229,7 +226,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="leadingMargin" secondItem="5N5-aV-aQM" secondAttribute="leading" id="4My-Na-6mt"/>
                             <constraint firstAttribute="trailing" secondItem="eFR-c8-gcw" secondAttribute="trailing" id="5b8-v8-M2z"/>
@@ -512,7 +509,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ytd-RQ-DZR" firstAttribute="centerX" secondItem="pRK-BY-SMm" secondAttribute="centerX" id="8ic-tl-4aN"/>
                             <constraint firstItem="ytd-RQ-DZR" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" constant="171" id="EUE-dO-DXO"/>
