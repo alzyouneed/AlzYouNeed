@@ -64,13 +64,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func prefersStatusBarHidden() -> Bool {
         return false
     }
-    
-    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func signUp() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("createUserVC") as! CreateUserViewController
+        self.navigationController?.pushViewController(createUserVC, animated: true)
     }
     
     func loginUser() {
@@ -106,24 +108,17 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func rightButtonAction(sender: UIButton) {
         switch sender.currentTitle! {
-        case "Cancel":
-//            print("log in user")
-            loginUser()
         case "Login":
+            loginUser()
+        case "Cancel":
             hideLoginView()
             self.view.endEditing(true)
         default:
             break
         }
-        
     }
     
-    func signUp() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let createUserVC: CreateUserViewController = storyboard.instantiateViewControllerWithIdentifier("createUserVC") as! CreateUserViewController
-        self.navigationController?.pushViewController(createUserVC, animated: true)
-    }
-    
+    // MARK: - Validation
     func validateLogin() -> Bool {
         if emailVTFView.textField.text!.isEmpty {
             print("Missing email")
@@ -136,6 +131,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // MARK: - Login View
     func showLoginView() {
         if !loginMode {
             loginMode = true
@@ -187,7 +183,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - UITextFieldDelegate
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Switch between textFields by using return key
         let tag = textField.superview!.superview!.tag
@@ -209,18 +204,40 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         let userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
         let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
+        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        
         if show {
-            UIView.animateWithDuration(animationDuration) {
-                self.loginButtonsBottomConstraint.constant = changeInHeight
-            }
+            self.loginButtonsBottomConstraint.constant = changeInHeight
         }
         else {
-            UIView.animateWithDuration(animationDuration) {
-                self.loginButtonsBottomConstraint.constant = 0
-            }
+            self.loginButtonsBottomConstraint.constant = 0
         }
+        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
+        
+//        if show {
+//            UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+//                self.loginButtonsBottomConstraint.constant = changeInHeight
+//                }, completion: nil)
+//            
+////            UIView.animateWithDuration(animationDuration) {
+////                self.loginButtonsBottomConstraint.constant = changeInHeight
+////            }
+//        }
+//        else {
+//            UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+//                self.loginButtonsBottomConstraint.constant = 0
+//                }, completion: nil)
+//            
+////            UIView.animateWithDuration(animationDuration) {
+////                self.loginButtonsBottomConstraint.constant = 0
+////            }
+//        }
     }
     
     func keyboardWillShow(sender: NSNotification) {
@@ -229,10 +246,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
-        
-//        UIView.animateWithDuration(0.2) {
-//            self.loginButtonsBottomConstraint.constant = 0
-//        }
     }
 
 }

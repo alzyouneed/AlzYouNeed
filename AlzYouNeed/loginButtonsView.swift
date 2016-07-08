@@ -57,29 +57,31 @@ import UIKit
     
     // MARK: - Actions
     @IBAction func leftButtonClicked(sender: UIButton) {
-        switch state {
-        case "normal":
-            normalState()
-        case "login":
-            loginState()
-        default:
-            break
+        dispatch_async(dispatch_get_main_queue()) { 
+            switch self.state {
+            case "normal":
+                self.normalState()
+            case "login":
+                self.loginState()
+            default:
+                break
+            }
         }
     }
     @IBAction func rightButtonClicked(sender: UIButton) {
-        switch state {
-        case "normal":
-            loginState()
-        case "signup":
-//            print("Cancelling sign up")
-            state = "normal"
-            normalState()
-        case "login":
-//            print("Cancelling login")
-            state = "normal"
-            normalState()
-        default:
-            break
+        dispatch_async(dispatch_get_main_queue()) { 
+            switch self.state {
+            case "normal":
+                self.loginState()
+            case "signup":
+                self.state = "normal"
+                self.normalState()
+            case "login":
+                self.state = "normal"
+                self.normalState()
+            default:
+                break
+            }
         }
     }
     
