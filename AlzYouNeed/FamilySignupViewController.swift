@@ -23,6 +23,10 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var progressView: UIProgressView!
     
+    // MARK: - Popover View Properties
+    var errorPopoverView: popoverView!
+    var shadowView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,6 +75,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
+                self.showPopoverView(error!)
             }
             else {
                 // Successfully created new family
@@ -84,6 +89,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
+                self.showPopoverView(error!)
             }
             else {
                 // Successfully joined family
@@ -300,14 +306,61 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    // MARK: - Popover View
+    func showPopoverView(error: NSError) {
+        // Hide keyboard
+        self.view.endEditing(true)
+        
+        // Configure view size
+        errorPopoverView = popoverView(frame: CGRect(x: self.view.frame.width/2 - 100, y: self.view.frame.height/2 - 200, width: 200, height: 200))
+        // Add popover message
+        errorPopoverView.configureWithError(error)
+        // Add target to hide view
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(FamilySignupViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // Configure shadow view
+        shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        shadowView.backgroundColor = UIColor.blackColor()
+        
+        self.view.addSubview(shadowView)
+        self.view.addSubview(errorPopoverView)
+        
+        errorPopoverView.hidden = false
+        errorPopoverView.alpha = 0
+        
+        shadowView.hidden = false
+        shadowView.alpha = 0
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+            UIView.animateWithDuration(0.35, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.errorPopoverView.alpha = 1
+                self.shadowView.alpha = 0.2
+                }, completion: { (completed) in
+            })
+        }
+    }
+    
+    func hidePopoverView(sender: UIButton) {
+        dispatch_async(dispatch_get_main_queue()) { 
+            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.errorPopoverView.alpha = 0
+                self.shadowView.alpha = 0
+                }, completion: { (completed) in
+                    self.errorPopoverView.hidden = true
+                    self.shadowView.hidden = true
+                    
+                    self.errorPopoverView.removeFromSuperview()
+                    self.shadowView.removeFromSuperview()
+                    
+                    // Show keyboard again
+                    if self.newFamily {
+                        self.confirmPasswordVTFView.textField.becomeFirstResponder()
+                    }
+                    else {
+                        self.passwordVTFView.textField.becomeFirstResponder()
+                    }
+            })
+        }
+    }
     
 }

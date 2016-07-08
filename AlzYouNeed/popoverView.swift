@@ -65,6 +65,9 @@ import UIKit
         case 17010:
             // Try again later
             return "There were too many attempts. Please try again later"
+        case 00001:
+            // Family already exists
+            return "A family with this name already exists"
         default:
             return nil
         }

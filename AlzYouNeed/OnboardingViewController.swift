@@ -244,7 +244,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // Add popover message
         errorPopoverView.configureWithError(error)
         // Add target to hide view
-        errorPopoverView.confirmButton.addTarget(self, action: #selector(CreateUserViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(OnboardingViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         // Configure shadow view
         shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))

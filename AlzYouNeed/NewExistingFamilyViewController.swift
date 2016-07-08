@@ -10,7 +10,10 @@ import UIKit
 import Firebase
 
 class NewExistingFamilyViewController: UIViewController {
-
+    
+    @IBOutlet var newFamilyButton: UIButton!
+    @IBOutlet var existingFamilyButton: UIButton!
+    
     @IBOutlet var progressView: UIProgressView!
     
     @IBOutlet var cancelButton: UIBarButtonItem!
@@ -38,6 +41,9 @@ class NewExistingFamilyViewController: UIViewController {
     
     func configureView() {
         self.navigationItem.hidesBackButton = true
+        
+        self.newFamilyButton.layer.cornerRadius = 10
+        self.existingFamilyButton.layer.cornerRadius = 10
     }
     
     @IBAction func cancelOnboarding(sender: UIBarButtonItem) {

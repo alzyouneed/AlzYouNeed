@@ -232,37 +232,50 @@ class FirebaseManager: NSObject {
     // NEW
     class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            
-            getCurrentUser({ (userDict, error) in
-                if let userInfo = userDict {
-                   let databaseRef = FIRDatabase.database().reference()
-                    
-                    // Remove key for save to family group
-                    let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
-                    modifiedDict.removeObjectForKey("completedSignup")
-                    modifiedDict["admin"] = "true"
-                    
-                    let familyToSave = ["password": password, "members":[user.uid: modifiedDict]]
-                    
-                    // Update current user and new family, and signup Status
-                    let childUpdates = ["/users/\(user.uid)/familyId": familyId,
+            // Check if family group already exists
+            lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
+                // No error
+                if error == nil {
+                    // Check that bool exists
+                    if let familyExists = familyExists {
+                        // Family already exists
+                        if familyExists {
+                           // Don't create new family
+                            let error = NSError(domain: "ExistingFamilyGroupError", code: 00001, userInfo: nil)
+                            completionHandler(error: error, newDatabaseRef: nil)
+                        }
+                        else {
+                            getCurrentUser({ (userDict, error) in
+                                if let userInfo = userDict {
+                                    let databaseRef = FIRDatabase.database().reference()
+                                    
+                                    // Remove key for save to family group
+                                    let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
+                                    modifiedDict.removeObjectForKey("completedSignup")
+                                    modifiedDict["admin"] = "true"
+                                    
+                                    let familyToSave = ["password": password, "members":[user.uid: modifiedDict]]
+                                    
+                                    // Update current user and new family, and signup Status
+                                    let childUpdates = ["/users/\(user.uid)/familyId": familyId,
                                         "/users/\(user.uid)/completedSignup": "true",
                                         "/users/\(user.uid)/admin": "true",
                                         "/families/\(familyId)": familyToSave]
-//                                        "/families/\(familyId)/members/\(user.uid)/familyId": familyId,
-//                                        "/families/\(familyId)/members/\(user.uid)/completedSignup": "true",
-//                                        "/families/\(familyId)/members/\(user.uid)/admin": "true"]
-
-                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                        if error != nil {
-                            print("Error creating new family group")
-                            completionHandler(error: error, newDatabaseRef: databaseRef)
+                                    
+                                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                        if error != nil {
+                                            print("Error creating new family group")
+                                            completionHandler(error: error, newDatabaseRef: databaseRef)
+                                        }
+                                        else {
+                                            print("New family group created -- joined Family: \(familyId)")
+                                            completionHandler(error: error, newDatabaseRef: databaseRef)
+                                        }
+                                    })
+                                }
+                            })
                         }
-                        else {
-                            print("New family group created -- joined Family: \(familyId)")
-                            completionHandler(error: error, newDatabaseRef: databaseRef)
-                        }
-                    })
+                    }
                 }
             })
         }
@@ -318,6 +331,21 @@ class FirebaseManager: NSObject {
                     completionHandler(error: wrongPasswordError, newDatabaseRef: nil)
                 }
             })
+        }
+    }
+    
+    // NEW
+    class func lookUpFamilyGroup(familyId: String, completionHandler: (error: NSError?, familyExists: Bool?) -> Void) {
+        let databaseRef = FIRDatabase.database().reference()
+        
+        databaseRef.child("families").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+            if let groupExists = snapshot.hasChild(familyId) as Bool? {
+                print("Families has child: \(groupExists) -- cannot create new family")
+                completionHandler(error: nil, familyExists: groupExists)
+            }
+        }) { (error) in
+            print("Error occurred while looking up family group")
+            completionHandler(error: error, familyExists: nil)
         }
     }
     
