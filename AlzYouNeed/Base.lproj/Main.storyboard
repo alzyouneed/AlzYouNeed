@@ -5,6 +5,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </mutableArray>
+        <mutableArray key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Family & Friends-->
         <scene sceneID="rBu-7G-30b">
@@ -218,6 +228,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="7SJ-E2-p91"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Create Family">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -300,6 +311,7 @@
                                     <constraint firstAttribute="height" constant="60" id="O6N-Rm-w7B"/>
                                     <constraint firstAttribute="height" constant="46" id="cLd-hv-nzj"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Next">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -400,6 +412,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0hp-mE-mZn"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
                                 <state key="normal" title="Next">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -476,7 +489,8 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="eA0-p4-RM7">
-                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="Wc0-Ns-kDf">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="Wc0-Ns-kDf">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="vu3-xn-OOF" id="od4-36-PUe"/>
                             </connections>
@@ -555,7 +569,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV">
-                        <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="cf4-D6-ohH">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="cf4-D6-ohH">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="3ZR-OR-iiB" id="dBL-aI-DNv"/>
                             </connections>
@@ -612,7 +627,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="edK-k5-K3V"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -785,6 +800,7 @@
     </scenes>
     <resources>
         <image name="bareLogo" width="125" height="125"/>
+        <image name="cancelIcon" width="22" height="22"/>
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -117,4 +117,13 @@ import UIKit
             return 0
         }
     }
+    
+    // Adjust button size on touch
+    @IBAction func buttonTouchEnded(sender: UIButton) {
+        sender.transform = CGAffineTransformMakeScale(1, 1)
+    }
+    
+    @IBAction func buttonTouchStarted(sender: UIButton) {
+        sender.transform = CGAffineTransformMakeScale(0.9, 0.9)
+    }
 }

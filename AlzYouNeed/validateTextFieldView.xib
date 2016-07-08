@@ -5,6 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
             <connections>
@@ -22,7 +27,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="bTw-Y2-bGA"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="25"/>
                     <textInputTraits key="textInputTraits"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">

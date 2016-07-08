@@ -24,29 +24,35 @@
                         <constraint firstAttribute="width" constant="100" id="8bG-5O-i8l"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7E-4w-g0b">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7E-4w-g0b">
                     <rect key="frame" x="166" y="25" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="Dez-nX-kgv"/>
                         <constraint firstAttribute="height" constant="50" id="J1m-nL-99G"/>
                     </constraints>
-                    <state key="normal" title="Next">
+                    <state key="normal" image="nextButtonIcon">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
+                        <action selector="buttonTouchEnded:" destination="-1" eventType="touchUpInside" id="Uue-ln-J5j"/>
+                        <action selector="buttonTouchEnded:" destination="-1" eventType="touchDragOutside" id="aIf-eP-aaK"/>
+                        <action selector="buttonTouchStarted:" destination="-1" eventType="touchDown" id="afm-Lt-cbv"/>
                         <action selector="selectImage:" destination="-1" eventType="touchUpInside" id="Fzx-Sf-zoQ"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yYx-qt-G01">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yYx-qt-G01">
                     <rect key="frame" x="0.0" y="25" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="ef3-U3-opt"/>
                         <constraint firstAttribute="width" constant="50" id="pks-9X-uLj"/>
                     </constraints>
-                    <state key="normal" title="Last">
+                    <state key="normal" image="lastButtonIcon">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
+                        <action selector="buttonTouchEnded:" destination="-1" eventType="touchDragOutside" id="3mm-BZ-t3z"/>
+                        <action selector="buttonTouchEnded:" destination="-1" eventType="touchUpInside" id="DR2-Tf-p49"/>
+                        <action selector="buttonTouchStarted:" destination="-1" eventType="touchDown" id="P6E-Ag-LIE"/>
                         <action selector="selectImage:" destination="-1" eventType="touchUpInside" id="pQT-uR-JPw"/>
                     </connections>
                 </button>
@@ -64,4 +70,8 @@
             <point key="canvasLocation" x="435" y="118"/>
         </view>
     </objects>
+    <resources>
+        <image name="lastButtonIcon" width="50" height="50"/>
+        <image name="nextButtonIcon" width="50" height="50"/>
+    </resources>
 </document>

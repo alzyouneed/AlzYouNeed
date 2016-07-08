@@ -25,7 +25,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Highlighted)
         
+//        printAllFonts()
+        
         return true
+    }
+    
+    func printAllFonts() {
+        let fontFamilyNames = UIFont.familyNames()
+        for familyName in fontFamilyNames {
+            print("------------------------------")
+            print("Font Family Name = [\(familyName)]")
+            let names = UIFont.fontNamesForFamilyName(familyName)
+            print("Font Names = [\(names)]")
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
