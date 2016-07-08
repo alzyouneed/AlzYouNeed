@@ -20,6 +20,9 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     var userName: String!
     var userPhoneNumber: String!
     var userAvatarId: String!
+    
+    // MARK: - Properties
+    @IBOutlet var updateButtonBottomConstraint: NSLayoutConstraint!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,22 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add observers
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Remove observers
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -193,6 +212,33 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     // MARK: - SelectionView
     func avatarDidChange(button: UIButton) {
         updatesToSave()
+    }
+    
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        
+        if show {
+            UIView.animateWithDuration(animationDuration) {
+                self.updateButtonBottomConstraint.constant = changeInHeight
+            }
+        }
+        else {
+            UIView.animateWithDuration(animationDuration) {
+                self.updateButtonBottomConstraint.constant = 0
+            }
+        }
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender)
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        adjustingKeyboardHeight(false, notification: sender)
     }
 
 }

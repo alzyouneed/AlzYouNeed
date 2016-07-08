@@ -13,8 +13,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     var loginMode = false
     
-    @IBOutlet var emailTextField: UITextField!
-    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var emailVTFView: validateTextFieldView!
+    @IBOutlet var passwordVTFView: validateTextFieldView!
     
     @IBOutlet var loginButtons: loginButtonsView!
     @IBOutlet var loginButtonsBottomConstraint: NSLayoutConstraint!
@@ -28,10 +28,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func configureView() {
+        self.emailVTFView.emailMode()
+        self.passwordVTFView.passwordMode(false)
         
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-        
+        self.emailVTFView.textField.delegate = self
+        self.passwordVTFView.textField.delegate = self
+
         loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -77,7 +79,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
         else {
             if validateLogin() {
-                FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: { (user, error) in
+                FIRAuth.auth()?.signInWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completion: { (user, error) in
                     if error == nil {
                         print("Login successful")
                         self.view.endEditing(true)
@@ -123,11 +125,11 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func validateLogin() -> Bool {
-        if emailTextField.text!.isEmpty {
+        if emailVTFView.textField.text!.isEmpty {
             print("Missing email")
             return false
         }
-        if passwordTextField.text!.isEmpty {
+        if passwordVTFView.textField.text!.isEmpty {
             print("Missing password")
             return false
         }
@@ -137,22 +139,22 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func showLoginView() {
         if !loginMode {
             loginMode = true
-            
-            self.emailTextField.hidden = false
-            self.passwordTextField.hidden = false
+
+            self.emailVTFView.hidden = false
+            self.passwordVTFView.hidden = false
             
             self.logoImageView.hidden = true
             self.appNameLabel.hidden = true
-            
-            self.emailTextField.alpha = 0
-            self.passwordTextField.alpha = 0
+
+            self.emailVTFView.alpha = 0
+            self.passwordVTFView.alpha = 0
             
             UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
-                self.emailTextField.alpha = 1
-                self.passwordTextField.alpha = 1
+                self.emailVTFView.alpha = 1
+                self.passwordVTFView.alpha = 1
             }) { (completed) in
                 // Present keyboard
-                self.emailTextField.becomeFirstResponder()
+                self.emailVTFView.textField.becomeFirstResponder()
             }
         }
         else {
@@ -166,15 +168,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             self.resignFirstResponder()
             
             UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
-                self.emailTextField.alpha = 0
-                self.passwordTextField.alpha = 0
+                self.emailVTFView.alpha = 0
+                self.passwordVTFView.alpha = 0
                 
             }) { (completed) in
-                self.emailTextField.text = ""
-                self.passwordTextField.text = ""
+                self.emailVTFView.textField.text = ""
+                self.passwordVTFView.textField.text = ""
                 
-                self.emailTextField.hidden = true
-                self.passwordTextField.hidden = true
+                self.emailVTFView.hidden = true
+                self.passwordVTFView.hidden = true
                 
                 self.logoImageView.hidden = false
                 self.appNameLabel.hidden = false
@@ -187,10 +189,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        switch textField.tag {
+        // Switch between textFields by using return key
+        let tag = textField.superview!.superview!.tag
+        switch tag {
         case 0:
-            if !emailTextField.text!.isEmpty {
-                self.passwordTextField.becomeFirstResponder()
+            if !emailVTFView.textField.text!.isEmpty {
+                self.passwordVTFView.textField.becomeFirstResponder()
             }
         case 1:
             loginUser()

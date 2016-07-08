@@ -22,8 +22,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        FIRDatabase.database().persistenceEnabled = true
         
+        // Remove navigation bar button text
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Normal)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Highlighted)
+        
+        // Customize navigation bar appearance
+        UINavigationBar.appearance().barTintColor = backgroundPurple
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
+        // Set status bar to light
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
 //        printAllFonts()
         

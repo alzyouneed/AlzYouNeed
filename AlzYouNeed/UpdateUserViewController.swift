@@ -61,10 +61,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
-//    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
-//        return UIStatusBarStyle.LightContent
-//    }
-    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -75,8 +71,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     func configureView() {
         self.navigationItem.hidesBackButton = true
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(UpdateUserViewController.cancelAccountCreation(_:)))
-        
+
         self.nameVTFView.nameMode()
         self.phoneNumberVTFView.phoneNumberMode()
         
@@ -85,8 +80,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         
         self.nameVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        
-//        self.imagePicker.delegate = self
+
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
         signUpButtonEnabled()
