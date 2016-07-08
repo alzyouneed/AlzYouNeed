@@ -21,6 +21,8 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var confirmPasswordVTFView: validateTextFieldView!
     @IBOutlet var createJoinFamilyButton: UIButton!
     
+    @IBOutlet var progressView: UIProgressView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,6 +39,15 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         familyIdVTFView.textField.becomeFirstResponder()
+        
+        UIView.animateWithDuration(0.5) {
+            self.progressView.setProgress(0.825, animated: true)
+        }
+
+        // Animate status bar hidden
+        UIView.animateWithDuration(0.2) { 
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -49,6 +60,10 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     // MARK: - Firebase

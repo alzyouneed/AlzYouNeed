@@ -26,7 +26,7 @@
                     <textInputTraits key="textInputTraits"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
-                            <color key="value" red="0.61671161651611328" green="0.63335269689559937" blue="0.99897778034210205" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="value" red="0.70324093103408813" green="0.75650703907012939" blue="0.91492366790771484" alpha="1" colorSpace="calibratedRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </textField>

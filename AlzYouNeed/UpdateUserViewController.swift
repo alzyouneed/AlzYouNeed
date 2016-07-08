@@ -23,6 +23,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var selectionView: avatarSelectionView!
     
+    @IBOutlet var progressView: UIProgressView!
+    
     // MARK: - Properties
     var stepCompleted = false
     @IBOutlet var nextButtonBottomConstraint: NSLayoutConstraint!
@@ -43,6 +45,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         self.nameVTFView.textField.becomeFirstResponder()
+
+        UIView.animateWithDuration(0.5) {
+            self.progressView.setProgress(0.33, animated: true)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -56,6 +62,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
 //    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
 //        return UIStatusBarStyle.LightContent
 //    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

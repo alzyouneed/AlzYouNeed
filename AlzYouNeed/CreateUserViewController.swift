@@ -50,6 +50,10 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
 //    override func  preferredStatusBarStyle() -> UIStatusBarStyle {
 //        return UIStatusBarStyle.LightContent
 //    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

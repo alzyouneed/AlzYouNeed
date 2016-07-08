@@ -11,15 +11,27 @@ import Firebase
 
 class NewExistingFamilyViewController: UIViewController {
 
+    @IBOutlet var progressView: UIProgressView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureView()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        UIView.animateWithDuration(0.5) {
+            self.progressView.setProgress(0.66, animated: true)
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     func configureView() {

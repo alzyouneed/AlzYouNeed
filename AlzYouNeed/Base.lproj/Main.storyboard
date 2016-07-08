@@ -225,15 +225,22 @@
                                     <action selector="createOrJoinFamily:" destination="cPi-aJ-y8T" eventType="touchUpInside" id="7fN-jL-zrN"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.66000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="fxS-gW-yTg">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fxS-gW-yTg" secondAttribute="trailing" id="3nG-wI-ZwP"/>
                             <constraint firstAttribute="leadingMargin" secondItem="5N5-aV-aQM" secondAttribute="leading" id="4My-Na-6mt"/>
                             <constraint firstAttribute="trailing" secondItem="eFR-c8-gcw" secondAttribute="trailing" id="5b8-v8-M2z"/>
                             <constraint firstItem="5N5-aV-aQM" firstAttribute="top" secondItem="jqI-9Z-ILZ" secondAttribute="bottom" constant="8" id="9mY-hV-or5"/>
+                            <constraint firstItem="fxS-gW-yTg" firstAttribute="leading" secondItem="BDZ-Td-4uh" secondAttribute="leading" id="ACZ-LL-SSV"/>
                             <constraint firstAttribute="leadingMargin" secondItem="tbZ-PY-koH" secondAttribute="leading" id="DKB-PW-vDy"/>
                             <constraint firstItem="tbZ-PY-koH" firstAttribute="top" secondItem="5N5-aV-aQM" secondAttribute="bottom" constant="8" id="ESi-xu-mdF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jqI-9Z-ILZ" secondAttribute="trailing" id="IIT-bQ-dyo"/>
+                            <constraint firstItem="fxS-gW-yTg" firstAttribute="top" secondItem="KTh-5F-ABQ" secondAttribute="bottom" id="KT4-wb-nuQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tbZ-PY-koH" secondAttribute="trailing" id="Pmq-7V-E3Y"/>
                             <constraint firstAttribute="leadingMargin" secondItem="jqI-9Z-ILZ" secondAttribute="leading" id="VO7-Aj-EYk"/>
                             <constraint firstItem="rzQ-2J-3C0" firstAttribute="top" secondItem="eFR-c8-gcw" secondAttribute="bottom" id="e8e-0a-aWm"/>
@@ -248,11 +255,12 @@
                         <outlet property="familyButtonBottomConstraint" destination="e8e-0a-aWm" id="ATw-op-OD5"/>
                         <outlet property="familyIdVTFView" destination="jqI-9Z-ILZ" id="vuG-fb-gE8"/>
                         <outlet property="passwordVTFView" destination="5N5-aV-aQM" id="88L-8v-3YF"/>
+                        <outlet property="progressView" destination="fxS-gW-yTg" id="K8o-mM-yNT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rug-3z-N9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1414" y="-1008"/>
+            <point key="canvasLocation" x="1414" y="-996"/>
         </scene>
         <!--New User-->
         <scene sceneID="346-aL-I3p">
@@ -306,6 +314,10 @@
                                     <segue destination="vu3-xn-OOF" kind="show" identifier="updateUser" id="u3h-XE-qbp"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="leS-dh-Fda">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -313,6 +325,8 @@
                             <constraint firstItem="gk0-91-7wb" firstAttribute="top" secondItem="tfQ-MJ-m4q" secondAttribute="bottom" id="9Us-XM-0IL"/>
                             <constraint firstItem="Y5s-1d-YtL" firstAttribute="top" secondItem="shl-oi-30x" secondAttribute="bottom" constant="8" id="F3L-bx-3A5"/>
                             <constraint firstItem="vsc-YU-cNl" firstAttribute="top" secondItem="RHD-Mt-PpB" secondAttribute="bottom" constant="20" id="H6J-dF-qcd"/>
+                            <constraint firstItem="leS-dh-Fda" firstAttribute="top" secondItem="RHD-Mt-PpB" secondAttribute="bottom" id="IQN-y2-p2Q"/>
+                            <constraint firstItem="leS-dh-Fda" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leading" id="MTD-N5-NBS"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="top" secondItem="vsc-YU-cNl" secondAttribute="bottom" constant="8" id="OQI-26-HkW"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="trailing" secondItem="a1u-dL-OmZ" secondAttribute="trailingMargin" id="PDC-IO-8NX"/>
                             <constraint firstItem="vsc-YU-cNl" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="Xk5-qc-ymm"/>
@@ -322,6 +336,7 @@
                             <constraint firstAttribute="trailing" secondItem="tfQ-MJ-m4q" secondAttribute="trailing" id="mbX-lF-bLa"/>
                             <constraint firstItem="Y5s-1d-YtL" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="nkx-7c-sQi"/>
                             <constraint firstItem="shl-oi-30x" firstAttribute="leading" secondItem="a1u-dL-OmZ" secondAttribute="leadingMargin" id="ov1-7x-wEC"/>
+                            <constraint firstAttribute="trailing" secondItem="leS-dh-Fda" secondAttribute="trailing" id="vo5-rd-JuI"/>
                             <constraint firstItem="tfQ-MJ-m4q" firstAttribute="centerX" secondItem="a1u-dL-OmZ" secondAttribute="centerX" id="wLd-EL-Hu9"/>
                         </constraints>
                         <variation key="default">
@@ -343,7 +358,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pm7-s2-UnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-785" y="-1008"/>
+            <point key="canvasLocation" x="-785" y="-996"/>
         </scene>
         <!--Profile-->
         <scene sceneID="tc6-aw-isc">
@@ -403,6 +418,10 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A8e-QK-eYv">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
                                 <rect key="frame" x="135" y="390" width="40" height="40"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -426,12 +445,15 @@
                             <constraint firstItem="0UK-9c-99H" firstAttribute="leading" secondItem="ayi-9u-FXc" secondAttribute="trailing" constant="8" id="8Vb-oz-sCx"/>
                             <constraint firstItem="iZb-5H-e9P" firstAttribute="top" secondItem="kCt-Ui-83L" secondAttribute="bottom" id="Azt-hW-EEf"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="ayi-9u-FXc" secondAttribute="bottom" constant="8" id="D8b-a9-hCb"/>
+                            <constraint firstAttribute="trailing" secondItem="A8e-QK-eYv" secondAttribute="trailing" id="DuA-xy-w7b"/>
                             <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="W2J-gO-k8F" secondAttribute="bottom" constant="8" id="Iuj-je-hSg"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ayi-9u-FXc" secondAttribute="leading" id="Lo2-0l-jGt"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="QYx-SA-Vok"/>
                             <constraint firstItem="ayi-9u-FXc" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="Qgk-l3-gKQ"/>
+                            <constraint firstItem="A8e-QK-eYv" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" id="VxI-vF-Qvb"/>
                             <constraint firstAttribute="trailing" secondItem="kCt-Ui-83L" secondAttribute="trailing" id="c7k-14-p5N"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerY" secondItem="ayi-9u-FXc" secondAttribute="centerY" id="eNQ-cj-kLC"/>
+                            <constraint firstItem="A8e-QK-eYv" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="gDg-Z7-bxK"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="3" id="hNA-IB-pyY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ccO-ou-Rs8" secondAttribute="leading" id="iaz-iL-vzZ"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="jq3-ws-MIt"/>
@@ -460,13 +482,14 @@
                         <outlet property="nextButtonBottomConstraint" destination="Azt-hW-EEf" id="vDN-JN-vcY"/>
                         <outlet property="patientSwitch" destination="0UK-9c-99H" id="lfP-HJ-DOn"/>
                         <outlet property="phoneNumberVTFView" destination="xLf-c8-Ma4" id="clS-7U-zZH"/>
+                        <outlet property="progressView" destination="A8e-QK-eYv" id="Y5Z-7C-SjL"/>
                         <outlet property="selectionView" destination="W2J-gO-k8F" id="zMF-uY-e46"/>
                         <outlet property="signUpButton" destination="kCt-Ui-83L" id="WvY-4N-yTD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZh-rY-x0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36" y="-1008"/>
+            <point key="canvasLocation" x="-36" y="-996"/>
         </scene>
         <!--Family-->
         <scene sceneID="YSS-HU-EBv">
@@ -508,20 +531,30 @@
                                     <segue destination="cPi-aJ-y8T" kind="show" id="EcC-cZ-4XJ"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="suC-LP-9I8">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                <color key="progressTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ytd-RQ-DZR" firstAttribute="centerX" secondItem="pRK-BY-SMm" secondAttribute="centerX" id="8ic-tl-4aN"/>
+                            <constraint firstItem="suC-LP-9I8" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" id="BGT-EJ-Na4"/>
                             <constraint firstItem="ytd-RQ-DZR" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" constant="171" id="EUE-dO-DXO"/>
+                            <constraint firstAttribute="trailing" secondItem="suC-LP-9I8" secondAttribute="trailing" id="KoJ-Rw-Hxc"/>
                             <constraint firstItem="98z-69-oIU" firstAttribute="top" secondItem="ytd-RQ-DZR" secondAttribute="bottom" constant="8" id="QIE-Cn-rlZ"/>
+                            <constraint firstItem="suC-LP-9I8" firstAttribute="leading" secondItem="pRK-BY-SMm" secondAttribute="leading" id="XpR-3h-uAs"/>
                             <constraint firstItem="98z-69-oIU" firstAttribute="centerX" secondItem="pRK-BY-SMm" secondAttribute="centerX" id="lQ2-wk-vYD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV"/>
+                    <connections>
+                        <outlet property="progressView" destination="suC-LP-9I8" id="LYc-uq-JOp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOV-ro-sZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="730" y="-1008"/>
+            <point key="canvasLocation" x="730" y="-996"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="6dU-ax-Uhd">
@@ -741,6 +774,6 @@
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d61-Gb-xHV"/>
+        <segue reference="EcC-cZ-4XJ"/>
     </inferredMetricsTieBreakers>
 </document>

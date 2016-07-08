@@ -59,6 +59,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButtons.resetState()
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
     override func  preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
