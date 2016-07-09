@@ -65,6 +65,9 @@ import UIKit
         case 17010:
             // Try again later
             return "There were too many attempts. Please try again later"
+        case 17011:
+            // No matching user
+            return "There is no account using that email"
         case 00001:
             // Family already exists
             return "A family with this name already exists"

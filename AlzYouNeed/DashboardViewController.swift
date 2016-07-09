@@ -16,14 +16,6 @@ class DashboardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        FirebaseManager.getUserSignUpStatus { (status, error) in
-//            if error == nil {
-//                if let signupStatus = status {
-//                    print("Sign up completed: \(signupStatus)")
-//                }
-//            }
-//        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,6 +60,14 @@ class DashboardViewController: UIViewController {
                 if error == nil {
                     // Success
                 }
+                else {
+                    // Error
+                    // Check for relevant error being showing alert
+                    if error?.code != 2 {
+                        print("Error deleting user: \(error)")
+                        self.showLoginAlert()
+                    }
+                }
             })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
@@ -87,5 +87,45 @@ class DashboardViewController: UIViewController {
         // Hide tab bar in updateProfileVC
         updateProfileVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(updateProfileVC, animated: true)
+    }
+    
+    func showLoginAlert() {
+        let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        var emailTF: UITextField!
+        var passwordTF: UITextField!
+        alert.addTextFieldWithConfigurationHandler { (emailTextField) in
+            emailTextField.placeholder = "Email"
+            emailTextField.autocapitalizationType = UITextAutocapitalizationType.None
+            emailTextField.autocorrectionType = UITextAutocorrectionType.No
+            emailTextField.spellCheckingType = UITextSpellCheckingType.No
+            emailTextField.keyboardType = UIKeyboardType.EmailAddress
+            emailTF = emailTextField
+        }
+        alert.addTextFieldWithConfigurationHandler { (passwordTextField) in
+            passwordTextField.placeholder = "Password"
+            passwordTextField.autocapitalizationType = UITextAutocapitalizationType.None
+            passwordTextField.autocorrectionType = UITextAutocorrectionType.No
+            passwordTextField.spellCheckingType = UITextSpellCheckingType.No
+            passwordTextField.keyboardType = UIKeyboardType.ASCIICapable
+            passwordTextField.secureTextEntry = true
+            passwordTF = passwordTextField
+        }
+        
+        let confirmAction = UIAlertAction(title: "Login", style: .Default) { (action) in
+            FIRAuth.auth()?.signInWithEmail(emailTF.text!, password: passwordTF.text!, completion: { (user, error) in
+                if error == nil {
+                    print("Login successful - showing delete account warning")
+                    self.showDeleteAccountWarning()
+                }
+                else {
+                    print(error)
+                    self.showLoginAlert()
+                }
+            })
+        }
+        
+        alert.addAction(confirmAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }

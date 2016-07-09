@@ -90,6 +90,7 @@ class ContactsCollectionViewController: UICollectionViewController {
     
     func loadContacts() {
         contacts.removeAll()
+        self.collectionView?.reloadData()
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {

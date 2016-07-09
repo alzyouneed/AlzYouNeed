@@ -19,7 +19,7 @@ class FirebaseManager: NSObject {
                 completionHandler(user: user, error: error)
             }
             else {
-                print("New user created successfully")
+                print("New user created")
                 completionHandler(user: user, error: error)
             }
         })
@@ -45,8 +45,7 @@ class FirebaseManager: NSObject {
             }
         }
     }
-    
-    // NEW
+
     class func getCurrentUser(completionHandler: (userDict: NSDictionary?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let userId = user.uid
@@ -57,6 +56,12 @@ class FirebaseManager: NSObject {
 //                    print("Current user retrieved")
                     completionHandler(userDict: dict, error: nil)
                 }
+                else {
+                    // No user to retrieve
+                    print("No user found in RTDB")
+                    let error = NSError(domain: "UserRTDBErrorDomain", code: 2, userInfo: nil)
+                    completionHandler(userDict: nil, error: error)
+                }
             }) { (error) in
                 print("Error occurred while retrieving current user")
                 completionHandler(userDict: nil, error: error)
@@ -64,7 +69,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // NEW: Update user in real-time database with dictionary of changes
+    // Update user in real-time database with dictionary of changes
     class func updateUser(updates: NSDictionary, completionHandler: (error: NSError?) -> Void ) {
         if let user = FIRAuth.auth()?.currentUser {
             let userId = user.uid
@@ -77,7 +82,7 @@ class FirebaseManager: NSObject {
                     completionHandler(error: error)
                 }
                 else {
-                    print("Successfully updated user -- Updating in family")
+                    print("Updated user in RTDB -- Updating in family")
                     updateUserInFamily(updatesDict, completionHandler: { (error) in
                         if error != nil {
                             // Key does not exist -- proceed normally
@@ -99,7 +104,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // NEW: Helper func for updateUser
+    // Helper func for updateUser
     private class func updateUserInFamily(updates: NSDictionary, completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             getCurrentUser({ (userDict, error) in
@@ -117,14 +122,14 @@ class FirebaseManager: NSObject {
                                     completionHandler(error: error)
                                 }
                                 else {
-                                    print("Successfully updated user in family")
+                                    print("Updated user in family")
                                     completionHandler(error: nil)
                                 }
                             })
                         }
                         // Key does not exist -- do not update
                         else {
-                            print("familyId key does not exist -- skipping family update")
+                            print("User does not belong to family -- skipping family update")
                             let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
                             completionHandler(error: error)
                         }
@@ -134,20 +139,35 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // NEW: Delete current auth user, and entry in real time database and in family group
+    // Delete current auth user, and entry in real time database and in family group
     class func deleteCurrentUser(completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             deleteUserFromFamily { (error, databaseRef) in
                 // If user does not belong to family, proceed normally
                 if error != nil {
-                    if error?.code != 0 {
+                    // Check that user belongs to family and exists in RTDB
+                    if error?.code != 0 && error?.code != 2 {
                         // Error
                         print("Error occurred while deleting account from family")
                         completionHandler(error: error)
                     }
+                    // Delete account immediately since it cannot be found in RTDB
+                    else if error?.code == 2 {
+                        user.deleteWithCompletion({ (error) in
+                            if error != nil {
+                                // Error
+                                print("Error occurred while deleting account: \(error)")
+                                completionHandler(error: error)
+                            }
+                            else {
+                                // Success
+                                print("Account deleted")
+                                completionHandler(error: nil)
+                            }
+                        })
+                    }
                     
                 }
-//                else {
                 // Success
                 deleteUserFromRTDB({ (error, databaseRef) in
                     if error != nil {
@@ -170,12 +190,11 @@ class FirebaseManager: NSObject {
                         })
                     }
                 })
-//                }
             }
         }
     }
     
-    // NEW: Helper func for deleteCurrentUser
+    // Helper func for deleteCurrentUser
     private class func deleteUserFromRTDB(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             
@@ -194,10 +213,9 @@ class FirebaseManager: NSObject {
         }
     }
     
-    // NEW: Helper func for deleteCurrentUser
+    // Helper func for deleteCurrentUser
     private class func deleteUserFromFamily(completionHandler: (error: NSError?, databaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            
             getCurrentUser({ (userDict, error) in
                 if let userDict = userDict {
                     let databaseRef = FIRDatabase.database().reference()
@@ -223,13 +241,15 @@ class FirebaseManager: NSObject {
                         completionHandler(error: error, databaseRef: nil)
                     }
                 }
+                else if error != nil {
+//                    print("error: \(error?.domain)")
+                    completionHandler(error: error, databaseRef: nil)
+                }
             })
         }
     }
     
     // MARK: - Family Group Management
-    
-    // NEW
     class func createNewFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             // Check if family group already exists
@@ -281,8 +301,7 @@ class FirebaseManager: NSObject {
             })
         }
     }
-    
-    // NEW
+
     class func joinFamilyGroup(familyId: String, password: String, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             
@@ -334,8 +353,7 @@ class FirebaseManager: NSObject {
             })
         }
     }
-    
-    // NEW
+
     class func lookUpFamilyGroup(familyId: String, completionHandler: (error: NSError?, familyExists: Bool?) -> Void) {
         let databaseRef = FIRDatabase.database().reference()
         
@@ -363,8 +381,7 @@ class FirebaseManager: NSObject {
             completionHandler(password: nil, error: error)
         }
     }
-    
-    // NEW
+
     class func getFamilyMembers(completionHandler: (members: [Contact]?, error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser{
             getCurrentUser { (userDict, error) in
