@@ -45,6 +45,10 @@ class DashboardViewController: UIViewController {
                 self.presentOnboardingVC()
             }
         }
+        
+//        let tabArray = self.tabBarController?.tabBar.items as NSArray!
+//        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+//        tabItem.badgeValue = "8"
     }
     
     override func viewDidAppear(animated: Bool) {

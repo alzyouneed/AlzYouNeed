@@ -425,4 +425,71 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func createFamilyReminder(reminder: Reminder, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+        getCurrentUser { (userDict, error) in
+            if error != nil {
+                // Error
+                completionHandler(error: error, newDatabaseRef: nil)
+            }
+            else {
+                // Get user family id to save reminder
+                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    
+                    let reminderToSave = ["title": reminder.title, "description": reminder.reminderDescription, "dueDate": reminder.dueDate]
+                    
+                    databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminderToSave, withCompletionBlock: { (error, newDatabaseRef) in
+                        if error != nil {
+                            // Error
+                            print("Error creating reminder")
+                            completionHandler(error: error, newDatabaseRef: nil)
+                        }
+                        else {
+                            // Success
+                            print("Created new family reminder")
+                            completionHandler(error: nil, newDatabaseRef: newDatabaseRef)
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    class func getFamilyReminders(completionHandler: (error: NSError?, reminders: [Reminder]?) -> Void) {
+        getCurrentUser { (userDict, error) in
+            if error != nil {
+                // Error
+                completionHandler(error: error, reminders: nil)
+            }
+            else {
+                // Search for members using current user's familyId
+                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    var remindersArr = [Reminder]()
+                    
+                    databaseRef.child("families").child(userFamilyId).child("reminders").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                        if let dict = snapshot.value! as? NSDictionary {
+                            for (_, value) in dict {
+                                if let remindersDict = value as? NSDictionary {
+                                    if let newReminder = Reminder(reminderDict: remindersDict) {
+                                        remindersArr.append(newReminder)
+                                    }
+                                }
+                            }
+                            print("Retrieved family reminders")
+                            completionHandler(error: nil, reminders: remindersArr)
+                        }
+                        else {
+                            print("No reminders dict")
+                            completionHandler(error: nil, reminders: nil)
+                        }
+                    }) { (error) in
+                        print("Error occurred while retrieving family reminders")
+                        completionHandler(error: error, reminders: nil)
+                    }
+                }
+            }
+        }
+    }
+    
 }

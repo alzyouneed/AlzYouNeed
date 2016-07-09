@@ -722,7 +722,7 @@
             </objects>
             <point key="canvasLocation" x="-36" y="448"/>
         </scene>
-        <!--Dashboard View Controller-->
+        <!--Home-->
         <scene sceneID="0Nc-oR-Kwk">
             <objects>
                 <viewController id="fTz-C2-Fo8" customClass="DashboardViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
@@ -757,7 +757,7 @@
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" constant="33" id="lxA-EI-pkt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="JRu-Ga-1J2">
+                    <navigationItem key="navigationItem" title="Home" id="JRu-Ga-1J2">
                         <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="3Dj-7z-xYC">
                             <connections>
                                 <action selector="showSettings:" destination="fTz-C2-Fo8" id="oVI-H1-3ce"/>
@@ -794,10 +794,10 @@
             </objects>
             <point key="canvasLocation" x="-36" y="1210"/>
         </scene>
-        <!--View Controller-->
+        <!--Reminders-->
         <scene sceneID="TN1-fE-IlQ">
             <objects>
-                <viewController id="bGj-vw-7yG" sceneMemberID="viewController">
+                <viewController id="bGj-vw-7yG" customClass="RemindersViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GYq-y8-9xx"/>
                         <viewControllerLayoutGuide type="bottom" id="COk-1b-AU7"/>
@@ -807,7 +807,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="JEi-x6-Vzm"/>
+                    <navigationItem key="navigationItem" title="Reminders" id="JEi-x6-Vzm"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayy-CJ-Kch" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

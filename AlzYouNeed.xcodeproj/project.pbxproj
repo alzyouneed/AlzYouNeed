@@ -30,6 +30,8 @@
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
+		2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C21D3180C10090C89A /* Reminder.swift */; };
+		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
 		2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */; };
 		2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */; };
 		2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */; };
@@ -80,6 +82,8 @@
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		2DC0B2C21D3180C10090C89A /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardView.xib; sourceTree = "<group>"; };
 		2DC8D5BF1D12DDE000952483 /* UserDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDashboardView.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				2DC8D5C91D12EAAF00952483 /* Onboarding */,
 				2DC8D5B81D12DBDD00952483 /* Dashboard */,
 				2D2244EE1D0F994E005D9DF5 /* ContactList */,
+				2DC0B2BE1D3180800090C89A /* Reminders */,
 				2DCC3C691D303EFB005D0EFD /* PopoverView */,
 				2DE890B71D11B9B7001DC19F /* Extras */,
 				2D9834DE1D0C4A91000977DC /* Assets.xcassets */,
@@ -250,6 +255,39 @@
 				2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */,
 			);
 			path = AlzYouNeed;
+			sourceTree = "<group>";
+		};
+		2DC0B2BE1D3180800090C89A /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0B2BF1D31808D0090C89A /* Model */,
+				2DC0B2C01D3180910090C89A /* View */,
+				2DC0B2C11D3180980090C89A /* Controller */,
+			);
+			name = Reminders;
+			sourceTree = "<group>";
+		};
+		2DC0B2BF1D31808D0090C89A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0B2C21D3180C10090C89A /* Reminder.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2DC0B2C01D3180910090C89A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2DC0B2C11D3180980090C89A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0B2C41D3182810090C89A /* RemindersViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		2DC8D5B81D12DBDD00952483 /* Dashboard */ = {
@@ -519,6 +557,7 @@
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
+				2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
 				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
@@ -528,6 +567,7 @@
 				2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */,
 				2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
+				2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */,
 				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,
 				2D72834B1D1EF5B800389CFC /* Contact.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,

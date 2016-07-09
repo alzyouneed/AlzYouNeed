@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarController = self.window?.rootViewController as! UITabBarController
         tabBarController.selectedIndex = 1
         
+        // Get new reminders
+        let tabArray = tabBarController.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        tabItem.badgeValue = "8"
+        
 //        printAllFonts()
         
         return true
