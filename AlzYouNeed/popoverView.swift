@@ -71,6 +71,9 @@ import UIKit
         case 00001:
             // Family already exists
             return "A family with this name already exists"
+        case 00003:
+            // Incorrect family password
+            return "That password didn't work"
         default:
             return nil
         }

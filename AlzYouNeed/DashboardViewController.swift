@@ -62,8 +62,8 @@ class DashboardViewController: UIViewController {
                 }
                 else {
                     // Error
-                    // Check for relevant error being showing alert
-                    if error?.code != 2 {
+                    // Check for relevant error before showing alert
+                    if error?.code != 2 && error?.code != 17011 {
                         print("Error deleting user: \(error)")
                         self.showLoginAlert()
                     }

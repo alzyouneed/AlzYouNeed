@@ -338,7 +338,7 @@ class FirebaseManager: NSObject {
                                             }
                                             else {
                                                 print("User added to family")
-                                                completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)
+                                                completionHandler(error: nil, newDatabaseRef: secondDatabaseRef)
                                             }
                                         })
                                     }
@@ -346,9 +346,11 @@ class FirebaseManager: NSObject {
                             }
                         })
                     }
-                    print("Incorrect password to join family: \(familyId)")
-                    let wrongPasswordError = NSError(domain: "Incorrect password", code: 0, userInfo: nil)
-                    completionHandler(error: wrongPasswordError, newDatabaseRef: nil)
+                    else {
+                        print("Incorrect password to join family: \(familyId)")
+                        let wrongPasswordError = NSError(domain: "Incorrect password", code: 3, userInfo: nil)
+                        completionHandler(error: wrongPasswordError, newDatabaseRef: nil)
+                    }
                 }
             })
         }
