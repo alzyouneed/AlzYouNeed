@@ -694,17 +694,20 @@
                     <connections>
                         <segue destination="qfV-xL-rPd" kind="relationship" relationship="viewControllers" id="oxl-2Q-pEy"/>
                         <segue destination="d6k-9s-Qi8" kind="relationship" relationship="viewControllers" id="ePP-cs-mQB"/>
+                        <segue destination="tR6-f2-aAc" kind="relationship" relationship="viewControllers" id="f9k-dc-awN"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RIH-IG-nN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-785" y="448"/>
         </scene>
-        <!--Contacts-->
+        <!--Navigation Controller-->
         <scene sceneID="I0w-bp-nSU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qfV-xL-rPd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" id="QWF-CU-oK5"/>
+                    <tabBarItem key="tabBarItem" title="" image="contactsIcon" id="QWF-CU-oK5">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MFg-XF-DfL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -770,11 +773,13 @@
             </objects>
             <point key="canvasLocation" x="730" y="1210"/>
         </scene>
-        <!--Dashboard-->
+        <!--Navigation Controller-->
         <scene sceneID="Gdc-Of-6I7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d6k-9s-Qi8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dashboard" id="ebv-mc-t8K"/>
+                    <tabBarItem key="tabBarItem" title="" image="homeIcon" id="ebv-mc-t8K">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -788,6 +793,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KDs-EP-9PX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-36" y="1210"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="TN1-fE-IlQ">
+            <objects>
+                <viewController id="bGj-vw-7yG" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GYq-y8-9xx"/>
+                        <viewControllerLayoutGuide type="bottom" id="COk-1b-AU7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dPO-7O-ikM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JEi-x6-Vzm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ayy-CJ-Kch" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="730" y="1903"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="L8o-Gi-PWo">
@@ -807,10 +831,34 @@
             </objects>
             <point key="canvasLocation" x="-785" y="-287"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fAM-bv-GXo">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tR6-f2-aAc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="remindersIcon" id="hre-Np-uSC">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3nu-jH-bXc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bGj-vw-7yG" kind="relationship" relationship="rootViewController" id="OWd-7k-y4b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="548-pA-HC4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-36" y="1897"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bareLogo" width="125" height="125"/>
         <image name="cancelIcon" width="22" height="22"/>
+        <image name="contactsIcon" width="25" height="25"/>
+        <image name="homeIcon" width="25" height="25"/>
+        <image name="remindersIcon" width="25" height="25"/>
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>

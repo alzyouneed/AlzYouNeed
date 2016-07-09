@@ -34,6 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set status bar to light
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
+        // Customize tab bar appearance
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBar.appearance().barTintColor = deepSpaceSparkle
+        
+        // Set initial tab bar
+        let tabBarController = self.window?.rootViewController as! UITabBarController
+        tabBarController.selectedIndex = 1
+        
 //        printAllFonts()
         
         return true

@@ -19,66 +19,10 @@ class ContactsCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Create observer for CNContactPicker selection
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactsCollectionViewController.insertNewObject(_:)), name: "addNewContact", object: nil)
-        
-        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-            if let currentUser = user {
-                // User is signed in.
-                print("\(currentUser) is logged in")
-                
-                /*
-                // Check if current user has completed signup
-                FirebaseManager.getUserSignUpStatus({ (status, error) in
-                    if error == nil {
-                        if let status = status {
-                            switch status {
-                            case "updateUser":
-                                self.presentUpdateUserVC()
-                            case "familySetup":
-                                self.presentFamilyVC()
-                            default:
-                                break
-                                
-                            }
-                        }
-                    }
-                })
-                */
-                
-            }
-            else {
-                // No user is signed in.
-                print("No user is signed in -- moving to onboarding flow")
-                self.presentOnboardingVC()
-            }
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
         loadContacts()
-    }
-    
-    func presentOnboardingVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-        self.presentViewController(onboardingVC, animated: true, completion: nil)
-    }
-    
-    func presentFamilyVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
-        let navController = UINavigationController(rootViewController: onboardingVC)
-        self.presentViewController(navController, animated: true, completion: nil)
-
-    }
-    
-    func presentUpdateUserVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateUserVC: UpdateUserViewController = storyboard.instantiateViewControllerWithIdentifier("updateUserVC") as! UpdateUserViewController
-        let navController = UINavigationController(rootViewController: updateUserVC)
-        self.presentViewController(navController, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
