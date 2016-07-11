@@ -8,8 +8,10 @@
     <customFonts key="customFonts">
         <mutableArray key="OpenSans-Regular.ttf">
             <string>OpenSans</string>
+            <string>OpenSans</string>
         </mutableArray>
         <mutableArray key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
@@ -806,33 +808,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="66" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.49019607843137253" green="0.50980392156862742" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="separatorColor" red="0.28235294117647058" green="0.30196078431372547" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" textLabel="RP4-oj-dwg" detailTextLabel="gS1-wS-m5w" rowHeight="60" style="IBUITableViewCellStyleSubtitle" id="e3d-Pm-dad">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="66" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="600" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e3d-Pm-dad" id="vFo-hS-r4c">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RP4-oj-dwg">
-                                                    <rect key="frame" x="15" y="13" width="32" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
+                                                    <rect key="frame" x="8" y="8" width="584" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="1FR-aD-WWi"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="19"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gS1-wS-m5w">
-                                                    <rect key="frame" x="15" y="33" width="41" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
+                                                    <rect key="frame" x="8" y="37" width="584" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="5zG-N3-nrT"/>
+                                                        <constraint firstAttribute="height" constant="20" id="HZ0-Gx-TV1"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="5zG-N3-nrT"/>
+                                                        </mask>
+                                                    </variation>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="91o-up-eAi"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="3" id="Chj-7W-Rt1"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="Ojg-7e-J72"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="UYI-Qw-wut"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="gch-fU-FGw"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hTp-Rd-duT"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="ji2-Rv-77r"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="ouJ-3i-XFF"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Chj-7W-Rt1"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="vVg-7m-Tsh" id="fXY-Lq-5uF"/>
+                                            <outlet property="titleLabel" destination="YgS-6r-X0I" id="cLo-gn-nbw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>

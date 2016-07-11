@@ -20,6 +20,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         
         remindersTableView.delegate = self
+        remindersTableView.rowHeight = UITableViewAutomaticDimension
+        remindersTableView.estimatedRowHeight = 60
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.reminders.removeAll()
+        self.remindersTableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -69,13 +76,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         }
         
         let confirmAction = UIAlertAction(title: "Create", style: .Default) { (action) in
-            if !titleTF.text!.isEmpty && !descriptionTF.text!.isEmpty {
+            if !titleTF.text!.isEmpty {
                 let now = NSDate()
-                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text!, reminderDueDate: now.description)
+                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text! ?? "", reminderDueDate: now.description)
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
-//                        self.loadReminders()
+                        // Success
                     }
                 })
             }
@@ -99,11 +106,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("reminderCell")! as UITableViewCell
+        let cell:ReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("reminderCell")! as! ReminderTableViewCell
         let reminder = reminders[indexPath.row]
         
-        cell.textLabel?.text = reminder.title
-        cell.detailTextLabel!.text = reminder.reminderDescription
+        cell.titleLabel.text = reminder.title
+        cell.descriptionLabel.text = reminder.reminderDescription
+        
+//        cell.textLabel?.text = reminder.title
+//        cell.detailTextLabel!.text = reminder.reminderDescription
         
         return cell
     }
@@ -111,7 +121,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     // MARK: - Firebase Observers
     func addRemindersObservers() {
         print("Adding Firebase observers")
-        self.reminders.removeAll()
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
