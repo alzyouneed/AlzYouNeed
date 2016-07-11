@@ -31,7 +31,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         addRemindersObservers()
-//        loadReminders()
+//        resetTabBadges()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -67,11 +67,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         alert.addTextFieldWithConfigurationHandler { (titleTextField) in
             titleTextField.placeholder = "Task"
             titleTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
+            titleTextField.autocorrectionType = UITextAutocorrectionType.Yes
             titleTF = titleTextField
         }
         alert.addTextFieldWithConfigurationHandler { (descriptionTextField) in
             descriptionTextField.placeholder = "Notes"
             descriptionTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
+            descriptionTextField.autocorrectionType = UITextAutocorrectionType.Yes
             descriptionTF = descriptionTextField
         }
         
@@ -131,6 +133,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                                 print("New reminder in RTDB")
                                 self.reminders.append(newReminder)
                                 self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.reminders.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                self.updateTabBadge()
                             }
                         }
                     })
@@ -144,6 +147,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                                         print("Removing reminder in RTDB")
                                         self.reminders.removeAtIndex(index)
                                         self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                        self.updateTabBadge()
                                     }
                                 }
                             }
@@ -157,6 +161,19 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     func removeRemindersObservers() {
         print("Removing Firebase observers")
         self.databaseRef.child("families").child(familyId).child("reminders").removeAllObservers()
+    }
+    
+    // MARK: - Tab bar
+    func resetTabBadges() {
+        let tabArray = tabBarController!.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        tabItem.badgeValue = nil
+    }
+    
+    func updateTabBadge() {
+        let tabArray = tabBarController!.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        tabItem.badgeValue = "\(reminders.count)"
     }
     
     /*

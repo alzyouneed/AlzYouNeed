@@ -4,6 +4,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactView" customModule="AlzYouNeed" customModuleProvider="target">
             <connections>
@@ -27,8 +32,8 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" identifier="id5" id="hIZ-cQ-WsL"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -37,7 +42,7 @@
                             </variation>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="ezW-v5-SPO" firstAttribute="leading" secondItem="hdq-70-oLI" secondAttribute="leading" constant="8" identifier="id6" id="BAS-uF-eAF"/>
                         <constraint firstItem="ezW-v5-SPO" firstAttribute="top" secondItem="hdq-70-oLI" secondAttribute="top" constant="8" identifier="id7" id="x1B-qA-gWa"/>

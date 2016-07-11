@@ -45,6 +45,8 @@ import UIKit
         contactImageView.layer.cornerRadius = contactImageView.frame.size.width / 2
         contactImageView.layer.masksToBounds = false
         contactImageView.clipsToBounds = true
+        contactImageView.layer.borderWidth = 2
+        contactImageView.layer.borderColor = UIColor.whiteColor().CGColor
         
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         leftButton.layer.masksToBounds = false
