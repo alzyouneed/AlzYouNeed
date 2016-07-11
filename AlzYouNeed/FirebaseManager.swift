@@ -425,6 +425,8 @@ class FirebaseManager: NSObject {
         }
     }
     
+    
+    // MARK: - Reminders
     class func createFamilyReminder(reminder: Reminder, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         getCurrentUser { (userDict, error) in
             if error != nil {

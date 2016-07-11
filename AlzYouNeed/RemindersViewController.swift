@@ -13,6 +13,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var remindersTableView: UITableView!
     var reminders: [Reminder] = []
+    let databaseRef = FIRDatabase.database().reference()
+    var familyId: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        loadReminders()
+        addRemindersObservers()
+//        loadReminders()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        // Remove Firebase observers
+        removeRemindersObservers()
     }
     
     func loadReminders() {
@@ -67,7 +75,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
-                        self.loadReminders()
+//                        self.loadReminders()
                     }
                 })
             }
@@ -99,7 +107,49 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         
         return cell
     }
-
+    
+    // MARK: - Firebase Observers
+    func addRemindersObservers() {
+        print("Adding Firebase observers")
+        self.reminders.removeAll()
+        FirebaseManager.getCurrentUser { (userDict, error) in
+            if error == nil {
+                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                    self.familyId = userFamilyId
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
+                        if let reminderDict = snapshot.value! as? NSDictionary {
+                            if let newReminder = Reminder(reminderDict: reminderDict) {
+                                print("New reminder in RTDB")
+                                self.reminders.append(newReminder)
+                                self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.reminders.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                            }
+                        }
+                    })
+                    
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildRemoved, withBlock: { (snapshot) in
+                        if let reminderDict = snapshot.value! as? NSDictionary {
+                            if let reminderTitle = reminderDict.valueForKey("title") as? String {
+                                // TODO: Change removal logic -- Check for ID
+                                for (index,reminder) in self.reminders.enumerate() {
+                                    if reminder.title == reminderTitle {
+                                        print("Removing reminder in RTDB")
+                                        self.reminders.removeAtIndex(index)
+                                        self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    func removeRemindersObservers() {
+        print("Removing Firebase observers")
+        self.databaseRef.child("families").child(familyId).child("reminders").removeAllObservers()
+    }
+    
     /*
     // MARK: - Navigation
 

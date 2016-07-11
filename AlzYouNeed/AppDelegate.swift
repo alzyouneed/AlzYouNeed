@@ -14,11 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    override init() {
+        // Firebase init
+        FIRApp.configure()
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Configure Firebase
-        FIRApp.configure()
+//        FIRApp.configure()
         
 //        FIRDatabase.database().persistenceEnabled = true
         
