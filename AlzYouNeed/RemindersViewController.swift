@@ -21,7 +21,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         
         remindersTableView.delegate = self
         remindersTableView.rowHeight = UITableViewAutomaticDimension
-        remindersTableView.estimatedRowHeight = 60
+        remindersTableView.estimatedRowHeight = 66
     }
     
     override func viewWillAppear(animated: Bool) {

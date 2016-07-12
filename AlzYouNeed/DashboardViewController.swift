@@ -46,9 +46,7 @@ class DashboardViewController: UIViewController {
             }
         }
         
-//        let tabArray = self.tabBarController?.tabBar.items as NSArray!
-//        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
-//        tabItem.badgeValue = "8"
+        configureNavBarTitle()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -189,5 +187,17 @@ class DashboardViewController: UIViewController {
         let tabArray = tabBarController!.tabBar.items as NSArray!
         let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
         tabItem.badgeValue = nil
+    }
+    
+    func configureNavBarTitle() {
+        FirebaseManager.getCurrentUser { (userDict, error) in
+            if error == nil {
+                if let userDict = userDict {
+                    if let userName = userDict.objectForKey("name") as? String {
+                        self.navigationItem.title = userName
+                    }
+                }
+            }
+        }
     }
 }

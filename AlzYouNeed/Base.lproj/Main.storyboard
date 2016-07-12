@@ -724,7 +724,7 @@
             </objects>
             <point key="canvasLocation" x="-36" y="448"/>
         </scene>
-        <!--Home-->
+        <!--Dashboard View Controller-->
         <scene sceneID="0Nc-oR-Kwk">
             <objects>
                 <viewController id="fTz-C2-Fo8" customClass="DashboardViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
@@ -759,7 +759,7 @@
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" constant="33" id="lxA-EI-pkt"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="JRu-Ga-1J2">
+                    <navigationItem key="navigationItem" id="JRu-Ga-1J2">
                         <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="3Dj-7z-xYC">
                             <connections>
                                 <action selector="showSettings:" destination="fTz-C2-Fo8" id="oVI-H1-3ce"/>
