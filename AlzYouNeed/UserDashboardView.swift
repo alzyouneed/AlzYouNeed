@@ -42,6 +42,13 @@ import UIKit
         
         leftButton.layer.cornerRadius = leftButton.frame.size.width * 0.15
         rightButton.layer.cornerRadius = rightButton.frame.size.width * 0.15
+        
+        self.userImageView.layer.masksToBounds = true
+        self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
+        self.userImageView.clipsToBounds = true
+        self.userImageView.layer.borderWidth = 2
+        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.userImageView.alpha = 0
     }
     
     func loadViewFromNib() -> UIView {
@@ -49,6 +56,15 @@ import UIKit
         let nib = UINib(nibName: "UserDashboardView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         return view
+    }
+    
+    func setImage(image: UIImage) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.userImageView.image = image
+            UIView.animateWithDuration(0.25, animations: {
+                self.userImageView.alpha = 1
+            })
+        }
     }
     
 

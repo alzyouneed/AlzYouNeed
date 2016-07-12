@@ -46,7 +46,7 @@ class DashboardViewController: UIViewController {
             }
         }
         
-        configureNavBarTitle()
+        configureView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -189,15 +189,30 @@ class DashboardViewController: UIViewController {
         tabItem.badgeValue = nil
     }
     
+    // MARK: - Configuration
+    func configureView() {
+        configureNavBarTitle()
+    }
+    
     func configureNavBarTitle() {
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
                     if let userName = userDict.objectForKey("name") as? String {
                         self.navigationItem.title = userName
+                        
+                        if let imageString = userDict.objectForKey("avatarId") as? String {
+                            self.configureDashboardView(imageString)
+                        }
                     }
                 }
             }
+        }
+    }
+    
+    func configureDashboardView(imageString: String) {
+        if let image = UIImage(named: imageString) as UIImage? {
+            userView.setImage(image)
         }
     }
 }
