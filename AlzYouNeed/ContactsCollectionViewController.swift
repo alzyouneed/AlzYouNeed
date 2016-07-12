@@ -15,14 +15,19 @@ private let reuseIdentifier = "ContactCell"
 
 class ContactsCollectionViewController: UICollectionViewController {
     
+    // MARK: - Properties
     var contacts: [Contact] = []
+    var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureRefreshControl()
+        loadContacts(false)
     }
     
     override func viewWillAppear(animated: Bool) {
-        loadContacts()
+//        loadContacts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,7 +37,7 @@ class ContactsCollectionViewController: UICollectionViewController {
     
     // MARK: - Logic
     
-    func loadContacts() {
+    func loadContacts(refreshing: Bool) {
         contacts.removeAll()
         self.collectionView?.reloadData()
         FirebaseManager.getFamilyMembers { (members, error) in
@@ -41,13 +46,24 @@ class ContactsCollectionViewController: UICollectionViewController {
                     print("Loaded \(members.count) contacts from Firebase")
                     self.contacts = members
                     
-                    dispatch_async(dispatch_get_main_queue(), { 
-                        self.collectionView?.reloadData()
-                        self.checkCollectionViewEmpty()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        UIView.animateWithDuration(0.5, animations: { 
+                            self.collectionView?.reloadData()
+                            self.checkCollectionViewEmpty()
+                            
+                            if refreshing {
+                                self.refreshControl.endRefreshing()
+                            }
+                        })
                     })
                 }
             }
         }
+    }
+    
+    func refresh(control: UIRefreshControl) {
+        print("Refreshing")
+        loadContacts(true)
     }
     
     // MARK: - UICollectionViewDataSource
@@ -126,6 +142,15 @@ class ContactsCollectionViewController: UICollectionViewController {
             self.collectionView!.backgroundView = nil
 //            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         }
+    }
+    
+    // MARK: - Refresh control
+    func configureRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 16)!])
+        refreshControl.tintColor = UIColor.whiteColor()
+        refreshControl.addTarget(self, action: #selector(ContactsCollectionViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        collectionView?.addSubview(refreshControl)
     }
     
     /*
