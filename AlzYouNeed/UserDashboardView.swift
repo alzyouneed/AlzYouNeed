@@ -40,8 +40,8 @@ import UIKit
         
         addSubview(view)
         
-        leftButton.layer.cornerRadius = leftButton.frame.size.width * 0.15
-        rightButton.layer.cornerRadius = rightButton.frame.size.width * 0.15
+        leftButton.layer.cornerRadius = leftButton.frame.size.width * 0.1
+        rightButton.layer.cornerRadius = rightButton.frame.size.width * 0.1
         
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2

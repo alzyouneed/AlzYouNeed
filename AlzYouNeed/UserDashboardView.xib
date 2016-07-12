@@ -14,60 +14,79 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="256" height="80"/>
+            <rect key="frame" x="0.0" y="0.0" width="256" height="150"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3z-gA-ltU">
-                    <rect key="frame" x="176" y="15" width="80" height="50"/>
-                    <color key="backgroundColor" red="0.023529411760000001" green="0.83921568629999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ugG-qC-HwF">
+                    <rect key="frame" x="8" y="88" width="240" height="54"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8U-hN-1Kq">
+                            <rect key="frame" x="0.0" y="0.0" width="115" height="54"/>
+                            <color key="backgroundColor" red="0.0" green="0.66274509800000003" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="kYb-Zk-ALb"/>
+                                <constraint firstAttribute="width" constant="80" id="svy-ch-9bl"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" title="Emergency">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="kYb-Zk-ALb"/>
+                                    <exclude reference="svy-ch-9bl"/>
+                                </mask>
+                            </variation>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3z-gA-ltU">
+                            <rect key="frame" x="125" y="0.0" width="115" height="54"/>
+                            <color key="backgroundColor" red="0.023529411760000001" green="0.83921568629999999" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="Mbh-uW-7dC"/>
+                                <constraint firstAttribute="height" constant="50" id="QOR-JN-ipA"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" title="Locate Me">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Mbh-uW-7dC"/>
+                                    <exclude reference="QOR-JN-ipA"/>
+                                </mask>
+                            </variation>
+                        </button>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="Mbh-uW-7dC"/>
-                        <constraint firstAttribute="height" constant="50" id="QOR-JN-ipA"/>
+                        <constraint firstItem="c8U-hN-1Kq" firstAttribute="top" secondItem="ugG-qC-HwF" secondAttribute="top" id="573-zd-Nfq"/>
+                        <constraint firstItem="m3z-gA-ltU" firstAttribute="top" secondItem="ugG-qC-HwF" secondAttribute="top" id="Lg9-56-U8u"/>
+                        <constraint firstItem="m3z-gA-ltU" firstAttribute="leading" secondItem="c8U-hN-1Kq" secondAttribute="trailing" constant="10" id="OoN-rn-Xvf"/>
+                        <constraint firstAttribute="trailing" secondItem="m3z-gA-ltU" secondAttribute="trailing" id="byO-Cm-JhC"/>
+                        <constraint firstAttribute="height" constant="54" id="cF1-Ra-Lub"/>
+                        <constraint firstItem="c8U-hN-1Kq" firstAttribute="leading" secondItem="ugG-qC-HwF" secondAttribute="leading" id="fgn-cf-MDB"/>
+                        <constraint firstAttribute="bottom" secondItem="c8U-hN-1Kq" secondAttribute="bottom" id="nDx-eT-pVn"/>
+                        <constraint firstAttribute="bottom" secondItem="m3z-gA-ltU" secondAttribute="bottom" id="zYl-D5-twH"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="Locate Me">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8U-hN-1Kq">
-                    <rect key="frame" x="0.0" y="15" width="80" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.66274509800000003" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="kYb-Zk-ALb"/>
-                        <constraint firstAttribute="width" constant="80" id="svy-ch-9bl"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <state key="normal" title="Emergency">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                </stackView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-Tf-kk7">
                     <rect key="frame" x="88" y="0.0" width="80" height="80"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="UjQ-p8-fBB"/>
-                        <constraint firstAttribute="height" constant="80" id="Zle-By-G6s"/>
+                        <constraint firstAttribute="width" constant="80" id="Lep-mo-g9V"/>
+                        <constraint firstAttribute="height" constant="80" id="Qpj-E1-a2g"/>
                     </constraints>
                 </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="c8U-hN-1Kq" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3W9-ZN-xOv"/>
-                <constraint firstItem="W8J-Tf-kk7" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HDC-2z-zjj"/>
-                <constraint firstItem="W8J-Tf-kk7" firstAttribute="leading" secondItem="c8U-hN-1Kq" secondAttribute="trailing" constant="8" id="Kiy-75-2wd"/>
-                <constraint firstItem="m3z-gA-ltU" firstAttribute="centerY" secondItem="W8J-Tf-kk7" secondAttribute="centerY" id="Tm2-88-c58"/>
-                <constraint firstAttribute="bottom" secondItem="W8J-Tf-kk7" secondAttribute="bottom" id="Xzz-ii-wuc"/>
-                <constraint firstItem="W8J-Tf-kk7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="YrT-bL-7wO"/>
-                <constraint firstItem="m3z-gA-ltU" firstAttribute="leading" secondItem="W8J-Tf-kk7" secondAttribute="trailing" constant="8" id="cKS-kh-65R"/>
-                <constraint firstItem="W8J-Tf-kk7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jNP-Nq-rJg"/>
-                <constraint firstItem="c8U-hN-1Kq" firstAttribute="centerY" secondItem="W8J-Tf-kk7" secondAttribute="centerY" id="t0l-AR-rii"/>
+                <constraint firstItem="W8J-Tf-kk7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2y1-Jz-HfW"/>
+                <constraint firstItem="ugG-qC-HwF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="CTU-v2-JlC"/>
+                <constraint firstItem="W8J-Tf-kk7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="OYj-VM-ojx"/>
+                <constraint firstAttribute="trailing" secondItem="ugG-qC-HwF" secondAttribute="trailing" constant="8" id="UjZ-zH-PlP"/>
+                <constraint firstAttribute="bottom" secondItem="ugG-qC-HwF" secondAttribute="bottom" constant="8" id="oBS-RD-ff9"/>
+                <constraint firstItem="ugG-qC-HwF" firstAttribute="top" secondItem="W8J-Tf-kk7" secondAttribute="bottom" constant="8" id="pB6-Cw-wv9"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="3W9-ZN-xOv"/>
-                </mask>
-            </variation>
-            <point key="canvasLocation" x="329" y="80"/>
+            <point key="canvasLocation" x="329" y="118.5"/>
         </view>
     </objects>
 </document>

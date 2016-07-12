@@ -52,6 +52,10 @@ class DashboardViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         let now = NSDate()
         dateView.configureView(now)
+        
+        if self.navigationItem.title == "" {
+            configureNavBarTitle()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,7 +71,9 @@ class DashboardViewController: UIViewController {
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
             try! FIRAuth.auth()?.signOut()
+            // Clean up current session
             self.updateTabBadge()
+            self.resetView()
         }
         let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
             self.showDeleteAccountWarning()
@@ -189,12 +195,18 @@ class DashboardViewController: UIViewController {
         tabItem.badgeValue = nil
     }
     
+    func resetView() {
+        self.navigationItem.title = ""
+        self.userView.userImageView.image = nil
+    }
+    
     // MARK: - Configuration
     func configureView() {
         configureNavBarTitle()
     }
     
     func configureNavBarTitle() {
+        print("Configure nav bar title")
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {

@@ -737,14 +737,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLL-Sp-XmI" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="172" y="97" width="256" height="80"/>
+                                <rect key="frame" x="172" y="97" width="256" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0U2-Gl-dV4"/>
                                     <constraint firstAttribute="height" constant="80" id="aKX-b8-nAI"/>
+                                    <constraint firstAttribute="height" constant="150" id="s1b-0m-9rm"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="aKX-b8-nAI"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="172" y="236" width="256" height="81"/>
+                                <rect key="frame" x="172" y="306" width="256" height="81"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="8bx-2a-YDb"/>
                                     <constraint firstAttribute="height" constant="81" id="fN7-3b-R15"/>
