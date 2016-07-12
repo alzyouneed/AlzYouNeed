@@ -121,6 +121,19 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         return cell
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let reminder = reminders[indexPath.row]
+            FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
+                if error == nil {
+                    // Observers catch deletion and properly update data source array and UI
+                }
+            })
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
     // MARK: - Firebase Observers
     func addRemindersObservers() {
         print("Adding Firebase observers")
@@ -141,7 +154,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                     
                     self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildRemoved, withBlock: { (snapshot) in
                         if let reminderId = snapshot.key as String? {
-                            print("ReminderID: \(reminderId)")
                             if let index = self.getIndex(reminderId) {
                                 print("Removing reminder in RTDB")
                                 self.reminders.removeAtIndex(index)
@@ -170,7 +182,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
     func updateTabBadge() {
         let tabArray = tabBarController!.tabBar.items as NSArray!
         let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
-        tabItem.badgeValue = "\(reminders.count)"
+        
+        if reminders.count == 0 {
+            tabItem.badgeValue = nil
+        }
+        else {
+            tabItem.badgeValue = "\(reminders.count)"
+        }
     }
     
     // MARK: - Reminders Array
