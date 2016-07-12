@@ -69,6 +69,7 @@ class DashboardViewController: UIViewController {
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
             try! FIRAuth.auth()?.signOut()
+            self.updateTabBadge()
         }
         let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
             self.showDeleteAccountWarning()
@@ -182,5 +183,11 @@ class DashboardViewController: UIViewController {
         let updateUserVC: UpdateUserViewController = storyboard.instantiateViewControllerWithIdentifier("updateUserVC") as! UpdateUserViewController
         let navController = UINavigationController(rootViewController: updateUserVC)
         self.presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    func updateTabBadge() {
+        let tabArray = tabBarController!.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        tabItem.badgeValue = nil
     }
 }
