@@ -427,7 +427,8 @@ class FirebaseManager: NSObject {
     
     
     // MARK: - Reminders
-    class func createFamilyReminder(reminder: Reminder, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+//    class func createFamilyReminder(reminder: Reminder, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func createFamilyReminder(reminder: NSDictionary, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         getCurrentUser { (userDict, error) in
             if error != nil {
                 // Error
@@ -438,9 +439,7 @@ class FirebaseManager: NSObject {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     let databaseRef = FIRDatabase.database().reference()
                     
-                    let reminderToSave = ["title": reminder.title, "description": reminder.reminderDescription, "dueDate": reminder.dueDate]
-                    
-                    databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminderToSave, withCompletionBlock: { (error, newDatabaseRef) in
+                    databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
                         if error != nil {
                             // Error
                             print("Error creating reminder")
@@ -456,7 +455,7 @@ class FirebaseManager: NSObject {
             }
         }
     }
-    
+    /*
     class func getFamilyReminders(completionHandler: (error: NSError?, reminders: [Reminder]?) -> Void) {
         getCurrentUser { (userDict, error) in
             if error != nil {
@@ -493,5 +492,6 @@ class FirebaseManager: NSObject {
             }
         }
     }
+ */
     
 }

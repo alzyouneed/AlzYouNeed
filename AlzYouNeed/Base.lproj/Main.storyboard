@@ -820,47 +820,37 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
                                                     <rect key="frame" x="8" y="8" width="584" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="1FR-aD-WWi"/>
+                                                        <constraint firstAttribute="height" constant="21" id="hpk-Ht-68g"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="hpk-Ht-68g"/>
+                                                        </mask>
+                                                    </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
                                                     <rect key="frame" x="8" y="37" width="584" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="5zG-N3-nrT"/>
-                                                        <constraint firstAttribute="height" constant="20" id="HZ0-Gx-TV1"/>
-                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="5zG-N3-nrT"/>
-                                                        </mask>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="91o-up-eAi"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="3" id="Chj-7W-Rt1"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="Ojg-7e-J72"/>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="UYI-Qw-wut"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="gch-fU-FGw"/>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hTp-Rd-duT"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="ji2-Rv-77r"/>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="ouJ-3i-XFF"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="Bke-yp-piA"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="Li7-L2-t3z"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="QLJ-e6-6ag"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="eYP-4a-uyv"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hpE-uQ-zjm"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="jep-wk-MJn"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="lUh-RQ-lLp"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Chj-7W-Rt1"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="descriptionLabel" destination="vVg-7m-Tsh" id="fXY-Lq-5uF"/>

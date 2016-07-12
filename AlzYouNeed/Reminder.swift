@@ -10,26 +10,29 @@ import UIKit
 
 class Reminder: NSObject {
 
+    var id: String!
     var title: String!
     var reminderDescription: String!
     var dueDate: String!
     
-    init(reminderTitle: String, reminderDescription: String, reminderDueDate: String) {
+    init(reminderId: String, reminderTitle: String, reminderDescription: String, reminderDueDate: String) {
         super.init()
+        self.id = reminderId
         self.title = reminderTitle
         self.reminderDescription = reminderDescription
         self.dueDate = reminderDueDate
     }
     
-    init?(reminderDict: NSDictionary) {
+    init?(reminderId: String, reminderDict: NSDictionary) {
         super.init()
+        self.id = reminderId
         self.title = reminderDict.valueForKey("title") as! String
         self.reminderDescription = reminderDict.valueForKey("description") as! String
         self.dueDate = reminderDict.valueForKey("dueDate") as! String
     }
     
     override var description: String {
-        return "title: \(title) -- description: \(reminderDescription) -- dueDate: \(dueDate)"
+        return "id: \(id) -- title: \(title) -- description: \(reminderDescription) -- dueDate: \(dueDate)"
     }
     
 }

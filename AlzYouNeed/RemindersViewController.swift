@@ -39,21 +39,21 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         removeRemindersObservers()
     }
     
-    func loadReminders() {
-        reminders.removeAll()
-        
-        FirebaseManager.getFamilyReminders { (error, reminders) in
-            if let reminders = reminders {
-                print("Reminders: \(reminders)")
-                self.reminders = reminders
-                
-                dispatch_async(dispatch_get_main_queue(), { 
-                    self.remindersTableView.reloadData()
-                })
-                
-            }
-        }
-    }
+//    func loadReminders() {
+//        reminders.removeAll()
+//        
+//        FirebaseManager.getFamilyReminders { (error, reminders) in
+//            if let reminders = reminders {
+//                print("Reminders: \(reminders)")
+//                self.reminders = reminders
+//                
+//                dispatch_async(dispatch_get_main_queue(), { 
+//                    self.remindersTableView.reloadData()
+//                })
+//                
+//            }
+//        }
+//    }
     
     @IBAction func newReminder(sender: UIBarButtonItem) {
         createReminder()
@@ -80,7 +80,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         let confirmAction = UIAlertAction(title: "Create", style: .Default) { (action) in
             if !titleTF.text!.isEmpty {
                 let now = NSDate()
-                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text! ?? "", reminderDueDate: now.description)
+                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "dueDate":now.description]
+//                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text! ?? "", reminderDueDate: now.description)
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
@@ -129,7 +130,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                     self.familyId = userFamilyId
                     self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
                         if let reminderDict = snapshot.value! as? NSDictionary {
-                            if let newReminder = Reminder(reminderDict: reminderDict) {
+                            if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
                                 print("New reminder in RTDB")
                                 self.reminders.append(newReminder)
                                 self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.reminders.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -139,17 +140,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                     })
                     
                     self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildRemoved, withBlock: { (snapshot) in
-                        if let reminderDict = snapshot.value! as? NSDictionary {
-                            if let reminderTitle = reminderDict.valueForKey("title") as? String {
-                                // TODO: Change removal logic -- Check for ID
-                                for (index,reminder) in self.reminders.enumerate() {
-                                    if reminder.title == reminderTitle {
-                                        print("Removing reminder in RTDB")
-                                        self.reminders.removeAtIndex(index)
-                                        self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                                        self.updateTabBadge()
-                                    }
-                                }
+                        if let reminderId = snapshot.key as String? {
+                            print("ReminderID: \(reminderId)")
+                            if let index = self.getIndex(reminderId) {
+                                print("Removing reminder in RTDB")
+                                self.reminders.removeAtIndex(index)
+                                self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                self.updateTabBadge()
                             }
                         }
                     })
@@ -174,6 +171,16 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         let tabArray = tabBarController!.tabBar.items as NSArray!
         let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
         tabItem.badgeValue = "\(reminders.count)"
+    }
+    
+    // MARK: - Reminders Array
+    func getIndex(id: String) -> Int? {
+        for (index, reminder) in reminders.enumerate() {
+            if reminder.id == id {
+                return index
+            }
+        }
+        return nil
     }
     
     /*
