@@ -12,7 +12,9 @@ import Firebase
 class RemindersViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var remindersTableView: UITableView!
-    var reminders: [Reminder] = []
+//    var reminders: [Reminder] = []
+    var reminders = AYNModel.sharedInstance.remindersArr
+    
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
     

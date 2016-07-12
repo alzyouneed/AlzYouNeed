@@ -16,7 +16,9 @@ private let reuseIdentifier = "ContactCell"
 class ContactsCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
-    var contacts: [Contact] = []
+//    var contacts: [Contact] = []
+    var contacts = AYNModel.sharedInstance.contactsArr
+    
     var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
@@ -27,7 +29,12 @@ class ContactsCollectionViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-//        loadContacts()
+        // If new user signed in -- force reload contacts
+        if AYNModel.sharedInstance.wasReset {
+            print("Model was reset -- loading contacts")
+            AYNModel.sharedInstance.wasReset = false
+            loadContacts(false)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,9 +86,7 @@ class ContactsCollectionViewController: UICollectionViewController {
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ContactCollectionViewCell
-    
-//        let person = userContacts[indexPath.row]
-        
+
         let person = contacts[indexPath.row]
         
         // Configure cell
@@ -91,6 +96,15 @@ class ContactsCollectionViewController: UICollectionViewController {
         
         if let userImage = UIImage(named: person.avatarId) {
             cell.contactView.contactImageView.image = userImage
+        }
+        
+        if let userIsAdmin = person.admin as String? {
+            if userIsAdmin == "true" {
+                cell.contactView.isAdmin(true)
+            }
+            else {
+                cell.contactView.isAdmin(false)
+            }
         }
         
         // Add targets for both buttons

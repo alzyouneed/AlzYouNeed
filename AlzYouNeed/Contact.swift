@@ -19,6 +19,8 @@ class Contact: NSObject {
     
     var avatarId: String!
     
+    var admin: String!
+    
 //    var admin: String!
     
 //    init(uID: String, userDict: NSMutableDictionary) {
@@ -51,6 +53,8 @@ class Contact: NSObject {
         self.patient = userDict.valueForKey("patientStatus") as! String
         
         self.avatarId = userDict.valueForKey("avatarId") as! String
+        
+        self.admin = userDict.valueForKey("admin") as? String ?? "false"
         
 //        self.admin = userDict.valueForKey("admin") as! String
     }

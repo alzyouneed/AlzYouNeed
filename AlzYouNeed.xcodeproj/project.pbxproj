@@ -12,6 +12,7 @@
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
+		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
 		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
 		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
 		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
@@ -63,6 +64,7 @@
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
 		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
 		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
 		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
@@ -127,14 +129,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		2D1BCD3A1D1D70280060B55C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		2D2244EE1D0F994E005D9DF5 /* ContactList */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +155,15 @@
 				2D2244F51D0FB11D005D9DF5 /* ContactView.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		2D3C49051D35AE56003A1C81 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
+				2D3C49061D35AFF7003A1C81 /* AYNModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		2D417BED1D2187540045C80F /* validateTextField */ = {
@@ -250,6 +253,7 @@
 				2D2244EE1D0F994E005D9DF5 /* ContactList */,
 				2DC0B2BE1D3180800090C89A /* Reminders */,
 				2DCC3C691D303EFB005D0EFD /* PopoverView */,
+				2D3C49051D35AE56003A1C81 /* Models */,
 				2DE890B71D11B9B7001DC19F /* Extras */,
 				2D9834DE1D0C4A91000977DC /* Assets.xcassets */,
 				2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */,
@@ -296,7 +300,6 @@
 		2DC8D5B81D12DBDD00952483 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				2DC8D5BB1D12DC0700952483 /* Model */,
 				2DC8D5BC1D12DC0B00952483 /* View */,
 				2DC8D5B91D12DBF600952483 /* Controller */,
 			);
@@ -310,13 +313,6 @@
 				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
 			);
 			name = Controller;
-			sourceTree = "<group>";
-		};
-		2DC8D5BB1D12DC0700952483 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		2DC8D5BC1D12DC0B00952483 /* View */ = {
@@ -349,7 +345,6 @@
 		2DC8D5C91D12EAAF00952483 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				2D1BCD3A1D1D70280060B55C /* Model */,
 				2D6D2FBE1D186BCB0050589C /* View */,
 				2D6D2FBB1D186B7F0050589C /* Controller */,
 			);
@@ -562,6 +557,7 @@
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
+				2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */,
 				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
 				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
 				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,

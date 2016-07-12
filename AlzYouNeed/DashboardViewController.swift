@@ -70,10 +70,12 @@ class DashboardViewController: UIViewController {
             self.presentUpdateProfileVC()
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
-            try! FIRAuth.auth()?.signOut()
             // Clean up current session
+            AYNModel.sharedInstance.resetModel()
             self.updateTabBadge()
             self.resetView()
+            print("User logged out")
+            try! FIRAuth.auth()?.signOut()
         }
         let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
             self.showDeleteAccountWarning()
@@ -227,4 +229,5 @@ class DashboardViewController: UIViewController {
             userView.setImage(image)
         }
     }
+    
 }

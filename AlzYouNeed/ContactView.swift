@@ -19,6 +19,7 @@ import UIKit
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
     @IBOutlet var backgroundView: UIView!
+    @IBOutlet var adminImageView: UIImageView!
     
     // MARK: - Init
     
@@ -75,6 +76,14 @@ import UIKit
         sender.transform = CGAffineTransformMakeScale(0.9, 0.9)
     }
     
+    func isAdmin(admin: Bool) {
+        if admin {
+            self.adminImageView.hidden = false
+        }
+        else {
+            self.adminImageView.hidden = true
+        }
+    }
     
     /*
     func setImageWithPath(path: String) {
