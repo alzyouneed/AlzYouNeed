@@ -35,4 +35,9 @@ class Reminder: NSObject {
         return "id: \(id) -- title: \(title) -- description: \(reminderDescription) -- dueDate: \(dueDate)"
     }
     
+    func asDict() -> NSDictionary {
+        let reminderDict = ["title": self.title, "description": self.reminderDescription, "dueDate": self.dueDate]
+        return reminderDict
+    }
+    
 }

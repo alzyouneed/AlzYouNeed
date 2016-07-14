@@ -327,7 +327,7 @@ class FirebaseManager: NSObject {
                                 databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                     if error != nil {
                                         print("Error occurred while updating user with new family group values")
-                                        completionHandler(error: error, newDatabaseRef: databaseRef)
+                                        completionHandler(error: error, newDatabaseRef: nil)
                                     }
                                     else {
                                         print("User family group values updated")
@@ -475,60 +475,42 @@ class FirebaseManager: NSObject {
                             completionHandler(error: nil, newDatabaseRef: oldRef)
                         }
                     })
-                    
-//                    databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
-//                        if error != nil {
-//                            // Error
-//                            print("Error creating reminder")
-//                            completionHandler(error: error, newDatabaseRef: nil)
-//                        }
-//                        else {
-//                            // Success
-//                            print("Created new family reminder")
-//                            completionHandler(error: nil, newDatabaseRef: newDatabaseRef)
-//                        }
-//                    })
                 }
             }
         }
     }
-    /*
-    class func getFamilyReminders(completionHandler: (error: NSError?, reminders: [Reminder]?) -> Void) {
+    
+    class func completeFamilyReminder(reminder: Reminder, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         getCurrentUser { (userDict, error) in
             if error != nil {
-                // Error
-                completionHandler(error: error, reminders: nil)
+                completionHandler(error: error, newDatabaseRef: nil)
             }
             else {
-                // Search for members using current user's familyId
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     let databaseRef = FIRDatabase.database().reference()
-                    var remindersArr = [Reminder]()
                     
-                    databaseRef.child("families").child(userFamilyId).child("reminders").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                        if let dict = snapshot.value! as? NSDictionary {
-                            for (_, value) in dict {
-                                if let remindersDict = value as? NSDictionary {
-                                    if let newReminder = Reminder(reminderDict: remindersDict) {
-                                        remindersArr.append(newReminder)
-                                    }
-                                }
-                            }
-                            print("Retrieved family reminders")
-                            completionHandler(error: nil, reminders: remindersArr)
+                    let childUpdates = ["/families/\(userFamilyId)/completedReminders": [reminder.id: reminder.asDict()]]
+                    
+                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                        if error != nil {
+                            print("Error occurred while marking reminder as complete")
+                            completionHandler(error: error, newDatabaseRef: nil)
                         }
                         else {
-                            print("No reminders dict")
-                            completionHandler(error: nil, reminders: nil)
+                            print("Reminder completed -- deleting from old location")
+                            deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
+                                if error != nil {
+                                    completionHandler(error: error, newDatabaseRef: nil)
+                                }
+                                else {
+                                    completionHandler(error: nil, newDatabaseRef: newDatabaseRef)
+                                }
+                            })
                         }
-                    }) { (error) in
-                        print("Error occurred while retrieving family reminders")
-                        completionHandler(error: error, reminders: nil)
-                    }
+                    })
                 }
             }
         }
     }
- */
     
 }

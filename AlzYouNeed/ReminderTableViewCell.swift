@@ -12,6 +12,7 @@ class ReminderTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var completedButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

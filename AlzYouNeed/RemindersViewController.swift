@@ -116,6 +116,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         
         cell.titleLabel.text = reminder.title
         cell.descriptionLabel.text = reminder.reminderDescription
+        cell.completedButton.tag = indexPath.row
+        
+        cell.completedButton.addTarget(self, action: #selector(RemindersViewController.completeTask(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
 //        cell.textLabel?.text = reminder.title
 //        cell.detailTextLabel!.text = reminder.reminderDescription
@@ -131,7 +134,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                     // Observers catch deletion and properly update data source array and UI
                 }
             })
-        } else if editingStyle == .Insert {
+        }
+        else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
@@ -201,6 +205,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
             }
         }
         return nil
+    }
+    
+    // MARK: - Reminder Actions
+    func completeTask(sender: UIButton) {
+        if let completedReminder = reminders[sender.tag] as Reminder? {
+            FirebaseManager.completeFamilyReminder(completedReminder, completionHandler: { (error, newDatabaseRef) in
+                if error == nil {
+                    // Success
+                }
+            })
+        }
     }
     
     /*
