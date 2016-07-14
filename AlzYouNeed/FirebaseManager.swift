@@ -513,4 +513,38 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func getCompletedFamilyReminders(completionHandler: (completedReminders: [Reminder]?, error: NSError?) -> Void) {
+        getCurrentUser { (userDict, error) in
+            if error != nil {
+                // Error
+                completionHandler(completedReminders: nil, error: error)
+            }
+            else {
+                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    var remindersArr = [Reminder]()
+                    
+                    databaseRef.child("families").child(userFamilyId).child("completedReminders").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                        if let dict = snapshot.value! as? NSDictionary {
+                            for (key, value) in dict {
+                                if let reminderId = key as? String {
+                                    if let reminderDict = value as? NSDictionary {
+                                        if let completedReminder = Reminder(reminderId: reminderId, reminderDict: reminderDict) {
+                                            remindersArr.append(completedReminder)
+                                        }
+                                    }
+                                }
+                            }
+                            print("Completed reminders retrieved")
+                            completionHandler(completedReminders: remindersArr, error: nil)
+                        }
+                    }) { (error) in
+                        print("Error occurred while retrieving completed reminders")
+                        
+                    }
+                }
+            }
+        }
+    }
+    
 }

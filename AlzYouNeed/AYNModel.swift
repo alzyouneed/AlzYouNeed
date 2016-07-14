@@ -19,6 +19,7 @@ class AYNModel {
     
     var contactsArr: [Contact] = []
     var remindersArr: [Reminder] = []
+    var completedRemindersArr: [Reminder] = []
     
     var wasReset = false
     
@@ -26,6 +27,7 @@ class AYNModel {
         print("Resetting model")
         contactsArr.removeAll()
         remindersArr.removeAll()
+        completedRemindersArr.removeAll()
         wasReset = true
     }
 }

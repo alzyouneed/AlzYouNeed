@@ -41,22 +41,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
         removeRemindersObservers()
     }
     
-//    func loadReminders() {
-//        reminders.removeAll()
-//        
-//        FirebaseManager.getFamilyReminders { (error, reminders) in
-//            if let reminders = reminders {
-//                print("Reminders: \(reminders)")
-//                self.reminders = reminders
-//                
-//                dispatch_async(dispatch_get_main_queue(), { 
-//                    self.remindersTableView.reloadData()
-//                })
-//                
-//            }
-//        }
-//    }
-    
     @IBAction func newReminder(sender: UIBarButtonItem) {
         createReminder()
     }
@@ -218,6 +202,20 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                 }
             })
         }
+    }
+    
+    // MARK: - Present different VC's
+    @IBAction func showCompletedReminders(sender: UIButton) {
+        presentCompletedRemindersVC()
+    }
+    
+    func presentCompletedRemindersVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let completeRemindersVC: CompleteRemindersTableViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersTableViewController
+        
+        // Hide tab bar in updateProfileVC
+        completeRemindersVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(completeRemindersVC, animated: true)
     }
     
     /*

@@ -47,6 +47,8 @@
 		2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */; };
 		2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */; };
 		2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6D1D303F53005D0EFD /* popoverView.swift */; };
+		2DCFE4171D37350700F4C093 /* CompleteRemindersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFE4161D37350700F4C093 /* CompleteRemindersTableViewController.swift */; };
+		2DCFE4191D37365200F4C093 /* CompleteReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */; };
 		2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
@@ -101,6 +103,8 @@
 		2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = popoverView.xib; sourceTree = "<group>"; };
 		2DCC3C6D1D303F53005D0EFD /* popoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = popoverView.swift; sourceTree = "<group>"; };
+		2DCFE4161D37350700F4C093 /* CompleteRemindersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteRemindersTableViewController.swift; sourceTree = "<group>"; };
+		2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteReminderTableViewCell.swift; sourceTree = "<group>"; };
 		2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCollectionViewController.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 			children = (
 				2DC0B2C41D3182810090C89A /* RemindersViewController.swift */,
 				2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */,
+				2DCFE4131D37347500F4C093 /* CompletedReminders */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -378,6 +383,15 @@
 				2DCC3C6D1D303F53005D0EFD /* popoverView.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		2DCFE4131D37347500F4C093 /* CompletedReminders */ = {
+			isa = PBXGroup;
+			children = (
+				2DCFE4161D37350700F4C093 /* CompleteRemindersTableViewController.swift */,
+				2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */,
+			);
+			name = CompletedReminders;
 			sourceTree = "<group>";
 		};
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
@@ -561,6 +575,7 @@
 				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
 				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
 				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
+				2DCFE4171D37350700F4C093 /* CompleteRemindersTableViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
 				2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */,
@@ -574,6 +589,7 @@
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */,
+				2DCFE4191D37365200F4C093 /* CompleteReminderTableViewCell.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
