@@ -15,10 +15,7 @@ private let reuseIdentifier = "ContactCell"
 
 class ContactsCollectionViewController: UICollectionViewController {
     
-    // MARK: - Properties
-//    var contacts: [Contact] = []
-    var contacts = AYNModel.sharedInstance.contactsArr
-    
+    // MARK: - UI Elements
     var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
@@ -43,15 +40,14 @@ class ContactsCollectionViewController: UICollectionViewController {
     }
     
     // MARK: - Logic
-    
     func loadContacts(refreshing: Bool) {
-        contacts.removeAll()
+        AYNModel.sharedInstance.contactsArr.removeAll()
         self.collectionView?.reloadData()
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
                     print("Loaded \(members.count) contacts from Firebase")
-                    self.contacts = members
+                    AYNModel.sharedInstance.contactsArr = members
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         UIView.animateWithDuration(0.5, animations: { 
@@ -80,14 +76,13 @@ class ContactsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return userContacts.count
-        return contacts.count
+        return AYNModel.sharedInstance.contactsArr.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ContactCollectionViewCell
 
-        let person = contacts[indexPath.row]
+        let person = AYNModel.sharedInstance.contactsArr[indexPath.row]
         
         // Configure cell
         cell.contactView.nameLabel.text = "\(person.fullName)"
@@ -124,10 +119,7 @@ class ContactsCollectionViewController: UICollectionViewController {
     // MARK: - Contact Card Actions
     
     func leftButtonPressed(sender: UIButton) {
-        
-//        let phoneNumber = userContacts[sender.tag].phoneNumber
-        
-        let phoneNumber = contacts[sender.tag].phoneNumber
+        let phoneNumber = AYNModel.sharedInstance.contactsArr[sender.tag].phoneNumber
         print("Left button pressed -- row: \(sender.tag) -- Calling: \(phoneNumber) \n")
 
         let url: NSURL = NSURL(string: "tel://\(phoneNumber)")!
@@ -141,7 +133,7 @@ class ContactsCollectionViewController: UICollectionViewController {
     
     // Add label if table data array empty
     func checkCollectionViewEmpty() {
-        if contacts.isEmpty {
+        if AYNModel.sharedInstance.contactsArr.isEmpty {
             let emptyLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
             emptyLabel.text = "Where is everyone?"
             emptyLabel.font = UIFont(name: "OpenSans-Semibold", size: 20)
