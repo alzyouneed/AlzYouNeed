@@ -164,6 +164,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate {
                                 print("Removing reminder in RTDB")
                                 self.reminders.removeAtIndex(index)
                                 self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                // Resets tag on completionButton when Reminder is completed
+                                self.remindersTableView.reloadData()
                                 self.updateTabBadge()
                             }
                         }
