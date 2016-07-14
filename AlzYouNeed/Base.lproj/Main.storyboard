@@ -846,13 +846,14 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhX-7Y-RQS">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhX-7Y-RQS">
                                                     <rect key="frame" x="8" y="10" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="K4x-JP-yMj"/>
                                                         <constraint firstAttribute="width" constant="45" id="qyd-Wq-fel"/>
                                                     </constraints>
-                                                    <state key="normal" title="+"/>
+                                                    <state key="normal" image="reminderComplete"/>
+                                                    <state key="highlighted" image="remindersCompleteHL"/>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
@@ -960,6 +961,8 @@
         <image name="cancelIcon" width="22" height="22"/>
         <image name="contactsIcon" width="25" height="25"/>
         <image name="homeIcon" width="25" height="25"/>
+        <image name="reminderComplete" width="45" height="45"/>
+        <image name="remindersCompleteHL" width="45" height="45"/>
         <image name="remindersIcon" width="25" height="25"/>
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
