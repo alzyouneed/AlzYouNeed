@@ -27,9 +27,8 @@ class ContactsCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(animated: Bool) {
         // If new user signed in -- force reload contacts
-        if AYNModel.sharedInstance.wasReset {
+        if AYNModel.sharedInstance.contactsArr.isEmpty {
             print("Model was reset -- loading contacts")
-            AYNModel.sharedInstance.wasReset = false
             loadContacts(false)
         }
     }
