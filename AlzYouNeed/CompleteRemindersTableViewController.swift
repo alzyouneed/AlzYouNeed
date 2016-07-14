@@ -9,8 +9,6 @@
 import UIKit
 
 class CompleteRemindersTableViewController: UITableViewController {
-    
-    var completedReminders = AYNModel.sharedInstance.completedRemindersArr
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +18,14 @@ class CompleteRemindersTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.completedReminders.removeAll()
+        AYNModel.sharedInstance.completedRemindersArr.removeAll()
         self.tableView.reloadData()
         
         FirebaseManager.getCompletedFamilyReminders { (completedReminders, error) in
             if error == nil {
                 // Success
                 if let completedReminders = completedReminders {
-                    self.completedReminders = completedReminders
+                    AYNModel.sharedInstance.completedRemindersArr = completedReminders
                     self.tableView.reloadData()
                 }
             }
@@ -40,22 +38,20 @@ class CompleteRemindersTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return completedReminders.count
+        return AYNModel.sharedInstance.completedRemindersArr.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:CompleteReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("completedReminderCell")! as! CompleteReminderTableViewCell
         
-        let completedReminder = completedReminders[indexPath.row]
+        let completedReminder = AYNModel.sharedInstance.completedRemindersArr[indexPath.row]
 
         cell.titleLabel.text = completedReminder.title
         cell.descriptionLabel.text = completedReminder.reminderDescription
