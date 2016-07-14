@@ -12,8 +12,6 @@ import Firebase
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate {
 
     @IBOutlet var remindersTableView: UITableView!
-
-    var reminders = AYNModel.sharedInstance.remindersArr
     
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
@@ -27,13 +25,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.reminders.removeAll()
+        AYNModel.sharedInstance.remindersArr.removeAll()
         self.remindersTableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         addRemindersObservers()
-//        resetTabBadges()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -91,13 +88,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reminders.count
+        return AYNModel.sharedInstance.remindersArr.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell:ReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("reminderCell")! as! ReminderTableViewCell
-        let reminder = reminders[indexPath.row]
-
+        
+        let reminder = AYNModel.sharedInstance.remindersArr[indexPath.row]
         cell.delegate = self
         cell.titleLabel.text = reminder.title
         cell.descriptionLabel.text = reminder.reminderDescription
@@ -107,7 +104,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let reminder = reminders[indexPath.row]
+            let reminder = AYNModel.sharedInstance.remindersArr[indexPath.row]
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Observers catch deletion and properly update data source array and UI
@@ -130,8 +127,10 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         if let reminderDict = snapshot.value! as? NSDictionary {
                             if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
                                 print("New reminder in RTDB")
-                                self.reminders.append(newReminder)
-                                self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.reminders.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                
+                                AYNModel.sharedInstance.remindersArr.append(newReminder)
+
+                                self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AYNModel.sharedInstance.remindersArr.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                                 self.updateTabBadge()
                             }
                         }
@@ -141,7 +140,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         if let reminderId = snapshot.key as String? {
                             if let index = self.getIndex(reminderId) {
                                 print("Removing reminder in RTDB")
-                                self.reminders.removeAtIndex(index)
+                                
+                                AYNModel.sharedInstance.remindersArr.removeAtIndex(index)
+
                                 self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                                 self.updateTabBadge()
                             }
@@ -168,17 +169,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let tabArray = tabBarController!.tabBar.items as NSArray!
         let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
         
-        if reminders.count == 0 {
+        if AYNModel.sharedInstance.remindersArr.count == 0 {
             tabItem.badgeValue = nil
         }
         else {
-            tabItem.badgeValue = "\(reminders.count)"
+            tabItem.badgeValue = "\(AYNModel.sharedInstance.remindersArr.count)"
         }
     }
     
     // MARK: - Reminders Array
     func getIndex(id: String) -> Int? {
-        for (index, reminder) in reminders.enumerate() {
+        for (index, reminder) in AYNModel.sharedInstance.remindersArr.enumerate() {
             if reminder.id == id {
                 return index
             }
@@ -189,7 +190,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Reminder Actions
     func cellButtonTapped(cell: ReminderTableViewCell) {
         let indexPath = self.remindersTableView.indexPathForRowAtPoint(cell.center)!
-        if let completedReminder = reminders[indexPath.row] as Reminder? {
+        if let completedReminder = AYNModel.sharedInstance.remindersArr[indexPath.row] as Reminder? {
             FirebaseManager.completeFamilyReminder(completedReminder, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Success
