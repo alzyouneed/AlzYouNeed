@@ -8,11 +8,21 @@
 
 import UIKit
 
+protocol ReminderTableViewCellDelegate {
+    func cellButtonTapped(cell: ReminderTableViewCell)
+}
+
 class ReminderTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var completedButton: UIButton!
+    
+    var delegate: ReminderTableViewCellDelegate?
+    
+    @IBAction func buttonTapped(sender: UIButton) {
+        delegate?.cellButtonTapped(self)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

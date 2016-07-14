@@ -49,6 +49,15 @@ class DashboardViewController: UIViewController {
         configureView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        // If new user signed in -- force reload view
+        if AYNModel.sharedInstance.wasReset {
+            print("Model was reset -- reseting UI")
+            AYNModel.sharedInstance.wasReset = false
+            configureView()
+        }
+    }
+    
     override func viewDidAppear(animated: Bool) {
         let now = NSDate()
         dateView.configureView(now)
