@@ -53,7 +53,6 @@ class DashboardViewController: UIViewController {
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
             print("Model was reset -- reseting UI")
-            AYNModel.sharedInstance.wasReset = false
             configureView()
         }
     }
@@ -236,6 +235,8 @@ class DashboardViewController: UIViewController {
     func configureDashboardView(imageString: String) {
         if let image = UIImage(named: imageString) as UIImage? {
             userView.setImage(image)
+            // Reset variable only after configuration is complete
+            AYNModel.sharedInstance.wasReset = false
         }
     }
     
