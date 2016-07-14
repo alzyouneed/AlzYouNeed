@@ -189,7 +189,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Reminder Actions
     func cellButtonTapped(cell: ReminderTableViewCell) {
         let indexPath = self.remindersTableView.indexPathForRowAtPoint(cell.center)!
-        print("Completing reminder at row: \(indexPath.row)")
         if let completedReminder = reminders[indexPath.row] as Reminder? {
             FirebaseManager.completeFamilyReminder(completedReminder, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
