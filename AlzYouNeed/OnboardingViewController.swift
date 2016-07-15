@@ -198,7 +198,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.emailVTFView.alpha = 0
                 self.passwordVTFView.alpha = 0
                 
-                self.logoImageView.alpha = 1
+                self.logoImageView.alpha = 0.9
                 self.appNameLabel.alpha = 1
                 
             }) { (completed) in
@@ -316,12 +316,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         self.logoImageTopConstraint.constant = 110
         self.appNameLabelTopConstraint.constant = 8
         
-        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.logoImageView.alpha = 1
+        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.logoImageView.alpha = 0.9
             self.view.layoutIfNeeded()
             }) { (completed) in
         }
-        UIView.animateWithDuration(0.4, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animateWithDuration(0.3, delay: 0.15, options: UIViewAnimationOptions.CurveEaseIn, animations: {
             self.appNameLabel.alpha = 1
         }) { (completed) in
         }
