@@ -55,6 +55,11 @@ class DashboardViewController: UIViewController {
             print("Model was reset -- reseting UI")
             configureView()
         }
+        else if AYNModel.sharedInstance.profileWasUpdated {
+            print("Profile was udpated -- resetting UI")
+            AYNModel.sharedInstance.profileWasUpdated = false
+            configureView()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

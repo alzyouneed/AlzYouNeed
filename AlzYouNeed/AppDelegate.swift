@@ -31,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Highlighted)
         
         // Customize navigation bar appearance
-        UINavigationBar.appearance().barTintColor = backgroundPurple
+//        UINavigationBar.appearance().barTintColor = backgroundPurple
+        UINavigationBar.appearance().barTintColor = charcoal
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
         

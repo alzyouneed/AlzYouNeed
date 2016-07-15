@@ -23,6 +23,7 @@ class AYNModel {
     
     var wasReset = false
     var contactsArrWasReset = false
+    var profileWasUpdated = false
 //    var remindersArrWasReset = false
 //    var completedRemindersArrWasReset = false
     

@@ -109,6 +109,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
                 if error == nil {
                     // Return to previous VC
                     print("Profile updated -- returning to VC")
+                    AYNModel.sharedInstance.profileWasUpdated = true
                     self.navigationController?.popToRootViewControllerAnimated(true)
                 }
             })
