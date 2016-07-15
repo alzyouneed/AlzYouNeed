@@ -56,6 +56,7 @@
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
 		2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */; };
 		2DF36C3C1D394E7500155161 /* islandView.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2DF36C3B1D394B1200155161 /* islandView.mp4 */; };
+		2DF36C3E1D397B7000155161 /* islandView2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2DF36C3D1D397B7000155161 /* islandView2.mp4 */; };
 		54ABEE52BD1867E0724C87F4 /* libPods-AlzYouNeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09554C3A3CAFAB415E229CB7 /* libPods-AlzYouNeed.a */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = validateTextFieldView.swift; sourceTree = "<group>"; };
 		2DF36C3B1D394B1200155161 /* islandView.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = islandView.mp4; sourceTree = "<group>"; };
+		2DF36C3D1D397B7000155161 /* islandView2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = islandView2.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +276,7 @@
 		2DA8D5851D384C8000DD666C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2DF36C3D1D397B7000155161 /* islandView2.mp4 */,
 				2DF36C3B1D394B1200155161 /* islandView.mp4 */,
 				2DA8D5901D38A5C600DD666C /* islandViewBW.gif */,
 			);
@@ -509,6 +512,7 @@
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
 				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
 				2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */,
+				2DF36C3E1D397B7000155161 /* islandView2.mp4 in Resources */,
 				2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

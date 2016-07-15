@@ -34,7 +34,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
     }
     
     func configureView() {
@@ -78,8 +77,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
         // TODO: Background Video
+        configureView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.playerItemDidReachEnd), name: AVPlayerItemDidPlayToEndTimeNotification, object: player!.currentItem)
-        player?.play()
         logoImageView.alpha = 0
         appNameLabel.alpha = 0
     }
@@ -337,7 +336,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
 //        webViewBG.userInteractionEnabled = false
 //        self.view.addSubview(webViewBG)
         
-        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView", ofType: "mp4")
+        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView2", ofType: "mp4")
         if let movieFilePath = movieFilePath {
             print("Configuring background video")
             player = AVPlayer(URL: NSURL(fileURLWithPath: movieFilePath))
@@ -345,6 +344,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             playerLayer.frame = self.view.frame
             playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             self.view.layer.addSublayer(playerLayer)
+            player?.actionAtItemEnd = .None
             player?.seekToTime(kCMTimeZero)
             player?.play()
         }
@@ -358,7 +358,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func playerItemDidReachEnd() {
         player!.seekToTime(kCMTimeZero)
-        player?.play()
     }
 
 }
