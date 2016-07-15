@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
@@ -28,6 +29,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     var errorPopoverView: popoverView!
     var shadowView: UIView!
     
+    // MARK - Background Video Properties
+    var player: AVPlayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -43,21 +47,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
-        // // TODO: GIF
-        let filePath = NSBundle.mainBundle().pathForResource("islandViewBW", ofType: "gif")
-        let gif = NSData(contentsOfFile: filePath!)
-        
-        let webViewBG = UIWebView(frame: self.view.frame)
-        webViewBG.loadData(gif!, MIMEType: "image/gif", textEncodingName: String(), baseURL: NSURL())
-        webViewBG.userInteractionEnabled = false
-        self.view.addSubview(webViewBG)
-        
-        let filter = UIView()
-        filter.frame = self.view.frame
-        filter.backgroundColor = UIColor.blackColor()
-        filter.alpha = 0.4
-        self.view.addSubview(filter)
-        
+        // // TODO: Background Video
+        configureBackgroundVideo()
+//        emailVTFView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         self.view.bringSubviewToFront(emailVTFView)
         self.view.bringSubviewToFront(passwordVTFView)
         self.view.bringSubviewToFront(loginButtons)
@@ -69,6 +61,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // Remove observers
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        // TODO: Background Video
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
         
         self.navigationController?.setNavigationBarHidden(false, animated: animated);
         super.viewWillDisappear(animated)
@@ -82,8 +77,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
-        // TODO: GIF
-        UIApplication.sharedApplication().statusBarHidden = true
+        // TODO: Background Video
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.playerItemDidReachEnd), name: AVPlayerItemDidPlayToEndTimeNotification, object: player!.currentItem)
+        player?.play()
         logoImageView.alpha = 0
         appNameLabel.alpha = 0
     }
@@ -329,6 +325,40 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             self.appNameLabel.alpha = 1
         }) { (completed) in
         }
+    }
+    
+    // MARK: - TODO: Background Video
+    func configureBackgroundVideo() {
+//        let filePath = NSBundle.mainBundle().pathForResource("islandViewBW", ofType: "gif")
+//        let gif = NSData(contentsOfFile: filePath!)
+//        
+//        let webViewBG = UIWebView(frame: self.view.frame)
+//        webViewBG.loadData(gif!, MIMEType: "image/gif", textEncodingName: String(), baseURL: NSURL())
+//        webViewBG.userInteractionEnabled = false
+//        self.view.addSubview(webViewBG)
+        
+        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView", ofType: "mp4")
+        if let movieFilePath = movieFilePath {
+            print("Configuring background video")
+            player = AVPlayer(URL: NSURL(fileURLWithPath: movieFilePath))
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = self.view.frame
+            playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.view.layer.addSublayer(playerLayer)
+            player?.seekToTime(kCMTimeZero)
+            player?.play()
+        }
+        
+        let filter = UIView()
+        filter.frame = self.view.frame
+        filter.backgroundColor = UIColor.blackColor()
+        filter.alpha = 0.4
+        self.view.addSubview(filter)
+    }
+    
+    func playerItemDidReachEnd() {
+        player!.seekToTime(kCMTimeZero)
+        player?.play()
     }
 
 }
