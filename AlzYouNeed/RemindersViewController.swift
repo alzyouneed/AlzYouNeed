@@ -12,6 +12,7 @@ import Firebase
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate {
 
     @IBOutlet var remindersTableView: UITableView!
+    @IBOutlet var completedButton: UIButton!
     
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
@@ -19,9 +20,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        remindersTableView.delegate = self
-        remindersTableView.rowHeight = UITableViewAutomaticDimension
-        remindersTableView.estimatedRowHeight = 66
+        configureView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -211,6 +210,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         // Hide tab bar in updateProfileVC
         completeRemindersVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(completeRemindersVC, animated: true)
+    }
+    
+    // MARK: - Configuration
+    func configureView() {
+        // tableView
+        remindersTableView.delegate = self
+        remindersTableView.rowHeight = UITableViewAutomaticDimension
+        remindersTableView.estimatedRowHeight = 66
+        
+        // completedButton
+        completedButton.layer.cornerRadius = completedButton.frame.height/2
     }
     
     /*

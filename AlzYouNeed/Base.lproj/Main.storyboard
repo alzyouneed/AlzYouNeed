@@ -911,13 +911,14 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2HI-Vn-3qB">
                                 <rect key="frame" x="255" y="72" width="90" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Mpd-sz-xJT"/>
                                     <constraint firstAttribute="width" constant="90" id="xe7-15-Q8c"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                 <state key="normal" title="Completed">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.21568627450980393" green="0.24705882352941178" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="showCompletedReminders:" destination="bGj-vw-7yG" eventType="touchUpInside" id="blb-UM-SY8"/>
@@ -943,6 +944,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="completedButton" destination="2HI-Vn-3qB" id="gLH-Wf-XwV"/>
                         <outlet property="remindersTableView" destination="wV5-JN-i28" id="l0l-7Z-2ug"/>
                     </connections>
                 </viewController>
