@@ -150,6 +150,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             
             // Disable button to avoid multiple taps
             nextButtonEnabled(false)
+            self.navigationController?.navigationItem.backBarButtonItem?.enabled = false
             
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
@@ -157,6 +158,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                     self.showPopoverView(error!)
                     
                     self.nextButtonEnabled(true)
+                    self.navigationController?.navigationItem.backBarButtonItem?.enabled = true
                 }
                 else {
                     // Successfully signed up
