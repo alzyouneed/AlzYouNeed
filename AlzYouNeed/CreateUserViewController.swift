@@ -172,6 +172,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                                 
                                 self.view.endEditing(true)
                                 self.userSignedUp = true
+                                AYNModel.sharedInstance.wasReset = true
                                 
                                 self.performSegueWithIdentifier("updateUser", sender: self)
                             }
