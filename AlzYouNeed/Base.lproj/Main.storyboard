@@ -686,9 +686,11 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="appNameLabel" destination="78x-OC-pb2" id="x6S-IE-Qfr"/>
+                        <outlet property="appNameLabelTopConstraint" destination="M5N-vP-F7z" id="eX1-f6-gWc"/>
                         <outlet property="emailVTFView" destination="nQv-JJ-nf8" id="ioD-Ac-YEG"/>
                         <outlet property="loginButtons" destination="M7G-Xk-n5I" id="btz-jg-EMV"/>
                         <outlet property="loginButtonsBottomConstraint" destination="4nv-4a-DrL" id="UU3-ld-vfi"/>
+                        <outlet property="logoImageTopConstraint" destination="Owv-tm-nJ8" id="9yE-bS-wmP"/>
                         <outlet property="logoImageView" destination="pTn-uj-d6L" id="l82-TO-67u"/>
                         <outlet property="passwordVTFView" destination="1Bw-dF-VSA" id="1tX-Uq-XYk"/>
                     </connections>

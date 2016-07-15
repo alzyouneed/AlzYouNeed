@@ -21,6 +21,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var appNameLabel: UILabel!
+    @IBOutlet var logoImageTopConstraint: NSLayoutConstraint!
+    @IBOutlet var appNameLabelTopConstraint: NSLayoutConstraint!
     
     // MARK: - Popover View Properties
     var errorPopoverView: popoverView!
@@ -82,10 +84,13 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         
         // TODO: GIF
         UIApplication.sharedApplication().statusBarHidden = true
+        logoImageView.alpha = 0
+        appNameLabel.alpha = 0
     }
     
     override func viewDidAppear(animated: Bool) {
         loginButtons.resetState()
+        showTitleView()
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -167,9 +172,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
 
             self.emailVTFView.hidden = false
             self.passwordVTFView.hidden = false
-            
-            self.logoImageView.hidden = true
-            self.appNameLabel.hidden = true
 
             self.emailVTFView.alpha = 0
             self.passwordVTFView.alpha = 0
@@ -177,6 +179,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
                 self.emailVTFView.alpha = 1
                 self.passwordVTFView.alpha = 1
+                
+                self.logoImageView.alpha = 0
+                self.appNameLabel.alpha = 0
+                
             }) { (completed) in
                 // Present keyboard
                 self.emailVTFView.textField.becomeFirstResponder()
@@ -196,15 +202,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.emailVTFView.alpha = 0
                 self.passwordVTFView.alpha = 0
                 
+                self.logoImageView.alpha = 1
+                self.appNameLabel.alpha = 1
+                
             }) { (completed) in
                 self.emailVTFView.textField.text = ""
                 self.passwordVTFView.textField.text = ""
                 
                 self.emailVTFView.hidden = true
                 self.passwordVTFView.hidden = true
-                
-                self.logoImageView.hidden = false
-                self.appNameLabel.hidden = false
 
                 self.loginMode = false
             }
@@ -304,6 +310,25 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 // Show keyboard again
                 self.passwordVTFView.textField.becomeFirstResponder()
         })
+    }
+    
+    // MARK: - Title View Animations
+    func showTitleView() {
+        self.logoImageTopConstraint.constant = 130
+        self.appNameLabelTopConstraint.constant = 16
+        self.view.layoutIfNeeded()
+        self.logoImageTopConstraint.constant = 110
+        self.appNameLabelTopConstraint.constant = 8
+        
+        UIView.animateWithDuration(0.4, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.logoImageView.alpha = 1
+            self.view.layoutIfNeeded()
+            }) { (completed) in
+        }
+        UIView.animateWithDuration(0.4, delay: 0.2, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+            self.appNameLabel.alpha = 1
+        }) { (completed) in
+        }
     }
 
 }
