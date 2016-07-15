@@ -44,7 +44,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         // // TODO: GIF
-        let filePath = NSBundle.mainBundle().pathForResource("nycBridgeResizedBW", ofType: "gif")
+        let filePath = NSBundle.mainBundle().pathForResource("islandViewBW", ofType: "gif")
         let gif = NSData(contentsOfFile: filePath!)
         
         let webViewBG = UIWebView(frame: self.view.frame)

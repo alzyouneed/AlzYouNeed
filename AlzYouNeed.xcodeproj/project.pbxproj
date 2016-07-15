@@ -31,6 +31,8 @@
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DA8D58D1D388C2300DD666C /* nycBridgeResizedBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D58C1D388C2300DD666C /* nycBridgeResizedBW.gif */; };
+		2DA8D58F1D38A5C300DD666C /* flowingWaterBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D58E1D38A5C300DD666C /* flowingWaterBW.gif */; };
+		2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D5901D38A5C600DD666C /* islandViewBW.gif */; };
 		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C21D3180C10090C89A /* Reminder.swift */; };
 		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
@@ -88,6 +90,8 @@
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA8D58C1D388C2300DD666C /* nycBridgeResizedBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = nycBridgeResizedBW.gif; sourceTree = "<group>"; };
+		2DA8D58E1D38A5C300DD666C /* flowingWaterBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = flowingWaterBW.gif; sourceTree = "<group>"; };
+		2DA8D5901D38A5C600DD666C /* islandViewBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = islandViewBW.gif; sourceTree = "<group>"; };
 		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC0B2C21D3180C10090C89A /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
@@ -272,6 +276,8 @@
 		2DA8D5851D384C8000DD666C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2DA8D5901D38A5C600DD666C /* islandViewBW.gif */,
+				2DA8D58E1D38A5C300DD666C /* flowingWaterBW.gif */,
 				2DA8D58C1D388C2300DD666C /* nycBridgeResizedBW.gif */,
 			);
 			name = Images;
@@ -494,6 +500,7 @@
 				2DCC3C661D301208005D0EFD /* OpenSans-Light.ttf in Resources */,
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
+				2DA8D58F1D38A5C300DD666C /* flowingWaterBW.gif in Resources */,
 				2DCC3C671D301208005D0EFD /* OpenSans-Regular.ttf in Resources */,
 				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
@@ -506,6 +513,7 @@
 				2DA8D58D1D388C2300DD666C /* nycBridgeResizedBW.gif in Resources */,
 				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
 				2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */,
+				2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
