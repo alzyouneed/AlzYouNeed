@@ -41,6 +41,26 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
+        // // TODO: GIF
+        let filePath = NSBundle.mainBundle().pathForResource("nycBridgeResizedBW", ofType: "gif")
+        let gif = NSData(contentsOfFile: filePath!)
+        
+        let webViewBG = UIWebView(frame: self.view.frame)
+        webViewBG.loadData(gif!, MIMEType: "image/gif", textEncodingName: String(), baseURL: NSURL())
+        webViewBG.userInteractionEnabled = false
+        self.view.addSubview(webViewBG)
+        
+        let filter = UIView()
+        filter.frame = self.view.frame
+        filter.backgroundColor = UIColor.blackColor()
+        filter.alpha = 0.4
+        self.view.addSubview(filter)
+        
+        self.view.bringSubviewToFront(emailVTFView)
+        self.view.bringSubviewToFront(passwordVTFView)
+        self.view.bringSubviewToFront(loginButtons)
+        self.view.bringSubviewToFront(logoImageView)
+        self.view.bringSubviewToFront(appNameLabel)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -59,6 +79,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+        // TODO: GIF
+        UIApplication.sharedApplication().statusBarHidden = true
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -38,6 +38,9 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
         self.emailVTFView.textField.becomeFirstResponder()
+        
+        // TODO: GIF
+        UIApplication.sharedApplication().statusBarHidden = false
     }
     
     override func viewDidAppear(animated: Bool) {
