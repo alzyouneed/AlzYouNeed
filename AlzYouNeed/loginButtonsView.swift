@@ -14,8 +14,11 @@ import UIKit
     var view: UIView!
     var state = "normal"
     
-    var leftButtonColor = UIColor(red: 194/255, green: 187/255, blue: 240/255, alpha: 1)
-    var rightButtonColor = UIColor(red: 139/255, green: 149/255, blue: 201/255, alpha: 1)
+    var leftButtonColor = UIColor(red: 161/255, green: 65/255, blue: 222/255, alpha: 1)
+    var rightButtonColor = UIColor(red: 109/255, green: 57/255, blue: 237/255, alpha: 1)
+    
+//    var leftButtonColor = UIColor(red: 194/255, green: 187/255, blue: 240/255, alpha: 1)
+//    var rightButtonColor = UIColor(red: 139/255, green: 149/255, blue: 201/255, alpha: 1)
 //    var redColor = UIColor(red: 239/255, green: 121/255, blue: 138/255, alpha: 1)
     
     // MARK: - UI Elements

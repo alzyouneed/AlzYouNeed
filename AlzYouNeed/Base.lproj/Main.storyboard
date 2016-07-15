@@ -6,8 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Bold.ttf">
+            <string>OpenSans-Bold</string>
+        </mutableArray>
         <mutableArray key="OpenSans-Regular.ttf">
-            <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
@@ -618,19 +620,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bareLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pTn-uj-d6L">
-                                <rect key="frame" x="238" y="80" width="125" height="125"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="125" id="k61-mw-C7p"/>
-                                    <constraint firstAttribute="height" constant="125" id="qkI-28-Qq0"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alz You Need" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78x-OC-pb2">
-                                <rect key="frame" x="0.0" y="213" width="600" height="42"/>
+                                <rect key="frame" x="0.0" y="263" width="600" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="edK-k5-K3V"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="32"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -653,15 +648,24 @@
                                     <constraint firstAttribute="height" constant="46" id="G2Y-bB-1Lu"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bareLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pTn-uj-d6L">
+                                <rect key="frame" x="238" y="130" width="125" height="125"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="125" id="k61-mw-C7p"/>
+                                    <constraint firstAttribute="height" constant="125" id="qkI-28-Qq0"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.49019607840000001" green="0.50980392159999999" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="M7G-Xk-n5I" secondAttribute="bottom" identifier="loginBottom" id="4nv-4a-DrL"/>
                             <constraint firstAttribute="trailing" secondItem="78x-OC-pb2" secondAttribute="trailing" id="64K-ew-Sgi"/>
-                            <constraint firstItem="pTn-uj-d6L" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="60" id="JJd-wv-IAR"/>
+                            <constraint firstItem="pTn-uj-d6L" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="100" id="JJd-wv-IAR"/>
                             <constraint firstItem="nQv-JJ-nf8" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leadingMargin" id="JSe-kW-Wzw"/>
                             <constraint firstItem="1Bw-dF-VSA" firstAttribute="top" secondItem="nQv-JJ-nf8" secondAttribute="bottom" constant="8" id="KQm-qH-kWJ"/>
                             <constraint firstItem="78x-OC-pb2" firstAttribute="top" secondItem="pTn-uj-d6L" secondAttribute="bottom" constant="8" id="M5N-vP-F7z"/>
+                            <constraint firstItem="pTn-uj-d6L" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="110" id="Owv-tm-nJ8"/>
+                            <constraint firstItem="78x-OC-pb2" firstAttribute="centerY" secondItem="aSa-gE-Fff" secondAttribute="centerY" id="RNw-lT-OGc"/>
                             <constraint firstItem="M7G-Xk-n5I" firstAttribute="top" secondItem="1Bw-dF-VSA" secondAttribute="bottom" constant="30" id="U0h-cQ-BDf"/>
                             <constraint firstItem="pTn-uj-d6L" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="cNW-NJ-alT"/>
                             <constraint firstItem="M7G-Xk-n5I" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" identifier="loginLeading" id="h9j-Ry-UJM"/>
@@ -671,6 +675,12 @@
                             <constraint firstAttribute="trailing" secondItem="M7G-Xk-n5I" secondAttribute="trailing" identifier="loginTrailing" id="rv6-hc-UkT"/>
                             <constraint firstItem="nQv-JJ-nf8" firstAttribute="trailing" secondItem="aSa-gE-Fff" secondAttribute="trailingMargin" id="w3q-OX-a4B"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="RNw-lT-OGc"/>
+                                <exclude reference="JJd-wv-IAR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="ZUO-33-HWe"/>
                     <nil key="simulatedTopBarMetrics"/>

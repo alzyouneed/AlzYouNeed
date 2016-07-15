@@ -112,6 +112,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                     if error == nil {
                         print("Login successful")
                         self.view.endEditing(true)
+                        AYNModel.sharedInstance.resetModel()
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     else {

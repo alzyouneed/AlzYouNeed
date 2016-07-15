@@ -55,6 +55,9 @@ class DashboardViewController: UIViewController {
             print("Model was reset -- reseting UI")
             configureView()
         }
+        
+        // TODO: GIF
+        UIApplication.sharedApplication().statusBarHidden = false
     }
     
     override func viewDidAppear(animated: Bool) {
