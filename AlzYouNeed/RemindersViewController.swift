@@ -17,6 +17,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
     
+    // Class-scope for valueChanged function
+    var dateTF: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,6 +48,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let alert = UIAlertController(title: "New Reminder", message: nil, preferredStyle: .Alert)
         var titleTF: UITextField!
         var descriptionTF: UITextField!
+//        var dateTF: UITextField!
         
         alert.addTextFieldWithConfigurationHandler { (titleTextField) in
             titleTextField.placeholder = "Task"
@@ -58,11 +62,24 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             descriptionTextField.autocorrectionType = UITextAutocorrectionType.Yes
             descriptionTF = descriptionTextField
         }
+        alert.addTextFieldWithConfigurationHandler { (dateTextField) in
+            dateTextField.placeholder = "Due Date"
+            let datePickerView: UIDatePicker = UIDatePicker()
+            datePickerView.datePickerMode = UIDatePickerMode.Date
+            dateTextField.inputView = datePickerView
+            datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+            self.dateTF = dateTextField
+        }
         
         let confirmAction = UIAlertAction(title: "Create", style: .Default) { (action) in
-            if !titleTF.text!.isEmpty {
-                let now = NSDate()
-                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "dueDate":now.description]
+            if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
+                // Store date as number (time interval)
+                let now = NSDate().timeIntervalSince1970
+                
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "MMMM d, yyyy"
+                let dueDate = dateFormatter.dateFromString(self.dateTF.text!)?.timeIntervalSince1970
+                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
 //                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text! ?? "", reminderDueDate: now.description)
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
@@ -96,6 +113,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let reminder = AYNModel.sharedInstance.remindersArr[indexPath.row]
         cell.delegate = self
         cell.titleLabel.text = reminder.title
+        
+        // Format readable date
+        let date = NSDate(timeIntervalSince1970: Double(reminder.dueDate)!)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM d"
+        cell.dateLabel.text = dateFormatter.stringFromDate(date)
         cell.descriptionLabel.text = reminder.reminderDescription
     
         return cell
@@ -217,10 +240,18 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         // tableView
         remindersTableView.delegate = self
         remindersTableView.rowHeight = UITableViewAutomaticDimension
-        remindersTableView.estimatedRowHeight = 66
+        remindersTableView.estimatedRowHeight = 99
         
         // completedButton
         completedButton.layer.cornerRadius = completedButton.frame.height/2
+    }
+    
+    // MARK: - Date Picker
+    func datePickerValueChanged(sender: UIDatePicker) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        dateTF.text = dateFormatter.stringFromDate(sender.date)
     }
     
     /*

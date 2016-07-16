@@ -23,6 +23,7 @@
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -829,22 +830,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="66" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="99" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" red="0.21568627450980393" green="0.24705882352941178" blue="0.31764705882352939" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.28235294117647058" green="0.30196078431372547" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="66" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="600" height="66"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="99" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="600" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e3d-Pm-dad" id="vFo-hS-r4c">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="98"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
-                                                    <rect key="frame" x="62" y="8" width="530" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
+                                                    <rect key="frame" x="62" y="8" width="530" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="hpk-Ht-68g"/>
+                                                        <constraint firstAttribute="height" constant="26" id="xCj-Sb-UB6"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="19"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -855,17 +857,29 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
-                                                    <rect key="frame" x="62" y="37" width="530" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
+                                                    <rect key="frame" x="62" y="42" width="530" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="Z2b-qE-qp0"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBZ-Wg-Ure">
+                                                    <rect key="frame" x="62" y="68" width="530" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="Gnd-p5-gIV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.66274509800000003" blue="0.64705882349999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhX-7Y-RQS">
                                                     <rect key="frame" x="8" y="10" width="45" height="45"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="45" id="K4x-JP-yMj"/>
-                                                        <constraint firstAttribute="width" constant="45" id="qyd-Wq-fel"/>
+                                                        <constraint firstAttribute="width" constant="45" id="QGw-EG-jAX"/>
+                                                        <constraint firstAttribute="height" constant="45" id="ybN-di-KI1"/>
                                                     </constraints>
                                                     <state key="normal" image="reminderComplete"/>
                                                     <state key="highlighted" image="remindersCompleteHL"/>
@@ -876,28 +890,33 @@
                                             </subviews>
                                             <color key="backgroundColor" red="0.37254901960784315" green="0.42352941176470588" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="Bke-yp-piA"/>
-                                                <constraint firstItem="LhX-7Y-RQS" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" constant="2" id="Ddn-n1-Ep7"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="5gY-Og-m7x"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="6Jo-b3-n42"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="7Dg-4Q-GA4"/>
+                                                <constraint firstItem="LhX-7Y-RQS" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" constant="2" id="Bb4-au-TS6"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="L6c-P5-ZQS"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="Li7-L2-t3z"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="QLJ-e6-6ag"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="LhX-7Y-RQS" secondAttribute="bottom" constant="2" id="aDO-Js-hhO"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="MAi-eC-7Qs"/>
+                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="W6A-Yz-d8g"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="top" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="8" id="c0t-QN-5h4"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="eYP-4a-uyv"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hpE-uQ-zjm"/>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="jep-wk-MJn"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hiv-xm-X4U"/>
+                                                <constraint firstItem="LhX-7Y-RQS" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="jFk-qP-a7G"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="lUh-RQ-lLp"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="mx5-Yc-aLH"/>
-                                                <constraint firstItem="LhX-7Y-RQS" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="uH1-ar-P7D"/>
-                                                <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="xvF-X6-Q9o"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="leading" secondItem="vVg-7m-Tsh" secondAttribute="leading" id="tnp-OG-6R4"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="yBw-cD-G8T"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Li7-L2-t3z"/>
                                                     <exclude reference="eYP-4a-uyv"/>
+                                                    <exclude reference="lUh-RQ-lLp"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="completedButton" destination="LhX-7Y-RQS" id="5EZ-bz-YgV"/>
+                                            <outlet property="dateLabel" destination="oBZ-Wg-Ure" id="EGb-N0-gw3"/>
                                             <outlet property="descriptionLabel" destination="vVg-7m-Tsh" id="fXY-Lq-5uF"/>
                                             <outlet property="titleLabel" destination="YgS-6r-X0I" id="cLo-gn-nbw"/>
                                         </connections>
