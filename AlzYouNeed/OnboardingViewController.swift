@@ -345,6 +345,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             self.view.layer.addSublayer(playerLayer)
             player?.actionAtItemEnd = .None
+            player?.muted = true
             player?.seekToTime(kCMTimeZero)
             player?.play()
         }
