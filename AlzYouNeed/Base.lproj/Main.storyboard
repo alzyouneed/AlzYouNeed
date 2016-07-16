@@ -914,6 +914,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.37254901960784315" green="0.42352941176470588" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="completedButton" destination="LhX-7Y-RQS" id="5EZ-bz-YgV"/>
                                             <outlet property="dateLabel" destination="oBZ-Wg-Ure" id="EGb-N0-gw3"/>
