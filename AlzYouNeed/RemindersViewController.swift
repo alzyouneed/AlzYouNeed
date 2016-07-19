@@ -34,6 +34,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     override func viewDidAppear(animated: Bool) {
+        registerLocalNotifications()
         addRemindersObservers()
     }
     
@@ -85,7 +86,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
-                        // Success
+                        // Success -- schedule local
+                        self.scheduleLocalNotification(newReminder)
                     }
                 })
             }
@@ -253,6 +255,41 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateTF.text = dateFormatter.stringFromDate(sender.date)
+    }
+    
+    // MARK: - Push Notifications
+    func registerLocalNotifications() {
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+    }
+    
+    func scheduleLocalNotification(reminder: NSDictionary) {
+        // Check if have permission to schedule push notifications
+        guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else { return }
+        
+        // Permission denied
+        if settings.types == .None {
+            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of future tasks", preferredStyle: .Alert)
+            let enableAction = UIAlertAction(title: "Enable", style: .Default, handler: { (action) in
+                if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(appSettings)
+                }
+            })
+            let cancelAction = UIAlertAction(title: "No thanks", style: .Cancel, handler: nil)
+            alertController.addAction(enableAction)
+            alertController.addAction(cancelAction)
+            presentViewController(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        // Permission granted
+        print("Scheduling local notification")
+        let notification = UILocalNotification()
+        notification.fireDate = NSDate(timeIntervalSince1970: NSTimeInterval(reminder["dueDate"] as! String)!)
+        notification.alertBody = "Reminder: \(reminder["title"]!)"
+        notification.alertAction = "View"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     /*

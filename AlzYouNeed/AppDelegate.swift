@@ -52,6 +52,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        printAllFonts()
         
+        // Local reminders
+        if let options = launchOptions {
+            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+                tabBarController.selectedIndex = 2
+//                if let userInfo = notification.userInfo {
+//                    
+//                }
+            }
+        }
+        
         return true
     }
     
@@ -62,6 +72,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Font Family Name = [\(familyName)]")
             let names = UIFont.fontNamesForFamilyName(familyName)
             print("Font Names = [\(names)]")
+        }
+    }
+    
+    // MARK: - Push Notifications
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+//        let tabBarController = self.window?.rootViewController as! UITabBarController
+//        tabBarController.selectedIndex = 2
+        if let userInfo = notification.userInfo {
+            print("userInfo: \(userInfo)")
         }
     }
 
