@@ -139,7 +139,7 @@ class ContactsCollectionViewController: UICollectionViewController {
             let emptyLabel = UILabel(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
             emptyLabel.text = "Where is everyone?"
             emptyLabel.font = UIFont(name: "OpenSans-Semibold", size: 20)
-            emptyLabel.textColor = lightPurple
+            emptyLabel.textColor = stormCloud
             emptyLabel.hidden = false
             emptyLabel.alpha = 1
             emptyLabel.textAlignment = NSTextAlignment.Center

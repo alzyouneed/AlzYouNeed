@@ -32,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Customize navigation bar appearance
 //        UINavigationBar.appearance().barTintColor = backgroundPurple
-        UINavigationBar.appearance().barTintColor = charcoal
+//        UINavigationBar.appearance().barTintColor = charcoal
+//        UINavigationBar.appearance().barTintColor = slateBlue
+//        UINavigationBar.appearance().backgroundColor = slateBlue
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
         
@@ -40,8 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         // Customize tab bar appearance
-        UITabBar.appearance().tintColor = UIColor.whiteColor()
-        UITabBar.appearance().barTintColor = deepSpaceSparkle
+        UITabBar.appearance().tintColor = slateBlue
+        UITabBar.appearance().barTintColor = UIColor.whiteColor()
         
         // Set initial tab bar
         let tabBarController = self.window?.rootViewController as! UITabBarController

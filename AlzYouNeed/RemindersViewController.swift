@@ -230,7 +230,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     func presentCompletedRemindersVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let completeRemindersVC: CompleteRemindersTableViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersTableViewController
+//        let completeRemindersVC: CompleteRemindersTableViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersTableViewController
+        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersViewController
         
         // Hide tab bar in updateProfileVC
         completeRemindersVC.hidesBottomBarWhenPushed = true
