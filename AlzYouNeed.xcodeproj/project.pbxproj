@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */; };
+		2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */; };
+		2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */; };
 		2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244EF1D0FA12B005D9DF5 /* Person.swift */; };
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
@@ -65,6 +67,8 @@
 		096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
 		1E3258817A8CCC0657AA5166 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
 		2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = actionButtonsDashboardView.xib; sourceTree = "<group>"; };
+		2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actionButtonsDashboardView.swift; sourceTree = "<group>"; };
 		2D2244EF1D0FA12B005D9DF5 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
@@ -137,6 +141,15 @@
 				096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		2D1F93D61D3D7E1E0050794F /* actionButtonsDashboardView */ = {
+			isa = PBXGroup;
+			children = (
+				2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */,
+				2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */,
+			);
+			name = actionButtonsDashboardView;
 			sourceTree = "<group>";
 		};
 		2D2244EE1D0F994E005D9DF5 /* ContactList */ = {
@@ -339,6 +352,7 @@
 		2DC8D5BC1D12DC0B00952483 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D1F93D61D3D7E1E0050794F /* actionButtonsDashboardView */,
 				2DC8D5C11D12E11800952483 /* UserDashboardView */,
 				2DC8D5C61D12E14300952483 /* DateDashboardView */,
 			);
@@ -504,6 +518,7 @@
 				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2DF36C3C1D394E7500155161 /* islandView.mp4 in Resources */,
+				2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */,
 				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
 				2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */,
 				2DCC3C651D301208005D0EFD /* OpenSans-ExtraBold.ttf in Resources */,
@@ -587,6 +602,7 @@
 			files = (
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
 				2D2244F01D0FA12B005D9DF5 /* Person.swift in Sources */,
+				2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */,

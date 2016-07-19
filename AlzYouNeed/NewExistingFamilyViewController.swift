@@ -24,6 +24,10 @@ class NewExistingFamilyViewController: UIViewController {
         configureView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+    }
+    
     override func viewDidAppear(animated: Bool) {
         UIView.animateWithDuration(0.5) {
             self.progressView.setProgress(0.66, animated: true)

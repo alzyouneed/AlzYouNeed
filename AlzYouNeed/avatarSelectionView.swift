@@ -49,7 +49,8 @@ import UIKit
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.borderWidth = 2
-        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+//        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.userImageView.layer.borderColor = stormCloud.CGColor
     }
     
     func loadViewFromNib() -> UIView {

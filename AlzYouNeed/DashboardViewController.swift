@@ -50,6 +50,8 @@ class DashboardViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+        
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
             print("Model was reset -- reseting UI")
@@ -67,9 +69,13 @@ class DashboardViewController: UIViewController {
         dateView.configureView(now)
         
         if self.navigationItem.title == "" {
-            configureNavBarTitle()
+            configureUserNameLabel()
         }
     }
+    
+//    override func viewDidDisappear(animated: Bool) {
+//        self.navigationController?.hideTransparentNavBar()
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -217,17 +223,17 @@ class DashboardViewController: UIViewController {
     
     // MARK: - Configuration
     func configureView() {
-        configureNavBarTitle()
+        configureUserNameLabel()
     }
     
-    func configureNavBarTitle() {
+    func configureUserNameLabel() {
         print("Configure nav bar title")
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
                     if let userName = userDict.objectForKey("name") as? String {
-                        self.navigationItem.title = userName
-                        
+                        self.userView.userNameLabel.text = userName
+
                         if let imageString = userDict.objectForKey("avatarId") as? String {
                             self.configureDashboardView(imageString)
                         }

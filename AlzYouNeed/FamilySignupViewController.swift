@@ -36,6 +36,8 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationController?.presentTransparentNavBar()
+        
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)

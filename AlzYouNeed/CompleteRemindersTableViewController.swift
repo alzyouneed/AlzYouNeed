@@ -18,6 +18,8 @@ class CompleteRemindersTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+        
         AYNModel.sharedInstance.completedRemindersArr.removeAll()
         self.tableView.reloadData()
         

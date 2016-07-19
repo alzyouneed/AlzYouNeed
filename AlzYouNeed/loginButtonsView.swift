@@ -95,7 +95,7 @@ import UIKit
             leftButton.backgroundColor = leftButtonColor
             
             rightButton.setTitle("Cancel", forState: UIControlState.Normal)
-            rightButton.backgroundColor = redColor
+            rightButton.backgroundColor = sunsetOrange
         }
         else {
 //            print("Logging in")

@@ -27,6 +27,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+        
         AYNModel.sharedInstance.remindersArr.removeAll()
         self.remindersTableView.reloadData()
     }

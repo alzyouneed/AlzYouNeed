@@ -26,6 +26,8 @@ class ContactsCollectionViewController: UICollectionViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+        
         // If new user signed in -- force reload contacts
         if AYNModel.sharedInstance.contactsArrWasReset {
             AYNModel.sharedInstance.contactsArrWasReset = false

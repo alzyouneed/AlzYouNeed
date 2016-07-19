@@ -40,6 +40,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         self.emailVTFView.emailMode()
         self.passwordVTFView.passwordMode(false)
         
+        // Configure text color for dark background
+        self.emailVTFView.textField.textColor = UIColor.whiteColor()
+        self.emailVTFView.textField.tintColor = UIColor.whiteColor()
+        self.passwordVTFView.textField.textColor = UIColor.whiteColor()
+        self.passwordVTFView.textField.tintColor = UIColor.whiteColor()
+        
         self.emailVTFView.textField.delegate = self
         self.passwordVTFView.textField.delegate = self
 

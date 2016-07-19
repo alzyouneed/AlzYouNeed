@@ -14,9 +14,8 @@ import UIKit
     
     var view: UIView!
     
+    @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
-    @IBOutlet var leftButton: UIButton!
-    @IBOutlet var rightButton: UIButton!
     
     // MARK: - Init
     
@@ -40,14 +39,11 @@ import UIKit
         
         addSubview(view)
         
-        leftButton.layer.cornerRadius = leftButton.frame.size.width * 0.1
-        rightButton.layer.cornerRadius = rightButton.frame.size.width * 0.1
-        
         self.userImageView.layer.masksToBounds = true
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.borderWidth = 2
-        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.userImageView.layer.borderColor = ivory.CGColor
         self.userImageView.alpha = 0
     }
     
