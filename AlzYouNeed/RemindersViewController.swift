@@ -67,7 +67,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         alert.addTextFieldWithConfigurationHandler { (dateTextField) in
             dateTextField.placeholder = "Due Date"
             let datePickerView: UIDatePicker = UIDatePicker()
-            datePickerView.datePickerMode = UIDatePickerMode.Date
+            datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
             dateTextField.inputView = datePickerView
             datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
             self.dateTF = dateTextField
@@ -79,7 +79,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let now = NSDate().timeIntervalSince1970
                 
                 let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "MMMM d, yyyy"
+                dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
                 let dueDate = dateFormatter.dateFromString(self.dateTF.text!)?.timeIntervalSince1970
                 let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
                 
@@ -118,7 +118,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         // Format readable date
         let date = NSDate(timeIntervalSince1970: Double(reminder.dueDate)!)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d"
+        dateFormatter.dateFormat = "MMMM d, h:mm a"
         cell.dateLabel.text = "Due \(dateFormatter.stringFromDate(date))"
         cell.descriptionLabel.text = reminder.reminderDescription
     
@@ -251,7 +251,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     func datePickerValueChanged(sender: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.NoStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateTF.text = dateFormatter.stringFromDate(sender.date)
     }
     
