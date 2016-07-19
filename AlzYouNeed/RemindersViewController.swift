@@ -82,7 +82,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 dateFormatter.dateFormat = "MMMM d, yyyy"
                 let dueDate = dateFormatter.dateFromString(self.dateTF.text!)?.timeIntervalSince1970
                 let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
-//                let newReminder = Reminder(reminderTitle: titleTF.text!, reminderDescription: descriptionTF.text! ?? "", reminderDueDate: now.description)
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
