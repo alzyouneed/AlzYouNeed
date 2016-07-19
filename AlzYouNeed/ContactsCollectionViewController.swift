@@ -84,18 +84,18 @@ class ContactsCollectionViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! ContactCollectionViewCell
 
-        let person = AYNModel.sharedInstance.contactsArr[indexPath.row]
+        let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
         
         // Configure cell
-        cell.contactView.nameLabel.text = "\(person.fullName)"
+        cell.contactView.nameLabel.text = "\(contact.fullName)"
         cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
         cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
         
-        if let userImage = UIImage(named: person.avatarId) {
+        if let userImage = UIImage(named: contact.avatarId) {
             cell.contactView.contactImageView.image = userImage
         }
         
-        if let userIsAdmin = person.admin as String? {
+        if let userIsAdmin = contact.admin as String? {
             if userIsAdmin == "true" {
                 cell.contactView.isAdmin(true)
             }
@@ -161,15 +161,22 @@ class ContactsCollectionViewController: UICollectionViewController {
         collectionView?.addSubview(refreshControl)
     }
     
-    /*
+    
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
+        if segue.identifier == "contactDetail" {
+            let detailNavController: UINavigationController = segue.destinationViewController as! UINavigationController
+            if self.collectionView?.indexPathsForSelectedItems()?.count > 0 {
+                if let indexPath = self.collectionView?.indexPathsForSelectedItems()![0] as NSIndexPath? {
+                    let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
+                    if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
+                        detailVC.contact = contact
+                    }
+                }
+            }
+        }
      }
-     */
+ 
 
     // MARK: UICollectionViewDelegate
 

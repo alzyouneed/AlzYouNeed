@@ -10,29 +10,19 @@ import UIKit
 import Contacts
 
 class ContactDetailViewController: UIViewController {
+
+    @IBOutlet var userView: UserDashboardView!
+    var contact: Contact!
     
-    var person: Person!
-    
-    @IBOutlet var contactImage: UIImageView!
-    @IBOutlet var fullName: UILabel!
-    @IBOutlet var address: UILabel!
-    @IBOutlet var email: UILabel!
-    
-//    var contactItem: CNContact? {
-//        didSet {
-//            // Update view
-//            self.configureView()
-//        }
-//    }
-    
-    @IBOutlet var contactCard: ContactView!
     
     func configureView() {
-        contactCard.nameLabel.text = "\(person.firstName) \(person.lastName)"
-        contactCard.leftButton.setTitle("Call", forState: UIControlState.Normal)
-        contactCard.rightButton.setTitle("Message", forState: UIControlState.Normal)
         
-        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        userView.userNameLabel.text = "\(contact.fullName)"
+        if let image = UIImage(named: contact.avatarId) as UIImage? {
+            userView.setImage(image)
+        }
+
+//        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
         // Check if saved image to load
 //        if let imagePhotoPath = person.photoPath {
@@ -45,6 +35,10 @@ class ContactDetailViewController: UIViewController {
 
         self.configureView()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.presentTransparentNavBar()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -52,13 +46,14 @@ class ContactDetailViewController: UIViewController {
     }
     
     func leftButtonPressed(sender: UIButton) {
-        print("Left button pressed")
-        print("Calling: \(person.phoneNumber)")
-//        let telephoneNumber = (person.phoneNumber as CNPhoneNumber).stringValue
-        let url: NSURL = NSURL(string: "tel://\(person.phoneNumber)")!
-//        let url: NSURL = NSURL(string: "tel://123456789")!
-
+        print("Calling: \(contact.phoneNumber)")
+        
+        let url: NSURL = NSURL(string: "tel://\(contact.phoneNumber)")!
         UIApplication.sharedApplication().openURL(url)
+    }
+    
+    @IBAction func closeContactDetailView(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
