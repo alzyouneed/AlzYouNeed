@@ -47,7 +47,8 @@ import UIKit
         contactImageView.layer.masksToBounds = false
         contactImageView.clipsToBounds = true
         contactImageView.layer.borderWidth = 2
-        contactImageView.layer.borderColor = UIColor.whiteColor().CGColor
+//        contactImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        contactImageView.layer.borderColor = stormCloud.CGColor
         
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         leftButton.layer.masksToBounds = false
@@ -57,7 +58,7 @@ import UIKit
         rightButton.clipsToBounds = true
         
         backgroundView.clipsToBounds = true
-        backgroundView.layer.cornerRadius = 10
+        backgroundView.layer.cornerRadius = 5
     }
     
     func loadViewFromNib() -> UIView {

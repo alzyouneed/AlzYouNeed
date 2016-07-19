@@ -52,6 +52,9 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
         
+        self.tabBarController?.tabBar.layer.borderWidth = 0.5
+        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGrayColor().CGColor
+        
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
             print("Model was reset -- reseting UI")

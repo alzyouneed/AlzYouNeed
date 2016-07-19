@@ -120,7 +120,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let date = NSDate(timeIntervalSince1970: Double(reminder.dueDate)!)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM d"
-        cell.dateLabel.text = dateFormatter.stringFromDate(date)
+        cell.dateLabel.text = "Due \(dateFormatter.stringFromDate(date))"
         cell.descriptionLabel.text = reminder.reminderDescription
     
         return cell
@@ -230,7 +230,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     func presentCompletedRemindersVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let completeRemindersVC: CompleteRemindersTableViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersTableViewController
         let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersViewController
         
         // Hide tab bar in updateProfileVC
