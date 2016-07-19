@@ -86,8 +86,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
-                        // Success -- schedule local
-                        self.scheduleLocalNotification(newReminder)
+                        // Success
                     }
                 })
             }
@@ -133,6 +132,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Observers catch deletion and properly update data source array and UI
+                    self.cancelLocalNotification(reminder.id)
                 }
             })
         }
@@ -154,6 +154,18 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                 print("New reminder in RTDB")
                                 
                                 AYNModel.sharedInstance.remindersArr.append(newReminder)
+                                
+                                // Schedule local notifications
+                                if let dueDate = NSDate(timeIntervalSince1970: Double(newReminder.dueDate)!) as NSDate? {
+                                    let now = NSDate()
+                                    // Check that date has not passed
+                                    if !dueDate.earlierDate(now).isEqualToDate(dueDate) {
+                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+                                    }
+                                    else {
+                                        print("Reminder due date has passed -- skipping")
+                                    }
+                                }
 
                                 self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AYNModel.sharedInstance.remindersArr.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                                 self.updateTabBadge()
@@ -167,6 +179,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                 print("Removing reminder in RTDB")
                                 
                                 AYNModel.sharedInstance.remindersArr.removeAtIndex(index)
+                                
+                                // Cancel any local notifications
+                                self.cancelLocalNotification(reminderId)
 
                                 self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                                 self.updateTabBadge()
@@ -263,7 +278,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
     }
     
-    func scheduleLocalNotification(reminder: NSDictionary) {
+    func scheduleLocalNotification(reminderId: String, reminder: NSDictionary) {
         // Check if have permission to schedule push notifications
         guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else { return }
         
@@ -282,14 +297,46 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             return
         }
         
-        // Permission granted
+        // Check for existing notification for reminder
+        if let scheduledNotifications: [UILocalNotification]? = UIApplication.sharedApplication().scheduledLocalNotifications {
+            for notification in scheduledNotifications! {
+                if let userInfo = notification.userInfo {
+                    if let existingReminderId = userInfo["reminderId"] as? String {
+                        if existingReminderId == reminderId {
+                            print("Local notification already exists")
+                            return
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Permission granted & Notification does not already exist
         print("Scheduling local notification")
         let notification = UILocalNotification()
         notification.fireDate = NSDate(timeIntervalSince1970: NSTimeInterval(reminder["dueDate"] as! String)!)
         notification.alertBody = "Reminder: \(reminder["title"]!)"
         notification.alertAction = "View"
         notification.soundName = UILocalNotificationDefaultSoundName
+        notification.userInfo = ["reminderId": reminderId]
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
+    
+    func cancelLocalNotification(reminderId: String) {
+        let scheduledNotifications: [UILocalNotification]? = UIApplication.sharedApplication().scheduledLocalNotifications
+        guard scheduledNotifications != nil else { return }
+        
+        for notification in scheduledNotifications! {
+            if let userInfo = notification.userInfo {
+                if let existingReminderId = userInfo["reminderId"] as? String {
+                    if existingReminderId == reminderId {
+                        print("Cancelling local notification")
+                        UIApplication.sharedApplication().cancelLocalNotification(notification)
+                        break
+                    }
+                }
+            }
+        }
     }
     
     /*
