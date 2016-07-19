@@ -488,8 +488,11 @@ class FirebaseManager: NSObject {
             else {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     let databaseRef = FIRDatabase.database().reference()
+                    
+                    let modifiedReminderDict = reminder.asDict().mutableCopy() as! NSMutableDictionary
+                    modifiedReminderDict["completedDate"] = NSDate().timeIntervalSince1970.description
 
-                    let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id)": reminder.asDict()]
+                    let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id)": modifiedReminderDict]
                     
                     databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                         if error != nil {

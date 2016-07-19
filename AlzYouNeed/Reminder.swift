@@ -15,6 +15,7 @@ class Reminder: NSObject {
     var reminderDescription: String!
     var createdDate: String!
     var dueDate: String!
+    var completedDate: String!
     
     init(reminderId: String, reminderTitle: String, reminderDescription: String, reminderDueDate: String) {
         super.init()
@@ -31,14 +32,15 @@ class Reminder: NSObject {
         self.reminderDescription = reminderDict.valueForKey("description") as! String
         self.createdDate = reminderDict.valueForKey("createdDate") as! String
         self.dueDate = reminderDict.valueForKey("dueDate") as! String
+        self.completedDate = reminderDict.valueForKey("completedDate") as? String ?? ""
     }
     
     override var description: String {
-        return "id: \(id) -- title: \(title) -- description: \(reminderDescription) -- createdDate: \(createdDate) -- dueDate: \(dueDate)"
+        return "id: \(id) -- title: \(title) -- description: \(reminderDescription) -- createdDate: \(createdDate) -- dueDate: \(dueDate) -- completedDate: \(completedDate)"
     }
     
     func asDict() -> NSDictionary {
-        let reminderDict = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate]
+        let reminderDict = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate, "completedDate": self.completedDate]
         return reminderDict
     }
     

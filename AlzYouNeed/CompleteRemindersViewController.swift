@@ -65,10 +65,10 @@ class CompleteRemindersViewController: UIViewController, UITableViewDelegate {
         cell.descriptionLabel.text = completedReminder.reminderDescription
         
         // Format readable date
-        let date = NSDate(timeIntervalSince1970: Double(completedReminder.dueDate)!)
+        let date = NSDate(timeIntervalSince1970: Double(completedReminder.completedDate)!)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d"
-        cell.dateLabel.text = dateFormatter.stringFromDate(date)
+        dateFormatter.dateFormat = "MMMM d, h:mm a"
+        cell.dateLabel.text = "Completed \(dateFormatter.stringFromDate(date))"
         
         return cell
     }
