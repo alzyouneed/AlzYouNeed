@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="leftButton" destination="AZs-hG-tcc" id="iVe-PK-F52"/>
                 <outlet property="rightButton" destination="sxY-2r-I7l" id="KG5-mC-fjC"/>
+                <outlet property="stackView" destination="ddu-dT-iFO" id="pu8-HI-VCu"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -32,6 +33,11 @@
                             <state key="normal" title="Emergency">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="buttonTouchEnded:" destination="-1" eventType="touchDragOutside" id="di0-uO-iqR"/>
+                                <action selector="buttonTouchEnded:" destination="-1" eventType="touchUpInside" id="zj0-h1-aKc"/>
+                                <action selector="buttonTouchStarted:" destination="-1" eventType="touchDown" id="26U-yO-FxB"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sxY-2r-I7l">
                             <rect key="frame" x="305" y="0.0" width="295" height="88"/>
@@ -40,6 +46,11 @@
                             <state key="normal" title="Locate Me">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="buttonTouchEnded:" destination="-1" eventType="touchDragOutside" id="Dc7-jD-WCa"/>
+                                <action selector="buttonTouchEnded:" destination="-1" eventType="touchUpInside" id="NFP-yK-v4s"/>
+                                <action selector="buttonTouchStarted:" destination="-1" eventType="touchDown" id="KGf-n6-DTG"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>

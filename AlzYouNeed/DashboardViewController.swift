@@ -13,6 +13,7 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var dateView: DateDashboardView!
+    @IBOutlet var dashboardActionButtons: actionButtonsDashboardView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,6 +234,7 @@ class DashboardViewController: UIViewController {
     // MARK: - Configuration
     func configureView() {
         configureUserNameLabel()
+        configureActionButtons()
     }
     
     func configureUserNameLabel() {
@@ -258,6 +260,11 @@ class DashboardViewController: UIViewController {
             // Reset variable only after configuration is complete
             AYNModel.sharedInstance.wasReset = false
         }
+    }
+    
+    func configureActionButtons() {
+        // TODO: Change later to add functionality
+        dashboardActionButtons.singleButton("left")
     }
     
 }

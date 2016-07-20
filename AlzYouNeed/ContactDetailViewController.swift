@@ -12,8 +12,8 @@ import Contacts
 class ContactDetailViewController: UIViewController {
 
     @IBOutlet var userView: UserDashboardView!
+    @IBOutlet var contactActionButtons: actionButtonsDashboardView!
     var contact: Contact!
-    
     
     func configureView() {
         
@@ -21,6 +21,10 @@ class ContactDetailViewController: UIViewController {
         if let image = UIImage(named: contact.avatarId) as UIImage? {
             userView.setImage(image)
         }
+        
+        userView.view.backgroundColor = caribbeanGreen
+        
+        configureActionButtons()
 
 //        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
@@ -28,6 +32,19 @@ class ContactDetailViewController: UIViewController {
 //        if let imagePhotoPath = person.photoPath {
 //            contactCard.setImageWithPath(imagePhotoPath)
 //        }
+    }
+    
+    func configureActionButtons() {
+        contactActionButtons.leftButton.setTitle("Call", forState: UIControlState.Normal)
+        contactActionButtons.leftButton.backgroundColor = slateBlue
+//        contactActionButtons.rightButton.setTitle("Locate", forState: UIControlState.Normal)
+//        contactActionButtons.rightButton.backgroundColor =
+        
+        // TODO: Change later to add functionality
+        contactActionButtons.singleButton("left")
+        
+        // Add targets
+        contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
     }
 
     override func viewDidLoad() {
@@ -45,6 +62,7 @@ class ContactDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Action Buttons
     func leftButtonPressed(sender: UIButton) {
         print("Calling: \(contact.phoneNumber)")
         

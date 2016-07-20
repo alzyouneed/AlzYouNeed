@@ -15,6 +15,7 @@ import UIKit
     
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
+    @IBOutlet var stackView: UIStackView!
     
     // MARK: - Init
     
@@ -42,11 +43,32 @@ import UIKit
         rightButton.layer.cornerRadius = 10
     }
     
+    // TODO: Update later to add functionality
+    func singleButton(button: String) {
+        if button == "left" {
+            stackView.removeArrangedSubview(rightButton)
+            rightButton.hidden = true
+        }
+        else {
+            stackView.removeArrangedSubview(leftButton)
+            leftButton.hidden = true
+        }
+    }
+    
     func loadViewFromNib() -> UIView {
         let bundle = NSBundle(forClass: self.dynamicType)
         let nib = UINib(nibName: "actionButtonsDashboardView", bundle: bundle)
         let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
         return view
+    }
+    
+    // Adjust button size on touch
+    @IBAction func buttonTouchEnded(sender: UIButton) {
+        sender.transform = CGAffineTransformMakeScale(1, 1)
+    }
+    
+    @IBAction func buttonTouchStarted(sender: UIButton) {
+        sender.transform = CGAffineTransformMakeScale(0.95, 0.95)
     }
 
 }

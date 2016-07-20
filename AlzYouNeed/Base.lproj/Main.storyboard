@@ -109,6 +109,18 @@
                                 <rect key="frame" x="0.0" y="194" width="600" height="406"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YtU-xR-8Y5" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="20" y="202" width="560" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="NMz-7M-onU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="hRT-Nj-Y3Q"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hRT-Nj-Y3Q"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c8N-qm-y48" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="600" height="130"/>
                                 <constraints>
@@ -125,14 +137,17 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="c8N-qm-y48" firstAttribute="top" secondItem="r1v-BX-jPE" secondAttribute="bottom" id="4Se-3o-uv6"/>
                             <constraint firstItem="uNM-fj-SOc" firstAttribute="top" secondItem="r7B-sv-KVp" secondAttribute="bottom" id="5W2-tg-e2g"/>
                             <constraint firstAttribute="trailing" secondItem="c8N-qm-y48" secondAttribute="trailing" id="B5C-Oq-5vD"/>
                             <constraint firstItem="r7B-sv-KVp" firstAttribute="leading" secondItem="BET-g9-A0z" secondAttribute="leading" id="NoC-hK-TZd"/>
+                            <constraint firstItem="YtU-xR-8Y5" firstAttribute="leading" secondItem="BET-g9-A0z" secondAttribute="leadingMargin" id="Two-gz-n2B"/>
+                            <constraint firstItem="YtU-xR-8Y5" firstAttribute="top" secondItem="c8N-qm-y48" secondAttribute="bottom" constant="8" id="Uin-sH-prV"/>
                             <constraint firstItem="c8N-qm-y48" firstAttribute="leading" secondItem="BET-g9-A0z" secondAttribute="leading" id="cdj-KZ-1QF"/>
                             <constraint firstItem="r7B-sv-KVp" firstAttribute="top" secondItem="c8N-qm-y48" secondAttribute="bottom" id="eds-KF-HDd"/>
+                            <constraint firstItem="YtU-xR-8Y5" firstAttribute="trailing" secondItem="BET-g9-A0z" secondAttribute="trailingMargin" id="fWv-zZ-Sht"/>
                             <constraint firstAttribute="trailing" secondItem="r7B-sv-KVp" secondAttribute="trailing" id="yI8-MR-cNL"/>
                         </constraints>
                     </view>
@@ -146,6 +161,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="contactActionButtons" destination="YtU-xR-8Y5" id="Kdc-eZ-yqs"/>
                         <outlet property="userView" destination="c8N-qm-y48" id="k11-y5-7xu"/>
                     </connections>
                 </viewController>
@@ -903,6 +919,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dashboardActionButtons" destination="DvW-BC-Ijy" id="oFI-W2-2dz"/>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
                     </connections>
