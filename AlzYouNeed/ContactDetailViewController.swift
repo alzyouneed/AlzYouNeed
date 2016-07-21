@@ -13,6 +13,8 @@ class ContactDetailViewController: UIViewController {
 
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var contactActionButtons: actionButtonsDashboardView!
+    @IBOutlet var lastCalledLabel: UILabel!
+    
     var contact: Contact!
     
     func configureView() {
@@ -25,6 +27,7 @@ class ContactDetailViewController: UIViewController {
         userView.view.backgroundColor = caribbeanGreen
         
         configureActionButtons()
+        lastCalledLabel.hidden = true
 
 //        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
@@ -46,6 +49,25 @@ class ContactDetailViewController: UIViewController {
         // Add targets
         contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
     }
+    
+    func configureLastCalledLabel() {
+        let now = NSDate().timeIntervalSince1970
+        let updates = ["lastCalled": now.description]
+        FirebaseManager.updateFamilyMemberUserInfo(contact.userId, updates: updates) { (error) in
+            if error == nil {
+                // Success
+            }
+        }
+        
+        
+        
+//        let now = NSDate()
+//        
+////        let dateFormatter = NSDateFormatter()
+////        dateFormatter.dateFormat = "MMMM d, h:mm a"
+////        lastCalledLabel.text = "Last called: \(dateFormatter.stringFromDate(now))"
+//        lastCalledLabel.hidden = false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +87,8 @@ class ContactDetailViewController: UIViewController {
     // MARK: - Action Buttons
     func leftButtonPressed(sender: UIButton) {
         print("Calling: \(contact.phoneNumber)")
+        
+        configureLastCalledLabel()
         
         let url: NSURL = NSURL(string: "tel://\(contact.phoneNumber)")!
         UIApplication.sharedApplication().openURL(url)

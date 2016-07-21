@@ -425,6 +425,39 @@ class FirebaseManager: NSObject {
         }
     }
     
+    // Custom UserInfo unique to each familyMember's instance of their relationship to others
+    class func updateFamilyMemberUserInfo(contactId: String, updates: NSDictionary, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            getCurrentUser({ (userDict, error) in
+                if error != nil {
+                    // Error
+                    completionHandler(error: error)
+                }
+                else {
+                    if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                        let userId = user.uid
+                        let databaseRef = FIRDatabase.database().reference()
+                    
+                        let updatesDict = updates as [NSObject : AnyObject]
+                        
+                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                            if error != nil {
+                                // Error
+                                print("Error updating family member userInfo")
+                                completionHandler(error: error)
+                            }
+                            else {
+                                // Success
+                                print("Updated family member userInfo")
+                                completionHandler(error: nil)
+                            }
+                        })
+                    }
+                }
+            })  
+        }
+    }
+    
     // MARK: - Reminders
     class func createFamilyReminder(reminder: NSDictionary, completionHandler: (error: NSError?, newDatabaseRef: FIRDatabaseReference?) -> Void) {
         getCurrentUser { (userDict, error) in

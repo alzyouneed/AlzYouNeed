@@ -25,6 +25,7 @@
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -107,7 +108,22 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7B-sv-KVp">
                                 <rect key="frame" x="0.0" y="194" width="600" height="406"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBb-6R-Mct">
+                                        <rect key="frame" x="8" y="78" width="584" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="jW8-Wo-GRl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
+                                        <color key="textColor" red="0.30980392156862746" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bBb-6R-Mct" secondAttribute="trailing" constant="8" id="6rH-ua-wgI"/>
+                                    <constraint firstItem="bBb-6R-Mct" firstAttribute="leading" secondItem="r7B-sv-KVp" secondAttribute="leading" constant="8" id="Lv9-Sb-7T9"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YtU-xR-8Y5" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="202" width="560" height="60"/>
@@ -142,6 +158,7 @@
                             <constraint firstItem="c8N-qm-y48" firstAttribute="top" secondItem="r1v-BX-jPE" secondAttribute="bottom" id="4Se-3o-uv6"/>
                             <constraint firstItem="uNM-fj-SOc" firstAttribute="top" secondItem="r7B-sv-KVp" secondAttribute="bottom" id="5W2-tg-e2g"/>
                             <constraint firstAttribute="trailing" secondItem="c8N-qm-y48" secondAttribute="trailing" id="B5C-Oq-5vD"/>
+                            <constraint firstItem="bBb-6R-Mct" firstAttribute="top" secondItem="YtU-xR-8Y5" secondAttribute="bottom" constant="10" id="K4r-7q-oC5"/>
                             <constraint firstItem="r7B-sv-KVp" firstAttribute="leading" secondItem="BET-g9-A0z" secondAttribute="leading" id="NoC-hK-TZd"/>
                             <constraint firstItem="YtU-xR-8Y5" firstAttribute="leading" secondItem="BET-g9-A0z" secondAttribute="leadingMargin" id="Two-gz-n2B"/>
                             <constraint firstItem="YtU-xR-8Y5" firstAttribute="top" secondItem="c8N-qm-y48" secondAttribute="bottom" constant="8" id="Uin-sH-prV"/>
@@ -162,6 +179,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="contactActionButtons" destination="YtU-xR-8Y5" id="Kdc-eZ-yqs"/>
+                        <outlet property="lastCalledLabel" destination="bBb-6R-Mct" id="dab-lm-5zN"/>
                         <outlet property="userView" destination="c8N-qm-y48" id="k11-y5-7xu"/>
                     </connections>
                 </viewController>
