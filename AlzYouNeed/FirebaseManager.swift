@@ -426,7 +426,7 @@ class FirebaseManager: NSObject {
     }
     
     // Custom UserInfo unique to each familyMember's instance of their relationship to others
-    class func updateFamilyMemberUserInfo(contactId: String, updates: NSDictionary, completionHandler: (error: NSError?) -> Void) {
+    class func updateFamilyMemberUserInfo(contactUserId: String, updates: NSDictionary, completionHandler: (error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             getCurrentUser({ (userDict, error) in
                 if error != nil {
@@ -440,7 +440,7 @@ class FirebaseManager: NSObject {
                     
                         let updatesDict = updates as [NSObject : AnyObject]
                         
-                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                             if error != nil {
                                 // Error
                                 print("Error updating family member userInfo")
@@ -455,6 +455,33 @@ class FirebaseManager: NSObject {
                     }
                 }
             })  
+        }
+    }
+    
+    class func getFamilyMemberUserInfo(contactUserId: String, completionHandler: (error: NSError?, userInfo: NSDictionary?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            getCurrentUser({ (userDict, error) in
+                if error != nil {
+                    // Error
+                    completionHandler(error: error, userInfo: nil)
+                }
+                else {
+                    if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                        let userId = user.uid
+                        let databaseRef = FIRDatabase.database().reference()
+                        
+                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                            if let dict = snapshot.value! as? NSDictionary {
+                                print("Retrieved family member userInfo")
+                                completionHandler(error: nil, userInfo: dict)
+                            }
+                        }) { (error) in
+                            print("Error retrieving family member userInfo")
+                            completionHandler(error: error, userInfo: nil)
+                        }
+                    }
+                }
+            })
         }
     }
     

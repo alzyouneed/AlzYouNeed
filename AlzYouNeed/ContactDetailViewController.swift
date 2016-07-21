@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Contacts
 
 class ContactDetailViewController: UIViewController {
 
@@ -50,29 +49,29 @@ class ContactDetailViewController: UIViewController {
         contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
     }
     
-    func configureLastCalledLabel() {
-        let now = NSDate().timeIntervalSince1970
-        let updates = ["lastCalled": now.description]
-        FirebaseManager.updateFamilyMemberUserInfo(contact.userId, updates: updates) { (error) in
-            if error == nil {
-                // Success
-            }
-        }
-        
-        
-        
-//        let now = NSDate()
-//        
-////        let dateFormatter = NSDateFormatter()
-////        dateFormatter.dateFormat = "MMMM d, h:mm a"
-////        lastCalledLabel.text = "Last called: \(dateFormatter.stringFromDate(now))"
-//        lastCalledLabel.hidden = false
+    func configureLastCalledLabel(dateString: String) {
+        let date = NSDate(timeIntervalSince1970: Double(dateString)!)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM d, h:mm a"
+        lastCalledLabel.text = "Last called: \(dateFormatter.stringFromDate(date))"
+        lastCalledLabel.hidden = false
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.configureView()
+        
+        FirebaseManager.getFamilyMemberUserInfo(contact.userId) { (error, userInfo) in
+            if error == nil {
+                if let userInfo = userInfo {
+//                    print("userInfo: \(userInfo)")
+                    if let lastCalled = userInfo.valueForKey("lastCalled") as? String {
+                        self.configureLastCalledLabel(lastCalled)
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,7 +87,15 @@ class ContactDetailViewController: UIViewController {
     func leftButtonPressed(sender: UIButton) {
         print("Calling: \(contact.phoneNumber)")
         
-        configureLastCalledLabel()
+        // Save action in Firebase RTDB
+        let now = NSDate().timeIntervalSince1970
+        let updates = ["lastCalled": now.description]
+        FirebaseManager.updateFamilyMemberUserInfo(contact.userId, updates: updates) { (error) in
+            if error == nil {
+                // Success -- configure label
+                self.configureLastCalledLabel(now.description)
+            }
+        }
         
         let url: NSURL = NSURL(string: "tel://\(contact.phoneNumber)")!
         UIApplication.sharedApplication().openURL(url)
