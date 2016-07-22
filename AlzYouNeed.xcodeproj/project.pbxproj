@@ -14,6 +14,7 @@
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
+		2D39542E1D42A40700AC1674 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D39542D1D42A40700AC1674 /* ContactsViewController.swift */; };
 		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
 		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
 		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
@@ -72,6 +73,7 @@
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		2D39542D1D42A40700AC1674 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
 		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
 		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */,
+				2D39542D1D42A40700AC1674 /* ContactsViewController.swift */,
 				2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */,
 				2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */,
 			);
@@ -627,6 +630,7 @@
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
+				2D39542E1D42A40700AC1674 /* ContactsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

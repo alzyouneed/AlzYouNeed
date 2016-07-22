@@ -59,7 +59,7 @@ class ContactDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.configureView()
         
         FirebaseManager.getFamilyMemberUserInfo(contact.userId) { (error, userInfo) in

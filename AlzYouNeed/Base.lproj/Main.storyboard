@@ -30,67 +30,79 @@
     </customFonts>
     <scenes>
         <!--Family & Friends-->
-        <scene sceneID="rBu-7G-30b">
+        <scene sceneID="qhG-ZT-8MU">
             <objects>
-                <collectionViewController id="JiZ-1K-SvE" customClass="ContactsCollectionViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" id="0HA-SG-0FP">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="vin-0T-rca" customClass="ContactsViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zde-l8-p7Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="PqP-9E-X1L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yPN-QZ-0e4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5IR-cC-8bL">
-                            <size key="itemSize" width="200" height="225"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ContactCell" id="Tft-Nj-mYn" customClass="ContactCollectionViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="200" height="210"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDJ-wM-rYD" customClass="ContactView" customModule="AlzYouNeed" customModuleProvider="target">
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-s2-fvu">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8nL-Sq-GH4">
+                                    <size key="itemSize" width="200" height="210"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ContactCell" id="nnA-ch-dz6" customClass="ContactCollectionViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Oq-0X-cV9" customClass="ContactView" customModule="AlzYouNeed" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="cDJ-wM-rYD" firstAttribute="top" secondItem="Tft-Nj-mYn" secondAttribute="topMargin" constant="-8" id="3Dt-LR-bTb"/>
-                                    <constraint firstItem="cDJ-wM-rYD" firstAttribute="leading" secondItem="Tft-Nj-mYn" secondAttribute="leadingMargin" constant="-8" id="AFF-xh-pCc"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="cDJ-wM-rYD" secondAttribute="bottom" constant="-8" identifier="id1" id="UNr-kL-7jY"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="cDJ-wM-rYD" secondAttribute="trailing" constant="-8" id="cUd-Gk-Bac"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="cDJ-wM-rYD" secondAttribute="bottom" constant="-8" id="o6I-M9-Kw6"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="cDJ-wM-rYD" secondAttribute="trailing" constant="-8" identifier="id2" id="qVc-Pj-ofA"/>
-                                    <constraint firstItem="cDJ-wM-rYD" firstAttribute="top" secondItem="Tft-Nj-mYn" secondAttribute="topMargin" constant="-8" identifier="id3" id="zIp-ci-Zuy"/>
-                                    <constraint firstItem="cDJ-wM-rYD" firstAttribute="leading" secondItem="Tft-Nj-mYn" secondAttribute="leadingMargin" constant="-8" identifier="id4" id="ze4-Bj-J8p"/>
-                                </constraints>
-                                <size key="customSize" width="200" height="210"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="UNr-kL-7jY"/>
-                                        <exclude reference="qVc-Pj-ofA"/>
-                                        <exclude reference="zIp-ci-Zuy"/>
-                                        <exclude reference="ze4-Bj-J8p"/>
-                                    </mask>
-                                </variation>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="1Oq-0X-cV9" secondAttribute="trailing" id="8wG-qZ-0fb"/>
+                                            <constraint firstItem="1Oq-0X-cV9" firstAttribute="top" secondItem="nnA-ch-dz6" secondAttribute="top" id="F6y-Lh-NUW"/>
+                                            <constraint firstItem="1Oq-0X-cV9" firstAttribute="leading" secondItem="nnA-ch-dz6" secondAttribute="leading" id="O8Z-rS-6qa"/>
+                                            <constraint firstAttribute="bottom" secondItem="1Oq-0X-cV9" secondAttribute="bottom" id="PeE-SG-9FI"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="contactView" destination="1Oq-0X-cV9" id="WSW-sZ-ES1"/>
+                                            <segue destination="W9I-r8-WDP" kind="presentation" identifier="contactDetail" id="NDI-Yo-xRX"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
                                 <connections>
-                                    <outlet property="contactView" destination="cDJ-wM-rYD" id="S6n-KZ-FKD"/>
-                                    <segue destination="W9I-r8-WDP" kind="presentation" identifier="contactDetail" id="CwV-4X-RdF"/>
+                                    <outlet property="dataSource" destination="vin-0T-rca" id="pXO-mQ-MQY"/>
+                                    <outlet property="delegate" destination="vin-0T-rca" id="5Hz-qo-JOM"/>
                                 </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="JiZ-1K-SvE" id="Ini-ot-cRH"/>
-                            <outlet property="delegate" destination="JiZ-1K-SvE" id="6nF-eK-viv"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" title="Family &amp; Friends" id="PSc-hW-Vy1"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WAM-CH-l8t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Stv-s2-fvu" firstAttribute="top" secondItem="Zde-l8-p7Y" secondAttribute="bottom" id="UJN-El-GoF"/>
+                            <constraint firstAttribute="trailing" secondItem="Stv-s2-fvu" secondAttribute="trailing" id="c2b-lk-sU0"/>
+                            <constraint firstItem="Stv-s2-fvu" firstAttribute="top" secondItem="yPN-QZ-0e4" secondAttribute="top" id="oxP-P0-LOr"/>
+                            <constraint firstItem="Stv-s2-fvu" firstAttribute="leading" secondItem="yPN-QZ-0e4" secondAttribute="leading" id="veb-bu-qEO"/>
+                            <constraint firstItem="PqP-9E-X1L" firstAttribute="top" secondItem="Stv-s2-fvu" secondAttribute="bottom" id="wd0-Aw-Hwj"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="oxP-P0-LOr"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Family &amp; Friends" id="cpU-bE-gGz"/>
+                    <connections>
+                        <outlet property="contactsCollectionView" destination="Stv-s2-fvu" id="KPX-Me-eTa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UUH-JG-JKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="730" y="448"/>
         </scene>
@@ -844,7 +856,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="JiZ-1K-SvE" kind="relationship" relationship="rootViewController" id="Fgy-28-HCV"/>
+                        <segue destination="vin-0T-rca" kind="relationship" relationship="rootViewController" id="9W3-17-bkc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3LM-x4-KCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
