@@ -53,9 +53,14 @@ import UIKit
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         leftButton.layer.masksToBounds = false
         leftButton.clipsToBounds = true
+        leftButton.layer.borderWidth = 2
+        leftButton.layer.borderColor = UIColor.whiteColor().CGColor
+        
         rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
         rightButton.layer.masksToBounds = false
         rightButton.clipsToBounds = true
+        rightButton.layer.borderWidth = 2
+        rightButton.layer.borderColor = UIColor.whiteColor().CGColor
         
         backgroundView.clipsToBounds = true
         backgroundView.layer.cornerRadius = 5
