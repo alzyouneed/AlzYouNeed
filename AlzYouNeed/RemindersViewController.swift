@@ -148,7 +148,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             if error == nil {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     self.familyId = userFamilyId
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrderedByChild("dueDate").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
+
                         if let reminderDict = snapshot.value! as? NSDictionary {
                             if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
                                 print("New reminder in RTDB")
