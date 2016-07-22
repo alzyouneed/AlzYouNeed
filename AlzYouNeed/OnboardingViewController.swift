@@ -245,6 +245,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        UIView.performWithoutAnimation({
+            self.emailVTFView.layoutIfNeeded()
+            self.passwordVTFView.layoutIfNeeded()
+        })
         
         if show {
             self.loginButtonsBottomConstraint.constant = changeInHeight

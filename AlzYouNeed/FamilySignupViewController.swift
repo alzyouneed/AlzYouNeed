@@ -288,6 +288,11 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        UIView.performWithoutAnimation({
+            self.familyIdVTFView.layoutIfNeeded()
+            self.passwordVTFView.layoutIfNeeded()
+            self.confirmPasswordVTFView.layoutIfNeeded()
+        })
         
         if show {
             self.familyButtonBottomConstraint.constant = changeInHeight

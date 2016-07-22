@@ -272,6 +272,11 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        UIView.performWithoutAnimation({
+            self.emailVTFView.layoutIfNeeded()
+            self.passwordVTFView.layoutIfNeeded()
+            self.confirmPasswordVTFView.layoutIfNeeded()
+        })
         
         if show {
             self.nextButtonBottomConstraint.constant = changeInHeight

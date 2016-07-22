@@ -299,6 +299,10 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        UIView.performWithoutAnimation({
+            self.nameVTFView.layoutIfNeeded()
+            self.phoneNumberVTFView.layoutIfNeeded()
+        })
         
         if show {
             self.nextButtonBottomConstraint.constant = changeInHeight
