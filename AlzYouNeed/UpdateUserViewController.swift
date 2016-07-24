@@ -9,23 +9,22 @@
 import UIKit
 import Firebase
 
-class UpdateUserViewController: UIViewController, UITextFieldDelegate {
+class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - UI Elements
-    @IBOutlet var userImageView: UIImageView!
+//    @IBOutlet var userImageView: UIImageView!
     @IBOutlet var nameVTFView: validateTextFieldView!
     @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var addPhotoButton: UIButton!
     @IBOutlet var patientSwitch: UISwitch!
-    
-    @IBOutlet var avatarImageView: UIImageView!
-    
+//    @IBOutlet var avatarImageView: UIImageView!
     @IBOutlet var selectionView: avatarSelectionView!
-    
     @IBOutlet var progressView: UIProgressView!
-    
     @IBOutlet var cancelButton: UIBarButtonItem!
+    
+    @IBOutlet var profileImageView: UIImageView!
+    let imagePicker = UIImagePickerController()
     
     // MARK: - Properties
     var stepCompleted = false
@@ -86,6 +85,19 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
         signUpButtonEnabled()
+        configureImagePicker()
+    }
+    
+    func configureImagePicker() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 2
+        profileImageView.layer.borderColor = slateBlue.CGColor
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
+        tap.numberOfTapsRequired = 1
+        profileImageView.addGestureRecognizer(tap)
+        print("configured image picker")
     }
     
     func signUpButtonEnabled() {
@@ -111,34 +123,44 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     }
 
     // MARK: - UIImagePickerController Delegate
-    /*
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.userImageView.image = pickedImage
-            })
+//            dispatch_async(dispatch_get_main_queue(), { 
+//                self.userImageView.image = pickedImage
+//            })
 //            self.userImageView.image = pickedImage
 //            addPhotoButton.hidden = true
+//            self.selectionView.userImageView.image = pickedImage
+            self.profileImageView.image = pickedImage
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func selectPhoto() {
-        imagePicker.allowsEditing = false
+    func selectPhoto(tap: UITapGestureRecognizer) {
+        print("Select photo")
+        self.imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
+        
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            self.imagePicker.sourceType = .Camera
+        }
+        else {
+            self.imagePicker.sourceType = .PhotoLibrary
+        }
         
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func addPhoto(sender: UIButton) {
-        selectPhoto()
+    @IBAction func addPhoto(sender: UIBarButtonItem) {
+//        selectPhoto()
     }
-    */
     
     // MARK: - Validation
     func validFields() -> Bool {
@@ -184,7 +206,19 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
             // Disable interface to avoid extra interaction
             interfaceEnabled(false)
             
-            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
+            guard let name = nameVTFView.textField.text where !name.isEmpty, let phoneNumber = phoneNumberVTFView.textField.text where !phoneNumber.isEmpty else {
+                return
+            }
+            
+            
+//            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
+            
+            var imageData = NSData()
+            if let profileImage = profileImageView.image {
+                imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
+            }
+            
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData]
             
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {

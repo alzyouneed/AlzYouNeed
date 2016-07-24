@@ -84,13 +84,10 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
 
         // Configure cell
-        cell.contactView.nameLabel.text = "\(contact.fullName)"
+        cell.configureCell(contact)
+        
         cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
         cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
-        
-        if let userImage = UIImage(named: contact.avatarId) {
-            cell.contactView.contactImageView.image = userImage
-        }
         
         if let userIsAdmin = contact.admin as String? {
             if userIsAdmin == "true" {

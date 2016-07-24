@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class FirebaseManager: NSObject {
     
@@ -75,7 +76,76 @@ class FirebaseManager: NSObject {
             let userId = user.uid
             let databaseRef = FIRDatabase.database().reference()
             
-            let updatesDict = updates as [NSObject : AnyObject]
+            var updatesDict = updates as [NSObject : AnyObject]
+            
+            // Save image first
+            if let imageData = updatesDict["profileImage"] as! NSData? {
+                // Remove from dict before it saves illegal type
+                updatesDict.removeValueForKey("profileImage")
+                
+                let filePath = "profileImage/\(user.uid)"
+                let metadata = FIRStorageMetadata()
+                metadata.contentType = "image/jpeg"
+                
+                let storageRef = FIRStorage.storage().reference()
+                
+                // Storage image
+                storageRef.child(filePath).putData(imageData, metadata: metadata, completion: { (metadata, error) in
+                    if let error = error {
+                        // Error
+                        print("Error saving profile image: \(error.localizedDescription)")
+                        completionHandler(error: error)
+                    } else {
+                        // Success - save photoURL
+                        print("Saved user profile image -- attempting to update photo url")
+                        
+                        let fileUrl: String = (metadata?.downloadURLs![0].absoluteString)!
+                        let changeRequestPhoto = user.profileChangeRequest()
+                        changeRequestPhoto.photoURL = NSURL(string: fileUrl)
+                        changeRequestPhoto.commitChangesWithCompletion({ (error) in
+                            if let error = error {
+                                // Error
+                                print("Error completing profile photo URL change request: \(error.localizedDescription)")
+                                completionHandler(error: error)
+                            } else {
+                                // Success
+                                print("Saved user profile photo url")
+                                // Update new dict for RTDB save
+                                updatesDict["photoUrl"] = fileUrl
+                                
+                                databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                                    if error != nil {
+                                        print("Error updating user")
+                                        completionHandler(error: error)
+                                    }
+                                    else {
+                                        print("Updated user in RTDB -- Updating in family")
+                                        updateUserInFamily(updatesDict, completionHandler: { (error) in
+                                            if error != nil {
+                                                // Key does not exist -- proceed normally
+                                                if error?.code == 0 {
+                                                    completionHandler(error: nil)
+                                                }
+                                                else {
+                                                    // Error
+                                                    completionHandler(error: error)
+                                                }
+                                            }
+                                            else {
+                                                // Success
+                                                completionHandler(error: nil)
+                                            }
+                                        })
+                                    }
+                                })
+                                
+                                
+                            }
+                        })
+                    }
+                })
+            }
+            else {
             databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                 if error != nil {
                     print("Error updating user")
@@ -101,6 +171,7 @@ class FirebaseManager: NSObject {
                     })
                 }
             })
+            }
         }
     }
     
@@ -175,17 +246,23 @@ class FirebaseManager: NSObject {
                         completionHandler(error: error)
                     }
                     else {
-                        // Success
-                        user.deleteWithCompletion({ (error) in
-                            if error != nil {
-                                // Error
-                                print("Error occurred while deleting account: \(error)")
+                        deleteUserProfileImage({ (error) in
+                            if let error = error {
                                 completionHandler(error: error)
-                            }
-                            else {
+                            } else {
                                 // Success
-                                print("Account deleted")
-                                completionHandler(error: nil)
+                                user.deleteWithCompletion({ (error) in
+                                    if error != nil {
+                                        // Error
+                                        print("Error occurred while deleting account: \(error)")
+                                        completionHandler(error: error)
+                                    }
+                                    else {
+                                        // Success
+                                        print("Account deleted")
+                                        completionHandler(error: nil)
+                                    }
+                                })
                             }
                         })
                     }
@@ -244,6 +321,24 @@ class FirebaseManager: NSObject {
                 else if error != nil {
 //                    print("error: \(error?.domain)")
                     completionHandler(error: error, databaseRef: nil)
+                }
+            })
+        }
+    }
+    
+    private class func deleteUserProfileImage(completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let storageRef = FIRStorage.storage().reference()
+            
+            storageRef.child("profileImage").child(user.uid).deleteWithCompletion({ (error) in
+                if let error = error {
+                    // Error
+                    print("Error deleting user profile image: \(error.localizedDescription)")
+                    completionHandler(error: error)
+                } else {
+                    // Success
+                    print("Deleted user profile image")
+                    completionHandler(error: nil)
                 }
             })
         }

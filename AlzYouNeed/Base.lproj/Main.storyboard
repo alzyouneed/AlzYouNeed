@@ -502,21 +502,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="476"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
-                                <rect key="frame" x="135" y="390" width="40" height="40"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="Vf9-Xy-1Ux"/>
-                                    <constraint firstAttribute="height" constant="40" id="sY2-Gv-N8m"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                <state key="normal" title="+">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="addPhoto:" destination="vu3-xn-OOF" eventType="touchUpInside" id="9gY-RV-owb"/>
-                                </connections>
-                            </button>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLf-c8-Ma4" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="172" width="560" height="46"/>
                                 <constraints>
@@ -532,13 +517,35 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0UK-9c-99H">
                                 <rect key="frame" x="102" y="221" width="51" height="31"/>
                             </switch>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-gO-k8F" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-gO-k8F" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="192" y="10" width="216" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="216" id="ORh-9d-aFw"/>
                                     <constraint firstAttribute="height" constant="100" id="we7-Px-Mko"/>
                                 </constraints>
                             </view>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="6SM-Uo-3DD">
+                                <rect key="frame" x="250" y="10" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="1tJ-cC-W0d"/>
+                                    <constraint firstAttribute="width" constant="100" id="7IL-bU-ZGN"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
+                                <rect key="frame" x="135" y="390" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="Vf9-Xy-1Ux"/>
+                                    <constraint firstAttribute="height" constant="40" id="sY2-Gv-N8m"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addPhoto:" destination="vu3-xn-OOF" eventType="touchUpInside" id="9gY-RV-owb"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-Ui-83L">
                                 <rect key="frame" x="0.0" y="476" width="600" height="60"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
@@ -579,10 +586,12 @@
                             <constraint firstItem="ynf-lc-5fM" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="Cr3-Tk-YIZ"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="ayi-9u-FXc" secondAttribute="bottom" constant="8" id="D8b-a9-hCb"/>
                             <constraint firstAttribute="trailing" secondItem="A8e-QK-eYv" secondAttribute="trailing" id="DuA-xy-w7b"/>
+                            <constraint firstItem="6SM-Uo-3DD" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" constant="10" id="Fef-Zi-QGZ"/>
                             <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="W2J-gO-k8F" secondAttribute="bottom" constant="8" id="Iuj-je-hSg"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ayi-9u-FXc" secondAttribute="leading" id="Lo2-0l-jGt"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="QYx-SA-Vok"/>
                             <constraint firstItem="ayi-9u-FXc" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="Qgk-l3-gKQ"/>
+                            <constraint firstItem="6SM-Uo-3DD" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="Rlb-56-rIZ"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="ynf-lc-5fM" secondAttribute="bottom" id="TaI-zT-4xo"/>
                             <constraint firstItem="A8e-QK-eYv" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" id="VxI-vF-Qvb"/>
                             <constraint firstAttribute="trailing" secondItem="ynf-lc-5fM" secondAttribute="trailing" id="a7V-92-P2n"/>
@@ -626,6 +635,7 @@
                         <outlet property="nextButtonBottomConstraint" destination="Azt-hW-EEf" id="vDN-JN-vcY"/>
                         <outlet property="patientSwitch" destination="0UK-9c-99H" id="lfP-HJ-DOn"/>
                         <outlet property="phoneNumberVTFView" destination="xLf-c8-Ma4" id="clS-7U-zZH"/>
+                        <outlet property="profileImageView" destination="6SM-Uo-3DD" id="Bjm-6J-uAa"/>
                         <outlet property="progressView" destination="A8e-QK-eYv" id="Y5Z-7C-SjL"/>
                         <outlet property="selectionView" destination="W2J-gO-k8F" id="zMF-uY-e46"/>
                         <outlet property="signUpButton" destination="kCt-Ui-83L" id="WvY-4N-yTD"/>
@@ -1321,6 +1331,7 @@
         <image name="bareLogo" width="125" height="125"/>
         <image name="cancelIcon" width="22" height="22"/>
         <image name="contactsIcon" width="25" height="25"/>
+        <image name="defaultImage" width="100" height="100"/>
         <image name="homeIcon" width="25" height="25"/>
         <image name="reminderComplete" width="45" height="45"/>
         <image name="remindersCompleteHL" width="45" height="45"/>
