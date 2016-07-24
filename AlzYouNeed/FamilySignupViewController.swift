@@ -74,10 +74,14 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Firebase
     func createNewFamily(familyId: String, password: String) {
+        // Disable interface to avoid extra interaction
+        interfaceEnabled(false)
+        
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
                 self.showPopoverView(error!)
+                self.interfaceEnabled(true)
             }
             else {
                 // Successfully created new family
@@ -88,10 +92,14 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func joinFamily(familyId: String, password: String) {
+        // Disable interface to avoid extra interaction
+        interfaceEnabled(false)
+        
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
                 self.showPopoverView(error!)
+                self.interfaceEnabled(true)
             }
             else {
                 // Successfully joined family
@@ -153,6 +161,17 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     func createJoinFamilyButtonEnabled() {
         if validFields() {
+            createJoinFamilyButton.enabled = true
+            createJoinFamilyButton.alpha = 1
+        }
+        else {
+            createJoinFamilyButton.enabled = false
+            createJoinFamilyButton.alpha = 0.5
+        }
+    }
+    
+    func createJoinFamilyButtonEnabled(enabled: Bool) {
+        if enabled {
             createJoinFamilyButton.enabled = true
             createJoinFamilyButton.alpha = 1
         }
@@ -370,4 +389,11 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Interface Enable / Disable
+    func interfaceEnabled(enabled: Bool) {
+        createJoinFamilyButtonEnabled(enabled)
+        familyIdVTFView.textField.userInteractionEnabled = enabled
+        passwordVTFView.textField.userInteractionEnabled = enabled
+        confirmPasswordVTFView.userInteractionEnabled = enabled
+    }
 }

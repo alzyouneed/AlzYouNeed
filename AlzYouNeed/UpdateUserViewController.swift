@@ -181,19 +181,20 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     func updateUserAccount() {
         if validFields() {
             
-            // Disable button to avoid multiple taps
-            signUpButtonEnabled(false)
+            // Disable interface to avoid extra interaction
+            interfaceEnabled(false)
             
             let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
             
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update user
-                    self.signUpButtonEnabled(true)
+                    self.interfaceEnabled(true)
                 }
                 else {
                     // Updated user
                     self.stepCompleted = true
+                    self.view.endEditing(true)
                     self.performSegueWithIdentifier("familyStage", sender: self)
                 }
             })
@@ -215,7 +216,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
                 cancelButton.enabled = false
             }
             updateUserAccount()
-            self.view.endEditing(true)
         }
     }
     
@@ -321,6 +321,14 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
+    }
+    
+    // MARK: - Interface Enable / Disable
+    func interfaceEnabled(enabled: Bool) {
+        signUpButtonEnabled(enabled)
+        nameVTFView.textField.userInteractionEnabled = enabled
+        phoneNumberVTFView.textField.userInteractionEnabled = enabled
+        patientSwitch.userInteractionEnabled = enabled
     }
     
 //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

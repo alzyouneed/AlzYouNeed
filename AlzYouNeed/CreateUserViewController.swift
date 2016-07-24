@@ -150,17 +150,15 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     func signUpUser() {
         if validFields() {
             
-            // Disable button to avoid multiple taps
-            nextButtonEnabled(false)
-            self.navigationController?.navigationItem.backBarButtonItem?.enabled = false
+            // Disable interface to avoid extra interaction
+            interfaceEnabled(false)
             
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed -- show popoverView with reason
                     self.showPopoverView(error!)
                     
-                    self.nextButtonEnabled(true)
-                    self.navigationController?.navigationItem.backBarButtonItem?.enabled = true
+                    self.interfaceEnabled(true)
                 }
                 else {
                     // Successfully signed up
@@ -345,4 +343,12 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         })
     }
 
+    // MARK: - Interface Enable / Disable
+    func interfaceEnabled(enabled: Bool) {
+        nextButtonEnabled(enabled)
+        self.navigationController?.navigationItem.backBarButtonItem?.enabled = enabled
+        emailVTFView.textField.userInteractionEnabled = enabled
+        passwordVTFView.textField.userInteractionEnabled = enabled
+        confirmPasswordVTFView.userInteractionEnabled = enabled
+    }
 }
