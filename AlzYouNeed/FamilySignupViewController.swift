@@ -116,7 +116,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             }
             else {
                 // Successfully joined family
-                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                HUD.flash(.Success, delay: 0, completion: { (success) in
                     self.view.endEditing(true)
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })

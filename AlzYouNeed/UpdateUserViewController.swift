@@ -225,7 +225,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 }
                 else {
                     // Updated user
-                    HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                    HUD.flash(.Success, delay: 0, completion: { (success) in
                         self.stepCompleted = true
                         self.view.endEditing(true)
                         self.performSegueWithIdentifier("familyStage", sender: self)

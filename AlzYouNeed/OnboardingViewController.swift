@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import AVFoundation
+import PKHUD
 
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
@@ -114,15 +115,23 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         }
         else {
             if validateLogin() {
+                
+                // Show progress view
+                HUD.show(.Progress)
+                
                 FIRAuth.auth()?.signInWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completion: { (user, error) in
                     if error == nil {
                         print("Login successful")
-                        self.view.endEditing(true)
-                        AYNModel.sharedInstance.resetModel()
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        HUD.flash(.Success, delay: 0, completion: { (success) in
+                            self.view.endEditing(true)
+                            AYNModel.sharedInstance.resetModel()
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        })
                     }
                     else {
                         print(error)
+                        HUD.hide()
+                        
                         self.showPopoverView(error!)
                     }
                 })

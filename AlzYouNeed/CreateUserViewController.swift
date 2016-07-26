@@ -176,7 +176,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                         FirebaseManager.updateUser(updates, completionHandler: { (error) in
                             if error == nil {
                                 // success -- Show progress view success
-                                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                                HUD.flash(.Success, delay: 0, completion: { (success) in
                                     self.view.endEditing(true)
                                     self.userSignedUp = true
                                     AYNModel.sharedInstance.wasReset = true

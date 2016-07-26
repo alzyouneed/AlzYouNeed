@@ -252,7 +252,10 @@ class DashboardViewController: UIViewController {
             if error == nil {
                 if let userDict = userDict {
                     if let userName = userDict.objectForKey("name") as? String {
-                        self.userView.userNameLabel.text = userName
+                        dispatch_async(dispatch_get_main_queue(), { 
+                            self.userView.userNameLabel.text = userName
+                        })
+//                        self.userView.userNameLabel.text = userName
                         
                         if let photoUrl = userDict.objectForKey("photoUrl") as? String {
                             self.configureDashboardView(photoUrl)
