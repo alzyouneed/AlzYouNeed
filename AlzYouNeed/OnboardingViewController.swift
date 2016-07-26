@@ -353,7 +353,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
 //        webViewBG.userInteractionEnabled = false
 //        self.view.addSubview(webViewBG)
         
-        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView2", ofType: "mp4")
+        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView3", ofType: "mp4")
         if let movieFilePath = movieFilePath {
             print("Configuring background video")
             player = AVPlayer(URL: NSURL(fileURLWithPath: movieFilePath))
