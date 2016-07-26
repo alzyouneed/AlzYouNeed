@@ -17,14 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     override init() {
         // Firebase init
         FIRApp.configure()
+//        FIRDatabase.database().persistenceEnabled = true
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Configure Firebase
 //        FIRApp.configure()
-        
-//        FIRDatabase.database().persistenceEnabled = true
         
         // Remove navigation bar button text
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clearColor()], forState: UIControlState.Normal)

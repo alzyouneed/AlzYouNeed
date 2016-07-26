@@ -145,10 +145,8 @@ class ContactsCollectionViewController: UICollectionViewController {
             emptyLabel.textAlignment = NSTextAlignment.Center
             
             self.collectionView!.backgroundView = emptyLabel
-//            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.None
         } else {
             self.collectionView!.backgroundView = nil
-//            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         }
     }
     
@@ -161,9 +159,21 @@ class ContactsCollectionViewController: UICollectionViewController {
         collectionView?.addSubview(refreshControl)
     }
     
+    // MARK: - Tab Bar
+    func updateTabBadge() {
+        let tabArray = tabBarController!.tabBar.items as NSArray!
+        let tabItem = tabArray.objectAtIndex(0) as! UITabBarItem
+        
+        if AYNModel.sharedInstance.unreadMessagesCount == 0 {
+            tabItem.badgeValue = nil
+        }
+        else {
+            tabItem.badgeValue = "\(AYNModel.sharedInstance.unreadMessagesCount)"
+        }
+    }
     
-     // MARK: - Navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "contactDetail" {
             let detailNavController: UINavigationController = segue.destinationViewController as! UINavigationController
             if self.collectionView?.indexPathsForSelectedItems()?.count > 0 {
@@ -176,7 +186,6 @@ class ContactsCollectionViewController: UICollectionViewController {
             }
         }
      }
- 
 
     // MARK: UICollectionViewDelegate
 

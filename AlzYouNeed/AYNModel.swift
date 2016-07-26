@@ -20,6 +20,7 @@ class AYNModel {
     var contactsArr: [Contact] = []
     var remindersArr: [Reminder] = []
     var completedRemindersArr: [Reminder] = []
+    var unreadMessagesCount = 0
     
     var wasReset = false
     var contactsArrWasReset = false
@@ -32,6 +33,8 @@ class AYNModel {
         contactsArr.removeAll()
         remindersArr.removeAll()
         completedRemindersArr.removeAll()
+        unreadMessagesCount = 0
+        
         wasReset = true
         contactsArrWasReset = true
 //        remindersArrWasReset = true

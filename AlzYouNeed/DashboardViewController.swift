@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 
 class DashboardViewController: UIViewController {
     
@@ -19,7 +20,8 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
         
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
-            if let currentUser = user {
+//            if let currentUser = user {
+            if let currentUser = FIRAuth.auth()?.currentUser {
                 // User is signed in.
                 print("\(currentUser) is logged in")
 //                // Check if current user has completed signup
@@ -48,6 +50,13 @@ class DashboardViewController: UIViewController {
         }
         
         configureView()
+        
+        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : "Want to hangout today?"]
+        FirebaseManager.sendNewMessage("79nSgKxgI4QVcSMkavYYc7WUs7v2", message: newMessage) { (error) in
+            if error == nil {
+//                print("Message sent")
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -244,9 +253,9 @@ class DashboardViewController: UIViewController {
                 if let userDict = userDict {
                     if let userName = userDict.objectForKey("name") as? String {
                         self.userView.userNameLabel.text = userName
-
-                        if let imageString = userDict.objectForKey("avatarId") as? String {
-                            self.configureDashboardView(imageString)
+                        
+                        if let photoUrl = userDict.objectForKey("photoUrl") as? String {
+                            self.configureDashboardView(photoUrl)
                         }
                     }
                 }
@@ -254,12 +263,34 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    func configureDashboardView(imageString: String) {
-        if let image = UIImage(named: imageString) as UIImage? {
-            userView.setImage(image)
-            // Reset variable only after configuration is complete
-            AYNModel.sharedInstance.wasReset = false
-        }
+    func configureDashboardView(imageUrl: String) {
+            if imageUrl.hasPrefix("gs://") {
+                FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+                    if let error = error {
+                        // Error
+                        print("Error downloading user profile image: \(error.localizedDescription)")
+                        return
+                    }
+                    // Success
+                    if let image = UIImage(data: data!) as UIImage? {
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.userView.setImage(image)
+                        })
+                        // Reset variable only after configuration is complete
+                        AYNModel.sharedInstance.wasReset = false
+                    }
+                })
+            } else if let url = NSURL(string: imageUrl), data = NSData(contentsOfURL: url) {
+                if let image = UIImage(data: data) as UIImage? {
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.userView.setImage(image)
+                    })
+                    // Reset variable only after configuration is complete
+                    AYNModel.sharedInstance.wasReset = false
+                }
+            }
     }
     
     func configureActionButtons() {

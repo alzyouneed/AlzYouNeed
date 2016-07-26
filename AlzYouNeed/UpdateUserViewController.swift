@@ -126,13 +126,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            
-//            dispatch_async(dispatch_get_main_queue(), { 
-//                self.userImageView.image = pickedImage
-//            })
-//            self.userImageView.image = pickedImage
-//            addPhotoButton.hidden = true
-//            self.selectionView.userImageView.image = pickedImage
             self.profileImageView.image = pickedImage
         }
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
