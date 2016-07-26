@@ -163,9 +163,15 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
             if self.contactsCollectionView.indexPathsForSelectedItems()?.count > 0 {
                 if let indexPath = self.contactsCollectionView.indexPathsForSelectedItems()![0] as NSIndexPath? {
                     let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
-                    if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
-                        detailVC.contact = contact
+                    if let cell = self.contactsCollectionView.cellForItemAtIndexPath(indexPath) as? ContactCollectionViewCell {
+                        if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
+                            detailVC.contact = contact
+                            detailVC.profileImage = cell.contactView.contactImageView.image
+                        }
                     }
+//                    if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
+//                        detailVC.contact = contact
+//                    }
                 }
             }
         }

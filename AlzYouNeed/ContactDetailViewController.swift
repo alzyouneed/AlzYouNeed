@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class ContactDetailViewController: UIViewController {
 
@@ -15,25 +17,19 @@ class ContactDetailViewController: UIViewController {
     @IBOutlet var lastCalledLabel: UILabel!
     
     var contact: Contact!
+    var profileImage: UIImage!
     
     func configureView() {
         
         userView.userNameLabel.text = "\(contact.fullName)"
-        if let image = UIImage(named: contact.avatarId) as UIImage? {
-            userView.setImage(image)
-        }
-        
+        userView.setImage(profileImage)
+
         userView.view.backgroundColor = caribbeanGreen
         
         configureActionButtons()
         lastCalledLabel.hidden = true
 
 //        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
-        
-        // Check if saved image to load
-//        if let imagePhotoPath = person.photoPath {
-//            contactCard.setImageWithPath(imagePhotoPath)
-//        }
     }
     
     func configureActionButtons() {
