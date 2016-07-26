@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PKHUD
 
 class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -199,10 +200,12 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             // Disable interface to avoid extra interaction
             interfaceEnabled(false)
             
+            // Show progress view
+            HUD.show(.Progress)
+            
             guard let name = nameVTFView.textField.text where !name.isEmpty, let phoneNumber = phoneNumberVTFView.textField.text where !phoneNumber.isEmpty else {
                 return
             }
-            
             
 //            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
             
@@ -216,13 +219,17 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update user
+                    HUD.hide()
+                    
                     self.interfaceEnabled(true)
                 }
                 else {
                     // Updated user
-                    self.stepCompleted = true
-                    self.view.endEditing(true)
-                    self.performSegueWithIdentifier("familyStage", sender: self)
+                    HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                        self.stepCompleted = true
+                        self.view.endEditing(true)
+                        self.performSegueWithIdentifier("familyStage", sender: self)
+                    })
                 }
             })
         }

@@ -352,8 +352,14 @@ class FirebaseManager: NSObject {
             storageRef.child("profileImage").child(user.uid).deleteWithCompletion({ (error) in
                 if let error = error {
                     // Error
-                    print("Error deleting user profile image: \(error.localizedDescription)")
-                    completionHandler(error: error)
+                    if error.code == -13010 {
+                        // Object does not exist -- proceed as if no error
+                        print("User profile image does not exist -- proceed normally")
+                        completionHandler(error: nil)
+                    } else {
+                        print("Error deleting user profile image -- code: \(error.code) , description: \(error.localizedDescription)")
+                        completionHandler(error: error)
+                    }
                 } else {
                     // Success
                     print("Deleted user profile image")

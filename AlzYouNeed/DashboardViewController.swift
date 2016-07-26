@@ -51,12 +51,12 @@ class DashboardViewController: UIViewController {
         
         configureView()
         
-        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : "Want to hangout today?"]
-        FirebaseManager.sendNewMessage("79nSgKxgI4QVcSMkavYYc7WUs7v2", message: newMessage) { (error) in
-            if error == nil {
-//                print("Message sent")
-            }
-        }
+//        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : "Want to hangout today?"]
+//        FirebaseManager.sendNewMessage("79nSgKxgI4QVcSMkavYYc7WUs7v2", message: newMessage) { (error) in
+//            if error == nil {
+////                print("Message sent")
+//            }
+//        }
     }
     
     override func viewWillAppear(animated: Bool) {

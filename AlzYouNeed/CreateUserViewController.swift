@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PKHUD
 
 class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
@@ -153,8 +154,14 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             // Disable interface to avoid extra interaction
             interfaceEnabled(false)
             
+            // Show progress view
+            HUD.show(.Progress)
+            
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
+                    // Hide progress view
+                    HUD.hide()
+                    
                     // Sign up failed -- show popoverView with reason
                     self.showPopoverView(error!)
                     
@@ -168,13 +175,14 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                         
                         FirebaseManager.updateUser(updates, completionHandler: { (error) in
                             if error == nil {
-                                // success
-                                
-                                self.view.endEditing(true)
-                                self.userSignedUp = true
-                                AYNModel.sharedInstance.wasReset = true
-                                
-                                self.performSegueWithIdentifier("updateUser", sender: self)
+                                // success -- Show progress view success
+                                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                                    self.view.endEditing(true)
+                                    self.userSignedUp = true
+                                    AYNModel.sharedInstance.wasReset = true
+                                    
+                                    self.performSegueWithIdentifier("updateUser", sender: self)
+                                })
                             }
                         })
                     }

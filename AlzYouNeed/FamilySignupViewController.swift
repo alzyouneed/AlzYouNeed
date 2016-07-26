@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PKHUD
 
 class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
@@ -77,16 +78,23 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Disable interface to avoid extra interaction
         interfaceEnabled(false)
         
+        // Show progress view
+        HUD.show(.Progress)
+        
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
+                HUD.hide()
+                
                 self.showPopoverView(error!)
                 self.interfaceEnabled(true)
             }
             else {
                 // Successfully created new family
-                self.view.endEditing(true)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                    self.view.endEditing(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
             }
         }
     }
@@ -95,16 +103,23 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Disable interface to avoid extra interaction
         interfaceEnabled(false)
         
+        // Show progress view
+        HUD.show(.Progress)
+        
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
+                HUD.hide()
+                
                 self.showPopoverView(error!)
                 self.interfaceEnabled(true)
             }
             else {
                 // Successfully joined family
-                self.view.endEditing(true)
-                self.dismissViewControllerAnimated(true, completion: nil)
+                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                    self.view.endEditing(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                })
             }
         }
     }
