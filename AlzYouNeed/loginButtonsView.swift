@@ -65,7 +65,8 @@ import UIKit
             case "normal":
                 self.normalState()
             case "login":
-                self.loginState()
+                self.state = "normal"
+                self.normalState()
             default:
                 break
             }
@@ -80,8 +81,7 @@ import UIKit
                 self.state = "normal"
                 self.normalState()
             case "login":
-                self.state = "normal"
-                self.normalState()
+                self.loginState()
             default:
                 break
             }
@@ -91,11 +91,11 @@ import UIKit
     private func loginState() {
         if state != "login" {
             state = "login"
-            leftButton.setTitle("Login", forState: UIControlState.Normal)
-            leftButton.backgroundColor = leftButtonColor
+            leftButton.setTitle("Cancel", forState: UIControlState.Normal)
+            leftButton.backgroundColor = sunsetOrange
             
-            rightButton.setTitle("Cancel", forState: UIControlState.Normal)
-            rightButton.backgroundColor = sunsetOrange
+            rightButton.setTitle("Login", forState: UIControlState.Normal)
+            rightButton.backgroundColor = leftButtonColor
         }
         else {
 //            print("Logging in")

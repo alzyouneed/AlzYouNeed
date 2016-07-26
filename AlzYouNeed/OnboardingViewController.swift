@@ -143,8 +143,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         switch sender.currentTitle! {
         case "Sign up":
             signUp()
-        case "Login":
-            loginUser()
+        case "Cancel":
+            hideLoginView()
+            self.view.endEditing(true)
         default:
             break
         }
@@ -154,9 +155,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         switch sender.currentTitle! {
         case "Login":
             loginUser()
-        case "Cancel":
-            hideLoginView()
-            self.view.endEditing(true)
         default:
             break
         }
