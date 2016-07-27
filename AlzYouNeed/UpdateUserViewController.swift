@@ -219,10 +219,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update user
-//                    HUD.hide()
-//                    
-//                    self.interfaceEnabled(true)
-                    
                     HUD.hide({ (success) in
                         self.interfaceEnabled(true)
                     })

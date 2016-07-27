@@ -159,14 +159,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
-                    // Hide progress view
-//                    HUD.hide()
-//                    
-//                    // Sign up failed -- show popoverView with reason
-//                    self.showPopoverView(error!)
-//                    
-//                    self.interfaceEnabled(true)
-                    
+                    // Sign up failed -- show popoverView with reason
                     HUD.hide({ (success) in
                         self.showPopoverView(error!)
                         self.interfaceEnabled(true)
