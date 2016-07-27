@@ -84,10 +84,15 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
-                HUD.hide()
+//                HUD.hide()
+//                
+//                self.showPopoverView(error!)
+//                self.interfaceEnabled(true)
                 
-                self.showPopoverView(error!)
-                self.interfaceEnabled(true)
+                HUD.hide({ (success) in
+                    self.showPopoverView(error!)
+                    self.interfaceEnabled(true)
+                })
             }
             else {
                 // Successfully created new family
@@ -109,10 +114,15 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
-                HUD.hide()
+//                HUD.hide()
                 
-                self.showPopoverView(error!)
-                self.interfaceEnabled(true)
+                HUD.hide({ (success) in
+                    self.showPopoverView(error!)
+                    self.interfaceEnabled(true)
+                })
+                
+//                self.showPopoverView(error!)
+//                self.interfaceEnabled(true)
             }
             else {
                 // Successfully joined family

@@ -130,9 +130,13 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                     }
                     else {
                         print(error)
-                        HUD.hide()
+                        HUD.hide({ (success) in
+                            self.showPopoverView(error!)
+                        })
                         
-                        self.showPopoverView(error!)
+//                        HUD.hide()
+//                        
+//                        self.showPopoverView(error!)
                     }
                 })
             }

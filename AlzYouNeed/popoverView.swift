@@ -74,6 +74,9 @@ import UIKit
         case 00003:
             // Incorrect family password
             return "That password didn't work"
+        case 00004:
+            // Family group does not exist
+            return "A family with this name does not exist"
         default:
             return nil
         }
