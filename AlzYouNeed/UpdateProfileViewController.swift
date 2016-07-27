@@ -7,19 +7,23 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
+import PKHUD
 
-class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
+class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - UI Elements
-    
-    @IBOutlet var selectionView: avatarSelectionView!
+    @IBOutlet var profileImageView: UIImageView!
+    let imagePicker = UIImagePickerController()
     @IBOutlet var nameVTFView: validateTextFieldView!
     @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var updateButton: UIButton!
     
     var userName: String!
     var userPhoneNumber: String!
-    var userAvatarId: String!
+    var userPhotoUrl: String!
+    var profileImageUpdated = false
     
     // MARK: - Properties
     @IBOutlet var updateButtonBottomConstraint: NSLayoutConstraint!
@@ -34,7 +38,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
                 if let userDict = userDict {
                     self.userName = userDict.objectForKey("name") as! String
                     self.userPhoneNumber = userDict.objectForKey("phoneNumber") as! String
-                    self.userAvatarId = userDict.objectForKey("avatarId") as! String
+                    self.userPhotoUrl = userDict.objectForKey("photoUrl") as! String
                     
                     self.configureView()
                 }
@@ -65,15 +69,13 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     }
     
     func configureView() {
-        selectionView.userImageView.image = UIImage(named: userAvatarId)
-        // Ensure image index is correct for switching
-        selectionView.avatarImageIndex = selectionView.avatarIndex(userAvatarId)
-        
         self.nameVTFView.nameMode()
         self.phoneNumberVTFView.phoneNumberMode()
         
-        nameVTFView.textField.placeholder = userName
-        phoneNumberVTFView.textField.placeholder = userPhoneNumber
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.nameVTFView.textField.placeholder = self.userName
+            self.phoneNumberVTFView.textField.placeholder = self.userPhoneNumber
+        }
         
         self.nameVTFView.textField.delegate = self
         self.phoneNumberVTFView.textField.delegate = self
@@ -81,36 +83,82 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
-        self.selectionView.previousButton.addTarget(self, action: #selector(UpdateProfileViewController.avatarDidChange(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        self.selectionView.nextButton.addTarget(self, action: #selector(UpdateProfileViewController.avatarDidChange(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
+        configureImagePicker()
+        configureProfileImage(userPhotoUrl)
         updatesToSave()
+    }
+    
+    func configureProfileImage(photoUrl: String) {
+        if photoUrl.hasPrefix("gs://") {
+            FIRStorage.storage().referenceForURL(photoUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+                if let error = error {
+                    // Error
+                    print("Error downloading user profile image: \(error.localizedDescription)")
+                    return
+                }
+                // Success
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.profileImageView.image = UIImage(data: data!)
+                })
+            })
+        } else if let url = NSURL(string: photoUrl), data = NSData(contentsOfURL: url) {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.profileImageView.image = UIImage(data: data)
+            })
+        }
+    }
+    
+    func configureImagePicker() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 2
+        profileImageView.layer.borderColor = slateBlue.CGColor
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
+        tap.numberOfTapsRequired = 1
+        profileImageView.addGestureRecognizer(tap)
+        print("configured image picker")
     }
     
     @IBAction func updateProfile(sender: UIButton) {
         if updatesToSave() {
             // Update profile and return to previous VC
-            print("Update to save")
-            var updates = ["name": nameVTFView.textField.text!, "phoneNumber": phoneNumberVTFView.textField.text!, "avatarId": selectionView.avatarId()]
+            print("Updates to save")
+            var updates = [String: NSObject]()
+            
             
             // Remove if no updates
-            if !nameUpdate() {
-                updates.removeValueForKey("name")
+            if nameUpdate() {
+                updates["name"] = nameVTFView.textField.text!
             }
-            if !phoneNumberUpdate() {
-                updates.removeValueForKey("phoneNumber")
+            if phoneNumberUpdate() {
+                updates["phoneNumber"] = phoneNumberVTFView.textField.text!
+            }
+            if profileImageUpdated {
+                var imageData = NSData()
+                if let profileImage = profileImageView.image {
+                    imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
+                }
+                updates["profileImage"] = imageData
             }
             
-            if !avatarUpdate() {
-                updates.removeValueForKey("avatarId")
-            }
-            
+            // Show progress view
+            HUD.show(.Progress)
+
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error == nil {
-                    // Return to previous VC
-                    print("Profile updated -- returning to VC")
-                    AYNModel.sharedInstance.profileWasUpdated = true
-                    self.navigationController?.popToRootViewControllerAnimated(true)
+                    // Updated user -- Return to previous VC
+                    HUD.flash(.Success, delay: 0, completion: { (success) in
+                        print("Profile updated -- returning to VC")
+                        self.view.endEditing(true)
+                        AYNModel.sharedInstance.profileWasUpdated = true
+                        self.navigationController?.popToRootViewControllerAnimated(true)
+                    })
+                } else {
+                    // Error
+                    HUD.flash(.Error, delay: 0, completion: { (success) in
+                        print("Error updating user")
+                    })
                 }
             })
             
@@ -122,7 +170,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Updates
     func updatesToSave() -> Bool {
-        if nameUpdate() || phoneNumberUpdate() || avatarUpdate() {
+        if nameUpdate() || phoneNumberUpdate() || profileImageUpdated {
             enableUpdateButton(true)
             return true
         }
@@ -141,14 +189,6 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
     // Check for change in phone number
     func phoneNumberUpdate() -> Bool {
         if phoneNumberVTFView.textField.text != userPhoneNumber && validatePhoneNumber() {
-            return true
-        }
-        return false
-    }
-    
-    // Check for change in avatarId
-    func avatarUpdate() -> Bool {
-        if selectionView.avatarId() != userAvatarId {
             return true
         }
         return false
@@ -210,11 +250,6 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         updatesToSave()
     }
     
-    // MARK: - SelectionView
-    func avatarDidChange(button: UIButton) {
-        updatesToSave()
-    }
-    
     // MARK: - Keyboard
     func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
         let userInfo = notification.userInfo!
@@ -225,6 +260,10 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
         
+        UIView.performWithoutAnimation({
+            self.nameVTFView.layoutIfNeeded()
+            self.phoneNumberVTFView.layoutIfNeeded()
+        })
         
         if show {
             self.updateButtonBottomConstraint.constant = changeInHeight
@@ -245,5 +284,34 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
+    // MARK: - UIImagePickerController Delegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.profileImageView.image = pickedImage
+            profileImageUpdated = true
+            updatesToSave()
+        }
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func selectPhoto(tap: UITapGestureRecognizer) {
+        print("Select photo")
+        self.imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = .PhotoLibrary
+        
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            self.imagePicker.sourceType = .Camera
+        }
+        else {
+            self.imagePicker.sourceType = .PhotoLibrary
+        }
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
 
 }

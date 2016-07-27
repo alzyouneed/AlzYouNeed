@@ -215,6 +215,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="476"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbW-pv-4J8">
+                                <rect key="frame" x="250" y="12" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="aoK-cr-li2"/>
+                                    <constraint firstAttribute="width" constant="100" id="iOx-Q3-sft"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-4W-09d" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="120" width="560" height="46"/>
                                 <constraints>
@@ -225,13 +232,6 @@
                                 <rect key="frame" x="20" y="174" width="560" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cmU-YZ-Hj9"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aES-Sl-tTR" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="192" y="12" width="216" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="216" id="Pcc-mo-zJe"/>
-                                    <constraint firstAttribute="height" constant="100" id="TrT-Hu-G18"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUi-qn-GDA">
@@ -251,22 +251,22 @@
                         </subviews>
                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="aES-Sl-tTR" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="030-8m-pWL"/>
                             <constraint firstAttribute="trailing" secondItem="flZ-i1-2Ak" secondAttribute="trailing" id="19u-H4-dd1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T1N-4W-09d" secondAttribute="trailing" id="1Kr-OU-jfy"/>
+                            <constraint firstItem="jbW-pv-4J8" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="2ZW-81-C6I"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="top" secondItem="flZ-i1-2Ak" secondAttribute="bottom" id="4Gi-Fm-fyD"/>
+                            <constraint firstItem="jbW-pv-4J8" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="DjS-Cv-GNC"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="MZq-Dh-PU2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="leading" id="NYk-Pi-9PY"/>
-                            <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="aES-Sl-tTR" secondAttribute="bottom" constant="8" id="RlP-Gq-1GZ"/>
                             <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="SWp-lW-rIB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="T1N-4W-09d" secondAttribute="leading" id="Uph-vl-o0Y"/>
                             <constraint firstItem="flZ-i1-2Ak" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="WgZ-o8-HPE"/>
                             <constraint firstAttribute="trailing" secondItem="JUi-qn-GDA" secondAttribute="trailing" id="hAy-hY-Xzy"/>
-                            <constraint firstItem="aES-Sl-tTR" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="mcp-YS-SMd"/>
                             <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="oij-3N-i8J"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="trailing" id="oql-97-ai0"/>
                             <constraint firstItem="flZ-i1-2Ak" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" id="vpK-MO-tyd"/>
                             <constraint firstItem="vJ0-Ia-kPq" firstAttribute="top" secondItem="T1N-4W-09d" secondAttribute="bottom" constant="8" id="w0a-vN-iGL"/>
+                            <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="jbW-pv-4J8" secondAttribute="bottom" constant="8" id="z25-O7-gPp"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -279,7 +279,7 @@
                     <connections>
                         <outlet property="nameVTFView" destination="T1N-4W-09d" id="ADl-rY-oGh"/>
                         <outlet property="phoneNumberVTFView" destination="vJ0-Ia-kPq" id="mBM-8i-zM5"/>
-                        <outlet property="selectionView" destination="aES-Sl-tTR" id="eag-ux-Imv"/>
+                        <outlet property="profileImageView" destination="jbW-pv-4J8" id="xKP-CP-EH0"/>
                         <outlet property="updateButton" destination="JUi-qn-GDA" id="nfP-Cy-ohj"/>
                         <outlet property="updateButtonBottomConstraint" destination="oij-3N-i8J" id="PoD-Ty-ZGD"/>
                     </connections>
