@@ -17,6 +17,9 @@ class ContactCollectionViewCell: UICollectionViewCell {
     func configureCell(contact: Contact) {
         contactView.nameLabel.text = contact.fullName
         
+        // TODO: Change later to add functionality
+        contactView.singleButton("left")
+        
         if let imageUrl = contact.photoUrl {
             if imageUrl.hasPrefix("gs://") {
                 FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in

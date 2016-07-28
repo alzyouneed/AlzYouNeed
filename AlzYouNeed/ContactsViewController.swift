@@ -86,8 +86,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         // Configure cell
         cell.configureCell(contact)
         
-        cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
-        cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
+//        cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
+//        cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
         
         if let userIsAdmin = contact.admin as String? {
             if userIsAdmin == "true" {

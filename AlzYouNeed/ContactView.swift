@@ -20,6 +20,7 @@ import UIKit
     @IBOutlet var rightButton: UIButton!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var adminImageView: UIImageView!
+    @IBOutlet var stackView: UIStackView!
     
     // MARK: - Init
     
@@ -88,6 +89,18 @@ import UIKit
         }
         else {
             self.adminImageView.hidden = true
+        }
+    }
+    
+    // TODO: Update later to add functionality
+    func singleButton(button: String) {
+        if button == "left" {
+            stackView.removeArrangedSubview(rightButton)
+            rightButton.hidden = true
+        }
+        else {
+            stackView.removeArrangedSubview(leftButton)
+            leftButton.hidden = true
         }
     }
     
