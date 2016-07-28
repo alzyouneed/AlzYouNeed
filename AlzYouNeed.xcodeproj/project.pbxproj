@@ -54,7 +54,6 @@
 		2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */; };
 		2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6D1D303F53005D0EFD /* popoverView.swift */; };
 		2DCFE4191D37365200F4C093 /* CompleteReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */; };
-		2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
@@ -115,7 +114,6 @@
 		2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = popoverView.xib; sourceTree = "<group>"; };
 		2DCC3C6D1D303F53005D0EFD /* popoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = popoverView.swift; sourceTree = "<group>"; };
 		2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteReminderTableViewCell.swift; sourceTree = "<group>"; };
-		2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsCollectionViewController.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 		2D6EBACC1D0F0FC8004AD135 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2DE890AF1D10AD9E001DC19F /* ContactsCollectionViewController.swift */,
 				2D39542D1D42A40700AC1674 /* ContactsViewController.swift */,
 				2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */,
 				2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */,
@@ -618,7 +615,6 @@
 				2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */,
-				2DE890B01D10AD9E001DC19F /* ContactsCollectionViewController.swift in Sources */,
 				2D72834B1D1EF5B800389CFC /* Contact.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,

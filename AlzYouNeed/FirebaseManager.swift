@@ -859,7 +859,7 @@ class FirebaseManager: NSObject {
     }
     
     private class func getConversationId(receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if (FIRAuth.auth()?.currentUser) != nil {
             getCurrentUser({ (userDict, error) in
                 if let error = error {
                     // Error

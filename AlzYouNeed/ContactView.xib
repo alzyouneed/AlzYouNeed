@@ -51,7 +51,7 @@
                         <constraint firstAttribute="trailing" secondItem="ezW-v5-SPO" secondAttribute="trailing" constant="8" identifier="id8" id="yoK-CL-raD"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nd4-wO-RUx">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nd4-wO-RUx">
                     <rect key="frame" x="50" y="29" width="100" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" identifier="id9" id="4GG-e4-1Ft"/>

@@ -99,8 +99,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         }
         
         // Add targets for both buttons
-        cell.contactView.leftButton.addTarget(self, action: #selector(ContactsCollectionViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
-        cell.contactView.rightButton.addTarget(self, action: #selector(ContactsCollectionViewController.rightButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        cell.contactView.leftButton.addTarget(self, action: #selector(ContactsViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        cell.contactView.rightButton.addTarget(self, action: #selector(ContactsViewController.rightButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         
         // Saves row in tag for contact-specific actions
         cell.contactView.leftButton.tag = indexPath.row
@@ -151,7 +151,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName: slateBlue, NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 16)!])
         refreshControl.tintColor = slateBlue
-        refreshControl.addTarget(self, action: #selector(ContactsCollectionViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(ContactsViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         contactsCollectionView.addSubview(refreshControl)
     }
     

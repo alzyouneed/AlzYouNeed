@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Local reminders
         if let options = launchOptions {
-            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+            if (options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification) != nil {
+//            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
                 tabBarController.selectedIndex = 2
 //                if let userInfo = notification.userInfo {
 //                    
