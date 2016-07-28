@@ -16,6 +16,7 @@ import UIKit
     
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
+    @IBOutlet var familyGroupLabel: UILabel!
     
     // MARK: - Init
     
@@ -62,6 +63,13 @@ import UIKit
             })
         }
     }
+    
+    /*
+    MARK: - TODO
+    func configureView() {
+        
+    }
+    */
     
 
 }

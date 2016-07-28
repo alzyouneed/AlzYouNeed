@@ -886,14 +886,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFC-jY-2FC">
-                                <rect key="frame" x="0.0" y="194" width="600" height="357"/>
+                                <rect key="frame" x="0.0" y="218" width="600" height="333"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLL-Sp-XmI" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="600" height="130"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="154"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0U2-Gl-dV4"/>
-                                    <constraint firstAttribute="height" constant="130" id="S8m-2M-wW3"/>
+                                    <constraint firstAttribute="height" constant="154" id="S8m-2M-wW3"/>
                                     <constraint firstAttribute="height" constant="80" id="aKX-b8-nAI"/>
                                 </constraints>
                                 <variation key="default">
@@ -904,14 +904,14 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="172" y="286" width="256" height="81"/>
+                                <rect key="frame" x="172" y="310" width="256" height="81"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0Tc-ll-KHY"/>
                                     <constraint firstAttribute="height" constant="81" id="vQp-5R-Am2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvW-BC-Ijy" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="20" y="202" width="560" height="60"/>
+                                <rect key="frame" x="20" y="226" width="560" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="L3p-GA-VX8"/>
                                 </constraints>

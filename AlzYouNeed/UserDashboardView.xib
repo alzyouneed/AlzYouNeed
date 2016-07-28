@@ -5,6 +5,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="OpenSans-Regular.ttf">
+            <string>OpenSans</string>
+        </mutableArray>
         <mutableArray key="OpenSans-Semibold.ttf">
             <string>OpenSans-Semibold</string>
         </mutableArray>
@@ -12,13 +15,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
             <connections>
+                <outlet property="familyGroupLabel" destination="3l9-YS-S1D" id="U5y-Gy-i32"/>
                 <outlet property="userImageView" destination="W8J-Tf-kk7" id="9v9-x4-Byn"/>
                 <outlet property="userNameLabel" destination="mln-Lq-cKS" id="TeW-20-l78"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="256" height="115"/>
+            <rect key="frame" x="0.0" y="0.0" width="256" height="152"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-Tf-kk7">
@@ -37,21 +41,44 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dG-D7-Gjf">
+                    <rect key="frame" x="20" y="117" width="216" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="9Ri-vl-857"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3l9-YS-S1D">
+                    <rect key="frame" x="0.0" y="126" width="256" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ZWF-is-STG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="W8J-Tf-kk7" secondAttribute="bottom" priority="999" constant="8" id="05t-0e-TDZ"/>
                 <constraint firstItem="W8J-Tf-kk7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2y1-Jz-HfW"/>
+                <constraint firstAttribute="trailing" secondItem="3l9-YS-S1D" secondAttribute="trailing" id="6ZR-9e-xSB"/>
                 <constraint firstItem="mln-Lq-cKS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="97I-6A-fdv"/>
                 <constraint firstItem="mln-Lq-cKS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I4H-dE-1zE"/>
                 <constraint firstItem="mln-Lq-cKS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="L7x-fE-qbz"/>
                 <constraint firstItem="mln-Lq-cKS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="M65-GH-72E"/>
                 <constraint firstItem="W8J-Tf-kk7" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="OYj-VM-ojx"/>
                 <constraint firstAttribute="bottom" secondItem="W8J-Tf-kk7" secondAttribute="bottom" constant="19" id="YOL-ly-hDB"/>
+                <constraint firstItem="3l9-YS-S1D" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dpg-vK-6rX"/>
                 <constraint firstItem="W8J-Tf-kk7" firstAttribute="top" secondItem="mln-Lq-cKS" secondAttribute="bottom" constant="8" id="ghJ-XW-E7L"/>
                 <constraint firstAttribute="trailing" secondItem="mln-Lq-cKS" secondAttribute="trailing" id="n91-e6-Ozt"/>
+                <constraint firstAttribute="bottom" secondItem="3l9-YS-S1D" secondAttribute="bottom" priority="999" constant="5" id="nfX-hm-t4H"/>
+                <constraint firstItem="3dG-D7-Gjf" firstAttribute="top" secondItem="W8J-Tf-kk7" secondAttribute="bottom" constant="8" id="oWL-PL-4lt"/>
                 <constraint firstItem="mln-Lq-cKS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="pVG-Xd-L2f"/>
+                <constraint firstItem="3l9-YS-S1D" firstAttribute="top" secondItem="3dG-D7-Gjf" secondAttribute="bottom" constant="8" id="tNH-Zf-JwL"/>
                 <constraint firstAttribute="bottom" secondItem="W8J-Tf-kk7" secondAttribute="bottom" constant="21" id="uUt-Q6-bLw"/>
+                <constraint firstAttribute="trailing" secondItem="3dG-D7-Gjf" secondAttribute="trailing" constant="20" id="vcw-h0-uR0"/>
+                <constraint firstItem="3dG-D7-Gjf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="vxF-xH-FBt"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -60,12 +87,13 @@
                     <exclude reference="97I-6A-fdv"/>
                     <exclude reference="M65-GH-72E"/>
                     <exclude reference="pVG-Xd-L2f"/>
+                    <exclude reference="05t-0e-TDZ"/>
                     <exclude reference="2y1-Jz-HfW"/>
                     <exclude reference="YOL-ly-hDB"/>
                     <exclude reference="uUt-Q6-bLw"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="329" y="133.5"/>
+            <point key="canvasLocation" x="329" y="152"/>
         </view>
     </objects>
 </document>
