@@ -45,9 +45,6 @@ class NewExistingFamilyViewController: UIViewController {
     
     func configureView() {
         self.navigationItem.hidesBackButton = true
-        
-        self.newFamilyButton.layer.cornerRadius = 5
-        self.existingFamilyButton.layer.cornerRadius = 5
     }
     
     @IBAction func cancelOnboarding(sender: UIBarButtonItem) {

@@ -657,72 +657,56 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoF-lq-s5J">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="2TR-Km-nQO">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytd-RQ-DZR">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="267"/>
+                                        <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
+                                        <state key="normal" title="New Family">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="cPi-aJ-y8T" kind="show" id="d61-Gb-xHV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98z-69-oIU">
+                                        <rect key="frame" x="0.0" y="269" width="600" height="267"/>
+                                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
+                                        <state key="normal" title="Existing Family">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="cPi-aJ-y8T" kind="show" id="EcC-cZ-4XJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="suC-LP-9I8">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoF-lq-s5J">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2TR-Km-nQO">
-                                        <rect key="frame" x="214" y="125" width="173" height="128"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytd-RQ-DZR">
-                                                <rect key="frame" x="0.0" y="0.0" width="173" height="60"/>
-                                                <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="l8a-vl-vgt"/>
-                                                    <constraint firstAttribute="width" constant="173" id="syV-W1-7Db"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
-                                                <state key="normal" title="New Family">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="cPi-aJ-y8T" kind="show" id="d61-Gb-xHV"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98z-69-oIU">
-                                                <rect key="frame" x="0.0" y="68" width="173" height="60"/>
-                                                <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="cqe-6B-wgF"/>
-                                                    <constraint firstAttribute="width" constant="173" id="dOE-D0-Myo"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
-                                                <state key="normal" title="Existing Family">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="cPi-aJ-y8T" kind="show" id="EcC-cZ-4XJ"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="2TR-Km-nQO" firstAttribute="centerX" secondItem="RoF-lq-s5J" secondAttribute="centerX" id="107-rS-4kL"/>
-                                    <constraint firstItem="2TR-Km-nQO" firstAttribute="top" secondItem="RoF-lq-s5J" secondAttribute="top" constant="125" id="77t-Aj-AHI"/>
-                                    <constraint firstItem="2TR-Km-nQO" firstAttribute="centerY" secondItem="RoF-lq-s5J" secondAttribute="centerY" id="eB9-KI-VwF"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="eB9-KI-VwF"/>
-                                    </mask>
-                                </variation>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="laD-zr-WzV" firstAttribute="top" secondItem="2TR-Km-nQO" secondAttribute="bottom" id="40e-J6-wIC"/>
+                            <constraint firstItem="2TR-Km-nQO" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" id="4Lx-OQ-bZ2"/>
                             <constraint firstItem="RoF-lq-s5J" firstAttribute="leading" secondItem="pRK-BY-SMm" secondAttribute="leading" id="4oD-oR-OQC"/>
                             <constraint firstItem="RoF-lq-s5J" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" id="7fy-zq-lyO"/>
                             <constraint firstItem="suC-LP-9I8" firstAttribute="top" secondItem="6II-VX-mYd" secondAttribute="bottom" id="BGT-EJ-Na4"/>
                             <constraint firstAttribute="trailing" secondItem="suC-LP-9I8" secondAttribute="trailing" id="KoJ-Rw-Hxc"/>
                             <constraint firstItem="laD-zr-WzV" firstAttribute="top" secondItem="RoF-lq-s5J" secondAttribute="bottom" id="PjW-O1-nIJ"/>
                             <constraint firstItem="suC-LP-9I8" firstAttribute="leading" secondItem="pRK-BY-SMm" secondAttribute="leading" id="XpR-3h-uAs"/>
+                            <constraint firstItem="2TR-Km-nQO" firstAttribute="leading" secondItem="pRK-BY-SMm" secondAttribute="leadingMargin" constant="-20" id="dy3-53-uTS"/>
                             <constraint firstAttribute="trailing" secondItem="RoF-lq-s5J" secondAttribute="trailing" id="hFj-o1-fWZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2TR-Km-nQO" secondAttribute="trailing" constant="-20" id="inf-zL-eC3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV">
@@ -838,7 +822,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="KVa-5m-7Jk">
             <objects>
-                <tabBarController storyboardIdentifier="tabBarController" id="FWg-a8-Cxv" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FWg-a8-Cxv" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="azE-NK-cVF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1339,6 +1323,6 @@
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EcC-cZ-4XJ"/>
+        <segue reference="d61-Gb-xHV"/>
     </inferredMetricsTieBreakers>
 </document>

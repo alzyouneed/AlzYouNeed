@@ -93,7 +93,13 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 // Successfully created new family
                 HUD.flash(.Success, delay: 0.2, completion: { (success) in
                     self.view.endEditing(true)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabBarController: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+                    tabBarController.selectedIndex = 1
+                    self.presentViewController(tabBarController, animated: true, completion: nil)
+                    
+//                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
         }
@@ -118,7 +124,13 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 // Successfully joined family
                 HUD.flash(.Success, delay: 0, completion: { (success) in
                     self.view.endEditing(true)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabBarController: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+                    tabBarController.selectedIndex = 1
+                    self.presentViewController(tabBarController, animated: true, completion: nil)
+                    
+//                    self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
         }
@@ -165,12 +177,16 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             // set button title
             createJoinFamilyButton.setTitle("Create Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Next
+            
+            navigationItem.title = "New Family"
         }
         else {
             confirmPasswordVTFView.hidden = true
             // set button title
             createJoinFamilyButton.setTitle("Join Family", forState: UIControlState.Normal)
             passwordVTFView.textField.returnKeyType = UIReturnKeyType.Done
+            
+            navigationItem.title = "Existing Family"
         }
     }
     
