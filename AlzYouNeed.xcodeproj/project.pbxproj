@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */; };
+		2D1F6AC41D4A9BC20060E2CF /* beach.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */; };
 		2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */; };
 		2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */; };
 		2D1F93DE1D3DC5810050794F /* CompleteRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F93DD1D3DC5810050794F /* CompleteRemindersViewController.swift */; };
@@ -66,6 +67,7 @@
 		0A92C44ACB53CC07AA946F01 /* Pods_AlzYouNeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlzYouNeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3258817A8CCC0657AA5166 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
 		2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = beach.mp4; sourceTree = "<group>"; };
 		2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = actionButtonsDashboardView.xib; sourceTree = "<group>"; };
 		2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actionButtonsDashboardView.swift; sourceTree = "<group>"; };
 		2D1F93DD1D3DC5810050794F /* CompleteRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteRemindersViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		2DA8D5851D384C8000DD666C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */,
 				2D36370B1D47E23C0050812E /* islandView3.mp4 */,
 				2DA8D5901D38A5C600DD666C /* islandViewBW.gif */,
 			);
@@ -523,6 +526,7 @@
 				2DCC3C641D301208005D0EFD /* OpenSans-Bold.ttf in Resources */,
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
 				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
+				2D1F6AC41D4A9BC20060E2CF /* beach.mp4 in Resources */,
 				2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */,
 				2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */,
 			);
