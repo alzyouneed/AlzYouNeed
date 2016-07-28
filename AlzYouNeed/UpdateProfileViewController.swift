@@ -31,8 +31,6 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.tabBarController?.tabBar.hidden = true
-        
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {

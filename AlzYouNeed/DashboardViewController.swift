@@ -247,20 +247,27 @@ class DashboardViewController: UIViewController {
     }
     
     func configureUserNameLabel() {
-//        print("Configure nav bar title")
+        //        print("Configure nav bar title")
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
                     if let userName = userDict.objectForKey("name") as? String {
-                        dispatch_async(dispatch_get_main_queue(), { 
+                        dispatch_async(dispatch_get_main_queue(), {
                             self.userView.userNameLabel.text = userName
                         })
                         if let familyId = userDict.objectForKey("familyId") as? String {
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.userView.familyGroupLabel.text = familyId
                             })
-                            if let photoUrl = userDict.objectForKey("photoUrl") as? String {
-                                self.configureDashboardView(photoUrl)
+                            if let admin = userDict.objectForKey("admin") as? String {
+                                if admin == "true" {
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.userView.isAdmin(true)
+                                    })
+                                }
+                                if let photoUrl = userDict.objectForKey("photoUrl") as? String {
+                                    self.configureDashboardView(photoUrl)
+                                }
                             }
                         }
                     }

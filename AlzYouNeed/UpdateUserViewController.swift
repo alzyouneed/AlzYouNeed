@@ -13,19 +13,17 @@ import PKHUD
 class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - UI Elements
-//    @IBOutlet var userImageView: UIImageView!
     @IBOutlet var nameVTFView: validateTextFieldView!
     @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var addPhotoButton: UIButton!
     @IBOutlet var patientSwitch: UISwitch!
-//    @IBOutlet var avatarImageView: UIImageView!
-    @IBOutlet var selectionView: avatarSelectionView!
     @IBOutlet var progressView: UIProgressView!
     @IBOutlet var cancelButton: UIBarButtonItem!
     
     @IBOutlet var profileImageView: UIImageView!
     let imagePicker = UIImagePickerController()
+    @IBOutlet var addPhotoLabel: UILabel!
     
     // MARK: - Properties
     var stepCompleted = false
@@ -128,6 +126,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.profileImageView.image = pickedImage
+            self.addPhotoLabel.hidden = true
         }
         imagePicker.dismissViewControllerAnimated(true, completion: nil)
     }

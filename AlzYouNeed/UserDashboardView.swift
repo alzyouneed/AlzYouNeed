@@ -17,6 +17,8 @@ import UIKit
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
     @IBOutlet var familyGroupLabel: UILabel!
+    @IBOutlet var separatorView: UIView!
+    @IBOutlet var adminImageView: UIImageView!
     
     // MARK: - Init
     
@@ -61,6 +63,15 @@ import UIKit
             UIView.animateWithDuration(0.25, animations: {
                 self.userImageView.alpha = 1
             })
+        }
+    }
+    
+    func isAdmin(admin: Bool) {
+        if admin {
+            self.adminImageView.hidden = false
+        }
+        else {
+            self.adminImageView.hidden = true
         }
     }
     

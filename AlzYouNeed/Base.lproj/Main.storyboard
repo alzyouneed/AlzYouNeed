@@ -8,6 +8,7 @@
     <customFonts key="customFonts">
         <mutableArray key="OpenSans-Bold.ttf">
             <string>OpenSans-Bold</string>
+            <string>OpenSans-Bold</string>
         </mutableArray>
         <mutableArray key="OpenSans-Regular.ttf">
             <string>OpenSans</string>
@@ -517,13 +518,6 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0UK-9c-99H">
                                 <rect key="frame" x="102" y="221" width="51" height="31"/>
                             </switch>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-gO-k8F" customClass="avatarSelectionView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="192" y="10" width="216" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="216" id="ORh-9d-aFw"/>
-                                    <constraint firstAttribute="height" constant="100" id="we7-Px-Mko"/>
-                                </constraints>
-                            </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="6SM-Uo-3DD">
                                 <rect key="frame" x="250" y="10" width="100" height="100"/>
                                 <constraints>
@@ -576,6 +570,16 @@
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.70196078431372544" green="0.75686274509803919" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-OV-DO3">
+                                <rect key="frame" x="255" y="48" width="91" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="91" id="6kd-uz-m6G"/>
+                                    <constraint firstAttribute="height" constant="23" id="8ua-QL-Muc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="16"/>
+                                <color key="textColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -587,7 +591,7 @@
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="ayi-9u-FXc" secondAttribute="bottom" constant="8" id="D8b-a9-hCb"/>
                             <constraint firstAttribute="trailing" secondItem="A8e-QK-eYv" secondAttribute="trailing" id="DuA-xy-w7b"/>
                             <constraint firstItem="6SM-Uo-3DD" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" constant="10" id="Fef-Zi-QGZ"/>
-                            <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="W2J-gO-k8F" secondAttribute="bottom" constant="8" id="Iuj-je-hSg"/>
+                            <constraint firstItem="ccO-ou-Rs8" firstAttribute="top" secondItem="6SM-Uo-3DD" secondAttribute="bottom" constant="8" id="H52-bA-FE8"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ayi-9u-FXc" secondAttribute="leading" id="Lo2-0l-jGt"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="QYx-SA-Vok"/>
                             <constraint firstItem="ayi-9u-FXc" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="Qgk-l3-gKQ"/>
@@ -598,13 +602,13 @@
                             <constraint firstAttribute="trailing" secondItem="kCt-Ui-83L" secondAttribute="trailing" id="c7k-14-p5N"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="centerY" secondItem="ayi-9u-FXc" secondAttribute="centerY" id="eNQ-cj-kLC"/>
                             <constraint firstItem="A8e-QK-eYv" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="gDg-Z7-bxK"/>
+                            <constraint firstItem="Cim-OV-DO3" firstAttribute="centerY" secondItem="6SM-Uo-3DD" secondAttribute="centerY" id="gyw-Kt-wrI"/>
                             <constraint firstItem="0UK-9c-99H" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="3" id="hNA-IB-pyY"/>
+                            <constraint firstItem="Cim-OV-DO3" firstAttribute="centerX" secondItem="6SM-Uo-3DD" secondAttribute="centerX" id="hxw-Ov-U5G"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ccO-ou-Rs8" secondAttribute="leading" id="iaz-iL-vzZ"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="leading" secondItem="Kly-uR-wOj" secondAttribute="leading" id="jq3-ws-MIt"/>
                             <constraint firstItem="xLf-c8-Ma4" firstAttribute="top" secondItem="ccO-ou-Rs8" secondAttribute="bottom" constant="8" id="pcF-w4-Pms"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ccO-ou-Rs8" secondAttribute="trailing" id="rqX-Tg-RrZ"/>
-                            <constraint firstItem="W2J-gO-k8F" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" constant="10" id="ssa-q0-fJ2"/>
-                            <constraint firstItem="W2J-gO-k8F" firstAttribute="centerX" secondItem="Kly-uR-wOj" secondAttribute="centerX" id="tX7-kV-Wee"/>
                             <constraint firstItem="ynf-lc-5fM" firstAttribute="top" secondItem="obU-Z5-mxt" secondAttribute="bottom" id="wIT-3a-qs7"/>
                             <constraint firstItem="kCt-Ui-83L" firstAttribute="top" secondItem="xLf-c8-Ma4" secondAttribute="bottom" constant="8" id="yX7-2a-dTC"/>
                         </constraints>
@@ -630,6 +634,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addPhotoButton" destination="8v1-4n-gli" id="Usq-6q-GDB"/>
+                        <outlet property="addPhotoLabel" destination="Cim-OV-DO3" id="VP3-4P-1M1"/>
                         <outlet property="cancelButton" destination="Wc0-Ns-kDf" id="N7v-Nv-yWQ"/>
                         <outlet property="nameVTFView" destination="ccO-ou-Rs8" id="YOM-y4-YuU"/>
                         <outlet property="nextButtonBottomConstraint" destination="Azt-hW-EEf" id="vDN-JN-vcY"/>
@@ -637,7 +642,6 @@
                         <outlet property="phoneNumberVTFView" destination="xLf-c8-Ma4" id="clS-7U-zZH"/>
                         <outlet property="profileImageView" destination="6SM-Uo-3DD" id="Bjm-6J-uAa"/>
                         <outlet property="progressView" destination="A8e-QK-eYv" id="Y5Z-7C-SjL"/>
-                        <outlet property="selectionView" destination="W2J-gO-k8F" id="zMF-uY-e46"/>
                         <outlet property="signUpButton" destination="kCt-Ui-83L" id="WvY-4N-yTD"/>
                     </connections>
                 </viewController>

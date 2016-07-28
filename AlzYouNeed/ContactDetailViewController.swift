@@ -28,8 +28,9 @@ class ContactDetailViewController: UIViewController {
         
         configureActionButtons()
         lastCalledLabel.hidden = true
-
-//        contactCard.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        
+        // Hides redundant information
+        hideExtraUserViewItems()
     }
     
     func configureActionButtons() {
@@ -51,6 +52,11 @@ class ContactDetailViewController: UIViewController {
         dateFormatter.dateFormat = "MMMM d, h:mm a"
         lastCalledLabel.text = "Last called: \(dateFormatter.stringFromDate(date))"
         lastCalledLabel.hidden = false
+    }
+    
+    func hideExtraUserViewItems() {
+        userView.familyGroupLabel.hidden = true
+        userView.separatorView.hidden = true
     }
 
     override func viewDidLoad() {
