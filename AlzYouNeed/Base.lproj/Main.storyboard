@@ -14,6 +14,7 @@
             <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
+            <string>OpenSans</string>
         </mutableArray>
         <mutableArray key="OpenSans-Semibold.ttf">
             <string>OpenSans-Semibold</string>
@@ -131,12 +132,41 @@
                                         <color key="textColor" red="0.30980392156862746" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type message here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PeN-9z-acg">
+                                        <rect key="frame" x="8" y="107" width="584" height="30"/>
+                                        <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mkU-nT-Q3Y">
+                                        <rect key="frame" x="277" y="145" width="46" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="SSN-8U-Cy6"/>
+                                            <constraint firstAttribute="width" constant="46" id="p5K-fY-gRr"/>
+                                        </constraints>
+                                        <state key="normal" title="Send"/>
+                                        <connections>
+                                            <action selector="sendMessage:" destination="lrj-J9-jsr" eventType="touchUpInside" id="efQ-fj-Bc9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="mkU-nT-Q3Y" firstAttribute="top" secondItem="PeN-9z-acg" secondAttribute="bottom" constant="8" id="4lb-JS-Oeg"/>
+                                    <constraint firstItem="PeN-9z-acg" firstAttribute="leading" secondItem="r7B-sv-KVp" secondAttribute="leadingMargin" id="4of-cD-2vu"/>
                                     <constraint firstAttribute="trailing" secondItem="bBb-6R-Mct" secondAttribute="trailing" constant="8" id="6rH-ua-wgI"/>
+                                    <constraint firstItem="PeN-9z-acg" firstAttribute="trailing" secondItem="r7B-sv-KVp" secondAttribute="trailingMargin" id="ElE-rp-eaa"/>
+                                    <constraint firstItem="PeN-9z-acg" firstAttribute="top" secondItem="bBb-6R-Mct" secondAttribute="bottom" constant="8" id="G7z-ci-h9V"/>
                                     <constraint firstItem="bBb-6R-Mct" firstAttribute="leading" secondItem="r7B-sv-KVp" secondAttribute="leading" constant="8" id="Lv9-Sb-7T9"/>
+                                    <constraint firstAttribute="trailing" secondItem="PeN-9z-acg" secondAttribute="trailing" constant="8" id="Xfc-ee-DPV"/>
+                                    <constraint firstItem="PeN-9z-acg" firstAttribute="leading" secondItem="r7B-sv-KVp" secondAttribute="leading" constant="8" id="jBZ-fo-Rtz"/>
+                                    <constraint firstItem="mkU-nT-Q3Y" firstAttribute="centerX" secondItem="PeN-9z-acg" secondAttribute="centerX" id="rvA-VJ-TjL"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Xfc-ee-DPV"/>
+                                        <exclude reference="jBZ-fo-Rtz"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YtU-xR-8Y5" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="20" y="202" width="560" height="60"/>
@@ -193,6 +223,7 @@
                     <connections>
                         <outlet property="contactActionButtons" destination="YtU-xR-8Y5" id="Kdc-eZ-yqs"/>
                         <outlet property="lastCalledLabel" destination="bBb-6R-Mct" id="dab-lm-5zN"/>
+                        <outlet property="messageTextField" destination="PeN-9z-acg" id="2f4-uH-V6G"/>
                         <outlet property="userView" destination="c8N-qm-y48" id="k11-y5-7xu"/>
                     </connections>
                 </viewController>

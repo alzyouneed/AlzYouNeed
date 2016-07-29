@@ -819,6 +819,7 @@ class FirebaseManager: NSObject {
                                 // Create var to change based on conversationId
                                 let databaseRef = FIRDatabase.database().reference()
                                 var key = ""
+                                var newConversation = false
                                 
                                 if let conversationId = conversationId {
                                     // Existing conversation ID found
@@ -826,7 +827,7 @@ class FirebaseManager: NSObject {
                                 } else {
                                     // No conversation ID found -- create new conversation between users
                                     key = databaseRef.child("families").child(userFamilyId).child("conversations").childByAutoId().key
-                                    
+                                    newConversation = true
                                 }
                                 
                                 let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(key).childByAutoId().key
@@ -834,19 +835,31 @@ class FirebaseManager: NSObject {
                                 let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
                                 modifiedMessage.setObject(user.uid, forKey: "senderId")
                                 
-                                let messageDict = [messageKey : modifiedMessage]
-                                
-                                let childUpdates = ["/families/\(userFamilyId)/conversations/\(key)": messageDict,
-                                    "/users/\(user.uid)/conversations/\(key)": "true",
-                                    "/users/\(receiverId)/conversations/\(key)": "true"] as [NSObject : AnyObject]
-                                
-                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                databaseRef.child("families").child(userFamilyId).child("conversations").child(key).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
                                     if error != nil {
-                                        print("Error sending new message")
+                                        // Error
+                                        print("Error sending message")
                                         completionHandler(error: error)
                                     }
                                     else {
+                                        // Success
                                         print("Sent new message")
+                                        // Add users to conversation if new
+                                        if newConversation {
+                                            let childUpdates = ["/users/\(user.uid)/conversations/\(key)": "true",
+                                                "/users/\(receiverId)/conversations/\(key)": "true"] as [NSObject : AnyObject]
+                                            
+                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                                if error != nil {
+                                                    print("Error adding users to new conversation")
+                                                    completionHandler(error: error)
+                                                }
+                                                else {
+                                                    print("Added users to new conversation")
+                                                    completionHandler(error: nil)
+                                                }
+                                            })
+                                        }
                                         completionHandler(error: nil)
                                     }
                                 })
@@ -882,8 +895,9 @@ class FirebaseManager: NSObject {
                                                 print("Sender keys: \(senderConversationKeys)")
                                                 // Found matching conversation ID for both users
                                                 if let conversationId = key as? String {
-                                                    print("Retrieved conversation ID for users")
+                                                    print("Found existing conversation ID for users")
                                                     completionHandler(error: nil, conversationId: conversationId)
+                                                    return
                                                 }
                                             }
                                         }

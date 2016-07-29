@@ -19,6 +19,8 @@ class ContactDetailViewController: UIViewController {
     var contact: Contact!
     var profileImage: UIImage!
     
+    @IBOutlet var messageTextField: UITextField!
+    
     func configureView() {
         
         userView.userNameLabel.text = "\(contact.fullName)"
@@ -122,4 +124,23 @@ class ContactDetailViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // MARK: - Messaging
+    @IBAction func sendMessage(sender: UIButton) {
+        guard !messageTextField.text!.isEmpty else {
+            print("No message")
+            return
+        }
+        
+        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : messageTextField.text!]
+
+        FirebaseManager.sendNewMessage(contact.userId, message: newMessage) { (error) in
+            if error != nil {
+                // Error
+            } else {
+                // Success
+                self.messageTextField.text = ""
+            }
+        }
+    }
+
 }
