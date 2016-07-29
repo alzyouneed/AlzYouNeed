@@ -84,31 +84,12 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
 
         // Configure cell
-        cell.configureCell(contact)
-        
-//        cell.contactView.leftButton.setTitle("Call", forState: UIControlState.Normal)
-//        cell.contactView.rightButton.setTitle("Message", forState: UIControlState.Normal)
-        
-        if let userIsAdmin = contact.admin as String? {
-            if userIsAdmin == "true" {
-                cell.contactView.isAdmin(true)
-            }
-            else {
-                cell.contactView.isAdmin(false)
-            }
-        }
+        cell.configureCell(contact, row: indexPath.row)
         
         // Add targets for both buttons
         cell.contactView.leftButton.addTarget(self, action: #selector(ContactsViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
         cell.contactView.rightButton.addTarget(self, action: #selector(ContactsViewController.rightButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
-        
-        // Saves row in tag for contact-specific actions
-        cell.contactView.leftButton.tag = indexPath.row
-        cell.contactView.rightButton.tag = indexPath.row
-        
-        cell.layer.masksToBounds = true
-        cell.layer.cornerRadius = 10
-        
+
         return cell
     }
     
@@ -139,10 +120,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
             emptyLabel.textAlignment = NSTextAlignment.Center
             
             self.contactsCollectionView.backgroundView = emptyLabel
-            //            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.None
         } else {
             self.contactsCollectionView.backgroundView = nil
-            //            self.collectionView!.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
         }
     }
     
@@ -169,9 +148,6 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
                             detailVC.profileImage = cell.contactView.contactImageView.image
                         }
                     }
-//                    if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
-//                        detailVC.contact = contact
-//                    }
                 }
             }
         }

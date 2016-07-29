@@ -14,11 +14,28 @@ class ContactCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var contactView: ContactView!
     
-    func configureCell(contact: Contact) {
+//    func configureCell(contact: Contact) {
+    func configureCell(contact: Contact, row: Int) {
         contactView.nameLabel.text = contact.fullName
         
         // TODO: Change later to add functionality
         contactView.singleButton("left")
+        
+        // Saves row in tag for contact-specific actions
+        contactView.leftButton.tag = row
+        contactView.rightButton.tag = row
+        
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 10
+        
+        if let userIsAdmin = contact.admin as String? {
+            if userIsAdmin == "true" {
+                contactView.isAdmin(true)
+            }
+            else {
+                contactView.isAdmin(false)
+            }
+        }
         
         if let imageUrl = contact.photoUrl {
             if imageUrl.hasPrefix("gs://") {
