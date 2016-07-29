@@ -871,7 +871,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    private class func getConversationId(receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
+    class func getConversationId(receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
         if (FIRAuth.auth()?.currentUser) != nil {
             getCurrentUser({ (userDict, error) in
                 if let error = error {
@@ -892,7 +892,7 @@ class FirebaseManager: NSObject {
                                         // Iterate through each key of sender to find matching conversation ID
                                         for key in senderConversationKeys {
                                             if receiverConversations.objectForKey(key) != nil {
-                                                print("Sender keys: \(senderConversationKeys)")
+//                                                print("Sender keys: \(senderConversationKeys)")
                                                 // Found matching conversation ID for both users
                                                 if let conversationId = key as? String {
                                                     print("Found existing conversation ID for users")

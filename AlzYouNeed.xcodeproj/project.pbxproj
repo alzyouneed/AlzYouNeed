@@ -37,6 +37,9 @@
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D5901D38A5C600DD666C /* islandViewBW.gif */; };
+		2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */; };
+		2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */; };
+		2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */; };
 		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C21D3180C10090C89A /* Reminder.swift */; };
 		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
@@ -98,6 +101,9 @@
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA8D5901D38A5C600DD666C /* islandViewBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = islandViewBW.gif; sourceTree = "<group>"; };
+		2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
+		2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC0B2C21D3180C10090C89A /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
@@ -174,8 +180,8 @@
 		2D2244F41D0FB103005D9DF5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2D2244F21D0FAD93005D9DF5 /* ContactView.xib */,
-				2D2244F51D0FB11D005D9DF5 /* ContactView.swift */,
+				2DB325A11D4BFD1900DBBCFA /* ContactView */,
+				2DB325A61D4BFD5F00DBBCFA /* MessageView */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -235,6 +241,7 @@
 				2D39542D1D42A40700AC1674 /* ContactsViewController.swift */,
 				2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */,
 				2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */,
+				2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -294,6 +301,24 @@
 				2DA8D5901D38A5C600DD666C /* islandViewBW.gif */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		2DB325A11D4BFD1900DBBCFA /* ContactView */ = {
+			isa = PBXGroup;
+			children = (
+				2D2244F21D0FAD93005D9DF5 /* ContactView.xib */,
+				2D2244F51D0FB11D005D9DF5 /* ContactView.swift */,
+			);
+			name = ContactView;
+			sourceTree = "<group>";
+		};
+		2DB325A61D4BFD5F00DBBCFA /* MessageView */ = {
+			isa = PBXGroup;
+			children = (
+				2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */,
+				2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */,
+			);
+			name = MessageView;
 			sourceTree = "<group>";
 		};
 		2DC0B2BE1D3180800090C89A /* Reminders */ = {
@@ -510,6 +535,7 @@
 			files = (
 				2D7948471D1248F000FF1E51 /* .gitignore in Resources */,
 				2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */,
+				2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */,
 				2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */,
 				2DCC3C661D301208005D0EFD /* OpenSans-Light.ttf in Resources */,
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
@@ -606,6 +632,7 @@
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */,
+				2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */,
 				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
@@ -629,6 +656,7 @@
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */,
+				2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
 				2D39542E1D42A40700AC1674 /* ContactsViewController.swift in Sources */,
 			);
