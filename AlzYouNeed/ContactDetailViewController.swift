@@ -88,6 +88,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.messages.removeAll()
         self.configureView()
         
         FirebaseManager.getFamilyMemberUserInfo(contact.userId) { (error, userInfo) in
@@ -189,9 +190,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                                     if let messageDict = snapshot.value! as? NSDictionary {
                                         if let newMessage = Message(messageId: snapshot.key, messageDict: messageDict) {
                                             print("New message in RTDB")
-                                            self.messages.append(newMessage)
-                                            self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                                            self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+//                                            self.messages.append(newMessage)
+                                            dispatch_async(dispatch_get_main_queue(), {
+                                                self.messages.append(newMessage)
+                                                self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                                self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+                                            })
+//                                            self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+//                                            self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
                                         }
                                     }
                                 })
