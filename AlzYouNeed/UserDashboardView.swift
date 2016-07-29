@@ -66,12 +66,19 @@ import UIKit
         }
     }
     
-    func isAdmin(admin: Bool) {
-        if admin {
+    func specialUser(type: String) {
+        switch type {
+        case "admin":
+            self.adminImageView.image = UIImage(named: "adminIcon")
             self.adminImageView.hidden = false
-        }
-        else {
+        case "patient":
+            self.adminImageView.image = UIImage(named: "patientIcon")
+            self.adminImageView.hidden = false
+        case "none":
+            self.adminImageView.image = UIImage()
             self.adminImageView.hidden = true
+        default:
+            break
         }
     }
     

@@ -29,6 +29,21 @@ class ContactDetailViewController: UIViewController {
         configureActionButtons()
         lastCalledLabel.hidden = true
         
+        // Check user type
+        if let userIsAdmin = contact.admin as String? {
+            if userIsAdmin == "true" {
+                userView.specialUser("admin")
+            } else {
+                if let userIsPatient = contact.patient as String? {
+                    if userIsPatient == "true" {
+                        userView.specialUser("patient")
+                    } else {
+                        userView.specialUser("none")
+                    }
+                }
+            }
+        }
+        
         // Hides redundant information
         hideExtraUserViewItems()
     }

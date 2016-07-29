@@ -28,12 +28,18 @@ class ContactCollectionViewCell: UICollectionViewCell {
         self.layer.masksToBounds = true
         self.layer.cornerRadius = 10
         
+        // Check user type
         if let userIsAdmin = contact.admin as String? {
             if userIsAdmin == "true" {
-                contactView.isAdmin(true)
-            }
-            else {
-                contactView.isAdmin(false)
+                contactView.specialUser("admin")
+            } else {
+                if let userIsPatient = contact.patient as String? {
+                    if userIsPatient == "true" {
+                        contactView.specialUser("patient")
+                    } else {
+                        contactView.specialUser("none")
+                    }
+                }
             }
         }
         

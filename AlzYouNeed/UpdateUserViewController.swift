@@ -213,7 +213,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
             }
             
-            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData]
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patient":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData]
             
             FirebaseManager.updateUser(updates, completionHandler: { (error) in
                 if error != nil {

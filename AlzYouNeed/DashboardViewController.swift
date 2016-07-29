@@ -262,9 +262,20 @@ class DashboardViewController: UIViewController {
                             if let admin = userDict.objectForKey("admin") as? String {
                                 if admin == "true" {
                                     dispatch_async(dispatch_get_main_queue(), {
-                                        self.userView.isAdmin(true)
+                                        self.userView.specialUser("admin")
                                     })
+                                } else {
+                                    if let patient = userDict.objectForKey("patient") as? String {
+                                        if patient == "true" {
+                                            dispatch_async(dispatch_get_main_queue(), {
+                                                self.userView.specialUser("patient")
+                                            })
+                                        } else {
+                                            self.userView.specialUser("none")
+                                        }
+                                    }
                                 }
+                                
                                 if let photoUrl = userDict.objectForKey("photoUrl") as? String {
                                     self.configureDashboardView(photoUrl)
                                 }
