@@ -29,6 +29,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var messagesTableView: UITableView!
     
     @IBOutlet var toolbarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var scrollViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var scrollView: UIScrollView!
+    
     func configureView() {
         messagesTableView.delegate = self
         
@@ -91,6 +94,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         self.messages.removeAll()
         self.configureView()
         
+        
+        messagesTableView.estimatedRowHeight = 100
+        messagesTableView.rowHeight = UITableViewAutomaticDimension
+        
+        // Get user info
         FirebaseManager.getFamilyMemberUserInfo(contact.userId) { (error, userInfo) in
             if error == nil {
                 if let userInfo = userInfo {
@@ -98,6 +106,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                     if let lastCalled = userInfo.valueForKey("lastCalled") as? String {
                         self.configureLastCalledLabel(lastCalled)
                     }
+                }
+            }
+        }
+        
+        // Get conversation ID
+        FirebaseManager.getConversationId(contact.userId) { (error, conversationId) in
+            if error == nil {
+                if let conversationId = conversationId {
+                    self.conversationId = conversationId
                 }
             }
         }
@@ -157,18 +174,21 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     // MARK: - Messaging
     @IBAction func sendMessage(sender: UIButton) {
         guard !messageTextField.text!.isEmpty else {
-            print("No message")
+            print("Empty message textField")
             return
         }
         
         let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : messageTextField.text!]
+        sender.enabled = false
 
         FirebaseManager.sendNewMessage(contact.userId, message: newMessage) { (error) in
             if error != nil {
                 // Error
+                sender.enabled = true
             } else {
                 // Success
                 self.messageTextField.text = ""
+                sender.enabled = true
             }
         }
     }
@@ -181,26 +201,23 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     self.familyId = userFamilyId
                     
-                    FirebaseManager.getConversationId(self.contact.userId, completionHandler: { (error, conversationId) in
-                        if error == nil {
-                            if let conversationKey = conversationId {
-                                self.conversationId = conversationKey
-                                self.databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationKey).queryOrderedByChild("timestamp").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                        
+                        self.messages.removeAll()
+                        for item in snapshot.children {
+                            if let item = item as? FIRDataSnapshot {
+                                //                                                print("Item -- key: \(item.key) -- value: \(item.value)")
+                                if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
+                                    self.messages.append(newMessage)
+                                    self.messagesTableView.reloadData()
                                     
-                                    if let messageDict = snapshot.value! as? NSDictionary {
-                                        if let newMessage = Message(messageId: snapshot.key, messageDict: messageDict) {
-                                            print("New message in RTDB")
-//                                            self.messages.append(newMessage)
-                                            dispatch_async(dispatch_get_main_queue(), {
-                                                self.messages.append(newMessage)
-                                                self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                                                self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
-                                            })
-//                                            self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-//                                            self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
-                                        }
-                                    }
-                                })
+                                    //                                                    self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                    //                                                    self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+                                    
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.scrollToBottom()
+                                    })
+                                }
                             }
                         }
                     })
@@ -223,8 +240,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCell")! as! MessageTableViewCell
         
         let message = messages[indexPath.row]
-        
-        cell.configureCell(message)
+
+        cell.configureCell(message, contact: contact, profileImage: profileImage)
         
         return cell
     }
@@ -245,12 +262,19 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
 //        })
         
         if show {
-//            self.nextButtonBottomConstraint.constant = changeInHeight
             self.toolbarBottomConstraint.constant = changeInHeight
+            scrollViewBottomConstraint.constant = changeInHeight + 44
+            
+//            var offset = scrollView.contentOffset
+//            offset.y = scrollView.contentSize.height - scrollView.contentInset.bottom + scrollView.bounds.size.height
+            
+            let bottomOffset: CGPoint = CGPointMake(0, changeInHeight)
+            
+            scrollView.setContentOffset(bottomOffset, animated: true)
         }
         else {
-//            self.nextButtonBottomConstraint.constant = 0
             self.toolbarBottomConstraint.constant = 0
+            scrollViewBottomConstraint.constant = 0
         }
         UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
@@ -265,5 +289,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
+    func scrollToBottom() {
+        let lastRow = messagesTableView.numberOfRowsInSection(0) - 1
+        
+        if lastRow >= 0 {
+            messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+        }
+    }
 
 }

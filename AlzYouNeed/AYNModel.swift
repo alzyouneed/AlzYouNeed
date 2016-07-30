@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class AYNModel {
     
@@ -22,6 +23,8 @@ class AYNModel {
     var completedRemindersArr: [Reminder] = []
     var unreadMessagesCount = 0
     
+    var currentUserProfileImage: UIImage? = UIImage()
+    
     var wasReset = false
     var contactsArrWasReset = false
     var profileWasUpdated = false
@@ -34,6 +37,8 @@ class AYNModel {
         remindersArr.removeAll()
         completedRemindersArr.removeAll()
         unreadMessagesCount = 0
+        
+        currentUserProfileImage = nil
         
         wasReset = true
         contactsArrWasReset = true

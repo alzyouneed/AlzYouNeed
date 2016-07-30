@@ -859,8 +859,10 @@ class FirebaseManager: NSObject {
                                                     completionHandler(error: nil)
                                                 }
                                             })
+                                        } else {
+//                                            print("Users already have existing conversation")
+                                            completionHandler(error: nil)
                                         }
-                                        completionHandler(error: nil)
                                     }
                                 })
                             }

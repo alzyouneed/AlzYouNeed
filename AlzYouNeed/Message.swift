@@ -19,7 +19,7 @@ class Message: NSObject {
         
         self.messageId = messageId
         self.senderId = messageDict.objectForKey("senderId") as? String ?? ""
-        self.dateSent = messageDict.objectForKey("dateSent") as? String ?? ""
+        self.dateSent = messageDict.objectForKey("timestamp") as? String ?? ""
         self.messageString = messageDict.objectForKey("messageString") as? String ?? ""
     }
     

@@ -134,7 +134,6 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         contactsCollectionView.addSubview(refreshControl)
     }
     
-    
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "contactDetail" {

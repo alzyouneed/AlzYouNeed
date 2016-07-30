@@ -301,6 +301,7 @@ class DashboardViewController: UIViewController {
                         dispatch_async(dispatch_get_main_queue(), {
                             self.userView.setImage(image)
                         })
+                        AYNModel.sharedInstance.currentUserProfileImage = image
                         // Reset variable only after configuration is complete
                         AYNModel.sharedInstance.wasReset = false
                     }
@@ -311,6 +312,7 @@ class DashboardViewController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.userView.setImage(image)
                     })
+                    AYNModel.sharedInstance.currentUserProfileImage = image
                     // Reset variable only after configuration is complete
                     AYNModel.sharedInstance.wasReset = false
                 }

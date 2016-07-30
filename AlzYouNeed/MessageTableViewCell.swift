@@ -24,60 +24,43 @@ class MessageTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func configureCell(message: Message) {
-        
+
+    func configureCell(message: Message, contact: Contact, profileImage: UIImage) {
         messageView.alpha = 0
         
-        FirebaseManager.getUserById(message.senderId) { (userDict, error) in
-            if error == nil {
-                if let userDict = userDict {
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.messageView.nameLabel.text = userDict.objectForKey("name") as! String!
-                        
-                        let photoUrl = userDict.objectForKey("photoUrl") as! String!
-                        self.messageView.profileImageView.image = self.getProfileImage(photoUrl)
-                        
-                        self.messageView.messageLabel.text = message.messageString
-                        
-                        if let currentUser = FIRAuth.auth()?.currentUser {
-                            if message.senderId == currentUser.uid {
-                                self.messageView.nameLabel.text = "Me"
-                                self.messageView.userType("sender")
-                            } else {
-                                self.messageView.nameLabel.text = userDict.objectForKey("name") as! String!
-                               self.messageView.userType("receiver")
-                            }
-                        }
-                        
-                        UIView.animateWithDuration(0.2, animations: { 
-                            self.messageView.alpha = 1
-                        })
-                    })
+        dispatch_async(dispatch_get_main_queue()) {
+            self.messageView.messageLabel.text = message.messageString
+            
+            // Format readable date
+            let date = NSDate(timeIntervalSince1970: Double(message.dateSent)!)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "M/dd/yy h:mm a"
+            self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
+            
+            if let currentUser = FIRAuth.auth()?.currentUser {
+                if message.senderId == currentUser.uid {
+                    self.messageView.nameLabel.text = "Me"
+                    // Use current user's profile image
+                    self.messageView.profileImageView.image = AYNModel.sharedInstance.currentUserProfileImage
+                    self.messageView.userType("sender")
+                } else {
+                    // Get only first name
+                    let fullName = contact.fullName
+                    if let firstName = fullName.componentsSeparatedByString(" ")[0] as String? {
+                        self.messageView.nameLabel.text = firstName
+                    } else {
+                        self.messageView.nameLabel.text = fullName
+                    }
+                    // Use recipient's profile image
+                    self.messageView.profileImageView.image = profileImage
+                    self.messageView.userType("receiver")
                 }
             }
+            
+            UIView.animateWithDuration(0.2, animations: {
+                self.messageView.alpha = 1
+            })
         }
-    }
-    
-    private func getProfileImage(photoUrl: String) -> UIImage? {
-        var profileImage = UIImage()
-        if let photoUrl = photoUrl as String? {
-            if photoUrl.hasPrefix("gs://") {
-                FIRStorage.storage().referenceForURL(photoUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
-                    if let error = error {
-                        // Error
-                        print("Error downloading user profile image: \(error.localizedDescription)")
-                        return
-                    }
-                    // Success
-                    profileImage = UIImage(data: data!)!
-                })
-            } else if let url = NSURL(string: photoUrl), data = NSData(contentsOfURL: url) {
-                    profileImage = UIImage(data: data)!
-            }
-        }
-        return profileImage
     }
 
 }

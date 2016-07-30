@@ -7,6 +7,7 @@
     <customFonts key="customFonts">
         <mutableArray key="OpenSans-Light.ttf">
             <string>OpenSans-Light</string>
+            <string>OpenSans-Light</string>
         </mutableArray>
         <mutableArray key="OpenSans-Regular.ttf">
             <string>OpenSans</string>
@@ -15,9 +16,20 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageView" customModule="AlzYouNeed" customModuleProvider="target">
             <connections>
+                <outlet property="chatBubbleLeadingConstraintRecipient" destination="0Gj-U6-yDb" id="iqa-1A-7Ie"/>
+                <outlet property="chatBubbleLeadingConstraintSender" destination="5iM-kF-m1S" id="1kp-76-1zj"/>
+                <outlet property="chatBubbleTrailingConstraintRecipient" destination="lcI-dU-7NY" id="J9V-4M-1MN"/>
+                <outlet property="chatBubbleTrailingConstraintSender" destination="HsF-4H-B0g" id="Yty-BA-hxd"/>
                 <outlet property="chatBubbleView" destination="aD8-80-dpg" id="n8X-4R-xZR"/>
+                <outlet property="dateLabel" destination="Qqn-Cn-9An" id="Dff-Jj-Q0q"/>
+                <outlet property="dateLabelLeadingConstraintRecipient" destination="CmC-we-UdK" id="wVp-8C-2G9"/>
+                <outlet property="dateLabelTrailingConstraintRecipient" destination="eM0-gK-kWo" id="gty-pS-Ina"/>
                 <outlet property="messageLabel" destination="RPl-oP-0jD" id="XX3-ZR-LYA"/>
+                <outlet property="messageLabelLeadingConstraintRecipient" destination="YKf-lD-2eW" id="7g1-yH-4OI"/>
                 <outlet property="nameLabel" destination="qdf-Ka-Odf" id="9oD-R0-PyB"/>
+                <outlet property="nameLabelLeadingConstraintRecipient" destination="0hI-bJ-kgj" id="rts-uq-0w4"/>
+                <outlet property="profileImageLeadingConstraintRecipient" destination="62c-Oj-7fa" id="B3Y-pV-Uy9"/>
+                <outlet property="profileImageTrailingConstraintSender" destination="Ohf-O5-M97" id="y9O-h1-Etv"/>
                 <outlet property="profileImageView" destination="FTM-vm-OIs" id="IRE-9e-DWm"/>
             </connections>
         </placeholder>
@@ -27,13 +39,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-80-dpg">
-                    <rect key="frame" x="32" y="31" width="538" height="48"/>
+                    <rect key="frame" x="17" y="31" width="224" height="48"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPl-oP-0jD">
-                            <rect key="frame" x="34" y="6" width="504" height="36"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPl-oP-0jD">
+                            <rect key="frame" x="34" y="6" width="190" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="190" id="1cr-To-YMc"/>
+                                <constraint firstAttribute="height" constant="36" id="nBr-Ex-3Ih"/>
+                            </constraints>
                             <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="nBr-Ex-3Ih"/>
+                                </mask>
+                            </variation>
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,19 +65,29 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FTM-vm-OIs">
-                    <rect key="frame" x="8" y="8" width="50" height="50"/>
+                    <rect key="frame" x="8" y="8" width="35" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="1aU-8F-pxn"/>
-                        <constraint firstAttribute="height" constant="50" id="dbB-y0-xsH"/>
+                        <constraint firstAttribute="width" constant="35" id="1aU-8F-pxn"/>
+                        <constraint firstAttribute="height" constant="35" id="dbB-y0-xsH"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdf-Ka-Odf">
-                    <rect key="frame" x="66" y="8" width="526" height="21"/>
+                    <rect key="frame" x="51" y="8" width="37" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="OKH-nV-52y"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
                     <color key="textColor" red="0.30980392156862746" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-Cn-9An">
+                    <rect key="frame" x="96" y="8" width="140" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="j0H-9m-dEu"/>
+                        <constraint firstAttribute="width" constant="140" id="ntF-KQ-Lmb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="15"/>
+                    <color key="textColor" red="0.30980392159999998" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -65,20 +96,27 @@
                 <constraint firstItem="aD8-80-dpg" firstAttribute="leading" secondItem="FTM-vm-OIs" secondAttribute="trailing" constant="-26" id="0Gj-U6-yDb"/>
                 <constraint firstItem="qdf-Ka-Odf" firstAttribute="leading" secondItem="FTM-vm-OIs" secondAttribute="trailing" constant="8" id="0hI-bJ-kgj"/>
                 <constraint firstAttribute="bottom" secondItem="aD8-80-dpg" secondAttribute="bottom" id="2wA-j1-pL4"/>
+                <constraint firstItem="aD8-80-dpg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="5iM-kF-m1S"/>
                 <constraint firstItem="FTM-vm-OIs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="62c-Oj-7fa"/>
                 <constraint firstItem="FTM-vm-OIs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="Ah5-pe-2Nt"/>
-                <constraint firstItem="qdf-Ka-Odf" firstAttribute="leading" secondItem="FTM-vm-OIs" secondAttribute="trailing" constant="8" id="RyK-Lt-pOk"/>
+                <constraint firstItem="Qqn-Cn-9An" firstAttribute="leading" secondItem="qdf-Ka-Odf" secondAttribute="trailing" constant="8" id="CmC-we-UdK"/>
+                <constraint firstItem="aD8-80-dpg" firstAttribute="trailing" secondItem="FTM-vm-OIs" secondAttribute="leading" constant="-26" id="HsF-4H-B0g"/>
+                <constraint firstAttribute="trailing" secondItem="FTM-vm-OIs" secondAttribute="trailing" constant="8" id="Ohf-O5-M97"/>
                 <constraint firstItem="RPl-oP-0jD" firstAttribute="leading" secondItem="qdf-Ka-Odf" secondAttribute="leading" id="YKf-lD-2eW"/>
                 <constraint firstItem="qdf-Ka-Odf" firstAttribute="top" secondItem="FTM-vm-OIs" secondAttribute="top" id="YvY-Nm-mGP"/>
+                <constraint firstItem="Qqn-Cn-9An" firstAttribute="trailing" secondItem="RPl-oP-0jD" secondAttribute="trailing" constant="-5" id="eM0-gK-kWo"/>
                 <constraint firstItem="aD8-80-dpg" firstAttribute="top" secondItem="qdf-Ka-Odf" secondAttribute="bottom" constant="2" id="hUi-eb-pM6"/>
                 <constraint firstAttribute="trailing" secondItem="aD8-80-dpg" secondAttribute="trailing" constant="30" id="lcI-dU-7NY"/>
-                <constraint firstAttribute="trailing" secondItem="qdf-Ka-Odf" secondAttribute="trailing" constant="8" id="zj9-ge-7Xd"/>
+                <constraint firstItem="Qqn-Cn-9An" firstAttribute="top" secondItem="qdf-Ka-Odf" secondAttribute="top" id="ya7-Bj-4Gt"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
-                    <exclude reference="RyK-Lt-pOk"/>
+                    <exclude reference="Ohf-O5-M97"/>
+                    <exclude reference="5iM-kF-m1S"/>
+                    <exclude reference="HsF-4H-B0g"/>
+                    <exclude reference="lcI-dU-7NY"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="373" y="116.5"/>
