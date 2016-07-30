@@ -34,8 +34,21 @@ class MessageTableViewCell: UITableViewCell {
             // Format readable date
             let date = NSDate(timeIntervalSince1970: Double(message.dateSent)!)
             let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "M/dd/yy h:mm a"
-            self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
+            
+            let calendar = NSCalendar.currentCalendar()
+            if calendar.isDateInToday(date) {
+                dateFormatter.dateFormat = "h:mm a"
+                self.messageView.dateLabel.text = "Today, \(dateFormatter.stringFromDate(date))"
+            } else if calendar.isDateInYesterday(date) {
+                dateFormatter.dateFormat = "h:mm a"
+                self.messageView.dateLabel.text = "Yesterday, \(dateFormatter.stringFromDate(date))"
+            } else {
+                dateFormatter.dateFormat = "M/dd/yy h:mm a"
+                self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
+            }
+            
+//            dateFormatter.dateFormat = "M/dd/yy h:mm a"
+//            self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
             
             if let currentUser = FIRAuth.auth()?.currentUser {
                 if message.senderId == currentUser.uid {

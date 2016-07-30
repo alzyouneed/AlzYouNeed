@@ -93,7 +93,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         self.messages.removeAll()
         self.configureView()
-        
+        configureHideKeyboard()
         
         messagesTableView.estimatedRowHeight = 100
         messagesTableView.rowHeight = UITableViewAutomaticDimension
@@ -289,6 +289,16 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
+    func configureHideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContactDetailViewController.dismissKeyboard))
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     func scrollToBottom() {
         let lastRow = messagesTableView.numberOfRowsInSection(0) - 1
         
@@ -296,5 +306,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
             messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
         }
     }
+    
 
 }
