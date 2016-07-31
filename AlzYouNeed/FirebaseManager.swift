@@ -809,71 +809,134 @@ class FirebaseManager: NSObject {
                 }
                 else {
                     // Check for existing conversations
-                    getConversationId(receiverId, completionHandler: { (error, conversationId) in
-                        if let error = error {
-                            // Error
-                            completionHandler(error: error)
-                        } else {
-                            if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                    if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                        getConversationId(userFamilyId, receiverId: receiverId, completionHandler: { (error, conversationId) in
+                            if let error = error {
+                                // Error
+                                completionHandler(error: error)
+                            } else {
+//                                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                                 
-                                // Create var to change based on conversationId
-                                let databaseRef = FIRDatabase.database().reference()
-                                var key = ""
-                                var newConversation = false
-                                
-                                if let conversationId = conversationId {
-                                    // Existing conversation ID found
-                                    key = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).key
-                                } else {
-                                    // No conversation ID found -- create new conversation between users
-                                    key = databaseRef.child("families").child(userFamilyId).child("conversations").childByAutoId().key
-                                    newConversation = true
-                                }
-                                
-                                let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(key).childByAutoId().key
-                                // Add current user ID to message object
-                                let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
-                                modifiedMessage.setObject(user.uid, forKey: "senderId")
-                                
-                                databaseRef.child("families").child(userFamilyId).child("conversations").child(key).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
-                                    if error != nil {
-                                        // Error
-                                        print("Error sending message")
-                                        completionHandler(error: error)
+                                    // Create var to change based on conversationId
+                                    let databaseRef = FIRDatabase.database().reference()
+                                    var key = ""
+                                    var newConversation = false
+                                    
+                                    if let conversationId = conversationId {
+                                        // Existing conversation ID found
+                                        key = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).key
+                                    } else {
+                                        // No conversation ID found -- create new conversation between users
+                                        key = databaseRef.child("families").child(userFamilyId).child("conversations").childByAutoId().key
+                                        newConversation = true
                                     }
-                                    else {
-                                        // Success
-                                        print("Sent new message")
-                                        // Add users to conversation if new
-                                        if newConversation {
-                                            let childUpdates = ["/users/\(user.uid)/conversations/\(key)": "true",
-                                                "/users/\(receiverId)/conversations/\(key)": "true"] as [NSObject : AnyObject]
-                                            
-                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                                if error != nil {
-                                                    print("Error adding users to new conversation")
-                                                    completionHandler(error: error)
-                                                }
-                                                else {
-                                                    print("Added users to new conversation")
-                                                    completionHandler(error: nil)
-                                                }
-                                            })
-                                        } else {
-//                                            print("Users already have existing conversation")
-                                            completionHandler(error: nil)
+                                    
+                                    let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(key).childByAutoId().key
+                                    // Add current user ID to message object
+                                    let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
+                                    modifiedMessage.setObject(user.uid, forKey: "senderId")
+                                    
+                                    databaseRef.child("families").child(userFamilyId).child("conversations").child(key).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
+                                        if error != nil {
+                                            // Error
+                                            print("Error sending message")
+                                            completionHandler(error: error)
                                         }
-                                    }
-                                })
+                                        else {
+                                            // Success
+                                            print("Sent new message")
+                                            // Add users to conversation if new
+                                            if newConversation {
+                                                let childUpdates = ["/users/\(user.uid)/conversations/\(key)": "true",
+                                                    "/users/\(receiverId)/conversations/\(key)": "true"] as [NSObject : AnyObject]
+                                                
+                                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                                    if error != nil {
+                                                        print("Error adding users to new conversation")
+                                                        completionHandler(error: error)
+                                                    }
+                                                    else {
+                                                        print("Added users to new conversation")
+                                                        completionHandler(error: nil)
+                                                    }
+                                                })
+                                            } else {
+                                                //                                            print("Users already have existing conversation")
+                                                completionHandler(error: nil)
+                                            }
+                                        }
+                                    })
+//                                }
                             }
-                        }
-                    })
+                        })
+                    }
+                    
+//                    getConversationId(receiverId, completionHandler: { (error, conversationId) in
+//                        if let error = error {
+//                            // Error
+//                            completionHandler(error: error)
+//                        } else {
+//                            if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+//                                
+//                                // Create var to change based on conversationId
+//                                let databaseRef = FIRDatabase.database().reference()
+//                                var key = ""
+//                                var newConversation = false
+//                                
+//                                if let conversationId = conversationId {
+//                                    // Existing conversation ID found
+//                                    key = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).key
+//                                } else {
+//                                    // No conversation ID found -- create new conversation between users
+//                                    key = databaseRef.child("families").child(userFamilyId).child("conversations").childByAutoId().key
+//                                    newConversation = true
+//                                }
+//                                
+//                                let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(key).childByAutoId().key
+//                                // Add current user ID to message object
+//                                let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
+//                                modifiedMessage.setObject(user.uid, forKey: "senderId")
+//                                
+//                                databaseRef.child("families").child(userFamilyId).child("conversations").child(key).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
+//                                    if error != nil {
+//                                        // Error
+//                                        print("Error sending message")
+//                                        completionHandler(error: error)
+//                                    }
+//                                    else {
+//                                        // Success
+//                                        print("Sent new message")
+//                                        // Add users to conversation if new
+//                                        if newConversation {
+//                                            let childUpdates = ["/users/\(user.uid)/conversations/\(key)": "true",
+//                                                "/users/\(receiverId)/conversations/\(key)": "true"] as [NSObject : AnyObject]
+//                                            
+//                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+//                                                if error != nil {
+//                                                    print("Error adding users to new conversation")
+//                                                    completionHandler(error: error)
+//                                                }
+//                                                else {
+//                                                    print("Added users to new conversation")
+//                                                    completionHandler(error: nil)
+//                                                }
+//                                            })
+//                                        } else {
+////                                            print("Users already have existing conversation")
+//                                            completionHandler(error: nil)
+//                                        }
+//                                    }
+//                                })
+//                            }
+//                        }
+//                    })
                 }
             })
         }
     }
     
-    class func getConversationId(receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
+//    class func getConversationId(receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
+    class func getConversationId(familyId: String, receiverId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
         if (FIRAuth.auth()?.currentUser) != nil {
             getCurrentUser({ (userDict, error) in
                 if let error = error {
@@ -904,21 +967,69 @@ class FirebaseManager: NSObject {
                                             }
                                         }
                                         // No matching conversation ID found
-                                        print("Could not find matching conversation ID for users")
-                                        completionHandler(error: nil, conversationId: nil)
+                                        print("Could not find matching conversation ID for users -- creating new conversation")
+                                        // Create ID here
+                                        createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                                            if let error = error {
+                                                // Error
+                                                completionHandler(error: error, conversationId: nil)
+                                            } else {
+                                                // Success
+                                                completionHandler(error: nil, conversationId: conversationId)
+                                            }
+                                        })
                                     }
                                 } else {
                                     // Receiver has no saved conversations
-                                    print("Receiver has no saved conversations")
-                                    completionHandler(error: nil, conversationId: nil)
+                                    print("Receiver has no saved conversations -- creating new conversation")
+                                    // Create ID here
+                                    createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                                        if let error = error {
+                                            // Error
+                                            completionHandler(error: error, conversationId: nil)
+                                        } else {
+                                            // Success
+                                            completionHandler(error: nil, conversationId: conversationId)
+                                        }
+                                    })
                                 }
                             }
                         })
                     } else {
                         // Sender has no saved conversations
-                        print("Sender has no saved conversations")
-                        completionHandler(error: nil, conversationId: nil)
+                        print("Sender has no saved conversations -- creating new conversation")
+                        // Create ID here
+                        createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                            if let error = error {
+                                // Error
+                                completionHandler(error: error, conversationId: nil)
+                            } else {
+                                // Success
+                                completionHandler(error: nil, conversationId: conversationId)
+                            }
+                        })
                     }
+                }
+            })
+        }
+    }
+    
+    private class func createNewConversation(receiverId: String, familyId: String, completionHandler: (error: NSError?, conversationId: String?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let databaseRef = FIRDatabase.database().reference()
+            let newConversationId = databaseRef.child("families").child(familyId).child("conversations").childByAutoId().key
+            
+            let childUpdates = ["/users/\(user.uid)/conversations/\(newConversationId)": "true",
+                                "/users/\(receiverId)/conversations/\(newConversationId)": "true"] as [NSObject : AnyObject]
+            
+            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                if error != nil {
+                    print("Error adding users to new conversation")
+                    completionHandler(error: error, conversationId: nil)
+                }
+                else {
+                    print("Created new conversation with users")
+                    completionHandler(error: nil, conversationId: newConversationId)
                 }
             })
         }

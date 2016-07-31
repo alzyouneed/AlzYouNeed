@@ -259,6 +259,7 @@ class DashboardViewController: UIViewController {
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.userView.familyGroupLabel.text = familyId
                             })
+                            AYNModel.sharedInstance.currentUserFamilyId = familyId
                             if let admin = userDict.objectForKey("admin") as? String {
                                 if admin == "true" {
                                     dispatch_async(dispatch_get_main_queue(), {

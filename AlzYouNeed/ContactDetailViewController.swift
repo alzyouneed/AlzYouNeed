@@ -60,6 +60,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         // Hides redundant information
         hideExtraUserViewItems()
+        
+        scrollView.contentSize.height = 600
     }
     
     func configureActionButtons() {
@@ -111,13 +113,23 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         }
         
         // Get conversation ID
-        FirebaseManager.getConversationId(contact.userId) { (error, conversationId) in
-            if error == nil {
-                if let conversationId = conversationId {
-                    self.conversationId = conversationId
+        if let userFamilyId = AYNModel.sharedInstance.currentUserFamilyId as String? {
+            FirebaseManager.getConversationId(userFamilyId, receiverId: contact.userId) { (error, conversationId) in
+                if error == nil {
+                    if let conversationId = conversationId {
+                        self.conversationId = conversationId
+                    }
                 }
             }
         }
+        
+//        FirebaseManager.getConversationId(contact.userId) { (error, conversationId) in
+//            if error == nil {
+//                if let conversationId = conversationId {
+//                    self.conversationId = conversationId
+//                }
+//            }
+//        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -202,24 +214,48 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                     self.familyId = userFamilyId
                     
                     self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                        var indexPaths: [NSIndexPath] = []
                         
-                        self.messages.removeAll()
+//                        self.messages.removeAll()
+                        print("Messages: \(snapshot.childrenCount)")
                         for item in snapshot.children {
                             if let item = item as? FIRDataSnapshot {
                                 //                                                print("Item -- key: \(item.key) -- value: \(item.value)")
+                                
+//                                for message in self.messages {
+//                                    if item.key != message.messageId {
+//                                        if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
+//                                            self.messages.append(newMessage)
+//                                            indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+//                                        }
+//                                    }
+//                                }
+                                
                                 if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
                                     self.messages.append(newMessage)
-                                    self.messagesTableView.reloadData()
+                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+//                                    self.messagesTableView.reloadData()
+                                
+//                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+//                                    self.messagesTableView.reloadData()
                                     
-                                    //                                                    self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+//                                    self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+//                                    self.messagesTableView.reloadData()
                                     //                                                    self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
                                     
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.scrollToBottom()
-                                    })
+//                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                        self.scrollToBottom()
+//                                    })
                                 }
                             }
                         }
+                        if !indexPaths.isEmpty {
+                            self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+                            self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
+                        }
+                        
+//                        self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+//                        self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
                     })
                 }
             }
@@ -237,13 +273,27 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCell")! as! MessageTableViewCell
         
         let message = messages[indexPath.row]
-
-        cell.configureCell(message, contact: contact, profileImage: profileImage)
         
-        return cell
+        if message.senderId == FIRAuth.auth()?.currentUser?.uid {
+            let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellMe")! as! MessageTableViewCell
+            cell.configureCell(message, contact: contact, profileImage: profileImage)
+            return cell
+        } else {
+            let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellYou")! as! MessageTableViewCell
+            cell.configureCell(message, contact: contact, profileImage: profileImage)
+            return cell
+        }
+        
+        
+//        let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellMe")! as! MessageTableViewCell
+//        
+//        let message = messages[indexPath.row]
+//
+//        cell.configureCell(message, contact: contact, profileImage: profileImage)
+//        
+//        return cell
     }
     
     // MARK: - Keyboard
@@ -263,7 +313,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         if show {
             self.toolbarBottomConstraint.constant = changeInHeight
-            scrollViewBottomConstraint.constant = changeInHeight + 44
+            scrollViewBottomConstraint.constant = changeInHeight //+ 44
             
 //            var offset = scrollView.contentOffset
 //            offset.y = scrollView.contentSize.height - scrollView.contentInset.bottom + scrollView.bounds.size.height
@@ -271,6 +321,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
             let bottomOffset: CGPoint = CGPointMake(0, changeInHeight)
             
             scrollView.setContentOffset(bottomOffset, animated: true)
+            scrollToBottom()
         }
         else {
             self.toolbarBottomConstraint.constant = 0
@@ -283,10 +334,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     
     func keyboardWillShow(sender: NSNotification) {
         adjustingKeyboardHeight(true, notification: sender)
+        scrollView.scrollEnabled = false
     }
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
+        scrollView.scrollEnabled = true
     }
     
     func configureHideKeyboard() {
@@ -300,6 +353,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     }
     
     func scrollToBottom() {
+        
+//        if self.messagesTableView.contentSize.height > CGRectGetHeight(self.messagesTableView.frame) {
+//            let contentOffset = CGPointMake(0, self.messagesTableView.contentSize.height - CGRectGetHeight(self.messagesTableView.frame))
+//            self.messagesTableView.setContentOffset(contentOffset, animated: true)
+//        }
+        
         let lastRow = messagesTableView.numberOfRowsInSection(0) - 1
         
         if lastRow >= 0 {

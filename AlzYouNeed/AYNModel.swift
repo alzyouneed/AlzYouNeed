@@ -24,6 +24,7 @@ class AYNModel {
     var unreadMessagesCount = 0
     
     var currentUserProfileImage: UIImage? = UIImage()
+    var currentUserFamilyId: String? = String()
     
     var wasReset = false
     var contactsArrWasReset = false
@@ -39,6 +40,7 @@ class AYNModel {
         unreadMessagesCount = 0
         
         currentUserProfileImage = nil
+        currentUserFamilyId = nil
         
         wasReset = true
         contactsArrWasReset = true

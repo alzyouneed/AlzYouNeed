@@ -39,7 +39,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-80-dpg">
-                    <rect key="frame" x="17" y="31" width="224" height="48"/>
+                    <rect key="frame" x="17" y="31" width="240" height="48"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPl-oP-0jD">
                             <rect key="frame" x="34" y="6" width="190" height="36"/>
@@ -61,7 +61,7 @@
                     <constraints>
                         <constraint firstItem="RPl-oP-0jD" firstAttribute="top" secondItem="aD8-80-dpg" secondAttribute="top" constant="6" id="DN9-pG-J4a"/>
                         <constraint firstAttribute="bottom" secondItem="RPl-oP-0jD" secondAttribute="bottom" constant="6" id="Rif-bl-gKW"/>
-                        <constraint firstAttribute="trailing" secondItem="RPl-oP-0jD" secondAttribute="trailing" id="vfi-Ug-RHl"/>
+                        <constraint firstAttribute="trailing" secondItem="RPl-oP-0jD" secondAttribute="trailing" constant="16" id="vfi-Ug-RHl"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FTM-vm-OIs">
