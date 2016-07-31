@@ -118,6 +118,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                 if error == nil {
                     if let conversationId = conversationId {
                         self.conversationId = conversationId
+                        self.addConversationObservers()
                     }
                 }
             }
@@ -141,7 +142,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        addConversationObservers()
+//        addConversationObservers()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -213,50 +214,45 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                 if let userFamilyId = userDict?.valueForKey("familyId") as? String {
                     self.familyId = userFamilyId
                     
-                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(.ChildAdded, withBlock: { (snapshot) in
                         var indexPaths: [NSIndexPath] = []
-                        
-//                        self.messages.removeAll()
-                        print("Messages: \(snapshot.childrenCount)")
-                        for item in snapshot.children {
-                            if let item = item as? FIRDataSnapshot {
-                                //                                                print("Item -- key: \(item.key) -- value: \(item.value)")
+                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observeEventType(.Value, withBlock: { (snapshot) in
+                            print("Value: \(snapshot.value)")
+                            if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
+                                self.messages.append(newMessage)
+                                indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
                                 
-//                                for message in self.messages {
-//                                    if item.key != message.messageId {
-//                                        if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
-//                                            self.messages.append(newMessage)
-//                                            indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-//                                        }
-//                                    }
-//                                }
-                                
-                                if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
-                                    self.messages.append(newMessage)
-                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-//                                    self.messagesTableView.reloadData()
-                                
-//                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-//                                    self.messagesTableView.reloadData()
-                                    
-//                                    self.messagesTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.messages.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-//                                    self.messagesTableView.reloadData()
-                                    //                                                    self.messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
-                                    
-//                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                        self.scrollToBottom()
-//                                    })
-                                }
+                                print("inserting new message into row")
+                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+                                self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
+//                                self.moveToLastMessage()
                             }
-                        }
-                        if !indexPaths.isEmpty {
-                            self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-                            self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
-                        }
-                        
-//                        self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-//                        self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
+                        })
                     })
+                    
+//                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+//                        
+//                        var indexPaths: [NSIndexPath] = []
+//                        
+//                        self.messages.removeAll()
+//                        self.messagesTableView.reloadData()
+//                        
+//                        print("Messages: \(snapshot.childrenCount)")
+//
+//                        for item in snapshot.children {
+//                            if let item = item as? FIRDataSnapshot {
+//                                
+//                                if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
+//                                    self.messages.append(newMessage)
+//                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+//                                }
+//                            }
+//                        }
+//                        if !indexPaths.isEmpty {
+//                            self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+//                            self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
+//                        }
+//                    })
                 }
             }
         }
@@ -363,6 +359,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         if lastRow >= 0 {
             messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+        }
+    }
+    
+    func moveToLastMessage() {
+        if self.messagesTableView.contentSize.height > CGRectGetHeight(self.messagesTableView.frame) {
+            print("Moving to last message")
+//            let contentOffset = CGPointMake(0, self.messagesTableView.contentSize.height - CGRectGetHeight(self.messagesTableView.frame))
+            let contentOffset = CGPointMake(0, self.messagesTableView.contentSize.height)
+            self.messagesTableView.setContentOffset(contentOffset, animated: true)
         }
     }
     
