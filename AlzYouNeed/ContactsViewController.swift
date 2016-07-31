@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PKHUD
 
 class ContactsViewController: UIViewController, UICollectionViewDelegate {
 
@@ -41,24 +42,32 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
     // MARK: - Logic
     func loadContacts(refreshing: Bool) {
         AYNModel.sharedInstance.contactsArr.removeAll()
-        self.contactsCollectionView.reloadData()
+//        self.contactsCollectionView.reloadData()
+        
+        if !refreshing {
+            // Show progress view
+            HUD.show(.Progress)
+        }
+        
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
+                    HUD.hide()
                     print("Loaded \(members.count) contacts from Firebase")
                     AYNModel.sharedInstance.contactsArr = members
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        UIView.animateWithDuration(0.5, animations: {
-                            self.contactsCollectionView.reloadData()
-                            self.checkCollectionViewEmpty()
-                            
-                            if refreshing {
-                                self.refreshControl.endRefreshing()
-                            }
-                        })
+                        self.contactsCollectionView.reloadData()
+                        self.checkCollectionViewEmpty()
+                        
+                        if refreshing {
+                            self.refreshControl.endRefreshing()
+                        }
                     })
                 }
+            } else {
+                // Error
+                HUD.hide()
             }
         }
     }

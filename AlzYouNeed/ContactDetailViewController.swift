@@ -29,8 +29,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var messagesTableView: UITableView!
     
     @IBOutlet var toolbarBottomConstraint: NSLayoutConstraint!
-    @IBOutlet var scrollViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var scrollView: UIScrollView!
+    
+    var messageMode = false
     
     func configureView() {
         messagesTableView.delegate = self
@@ -60,8 +61,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         // Hides redundant information
         hideExtraUserViewItems()
-        
-        scrollView.contentSize.height = 600
     }
     
     func configureActionButtons() {
@@ -190,11 +189,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
             print("Empty message textField")
             return
         }
+        guard !conversationId.isEmpty else {
+            print("No conversation ID")
+            return
+        }
         
         let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : messageTextField.text!]
         sender.enabled = false
-
-        FirebaseManager.sendNewMessage(contact.userId, message: newMessage) { (error) in
+        
+        FirebaseManager.sendNewMessage(contact.userId, conversationId: conversationId, message: newMessage) { (error) in
             if error != nil {
                 // Error
                 sender.enabled = true
@@ -215,16 +218,23 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
                     self.familyId = userFamilyId
                     
                     self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+//                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
                         var indexPaths: [NSIndexPath] = []
                         self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observeEventType(.Value, withBlock: { (snapshot) in
-                            print("Value: \(snapshot.value)")
+//                            print("Value: \(snapshot.value)")
                             if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
                                 self.messages.append(newMessage)
                                 indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
                                 
-                                print("inserting new message into row")
+//                                print("inserting new message into row")
                                 self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-                                self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
+                                
+//                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
+                                })
+//                                self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
 //                                self.moveToLastMessage()
                             }
                         })
@@ -309,20 +319,16 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         
         if show {
             self.toolbarBottomConstraint.constant = changeInHeight
-            scrollViewBottomConstraint.constant = changeInHeight //+ 44
-            
-//            var offset = scrollView.contentOffset
-//            offset.y = scrollView.contentSize.height - scrollView.contentInset.bottom + scrollView.bounds.size.height
-            
+
             let bottomOffset: CGPoint = CGPointMake(0, changeInHeight)
             
-            scrollView.setContentOffset(bottomOffset, animated: true)
+            scrollView.setContentOffset(bottomOffset, animated: false)
             scrollToBottom()
         }
         else {
             self.toolbarBottomConstraint.constant = 0
-            scrollViewBottomConstraint.constant = 0
         }
+        
         UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
@@ -331,11 +337,15 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
     func keyboardWillShow(sender: NSNotification) {
         adjustingKeyboardHeight(true, notification: sender)
         scrollView.scrollEnabled = false
+        
+        configureMessageMode()
     }
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(false, notification: sender)
         scrollView.scrollEnabled = true
+        
+        configureMessageMode()
     }
     
     func configureHideKeyboard() {
@@ -371,5 +381,26 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    func configureMessageMode() {
+        if !messageMode {
+            messageMode = true
+            
+            self.navigationItem.title = "Messages"
+            
+            UIView.animateWithDuration(0.2, animations: { 
+                self.contactActionButtons.alpha = 0
+                self.lastCalledLabel.alpha = 0
+            })
+        } else {
+            messageMode = false
+            
+            self.navigationItem.title = nil
+            
+            UIView.animateWithDuration(0.2, animations: { 
+                self.contactActionButtons.alpha = 1
+                self.lastCalledLabel.alpha = 1
+            })
+        }
+    }
 
 }
