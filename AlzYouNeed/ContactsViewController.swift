@@ -93,6 +93,9 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
 
         // Configure cell
+//        dispatch_async(dispatch_get_main_queue()) { 
+//            cell.configureCell(contact, row: indexPath.row)
+//        }
         cell.configureCell(contact, row: indexPath.row)
         
         // Add targets for both buttons
