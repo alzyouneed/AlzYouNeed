@@ -228,6 +228,18 @@
                                                                     <color key="textColor" red="0.30980392159999998" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6sk-Jt-Okv">
+                                                                    <rect key="frame" x="422" y="38" width="30" height="30"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="30" id="p6a-bP-amT"/>
+                                                                        <constraint firstAttribute="height" constant="30" id="tL3-GJ-9t4"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="favoriteDefault"/>
+                                                                    <state key="selected" image="favoriteSelected"/>
+                                                                    <connections>
+                                                                        <action selector="buttonTapped:" destination="XLX-ls-cUP" eventType="touchUpInside" id="JH7-Lm-x4Y"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="Bbj-CT-k9j" firstAttribute="leading" secondItem="Nqd-PC-mba" secondAttribute="leading" id="59U-hz-PLZ"/>
@@ -235,7 +247,9 @@
                                                                 <constraint firstItem="1ow-cR-AuR" firstAttribute="leading" secondItem="Bbj-CT-k9j" secondAttribute="trailing" constant="8" id="6vV-I8-5cg"/>
                                                                 <constraint firstItem="1ow-cR-AuR" firstAttribute="top" secondItem="Rbc-sH-qWg" secondAttribute="top" id="7Pb-EC-LTw"/>
                                                                 <constraint firstItem="Rbc-sH-qWg" firstAttribute="top" secondItem="POa-nu-dN2" secondAttribute="top" constant="8" id="8Gi-mq-Gzb"/>
+                                                                <constraint firstItem="6sk-Jt-Okv" firstAttribute="centerY" secondItem="Nqd-PC-mba" secondAttribute="centerY" id="CSI-t7-Acg"/>
                                                                 <constraint firstItem="1ow-cR-AuR" firstAttribute="leading" secondItem="Bbj-CT-k9j" secondAttribute="trailing" priority="999" constant="8" id="HdO-wC-Uxb"/>
+                                                                <constraint firstItem="Nqd-PC-mba" firstAttribute="leading" secondItem="6sk-Jt-Okv" secondAttribute="trailing" constant="8" id="I0G-De-hPH"/>
                                                                 <constraint firstItem="Rbc-sH-qWg" firstAttribute="leading" secondItem="1ow-cR-AuR" secondAttribute="trailing" constant="8" id="KZP-bo-bYZ"/>
                                                                 <constraint firstItem="Bbj-CT-k9j" firstAttribute="leading" secondItem="Nqd-PC-mba" secondAttribute="leading" constant="7" id="SMg-fw-RJc"/>
                                                                 <constraint firstItem="1ow-cR-AuR" firstAttribute="leading" secondItem="Bbj-CT-k9j" secondAttribute="trailing" constant="8" id="VQn-kE-tWy"/>
@@ -259,6 +273,7 @@
                                                         <connections>
                                                             <outlet property="chatBubbleView" destination="Nqd-PC-mba" id="row-kU-Qf9"/>
                                                             <outlet property="dateLabel" destination="Bbj-CT-k9j" id="Slu-AH-zBJ"/>
+                                                            <outlet property="favoriteButton" destination="6sk-Jt-Okv" id="iDJ-zM-bCb"/>
                                                             <outlet property="messageLabel" destination="jhB-Cu-LAm" id="wRa-Ll-tkR"/>
                                                             <outlet property="nameLabel" destination="1ow-cR-AuR" id="srP-w3-L6M"/>
                                                             <outlet property="profileImageView" destination="Rbc-sH-qWg" id="f0i-DU-1SA"/>
@@ -323,13 +338,27 @@
                                                                     <color key="textColor" red="0.30980392159999998" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rsS-7D-FMa">
+                                                                    <rect key="frame" x="146" y="38" width="30" height="30"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="30" id="PYz-1x-iT9"/>
+                                                                        <constraint firstAttribute="width" constant="30" id="hr7-B9-QWD"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="favoriteDefault"/>
+                                                                    <state key="selected" image="favoriteSelected"/>
+                                                                    <connections>
+                                                                        <action selector="buttonTapped:" destination="9Aa-tL-QaK" eventType="touchUpInside" id="wHt-rp-EQb"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="u3t-QZ-hd8" firstAttribute="top" secondItem="Y80-0e-eZF" secondAttribute="top" constant="8" id="0Gz-CR-lgA"/>
                                                                 <constraint firstItem="u3t-QZ-hd8" firstAttribute="top" secondItem="Y80-0e-eZF" secondAttribute="top" constant="8" id="40R-Ap-5aK"/>
                                                                 <constraint firstItem="epe-aw-okJ" firstAttribute="leading" secondItem="BpU-va-Qqm" secondAttribute="leading" id="56N-Vj-Fh0"/>
+                                                                <constraint firstItem="rsS-7D-FMa" firstAttribute="centerY" secondItem="BpU-va-Qqm" secondAttribute="centerY" id="DHF-FB-mHS"/>
                                                                 <constraint firstItem="BpU-va-Qqm" firstAttribute="leading" secondItem="u3t-QZ-hd8" secondAttribute="trailing" constant="-21" id="Esu-9n-avj"/>
                                                                 <constraint firstItem="cog-zu-vca" firstAttribute="leading" secondItem="epe-aw-okJ" secondAttribute="trailing" constant="8" id="Fto-HQ-FPW"/>
+                                                                <constraint firstItem="rsS-7D-FMa" firstAttribute="leading" secondItem="BpU-va-Qqm" secondAttribute="trailing" constant="8" id="FyN-a0-6hP"/>
                                                                 <constraint firstItem="BpU-va-Qqm" firstAttribute="top" secondItem="cog-zu-vca" secondAttribute="bottom" id="QNh-2g-CQI"/>
                                                                 <constraint firstItem="cog-zu-vca" firstAttribute="leading" secondItem="epe-aw-okJ" secondAttribute="trailing" priority="999" constant="8" id="TGt-XU-5Ow"/>
                                                                 <constraint firstItem="u3t-QZ-hd8" firstAttribute="leading" secondItem="cog-zu-vca" secondAttribute="trailing" constant="8" id="TIo-k3-Ylk"/>
@@ -360,6 +389,7 @@
                                                         <connections>
                                                             <outlet property="chatBubbleView" destination="BpU-va-Qqm" id="Y0A-B5-kIz"/>
                                                             <outlet property="dateLabel" destination="cog-zu-vca" id="2na-iq-Gwe"/>
+                                                            <outlet property="favoriteButton" destination="rsS-7D-FMa" id="aeP-h6-sGc"/>
                                                             <outlet property="messageLabel" destination="blP-sO-PO2" id="Cxa-rs-Kwe"/>
                                                             <outlet property="nameLabel" destination="epe-aw-okJ" id="zpD-8U-YFa"/>
                                                             <outlet property="profileImageView" destination="u3t-QZ-hd8" id="mGH-JM-A3q"/>
@@ -1603,6 +1633,8 @@
         <image name="cancelIcon" width="22" height="22"/>
         <image name="contactsIcon" width="25" height="25"/>
         <image name="defaultImage" width="100" height="100"/>
+        <image name="favoriteDefault" width="30" height="30"/>
+        <image name="favoriteSelected" width="30" height="30"/>
         <image name="homeIcon" width="25" height="25"/>
         <image name="reminderComplete" width="45" height="45"/>
         <image name="remindersCompleteHL" width="45" height="45"/>

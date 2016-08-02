@@ -10,16 +10,23 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
+protocol MessageTableViewCellDelegate {
+    func cellButtonTapped(cell: MessageTableViewCell)
+}
+
 class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet var messageView: MessageView!
+    
+    var delegate: MessageTableViewCellDelegate?
     
     @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var chatBubbleView: UIView!
     @IBOutlet var messageLabel: UILabel!
-
+    @IBOutlet var favoriteButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -40,6 +47,24 @@ class MessageTableViewCell: UITableViewCell {
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.borderColor = stormCloud.CGColor
+        
+        
+        // Configure favorited
+        if message.favorited.count > 0 {
+            if let currentUser = FIRAuth.auth()?.currentUser {
+                for userId in message.favorited.keys {
+                    // Message is favorited by current user
+                    if userId == currentUser.uid {
+                        if message.favorited[userId] == "true" {
+                            favoriteButton.selected = true
+                            break
+                        } else {
+                            favoriteButton.selected = false
+                        }
+                    }
+                }
+            }
+        }
         
         self.messageLabel.text = message.messageString
         // Format readable date
@@ -95,56 +120,9 @@ class MessageTableViewCell: UITableViewCell {
             break
         }
     }
-
-//    func configureCell(message: Message, contact: Contact, profileImage: UIImage) {
-//        messageView.alpha = 0
-//        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.messageView.messageLabel.text = message.messageString
-//            
-//            // Format readable date
-//            let date = NSDate(timeIntervalSince1970: Double(message.dateSent)!)
-//            let dateFormatter = NSDateFormatter()
-//            
-//            let calendar = NSCalendar.currentCalendar()
-//            if calendar.isDateInToday(date) {
-//                dateFormatter.dateFormat = "h:mm a"
-//                self.messageView.dateLabel.text = "Today, \(dateFormatter.stringFromDate(date))"
-//            } else if calendar.isDateInYesterday(date) {
-//                dateFormatter.dateFormat = "h:mm a"
-//                self.messageView.dateLabel.text = "Yesterday, \(dateFormatter.stringFromDate(date))"
-//            } else {
-//                dateFormatter.dateFormat = "M/dd/yy h:mm a"
-//                self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
-//            }
-//            
-////            dateFormatter.dateFormat = "M/dd/yy h:mm a"
-////            self.messageView.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
-//            
-//            if let currentUser = FIRAuth.auth()?.currentUser {
-//                if message.senderId == currentUser.uid {
-//                    self.messageView.nameLabel.text = "Me"
-//                    // Use current user's profile image
-//                    self.messageView.profileImageView.image = AYNModel.sharedInstance.currentUserProfileImage
-//                    self.messageView.userType("sender")
-//                } else {
-//                    // Get only first name
-//                    let fullName = contact.fullName
-//                    if let firstName = fullName.componentsSeparatedByString(" ")[0] as String? {
-//                        self.messageView.nameLabel.text = firstName
-//                    } else {
-//                        self.messageView.nameLabel.text = fullName
-//                    }
-//                    // Use recipient's profile image
-//                    self.messageView.profileImageView.image = profileImage
-//                    self.messageView.userType("receiver")
-//                }
-//            }
-//            
-//            UIView.animateWithDuration(0.2, animations: {
-//                self.messageView.alpha = 1
-//            })
-//        }
-//    }
+    
+    @IBAction func buttonTapped(sender: UIButton) {
+        delegate?.cellButtonTapped(self)
+    }
 
 }

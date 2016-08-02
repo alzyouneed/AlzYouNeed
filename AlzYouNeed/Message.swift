@@ -13,6 +13,7 @@ class Message: NSObject {
     var senderId: String!
     var dateSent: String!
     var messageString: String!
+    var favorited: [String:String]!
     
     init?(messageId: String, messageDict: NSDictionary) {
         super.init()
@@ -21,9 +22,10 @@ class Message: NSObject {
         self.senderId = messageDict.objectForKey("senderId") as? String ?? ""
         self.dateSent = messageDict.objectForKey("timestamp") as? String ?? ""
         self.messageString = messageDict.objectForKey("messageString") as? String ?? ""
+        self.favorited = messageDict.objectForKey("favorited") as? [String:String] ?? [:]
     }
     
     override var description: String {
-        return "messageId: \(messageId) -- senderId: \(senderId) -- dateSent: \(dateSent) -- messageString: \(messageString)"
+        return "messageId: \(messageId) -- senderId: \(senderId) -- dateSent: \(dateSent) -- messageString: \(messageString) -- favorited: \(favorited)"
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class ContactDetailViewController: UIViewController, UITableViewDelegate {
+class ContactDetailViewController: UIViewController, UITableViewDelegate, MessageTableViewCellDelegate {
 
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var contactActionButtons: actionButtonsDashboardView!
@@ -238,7 +238,29 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
 //                                self.moveToLastMessage()
                             }
                         })
+                        
+//                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observeEventType(.ChildChanged, withBlock: { (snapshot) in
+//                            print("Child updated")
+//                            if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
+//                                self.messages.append(newMessage)
+//                                indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+//                                
+//                                // print("inserting new message into row")
+//                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+//                                
+//                                // self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+//                                
+//                                dispatch_async(dispatch_get_main_queue(), {
+//                                    self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
+//                                })
+//                              self.moveToLastMessage()
+//                            }
+//                        })
                     })
+                    
+//                   self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(.ChildChanged, withBlock: { (snapshot) in
+//                        print("Child changed")
+//                    })
                     
 //                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
 //                        
@@ -285,10 +307,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
         if message.senderId == FIRAuth.auth()?.currentUser?.uid {
             let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellMe")! as! MessageTableViewCell
             cell.configureCell(message, contact: contact, profileImage: profileImage)
+            cell.delegate = self
             return cell
         } else {
             let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellYou")! as! MessageTableViewCell
             cell.configureCell(message, contact: contact, profileImage: profileImage)
+            cell.delegate = self
             return cell
         }
         
@@ -300,6 +324,33 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate {
 //        cell.configureCell(message, contact: contact, profileImage: profileImage)
 //        
 //        return cell
+    }
+    
+    // MARK: - MessageTableViewCell Delegate
+    func cellButtonTapped(cell: MessageTableViewCell) {
+
+        let indexPath = self.messagesTableView.indexPathForRowAtPoint(cell.center)!
+        print("Favorite selected at: \(indexPath.row)")
+//        if let selectedMessage = messages[indexPath.row] as Message? {
+//            // Favorite / Un-Favorite message
+//            
+//            var favorited = "true"
+//            if cell.favoriteButton.selected == true {
+//                // Already favorited -- un-favorite
+//                print("Un-favoriting message")
+//                favorited = "false"
+//            }
+//            
+//            FirebaseManager.favoriteMessage(self.conversationId, messageId: selectedMessage.messageId, favorited: favorited, completionHandler: { (error) in
+//                if let error = error {
+//                    // Error
+//                } else {
+//                    // Success
+////                    self.messages.removeAtIndex(indexPath.row)
+////                    self.messagesTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+//                }
+//            })
+//        }
     }
     
     // MARK: - Keyboard

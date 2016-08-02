@@ -815,6 +815,9 @@ class FirebaseManager: NSObject {
                         let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
                         modifiedMessage.setObject(user.uid, forKey: "senderId")
                         
+                        let favoritedDict = [user.uid : "false", receiverId : "false"]
+                        modifiedMessage.setObject(favoritedDict, forKey: "favorited")
+                        
                         databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
                             if error != nil {
                                 // Error
@@ -824,6 +827,34 @@ class FirebaseManager: NSObject {
                             else {
                                 // Success
                                 print("Sent new message")
+                                completionHandler(error: nil)
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    }
+    
+    class func favoriteMessage(conversationId: String, messageId: String, favorited: String, completionHandler: (error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            getCurrentUser({ (userDict, error) in
+                if let error = error {
+                    // Error
+                    completionHandler(error: error)
+                } else {
+                    if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                        let databaseRef = FIRDatabase.database().reference()
+                        
+                        let childUpdates = [user.uid : favorited]
+                        databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
+                            if let error = error {
+                                // Error
+                                print("Error updating favorite value for message")
+                                completionHandler(error: error)
+                            } else {
+                                // Success
+                                print("Updated favorite value for message")
                                 completionHandler(error: nil)
                             }
                         })
