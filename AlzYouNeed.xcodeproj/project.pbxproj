@@ -507,6 +507,11 @@
 					2D9834D31D0C4A91000977DC = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 472W345FWN;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
