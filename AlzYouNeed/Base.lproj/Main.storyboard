@@ -52,18 +52,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-s2-fvu">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-s2-fvu">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="8nL-Sq-GH4">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="20" id="FYf-1h-a4d">
                                     <size key="itemSize" width="200" height="210"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="50" maxX="0.0" maxY="100"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ContactCell" id="nnA-ch-dz6" customClass="ContactCollectionViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="5" width="200" height="210"/>
+                                        <rect key="frame" x="0.0" y="114" width="200" height="210"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="210"/>
@@ -82,6 +82,7 @@
                                             <constraint firstItem="1Oq-0X-cV9" firstAttribute="leading" secondItem="nnA-ch-dz6" secondAttribute="leading" id="O8Z-rS-6qa"/>
                                             <constraint firstAttribute="bottom" secondItem="1Oq-0X-cV9" secondAttribute="bottom" id="PeE-SG-9FI"/>
                                         </constraints>
+                                        <size key="customSize" width="200" height="210"/>
                                         <connections>
                                             <outlet property="contactView" destination="1Oq-0X-cV9" id="WSW-sZ-ES1"/>
                                             <segue destination="W9I-r8-WDP" kind="presentation" identifier="contactDetail" id="NDI-Yo-xRX"/>

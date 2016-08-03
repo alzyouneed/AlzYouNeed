@@ -43,25 +43,30 @@ class ContactCollectionViewCell: UICollectionViewCell {
             }
         }
         
-        if let imageUrl = contact.photoUrl {
-            if imageUrl.hasPrefix("gs://") {
-                FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
-                    if let error = error {
-                        // Error
-                        print("Error downloading user profile image: \(error.localizedDescription)")
-                        return
-                    }
-                    // Success
-                    dispatch_async(dispatch_get_main_queue(), { 
-                        self.contactView.contactImageView.image = UIImage(data: data!)
+        // Load images on background thread to avoid choppiness
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            if let imageUrl = contact.photoUrl {
+                if imageUrl.hasPrefix("gs://") {
+                    FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+                        if let error = error {
+                            // Error
+                            print("Error downloading user profile image: \(error.localizedDescription)")
+                            return
+                        }
+                        // Success
+                            let image = UIImage(data: data!)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.contactView.contactImageView.image = image
+                            })
                     })
-                })
-            } else if let url = NSURL(string: imageUrl), data = NSData(contentsOfURL: url) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.contactView.contactImageView.image = UIImage(data: data)
-                })
+                } else if let url = NSURL(string: imageUrl), data = NSData(contentsOfURL: url) {
+                        let image = UIImage(data: data)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.contactView.contactImageView.image = image
+                        })
+                }
             }
-        }
+        })
     }
   
 }
