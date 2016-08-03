@@ -1203,10 +1203,10 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="172" y="310" width="256" height="81"/>
+                                <rect key="frame" x="172" y="310" width="256" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0Tc-ll-KHY"/>
-                                    <constraint firstAttribute="height" constant="81" id="vQp-5R-Am2"/>
+                                    <constraint firstAttribute="height" constant="90" id="vQp-5R-Am2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvW-BC-Ijy" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
