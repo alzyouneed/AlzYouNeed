@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import PKHUD
 
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate {
 
@@ -232,12 +233,26 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     func cellButtonTapped(cell: ReminderTableViewCell) {
         let indexPath = self.remindersTableView.indexPathForRowAtPoint(cell.center)!
         if let completedReminder = AYNModel.sharedInstance.remindersArr[indexPath.row] as Reminder? {
+            confirmCompleteReminder(completedReminder)
+        }
+    }
+    
+    func confirmCompleteReminder(completedReminder: Reminder) {
+        let alertController = UIAlertController(title: "Are you sure you're done?", message: nil, preferredStyle: .Alert)
+        let confirmAction = UIAlertAction(title: "Yes!", style: .Default) { (action) in
             FirebaseManager.completeFamilyReminder(completedReminder, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Success
+                    HUD.flash(.Success)
                 }
             })
         }
+        let cancelAction = UIAlertAction(title: "Nope", style: .Cancel, handler: nil)
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Present different VC's
