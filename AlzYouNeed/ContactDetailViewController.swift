@@ -33,6 +33,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     var messageMode = false
     
+    // Handle segue to message the contact
+    var messageContact = false
+    
     func configureView() {
         messagesTableView.delegate = self
         
@@ -138,10 +141,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         // Add observers
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardDidChangeFrame(_:)), name:UIKeyboardDidChangeFrameNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
 //        addConversationObservers()
+        if messageContact {
+            messageTextField.becomeFirstResponder()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -149,6 +156,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         // Remove observers
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -375,8 +383,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             
             scrollView.setContentOffset(bottomOffset, animated: false)
             scrollToBottom()
-        }
-        else {
+        } else {
             self.toolbarBottomConstraint.constant = 0
         }
         
@@ -398,6 +405,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         
         configureMessageMode()
     }
+    
+//    func keyboardDidChangeFrame(sender: NSNotification) {
+//        print("Keyboard frame did change")
+//        adjustingKeyboardHeight(false, changeFrame: true, notification: sender)
+//    }
     
     func configureHideKeyboard() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ContactDetailViewController.dismissKeyboard))
@@ -453,5 +465,4 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             })
         }
     }
-
 }

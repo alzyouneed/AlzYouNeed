@@ -118,6 +118,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
     
     func rightButtonPressed(sender: UIButton) {
         print("Right button pressed -- row: \(sender.tag)")
+        performSegueWithIdentifier("contactDetailMessage", sender: sender)
     }
     
     // Add label if table data array empty
@@ -158,6 +159,19 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
                             detailVC.contact = contact
                             detailVC.profileImage = cell.contactView.contactImageView.image
                         }
+                    }
+                }
+            }
+        } else if segue.identifier == "contactDetailMessage" {
+            let detailNavController: UINavigationController = segue.destinationViewController as! UINavigationController
+            if let indexPath = NSIndexPath(forItem: sender!.tag, inSection: 0) as NSIndexPath? {
+                let contact = AYNModel.sharedInstance.contactsArr[indexPath.row]
+                if let cell = self.contactsCollectionView.cellForItemAtIndexPath(indexPath) as? ContactCollectionViewCell {
+                    if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
+                        detailVC.contact = contact
+                        detailVC.profileImage = cell.contactView.contactImageView.image
+                        
+                        detailVC.messageContact = true
                     }
                 }
             }

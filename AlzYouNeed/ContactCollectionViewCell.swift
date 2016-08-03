@@ -19,7 +19,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
         contactView.nameLabel.text = contact.fullName
         
         // TODO: Change later to add functionality
-        contactView.singleButton("left")
+//        contactView.singleButton("left")
         
         // Saves row in tag for contact-specific actions
         contactView.leftButton.tag = row

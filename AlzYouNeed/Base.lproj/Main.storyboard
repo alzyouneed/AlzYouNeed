@@ -112,6 +112,7 @@
                     <navigationItem key="navigationItem" title="Family &amp; Friends" id="cpU-bE-gGz"/>
                     <connections>
                         <outlet property="contactsCollectionView" destination="Stv-s2-fvu" id="KPX-Me-eTa"/>
+                        <segue destination="W9I-r8-WDP" kind="presentation" identifier="contactDetailMessage" id="L6i-Jh-g50"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUH-JG-JKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1644,5 +1645,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d61-Gb-xHV"/>
+        <segue reference="L6i-Jh-g50"/>
     </inferredMetricsTieBreakers>
 </document>
