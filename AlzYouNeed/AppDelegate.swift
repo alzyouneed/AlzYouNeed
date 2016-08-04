@@ -111,8 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
 
-//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Sandbox)
-        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Sandbox)
+//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
 //        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Prod)
 //        print("Device Token:", tokenString)
 //        print("FCM Token:", FIRInstanceID.instanceID().token()!)
@@ -136,7 +136,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func tokenRefreshNotification(notification: NSNotification) {
-        let refreshedToken = FIRInstanceID.instanceID().token()!
+        
+        // Prevent crashing from unwrapping possible nil value
+        guard let refreshedToken = FIRInstanceID.instanceID().token()
+            else {
+//                print("Refreshed token is nil")
+                return
+        }
+//        let refreshedToken = FIRInstanceID.instanceID().token()!
         print("InstanceID token: \(refreshedToken)")
         
         // Connect to FCM since connection may have failed when attempted before having a token.
