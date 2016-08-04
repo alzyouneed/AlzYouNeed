@@ -1,22 +1,16 @@
 //
-//  NewExistingFamilyViewController.swift
+//  PushNotificationsViewController.swift
 //  AlzYouNeed
 //
-//  Created by Connor Wybranowski on 6/23/16.
+//  Created by Connor Wybranowski on 8/4/16.
 //  Copyright © 2016 Alz You Need. All rights reserved.
 //
 
 import UIKit
-import Firebase
 
-class NewExistingFamilyViewController: UIViewController {
-    
-    @IBOutlet var newFamilyButton: UIButton!
-    @IBOutlet var existingFamilyButton: UIButton!
+class PushNotificationsViewController: UIViewController {
     
     @IBOutlet var progressView: UIProgressView!
-    
-    @IBOutlet var cancelButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,13 +18,9 @@ class NewExistingFamilyViewController: UIViewController {
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.presentTransparentNavBar()
-    }
-    
     override func viewDidAppear(animated: Bool) {
         UIView.animateWithDuration(0.5) {
-            self.progressView.setProgress(0.75, animated: true)
+            self.progressView.setProgress(0.5, animated: true)
         }
     }
 
@@ -39,19 +29,43 @@ class NewExistingFamilyViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
     func configureView() {
         self.navigationItem.hidesBackButton = true
     }
     
+    @IBAction func enablePush(sender: UIButton) {
+        // TODO: Perform segue after user has clicked "Allow"
+        registerPushNotifications()
+        performSegueWithIdentifier("familyStage", sender: self)
+    }
+    
+    @IBAction func disablePush(sender: UIButton) {
+        // Show alert with tip on how to enable later
+        let alertController = UIAlertController(title: "Tip", message: "You can enable notifications in Settings if you change your mind", preferredStyle: .Alert)
+        let confirmAction = UIAlertAction(title: "Got it", style: .Default) { (action) in
+            // Transition to next step in onboarding
+            self.performSegueWithIdentifier("familyStage", sender: self)
+        }
+        let cancelAction = UIAlertAction(title: "I change my mind...", style: .Cancel, handler: nil)
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func registerPushNotifications() {
+        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+    }
+    
+    
+    // MARK: - Cancel Onboarding
     @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
         cancelAccountCreation()
     }
     
-    // MARK: - Firebase
     func cancelAccountCreation() {
         
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
@@ -82,25 +96,15 @@ class NewExistingFamilyViewController: UIViewController {
         }
     }
     
+
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if let destinationVC = segue.destinationViewController as? FamilySignupViewController {
-            // New family
-            if sender?.tag == 0 {
-               destinationVC.newFamily = true
-                
-            }
-            // Existing family
-            else {
-                destinationVC.newFamily = false
-            }
-        }
-        
     }
- 
+    */
 
 }

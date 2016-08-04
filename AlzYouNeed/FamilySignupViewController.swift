@@ -48,7 +48,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidAppear(animated: Bool) {
         UIView.animateWithDuration(0.5) {
-            self.progressView.setProgress(0.825, animated: true)
+            self.progressView.setProgress(1, animated: true)
         }
 
         // Animate status bar hidden

@@ -49,7 +49,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     override func viewDidAppear(animated: Bool) {
         UIView.animateWithDuration(0.5) {
-            self.progressView.setProgress(0.33, animated: true)
+            self.progressView.setProgress(0.25, animated: true)
         }
     }
     
@@ -227,7 +227,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     HUD.flash(.Success, delay: 0, completion: { (success) in
                         self.stepCompleted = true
                         self.view.endEditing(true)
-                        self.performSegueWithIdentifier("familyStage", sender: self)
+                        self.performSegueWithIdentifier("pushNotification", sender: self)
                     })
                 }
             })
@@ -415,7 +415,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
 //    }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "familyStage" {
+        if identifier == "pushNotification" {
             return stepCompleted
         }
         return false

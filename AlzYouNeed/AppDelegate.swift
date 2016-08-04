@@ -50,8 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
 //        tabItem.badgeValue = "8"
         
-//        printAllFonts()
-        
         // Local reminders
         if let options = launchOptions {
             if (options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification) != nil {
@@ -63,10 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-
-        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-        application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
+        
+//        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+//        application.registerUserNotificationSettings(settings)
+//        application.registerForRemoteNotifications()
         
         
         // Add observer for InstanceID token refresh callback.
@@ -138,12 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func tokenRefreshNotification(notification: NSNotification) {
         
         // Prevent crashing from unwrapping possible nil value
-        guard let refreshedToken = FIRInstanceID.instanceID().token()
-            else {
-//                print("Refreshed token is nil")
-                return
-        }
-//        let refreshedToken = FIRInstanceID.instanceID().token()!
+        guard let refreshedToken = FIRInstanceID.instanceID().token() else { return }
         print("InstanceID token: \(refreshedToken)")
         
         // Connect to FCM since connection may have failed when attempted before having a token.

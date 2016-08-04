@@ -23,8 +23,12 @@
             <string>OpenSans</string>
             <string>OpenSans</string>
             <string>OpenSans</string>
+            <string>OpenSans</string>
         </mutableArray>
         <mutableArray key="OpenSans-Semibold.ttf">
+            <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
@@ -439,7 +443,7 @@
                                         <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60B-oY-ibZ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60B-oY-ibZ">
                                         <rect key="frame" x="546" y="5" width="46" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="RkS-S7-vse"/>
@@ -648,7 +652,7 @@
                                     <action selector="createOrJoinFamily:" destination="cPi-aJ-y8T" eventType="touchUpInside" id="7fN-jL-zrN"/>
                                 </connections>
                             </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.66000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="fxS-gW-yTg">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="fxS-gW-yTg">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.70196078431372544" green="0.75686274509803919" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
@@ -688,7 +692,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rug-3z-N9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1414" y="-996"/>
+            <point key="canvasLocation" x="2018" y="-996"/>
         </scene>
         <!--New User-->
         <scene sceneID="346-aL-I3p">
@@ -863,7 +867,7 @@
                                 </state>
                                 <connections>
                                     <action selector="completeSetup:" destination="vu3-xn-OOF" eventType="touchUpInside" id="5bN-2M-r2S"/>
-                                    <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="1Dy-Bz-OGC"/>
+                                    <segue destination="dKb-Zr-60z" kind="show" identifier="pushNotification" id="C14-Xj-oII"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ayi-9u-FXc">
@@ -960,6 +964,144 @@
             </objects>
             <point key="canvasLocation" x="-36" y="-996"/>
         </scene>
+        <!--Push Notifications-->
+        <scene sceneID="Hmw-c9-Tis">
+            <objects>
+                <viewController id="dKb-Zr-60z" customClass="PushNotificationsViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DKA-SD-3OA"/>
+                        <viewControllerLayoutGuide type="bottom" id="T73-bp-9DR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kOh-Az-Ecx">
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8O-ST-OUF">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="vXo-Ua-RJM">
+                                <rect key="frame" x="0.0" y="266" width="600" height="270"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-P4-4wk">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="134"/>
+                                        <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
+                                        <state key="normal" title="Enable">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="enablePush:" destination="dKb-Zr-60z" eventType="touchUpInside" id="isN-lk-hUa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOI-I0-31Y">
+                                        <rect key="frame" x="0.0" y="136" width="600" height="134"/>
+                                        <color key="backgroundColor" red="0.99607843137254903" green="0.37254901960784315" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
+                                        <state key="normal" title="No thanks">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="disablePush:" destination="dKb-Zr-60z" eventType="touchUpInside" id="s8s-wc-rPu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Etk-c6-A0r">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="266"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications are used to alert you of important information such as reminders" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvA-4k-y4o">
+                                        <rect key="frame" x="8" y="86" width="584" height="94"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="346" id="eNj-Mx-fAi"/>
+                                            <constraint firstAttribute="height" constant="94" id="mzy-en-KHU"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
+                                        <color key="textColor" red="0.30980392156862746" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="eNj-Mx-fAi"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable to improve the AlzYouNeed experience" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yp4-f5-Grl">
+                                        <rect key="frame" x="8" y="176" width="584" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="421" id="BPJ-Zd-wjX"/>
+                                            <constraint firstAttribute="height" constant="40" id="OCO-kg-xRx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
+                                        <color key="textColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="BPJ-Zd-wjX"/>
+                                                <exclude reference="OCO-kg-xRx"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="266" id="Bo2-MQ-mMg"/>
+                                    <constraint firstItem="Yp4-f5-Grl" firstAttribute="top" secondItem="mvA-4k-y4o" secondAttribute="bottom" constant="-4" id="RTs-jU-Zsd"/>
+                                    <constraint firstItem="mvA-4k-y4o" firstAttribute="leading" secondItem="Etk-c6-A0r" secondAttribute="leading" constant="8" id="Wo8-0g-gKI"/>
+                                    <constraint firstItem="Yp4-f5-Grl" firstAttribute="leading" secondItem="Etk-c6-A0r" secondAttribute="leading" constant="8" id="bCx-c9-Eac"/>
+                                    <constraint firstItem="mvA-4k-y4o" firstAttribute="centerY" secondItem="Etk-c6-A0r" secondAttribute="centerY" id="wwh-Gu-JCt"/>
+                                    <constraint firstAttribute="trailing" secondItem="mvA-4k-y4o" secondAttribute="trailing" constant="8" id="yUQ-wC-iFQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yp4-f5-Grl" secondAttribute="trailing" constant="8" id="ybg-mb-Ieu"/>
+                                </constraints>
+                            </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="bzW-VP-7jV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                                <color key="progressTintColor" red="0.63137254899999995" green="0.25490196079999999" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.76078431369999999" green="0.73333333329999995" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="vXo-Ua-RJM" firstAttribute="leading" secondItem="kOh-Az-Ecx" secondAttribute="leading" id="782-da-lI6"/>
+                            <constraint firstItem="T73-bp-9DR" firstAttribute="top" secondItem="U8O-ST-OUF" secondAttribute="bottom" id="Qkg-SH-PAK"/>
+                            <constraint firstItem="bzW-VP-7jV" firstAttribute="leading" secondItem="kOh-Az-Ecx" secondAttribute="leading" id="ShQ-H1-12d"/>
+                            <constraint firstAttribute="trailing" secondItem="bzW-VP-7jV" secondAttribute="trailing" id="Yjw-8z-u8k"/>
+                            <constraint firstItem="Etk-c6-A0r" firstAttribute="top" secondItem="DKA-SD-3OA" secondAttribute="bottom" id="ZRd-Em-1x4"/>
+                            <constraint firstItem="U8O-ST-OUF" firstAttribute="leading" secondItem="kOh-Az-Ecx" secondAttribute="leading" id="anL-oc-CeA"/>
+                            <constraint firstAttribute="trailing" secondItem="Etk-c6-A0r" secondAttribute="trailing" id="bQU-EF-RnJ"/>
+                            <constraint firstItem="T73-bp-9DR" firstAttribute="top" secondItem="vXo-Ua-RJM" secondAttribute="bottom" id="ckL-Uu-VHK"/>
+                            <constraint firstItem="Etk-c6-A0r" firstAttribute="leading" secondItem="kOh-Az-Ecx" secondAttribute="leading" id="ehD-cI-wEp"/>
+                            <constraint firstItem="bzW-VP-7jV" firstAttribute="top" secondItem="DKA-SD-3OA" secondAttribute="bottom" id="ekA-jC-Ell"/>
+                            <constraint firstAttribute="trailing" secondItem="U8O-ST-OUF" secondAttribute="trailing" id="lkD-ph-DKN"/>
+                            <constraint firstItem="vXo-Ua-RJM" firstAttribute="leading" secondItem="kOh-Az-Ecx" secondAttribute="leadingMargin" id="loO-rj-xLx"/>
+                            <constraint firstAttribute="trailing" secondItem="vXo-Ua-RJM" secondAttribute="trailing" id="mCN-FV-sFE"/>
+                            <constraint firstItem="vXo-Ua-RJM" firstAttribute="top" secondItem="Etk-c6-A0r" secondAttribute="bottom" id="pEy-GW-Qso"/>
+                            <constraint firstItem="U8O-ST-OUF" firstAttribute="top" secondItem="DKA-SD-3OA" secondAttribute="bottom" id="sJ8-UJ-hFW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vXo-Ua-RJM" secondAttribute="trailing" id="t08-In-nix"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="loO-rj-xLx"/>
+                                <exclude reference="t08-In-nix"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Push Notifications" id="qCN-Rt-fz7">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="Edo-7a-W3Q">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelOnboarding:" destination="dKb-Zr-60z" id="Gb1-3Q-Bug"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="progressView" destination="bzW-VP-7jV" id="ott-fL-qCG"/>
+                        <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="YZE-J6-Np1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nzN-oo-vH3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="655" y="-996"/>
+        </scene>
         <!--Family-->
         <scene sceneID="YSS-HU-EBv">
             <objects>
@@ -1003,7 +1145,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="suC-LP-9I8">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="suC-LP-9I8">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
@@ -1041,7 +1183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOV-ro-sZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="730" y="-996"/>
+            <point key="canvasLocation" x="1334" y="-996"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="6dU-ax-Uhd">
@@ -1644,7 +1786,7 @@
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d61-Gb-xHV"/>
         <segue reference="L6i-Jh-g50"/>
+        <segue reference="d61-Gb-xHV"/>
     </inferredMetricsTieBreakers>
 </document>
