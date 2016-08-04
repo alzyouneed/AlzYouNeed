@@ -63,6 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+
+        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        
         // Add observer for InstanceID token refresh callback.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.tokenRefreshNotification), name: kFIRInstanceIDTokenRefreshNotification, object: nil)
         
@@ -107,8 +113,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Sandbox)
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
-        print("Device Token:", tokenString)
-        print("FCM Token:", FIRInstanceID.instanceID().token()!)
+//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Prod)
+//        print("Device Token:", tokenString)
+//        print("FCM Token:", FIRInstanceID.instanceID().token()!)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
