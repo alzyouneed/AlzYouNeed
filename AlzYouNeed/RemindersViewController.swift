@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import PKHUD
 
-class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate {
+class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet var remindersTableView: UITableView!
     @IBOutlet var completedButton: UIButton!
@@ -20,6 +20,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     // Class-scope for valueChanged function
     var dateTF: UITextField!
+    var repeatsTF: UITextField!
+    let repeatPickerView: UIPickerView! = UIPickerView()
+    let repeatOptions = ["None", "Hourly", "Daily", "Weekly"]
+    // TESTING ONLY
+//    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +57,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let alert = UIAlertController(title: "New Reminder", message: nil, preferredStyle: .Alert)
         var titleTF: UITextField!
         var descriptionTF: UITextField!
-//        var dateTF: UITextField!
+        repeatPickerView.delegate = self
+        repeatPickerView.dataSource = self
         
         alert.addTextFieldWithConfigurationHandler { (titleTextField) in
             titleTextField.placeholder = "Task"
@@ -74,6 +80,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
             self.dateTF = dateTextField
         }
+        alert.addTextFieldWithConfigurationHandler { (repeatsTextField) in
+            repeatsTextField.text = "Repeats None"
+            repeatsTextField.inputView = self.repeatPickerView
+            self.repeatsTF = repeatsTextField
+        }
         
         let confirmAction = UIAlertAction(title: "Create", style: .Default) { (action) in
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
@@ -83,7 +94,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let dateFormatter = NSDateFormatter()
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
                 let dueDate = dateFormatter.dateFromString(self.dateTF.text!)?.timeIntervalSince1970
-                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
+                
+                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
+                
+                let repeatsTFText = self.repeatsTF.text?.componentsSeparatedByString(" ")[1]
+                
+                if let repeatOption = repeatsTFText as String? {
+                    newReminder["repeats"] = repeatOption
+                }
                 
                 FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
@@ -331,6 +349,27 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         print("Scheduling local notification")
         let notification = UILocalNotification()
         notification.fireDate = NSDate(timeIntervalSince1970: NSTimeInterval(reminder["dueDate"] as! String)!)
+        
+        // Handle repeated reminders
+        if let reminderRepeats = reminder["repeats"] as! String? {
+            print("Repeated reminder")
+            switch reminderRepeats {
+            case "None":
+                break
+            case "Hourly":
+                notification.repeatInterval = NSCalendarUnit.Hour
+            case "Daily":
+                notification.repeatInterval = NSCalendarUnit.Day
+            case "Weekly":
+                notification.repeatInterval = NSCalendarUnit.WeekOfYear
+            // TESTING ONLY
+//            case "Minute":
+//                notification.repeatInterval = NSCalendarUnit.Minute
+            default:
+                break
+            }
+        }
+        
         notification.alertBody = "Reminder: \(reminder["title"]!)"
         notification.alertAction = "View"
         notification.soundName = UILocalNotificationDefaultSoundName
@@ -353,6 +392,23 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 }
             }
         }
+    }
+    
+    // MARK: - UIPickerView
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return repeatOptions.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return repeatOptions[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        repeatsTF.text = "Repeats \(repeatOptions[row])"
     }
     
     /*
