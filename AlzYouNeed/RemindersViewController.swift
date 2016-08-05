@@ -141,6 +141,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         dateFormatter.dateFormat = "MMMM d, h:mm a"
         cell.dateLabel.text = "Due \(dateFormatter.stringFromDate(date))"
         cell.descriptionLabel.text = reminder.reminderDescription
+        
+        if reminder.repeats != "None" {
+            cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
+            cell.repeatsLabel.hidden = false
+        } else {
+            cell.repeatsLabel.hidden = true
+        }
     
         return cell
     }

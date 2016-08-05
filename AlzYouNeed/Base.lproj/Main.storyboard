@@ -41,6 +41,7 @@
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
             <string>OpenSans-Semibold</string>
+            <string>OpenSans-Semibold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1503,7 +1504,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBZ-Wg-Ure">
-                                                    <rect key="frame" x="62" y="68" width="530" height="22"/>
+                                                    <rect key="frame" x="62" y="68" width="403" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="Gnd-p5-gIV"/>
                                                     </constraints>
@@ -1523,9 +1524,20 @@
                                                         <action selector="buttonTapped:" destination="e3d-Pm-dad" eventType="touchUpInside" id="zgq-nn-j93"/>
                                                     </connections>
                                                 </button>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRl-JE-fif">
+                                                    <rect key="frame" x="473" y="68" width="119" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="sdL-7a-KTK"/>
+                                                        <constraint firstAttribute="width" constant="119" id="siQ-pI-9kU"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstItem="tRl-JE-fif" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="2ET-Oa-taY"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="5gY-Og-m7x"/>
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="6Jo-b3-n42"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="7Dg-4Q-GA4"/>
@@ -1537,9 +1549,11 @@
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="top" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="8" id="c0t-QN-5h4"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="eYP-4a-uyv"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hiv-xm-X4U"/>
+                                                <constraint firstItem="tRl-JE-fif" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="j90-6h-UIg"/>
                                                 <constraint firstItem="LhX-7Y-RQS" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="jFk-qP-a7G"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="lUh-RQ-lLp"/>
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="leading" secondItem="vVg-7m-Tsh" secondAttribute="leading" id="tnp-OG-6R4"/>
+                                                <constraint firstItem="tRl-JE-fif" firstAttribute="leading" secondItem="oBZ-Wg-Ure" secondAttribute="trailing" constant="8" id="vLx-hl-dn4"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="yBw-cD-G8T"/>
                                             </constraints>
                                             <variation key="default">
@@ -1547,6 +1561,7 @@
                                                     <exclude reference="Li7-L2-t3z"/>
                                                     <exclude reference="eYP-4a-uyv"/>
                                                     <exclude reference="lUh-RQ-lLp"/>
+                                                    <exclude reference="6Jo-b3-n42"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1555,6 +1570,7 @@
                                             <outlet property="completedButton" destination="LhX-7Y-RQS" id="5EZ-bz-YgV"/>
                                             <outlet property="dateLabel" destination="oBZ-Wg-Ure" id="EGb-N0-gw3"/>
                                             <outlet property="descriptionLabel" destination="vVg-7m-Tsh" id="fXY-Lq-5uF"/>
+                                            <outlet property="repeatsLabel" destination="tRl-JE-fif" id="NLW-v6-EKw"/>
                                             <outlet property="titleLabel" destination="YgS-6r-X0I" id="cLo-gn-nbw"/>
                                         </connections>
                                     </tableViewCell>

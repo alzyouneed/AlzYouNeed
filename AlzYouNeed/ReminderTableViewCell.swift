@@ -17,6 +17,8 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var repeatsLabel: UILabel!
+    
     @IBOutlet var completedButton: UIButton!
     
     var delegate: ReminderTableViewCellDelegate?
