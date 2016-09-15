@@ -40,7 +40,7 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
         
@@ -50,17 +50,17 @@ import UIKit
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.borderWidth = 2
 //        self.userImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        self.userImageView.layer.borderColor = stormCloud.CGColor
+        self.userImageView.layer.borderColor = stormCloud.cgColor
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "avatarSelectionView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
-    @IBAction func selectImage(sender: UIButton) {
+    @IBAction func selectImage(_ sender: UIButton) {
         // Previous button
         if sender.tag == 0 {
             if self.avatarImageIndex > 0 {
@@ -102,7 +102,7 @@ import UIKit
         }
     }
     
-    func avatarIndex(image: String) -> Int {
+    func avatarIndex(_ image: String) -> Int {
         switch image {
         case "avatarOne":
             return 0
@@ -120,12 +120,12 @@ import UIKit
     }
     
     // Adjust button size on touch
-    @IBAction func buttonTouchEnded(sender: UIButton) {
-        sender.transform = CGAffineTransformMakeScale(1, 1)
+    @IBAction func buttonTouchEnded(_ sender: UIButton) {
+        sender.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
-    @IBAction func buttonTouchStarted(sender: UIButton) {
-        sender.transform = CGAffineTransformMakeScale(0.9, 0.9)
+    @IBAction func buttonTouchStarted(_ sender: UIButton) {
+        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
     }
     
 }

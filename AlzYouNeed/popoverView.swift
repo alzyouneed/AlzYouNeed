@@ -36,24 +36,24 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "popoverView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
     // MARK: - Error Handling
-    func configureWithError(error: NSError) {
+    func configureWithError(_ error: NSError) {
         messageLabel.text = makeErrorReadable(error) ?? "Something went wrong"
     }
     
-    func makeErrorReadable(error: NSError) -> String? {
+    func makeErrorReadable(_ error: NSError) -> String? {
         let code = error.code
         switch code {
         case 17007:

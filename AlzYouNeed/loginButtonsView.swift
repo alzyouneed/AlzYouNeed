@@ -43,15 +43,15 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "loginButtonsView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
@@ -59,8 +59,8 @@ import UIKit
     
     
     // MARK: - Actions
-    @IBAction func leftButtonClicked(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) { 
+    @IBAction func leftButtonClicked(_ sender: UIButton) {
+        DispatchQueue.main.async { 
             switch self.state {
             case "normal":
                 self.normalState()
@@ -72,8 +72,8 @@ import UIKit
             }
         }
     }
-    @IBAction func rightButtonClicked(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) { 
+    @IBAction func rightButtonClicked(_ sender: UIButton) {
+        DispatchQueue.main.async { 
             switch self.state {
             case "normal":
                 self.loginState()
@@ -88,13 +88,13 @@ import UIKit
         }
     }
     
-    private func loginState() {
+    fileprivate func loginState() {
         if state != "login" {
             state = "login"
-            leftButton.setTitle("Cancel", forState: UIControlState.Normal)
+            leftButton.setTitle("Cancel", for: UIControlState())
             leftButton.backgroundColor = sunsetOrange
             
-            rightButton.setTitle("Login", forState: UIControlState.Normal)
+            rightButton.setTitle("Login", for: UIControlState())
             rightButton.backgroundColor = leftButtonColor
         }
         else {
@@ -102,11 +102,11 @@ import UIKit
         }
     }
     
-    private func normalState() {
-        leftButton.setTitle("Sign up", forState: UIControlState.Normal)
+    fileprivate func normalState() {
+        leftButton.setTitle("Sign up", for: UIControlState())
         leftButton.backgroundColor = leftButtonColor
         
-        rightButton.setTitle("Login", forState: UIControlState.Normal)
+        rightButton.setTitle("Login", for: UIControlState())
         rightButton.backgroundColor = rightButtonColor
     }
     

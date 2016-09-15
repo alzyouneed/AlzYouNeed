@@ -45,7 +45,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         userView.view.backgroundColor = caribbeanGreen
         
         configureActionButtons()
-        lastCalledLabel.hidden = true
+        lastCalledLabel.isHidden = true
         
         // Check user type
         if let userIsAdmin = contact.admin as String? {
@@ -67,7 +67,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     func configureActionButtons() {
-        contactActionButtons.leftButton.setTitle("Call", forState: UIControlState.Normal)
+        contactActionButtons.leftButton.setTitle("Call", for: UIControlState())
         contactActionButtons.leftButton.backgroundColor = slateBlue
 //        contactActionButtons.rightButton.setTitle("Locate", forState: UIControlState.Normal)
 //        contactActionButtons.rightButton.backgroundColor =
@@ -76,20 +76,20 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         contactActionButtons.singleButton("left")
         
         // Add targets
-        contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), forControlEvents: [UIControlEvents.TouchUpInside])
+        contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
     }
     
-    func configureLastCalledLabel(dateString: String) {
-        let date = NSDate(timeIntervalSince1970: Double(dateString)!)
-        let dateFormatter = NSDateFormatter()
+    func configureLastCalledLabel(_ dateString: String) {
+        let date = Date(timeIntervalSince1970: Double(dateString)!)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, h:mm a"
-        lastCalledLabel.text = "Last called: \(dateFormatter.stringFromDate(date))"
-        lastCalledLabel.hidden = false
+        lastCalledLabel.text = "Last called: \(dateFormatter.string(from: date))"
+        lastCalledLabel.isHidden = false
     }
     
     func hideExtraUserViewItems() {
-        userView.familyGroupLabel.hidden = true
-        userView.separatorView.hidden = true
+        userView.familyGroupLabel.isHidden = true
+        userView.separatorView.isHidden = true
     }
 
     override func viewDidLoad() {
@@ -107,7 +107,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             if error == nil {
                 if let userInfo = userInfo {
 //                    print("userInfo: \(userInfo)")
-                    if let lastCalled = userInfo.valueForKey("lastCalled") as? String {
+                    if let lastCalled = userInfo.value(forKey: "lastCalled") as? String {
                         self.configureLastCalledLabel(lastCalled)
                     }
                 }
@@ -135,31 +135,31 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
 //        }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
         
         // Add observers
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ContactDetailViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ContactDetailViewController.keyboardDidChangeFrame(_:)), name:UIKeyboardDidChangeFrameNotification, object: nil)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 //        addConversationObservers()
         if messageContact {
             messageTextField.becomeFirstResponder()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Remove observers
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardDidChangeFrameNotification, object: nil)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         removeConversationObservers()
     }
 
@@ -169,30 +169,30 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     // MARK: - Action Buttons
-    func leftButtonPressed(sender: UIButton) {
+    func leftButtonPressed(_ sender: UIButton) {
         print("Calling: \(contact.phoneNumber)")
         
         // Save action in Firebase RTDB
-        let now = NSDate().timeIntervalSince1970
+        let now = Date().timeIntervalSince1970
         let updates = ["lastCalled": now.description]
-        FirebaseManager.updateFamilyMemberUserInfo(contact.userId, updates: updates) { (error) in
+        FirebaseManager.updateFamilyMemberUserInfo(contact.userId, updates: updates as NSDictionary) { (error) in
             if error == nil {
                 // Success -- configure label
                 self.configureLastCalledLabel(now.description)
             }
         }
         
-        let url: NSURL = NSURL(string: "tel://\(contact.phoneNumber)")!
-        UIApplication.sharedApplication().openURL(url)
+        let url: URL = URL(string: "tel://\(contact.phoneNumber)")!
+        UIApplication.shared.openURL(url)
     }
     
-    @IBAction func closeContactDetailView(sender: AnyObject) {
+    @IBAction func closeContactDetailView(_ sender: AnyObject) {
         self.view.endEditing(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Messaging
-    @IBAction func sendMessage(sender: UIButton) {
+    @IBAction func sendMessage(_ sender: UIButton) {
         guard !messageTextField.text!.isEmpty else {
             print("Empty message textField")
             return
@@ -202,17 +202,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             return
         }
         
-        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : messageTextField.text!]
-        sender.enabled = false
+        let newMessage = ["timestamp" : Date().timeIntervalSince1970.description, "messageString" : messageTextField.text!]
+        sender.isEnabled = false
         
-        FirebaseManager.sendNewMessage(contact.userId, conversationId: conversationId, message: newMessage) { (error) in
+        FirebaseManager.sendNewMessage(contact.userId, conversationId: conversationId, message: newMessage as NSDictionary) { (error) in
             if error != nil {
                 // Error
-                sender.enabled = true
+                sender.isEnabled = true
             } else {
                 // Success
                 self.messageTextField.text = ""
-                sender.enabled = true
+                sender.isEnabled = true
             }
         }
     }
@@ -222,25 +222,25 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         print("Adding Firebase observers")
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
-                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
                     self.familyId = userFamilyId
                     
-                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
 //                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
-                        var indexPaths: [NSIndexPath] = []
-                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observeEventType(.Value, withBlock: { (snapshot) in
+                        var indexPaths: [IndexPath] = []
+                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
 //                            print("Value: \(snapshot.value)")
                             if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
                                 self.messages.append(newMessage)
-                                indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+                                indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
                                 
 //                                print("inserting new message into row")
-                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
+                                self.messagesTableView.insertRows(at: indexPaths, with: .none)
                                 
 //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
 
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
+                                DispatchQueue.main.async(execute: {
+                                    self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
                                 })
 //                                self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
 //                                self.moveToLastMessage()
@@ -304,21 +304,21 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     // MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         
-        let message = messages[indexPath.row]
+        let message = messages[(indexPath as NSIndexPath).row]
         
         if message.senderId == FIRAuth.auth()?.currentUser?.uid {
-            let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellMe")! as! MessageTableViewCell
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "messageCellMe")! as! MessageTableViewCell
             cell.configureCell(message, contact: contact, profileImage: profileImage)
             cell.delegate = self
             return cell
         } else {
-            let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellYou")! as! MessageTableViewCell
+            let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "messageCellYou")! as! MessageTableViewCell
             cell.configureCell(message, contact: contact, profileImage: profileImage)
             cell.delegate = self
             return cell
@@ -335,10 +335,10 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     // MARK: - MessageTableViewCell Delegate
-    func cellButtonTapped(cell: MessageTableViewCell) {
+    func cellButtonTapped(_ cell: MessageTableViewCell) {
 
-        let indexPath = self.messagesTableView.indexPathForRowAtPoint(cell.center)!
-        print("Favorite selected at: \(indexPath.row)")
+        let indexPath = self.messagesTableView.indexPathForRow(at: cell.center)!
+        print("Favorite selected at: \((indexPath as NSIndexPath).row)")
 //        if let selectedMessage = messages[indexPath.row] as Message? {
 //            // Favorite / Un-Favorite message
 //            
@@ -362,14 +362,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     // MARK: - Keyboard
-    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue 
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
 //        UIView.performWithoutAnimation({
 //            self.nameVTFView.layoutIfNeeded()
@@ -379,7 +379,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         if show {
             self.toolbarBottomConstraint.constant = changeInHeight
 
-            let bottomOffset: CGPoint = CGPointMake(0, changeInHeight)
+            let bottomOffset: CGPoint = CGPoint(x: 0, y: changeInHeight)
             
             scrollView.setContentOffset(bottomOffset, animated: false)
             scrollToBottom()
@@ -387,21 +387,21 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             self.toolbarBottomConstraint.constant = 0
         }
         
-        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
         
         configureMessageMode()
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
-        scrollView.scrollEnabled = true
+        scrollView.isScrollEnabled = true
         
         configureMessageMode()
     }
@@ -428,18 +428,18 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
 //            self.messagesTableView.setContentOffset(contentOffset, animated: true)
 //        }
         
-        let lastRow = messagesTableView.numberOfRowsInSection(0) - 1
+        let lastRow = messagesTableView.numberOfRows(inSection: 0) - 1
         
         if lastRow >= 0 {
-            messagesTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: lastRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+            messagesTableView.scrollToRow(at: IndexPath(row: lastRow, section: 0), at: UITableViewScrollPosition.bottom, animated: true)
         }
     }
     
     func moveToLastMessage() {
-        if self.messagesTableView.contentSize.height > CGRectGetHeight(self.messagesTableView.frame) {
+        if self.messagesTableView.contentSize.height > self.messagesTableView.frame.height {
             print("Moving to last message")
 //            let contentOffset = CGPointMake(0, self.messagesTableView.contentSize.height - CGRectGetHeight(self.messagesTableView.frame))
-            let contentOffset = CGPointMake(0, self.messagesTableView.contentSize.height)
+            let contentOffset = CGPoint(x: 0, y: self.messagesTableView.contentSize.height)
             self.messagesTableView.setContentOffset(contentOffset, animated: true)
         }
     }
@@ -450,7 +450,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             
             self.navigationItem.title = "Messages"
             
-            UIView.animateWithDuration(0.2, animations: { 
+            UIView.animate(withDuration: 0.2, animations: { 
                 self.contactActionButtons.alpha = 0
                 self.lastCalledLabel.alpha = 0
             })
@@ -459,7 +459,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             
             self.navigationItem.title = nil
             
-            UIView.animateWithDuration(0.2, animations: { 
+            UIView.animate(withDuration: 0.2, animations: { 
                 self.contactActionButtons.alpha = 1
                 self.lastCalledLabel.alpha = 1
             })

@@ -36,34 +36,34 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "DateDashboardView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
-    func configureView(date: NSDate) {
+    func configureView(_ date: Date) {
         
         // Format time strings for all labels
-        let dayFormatter = NSDateFormatter()
+        let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = "EEEE"
-        let dayString = dayFormatter.stringFromDate(date)
+        let dayString = dayFormatter.string(from: date)
 //        print(dayString)
         
-        let fullDateFormatter = NSDateFormatter()
+        let fullDateFormatter = DateFormatter()
         fullDateFormatter.dateFormat = "MMMM d, yyyy"
-        let fullDateString = fullDateFormatter.stringFromDate(date)
+        let fullDateString = fullDateFormatter.string(from: date)
 //        print(fullDateString)
         
-        let timeFormatter = NSDateFormatter()
+        let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "h:mm a"
-        let timeString = timeFormatter.stringFromDate(date)
+        let timeString = timeFormatter.string(from: date)
 //        print(timeString)
 
         dayLabel.text = dayString

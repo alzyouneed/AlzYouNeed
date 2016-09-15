@@ -38,7 +38,7 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
         
@@ -46,37 +46,37 @@ import UIKit
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.borderWidth = 2
-        self.userImageView.layer.borderColor = ivory.CGColor
+        self.userImageView.layer.borderColor = ivory.cgColor
         self.userImageView.alpha = 0
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "UserDashboardView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
-    func setImage(image: UIImage) {
-        dispatch_async(dispatch_get_main_queue()) {
+    func setImage(_ image: UIImage) {
+        DispatchQueue.main.async {
             self.userImageView.image = image
-            UIView.animateWithDuration(0.25, animations: {
+            UIView.animate(withDuration: 0.25, animations: {
                 self.userImageView.alpha = 1
             })
         }
     }
     
-    func specialUser(type: String) {
+    func specialUser(_ type: String) {
         switch type {
         case "admin":
             self.adminImageView.image = UIImage(named: "adminIcon")
-            self.adminImageView.hidden = false
+            self.adminImageView.isHidden = false
         case "patient":
             self.adminImageView.image = UIImage(named: "patientIcon")
-            self.adminImageView.hidden = false
+            self.adminImageView.isHidden = false
         case "none":
             self.adminImageView.image = UIImage()
-            self.adminImageView.hidden = true
+            self.adminImageView.isHidden = true
         default:
             break
         }

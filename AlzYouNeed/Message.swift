@@ -19,10 +19,10 @@ class Message: NSObject {
         super.init()
         
         self.messageId = messageId
-        self.senderId = messageDict.objectForKey("senderId") as? String ?? ""
-        self.dateSent = messageDict.objectForKey("timestamp") as? String ?? ""
-        self.messageString = messageDict.objectForKey("messageString") as? String ?? ""
-        self.favorited = messageDict.objectForKey("favorited") as? [String:String] ?? [:]
+        self.senderId = messageDict.object(forKey: "senderId") as? String ?? ""
+        self.dateSent = messageDict.object(forKey: "timestamp") as? String ?? ""
+        self.messageString = messageDict.object(forKey: "messageString") as? String ?? ""
+        self.favorited = messageDict.object(forKey: "favorited") as? [String:String] ?? [:]
     }
     
     override var description: String {

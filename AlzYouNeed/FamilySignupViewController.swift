@@ -8,7 +8,19 @@
 
 import UIKit
 import Firebase
-import PKHUD
+// import PKHUD
+
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
@@ -34,109 +46,109 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.presentTransparentNavBar()
         
         // Add observers
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(FamilySignupViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         familyIdVTFView.textField.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5) {
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.progressView.setProgress(1, animated: true)
-        }
+        }) 
 
         // Animate status bar hidden
-        UIView.animateWithDuration(0.2) { 
+        UIView.animate(withDuration: 0.2, animations: { 
             self.setNeedsStatusBarAppearanceUpdate()
-        }
+        }) 
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Remove observers
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     // MARK: - Firebase
-    func createNewFamily(familyId: String, password: String) {
+    func createNewFamily(_ familyId: String, password: String) {
         // Disable interface to avoid extra interaction
         interfaceEnabled(false)
         
         // Show progress view
-        HUD.show(.Progress)
+        // HUD.show(.Progress)
         
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
-                HUD.hide({ (success) in
+                // HUD.hide({ (success) in
                     self.showPopoverView(error!)
                     self.interfaceEnabled(true)
-                })
+                // })
             }
             else {
                 // Successfully created new family
-                HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                // HUD.flash(.Success, delay: 0.2, completion: { (success) in
                     self.view.endEditing(true)
                     
                     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabBarController: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+                    let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
                     tabBarController.selectedIndex = 1
-                    self.presentViewController(tabBarController, animated: true, completion: nil)
+                    self.present(tabBarController, animated: true, completion: nil)
                     
 //                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
+                // })
             }
         }
     }
     
-    func joinFamily(familyId: String, password: String) {
+    func joinFamily(_ familyId: String, password: String) {
         // Disable interface to avoid extra interaction
         interfaceEnabled(false)
         
         // Show progress view
-        HUD.show(.Progress)
+        // HUD.show(.Progress)
         
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
-                HUD.hide({ (success) in
+                // HUD.hide({ (success) in
                     self.showPopoverView(error!)
                     self.interfaceEnabled(true)
-                })
+                // })
             }
             else {
                 // Successfully joined family
-                HUD.flash(.Success, delay: 0, completion: { (success) in
+                // HUD.flash(.Success, delay: 0, completion: { (success) in
                     self.view.endEditing(true)
                     
                     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabBarController: UITabBarController = storyboard.instantiateViewControllerWithIdentifier("tabBarController") as! UITabBarController
+                    let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
                     tabBarController.selectedIndex = 1
-                    self.presentViewController(tabBarController, animated: true, completion: nil)
+                    self.present(tabBarController, animated: true, completion: nil)
                     
 //                    self.dismissViewControllerAnimated(true, completion: nil)
-                })
+                // })
             }
         }
     }
     
-    @IBAction func createOrJoinFamily(sender: UIButton) {
+    @IBAction func createOrJoinFamily(_ sender: UIButton) {
         // Check if fields valid
         if validFields() {
             // Create family
@@ -165,26 +177,26 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         self.passwordVTFView.textField.delegate = self
         self.confirmPasswordVTFView.textField.delegate = self
         
-        self.familyIdVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.familyIdVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.passwordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(FamilySignupViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
 
     }
     
     func configureButton() {
         if newFamily {
-            confirmPasswordVTFView.hidden = false
+            confirmPasswordVTFView.isHidden = false
             // set button title
-            createJoinFamilyButton.setTitle("Create Family", forState: UIControlState.Normal)
-            passwordVTFView.textField.returnKeyType = UIReturnKeyType.Next
+            createJoinFamilyButton.setTitle("Create Family", for: UIControlState())
+            passwordVTFView.textField.returnKeyType = UIReturnKeyType.next
             
             navigationItem.title = "New Family"
         }
         else {
-            confirmPasswordVTFView.hidden = true
+            confirmPasswordVTFView.isHidden = true
             // set button title
-            createJoinFamilyButton.setTitle("Join Family", forState: UIControlState.Normal)
-            passwordVTFView.textField.returnKeyType = UIReturnKeyType.Done
+            createJoinFamilyButton.setTitle("Join Family", for: UIControlState())
+            passwordVTFView.textField.returnKeyType = UIReturnKeyType.done
             
             navigationItem.title = "Existing Family"
         }
@@ -192,29 +204,29 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     func createJoinFamilyButtonEnabled() {
         if validFields() {
-            createJoinFamilyButton.enabled = true
+            createJoinFamilyButton.isEnabled = true
             createJoinFamilyButton.alpha = 1
         }
         else {
-            createJoinFamilyButton.enabled = false
+            createJoinFamilyButton.isEnabled = false
             createJoinFamilyButton.alpha = 0.5
         }
     }
     
-    func createJoinFamilyButtonEnabled(enabled: Bool) {
+    func createJoinFamilyButtonEnabled(_ enabled: Bool) {
         if enabled {
-            createJoinFamilyButton.enabled = true
+            createJoinFamilyButton.isEnabled = true
             createJoinFamilyButton.alpha = 1
         }
         else {
-            createJoinFamilyButton.enabled = false
+            createJoinFamilyButton.isEnabled = false
             createJoinFamilyButton.alpha = 0.5
         }
     }
     
     // MARK: - UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Switch between textFields by using return key
         let tag = textField.superview!.superview!.tag
         switch tag {
@@ -246,19 +258,19 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         if newFamily {
             let tag = textField.superview!.superview!.tag
             switch tag {
             // FamilyId textField
             case 0:
-                validateFamilyId()
+                _ = validateFamilyId()
             // Password textField
             case 1:
-                validatePassword()
+                _ = validatePassword()
             // Confirm password textField
             case 2:
-                validateConfirmPassword()
+                _ = validateConfirmPassword()
             default:
                 break
             }
@@ -329,14 +341,14 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Keyboard
-    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue 
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
         UIView.performWithoutAnimation({
             self.familyIdVTFView.layoutIfNeeded()
@@ -350,21 +362,21 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         else {
             self.familyButtonBottomConstraint.constant = 0
         }
-        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
     // MARK: - Popover View
-    func showPopoverView(error: NSError) {
+    func showPopoverView(_ error: NSError) {
         // Hide keyboard
         self.view.endEditing(true)
         
@@ -373,23 +385,23 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         // Add popover message
         errorPopoverView.configureWithError(error)
         // Add target to hide view
-        errorPopoverView.confirmButton.addTarget(self, action: #selector(FamilySignupViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(FamilySignupViewController.hidePopoverView(_:)), for: UIControlEvents.touchUpInside)
         
         // Configure shadow view
         shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        shadowView.backgroundColor = UIColor.blackColor()
+        shadowView.backgroundColor = UIColor.black
         
         self.view.addSubview(shadowView)
         self.view.addSubview(errorPopoverView)
         
-        errorPopoverView.hidden = false
+        errorPopoverView.isHidden = false
         errorPopoverView.alpha = 0
         
-        shadowView.hidden = false
+        shadowView.isHidden = false
         shadowView.alpha = 0
         
-        dispatch_async(dispatch_get_main_queue()) { 
-            UIView.animateWithDuration(0.35, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        DispatchQueue.main.async { 
+            UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.errorPopoverView.alpha = 1
                 self.shadowView.alpha = 0.2
                 }, completion: { (completed) in
@@ -397,14 +409,14 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func hidePopoverView(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) { 
-            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+    func hidePopoverView(_ sender: UIButton) {
+        DispatchQueue.main.async { 
+            UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.errorPopoverView.alpha = 0
                 self.shadowView.alpha = 0
                 }, completion: { (completed) in
-                    self.errorPopoverView.hidden = true
-                    self.shadowView.hidden = true
+                    self.errorPopoverView.isHidden = true
+                    self.shadowView.isHidden = true
                     
                     self.errorPopoverView.removeFromSuperview()
                     self.shadowView.removeFromSuperview()
@@ -421,10 +433,10 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Interface Enable / Disable
-    func interfaceEnabled(enabled: Bool) {
+    func interfaceEnabled(_ enabled: Bool) {
         createJoinFamilyButtonEnabled(enabled)
-        familyIdVTFView.textField.userInteractionEnabled = enabled
-        passwordVTFView.textField.userInteractionEnabled = enabled
-        confirmPasswordVTFView.userInteractionEnabled = enabled
+        familyIdVTFView.textField.isUserInteractionEnabled = enabled
+        passwordVTFView.textField.isUserInteractionEnabled = enabled
+        confirmPasswordVTFView.isUserInteractionEnabled = enabled
     }
 }

@@ -35,20 +35,20 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
         
         textField.delegate = self
 //        textField.textColor = UIColor.whiteColor()
         textField.textColor = stormCloud
-        imageView.hidden = true
+        imageView.isHidden = true
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "validateTextFieldView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
@@ -56,78 +56,78 @@ import UIKit
     
     func emailMode() {
         textField.placeholder = "Email"
-        textField.autocapitalizationType = UITextAutocapitalizationType.None
-        textField.autocorrectionType = UITextAutocorrectionType.No
-        textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.EmailAddress
-        textField.returnKeyType = UIReturnKeyType.Next
-        textField.secureTextEntry = false
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.spellCheckingType = UITextSpellCheckingType.no
+        textField.keyboardType = UIKeyboardType.emailAddress
+        textField.returnKeyType = UIReturnKeyType.next
+        textField.isSecureTextEntry = false
     }
     
-    func passwordMode(confirmPassword: Bool) {
+    func passwordMode(_ confirmPassword: Bool) {
         textField.placeholder = "Password"
-        textField.autocapitalizationType = UITextAutocapitalizationType.None
-        textField.autocorrectionType = UITextAutocorrectionType.No
-        textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.ASCIICapable
-        textField.returnKeyType = UIReturnKeyType.Next
-        textField.secureTextEntry = true
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.spellCheckingType = UITextSpellCheckingType.no
+        textField.keyboardType = UIKeyboardType.asciiCapable
+        textField.returnKeyType = UIReturnKeyType.next
+        textField.isSecureTextEntry = true
         
         if confirmPassword {
             textField.placeholder = "Confirm password"
-            textField.returnKeyType = UIReturnKeyType.Done
+            textField.returnKeyType = UIReturnKeyType.done
         }
     }
     
     func familyIdMode() {
         textField.placeholder = "Family ID"
-        textField.autocapitalizationType = UITextAutocapitalizationType.Words
-        textField.autocorrectionType = UITextAutocorrectionType.No
-        textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.ASCIICapable
-        textField.returnKeyType = UIReturnKeyType.Next
-        textField.secureTextEntry = false
+        textField.autocapitalizationType = UITextAutocapitalizationType.words
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.spellCheckingType = UITextSpellCheckingType.no
+        textField.keyboardType = UIKeyboardType.asciiCapable
+        textField.returnKeyType = UIReturnKeyType.next
+        textField.isSecureTextEntry = false
     }
     
     func phoneNumberMode() {
         textField.placeholder = "Phone Number"
-        textField.autocapitalizationType = UITextAutocapitalizationType.None
-        textField.autocorrectionType = UITextAutocorrectionType.No
-        textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.NumberPad
-        textField.returnKeyType = UIReturnKeyType.Next
-        textField.secureTextEntry = false
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.spellCheckingType = UITextSpellCheckingType.no
+        textField.keyboardType = UIKeyboardType.numberPad
+        textField.returnKeyType = UIReturnKeyType.next
+        textField.isSecureTextEntry = false
     }
     
     func nameMode() {
         textField.placeholder = "Full Name"
-        textField.autocapitalizationType = UITextAutocapitalizationType.Words
-        textField.autocorrectionType = UITextAutocorrectionType.No
-        textField.spellCheckingType = UITextSpellCheckingType.No
-        textField.keyboardType = UIKeyboardType.ASCIICapable
-        textField.returnKeyType = UIReturnKeyType.Next
-        textField.secureTextEntry = false
+        textField.autocapitalizationType = UITextAutocapitalizationType.words
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.spellCheckingType = UITextSpellCheckingType.no
+        textField.keyboardType = UIKeyboardType.asciiCapable
+        textField.returnKeyType = UIReturnKeyType.next
+        textField.isSecureTextEntry = false
     }
     
-    func isValid(valid: Bool) {
+    func isValid(_ valid: Bool) {
         imageView.image = UIImage(named: "validEntry")
         
         switch valid {
         case true:
-            if imageView.hidden {
-                imageView.hidden = false
+            if imageView.isHidden {
+                imageView.isHidden = false
                 imageView.alpha = 0
                 
-                UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                     self.imageView.alpha = 1
                     }, completion: { (completed) in
                 })
             }
         case false:
-            UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
                 self.imageView.alpha = 0
                 }, completion: { (completed) in
-                    self.imageView.hidden = true
+                    self.imageView.isHidden = true
             })
         }
     }

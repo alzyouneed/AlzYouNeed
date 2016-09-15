@@ -11,7 +11,7 @@ import Firebase
 import FirebaseStorage
 
 protocol MessageTableViewCellDelegate {
-    func cellButtonTapped(cell: MessageTableViewCell)
+    func cellButtonTapped(_ cell: MessageTableViewCell)
 }
 
 class MessageTableViewCell: UITableViewCell {
@@ -32,13 +32,13 @@ class MessageTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureCell(message: Message, contact: Contact, profileImage: UIImage) {
+    func configureCell(_ message: Message, contact: Contact, profileImage: UIImage) {
         self.alpha = 0
         
         chatBubbleView.layer.cornerRadius = 10
@@ -46,7 +46,7 @@ class MessageTableViewCell: UITableViewCell {
         profileImageView.layer.masksToBounds = true
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = stormCloud.CGColor
+        profileImageView.layer.borderColor = stormCloud.cgColor
         
         
         // Configure favorited
@@ -56,10 +56,10 @@ class MessageTableViewCell: UITableViewCell {
                     // Message is favorited by current user
                     if userId == currentUser.uid {
                         if message.favorited[userId] == "true" {
-                            favoriteButton.selected = true
+                            favoriteButton.isSelected = true
                             break
                         } else {
-                            favoriteButton.selected = false
+                            favoriteButton.isSelected = false
                         }
                     }
                 }
@@ -68,19 +68,19 @@ class MessageTableViewCell: UITableViewCell {
         
         self.messageLabel.text = message.messageString
         // Format readable date
-        let date = NSDate(timeIntervalSince1970: Double(message.dateSent)!)
-        let dateFormatter = NSDateFormatter()
+        let date = Date(timeIntervalSince1970: Double(message.dateSent)!)
+        let dateFormatter = DateFormatter()
         
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         if calendar.isDateInToday(date) {
             dateFormatter.dateFormat = "h:mm a"
-            self.dateLabel.text = "Today, \(dateFormatter.stringFromDate(date))"
+            self.dateLabel.text = "Today, \(dateFormatter.string(from: date))"
         } else if calendar.isDateInYesterday(date) {
             dateFormatter.dateFormat = "h:mm a"
-            self.dateLabel.text = "Yesterday, \(dateFormatter.stringFromDate(date))"
+            self.dateLabel.text = "Yesterday, \(dateFormatter.string(from: date))"
         } else {
             dateFormatter.dateFormat = "M/dd/yy h:mm a"
-            self.dateLabel.text = "\(dateFormatter.stringFromDate(date))"
+            self.dateLabel.text = "\(dateFormatter.string(from: date))"
         }
         
         if let currentUser = FIRAuth.auth()?.currentUser {
@@ -92,7 +92,7 @@ class MessageTableViewCell: UITableViewCell {
             } else {
                 // Get only first name
                 let fullName = contact.fullName
-                if let firstName = fullName.componentsSeparatedByString(" ")[0] as String? {
+                if let firstName = fullName?.components(separatedBy: " ")[0] as String? {
                     self.nameLabel.text = firstName
                 } else {
                     self.nameLabel.text = fullName
@@ -103,25 +103,25 @@ class MessageTableViewCell: UITableViewCell {
             }
         }
         
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.alpha = 1
         })
     }
     
-    private func userType(type: String) {
+    fileprivate func userType(_ type: String) {
         switch type {
         case "sender":
             chatBubbleView.backgroundColor = caribbeanGreen
-            messageLabel.textColor = UIColor.whiteColor()
+            messageLabel.textColor = UIColor.white
         case "receiver":
             chatBubbleView.backgroundColor = columbiaBlue
-            messageLabel.textColor = UIColor.blackColor()
+            messageLabel.textColor = UIColor.black
         default:
             break
         }
     }
     
-    @IBAction func buttonTapped(sender: UIButton) {
+    @IBAction func buttonTapped(_ sender: UIButton) {
         delegate?.cellButtonTapped(self)
     }
 

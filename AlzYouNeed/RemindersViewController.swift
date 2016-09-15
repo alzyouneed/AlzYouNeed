@@ -8,7 +8,8 @@
 
 import UIKit
 import Firebase
-import PKHUD
+import UserNotifications
+// import PKHUD
 
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -32,78 +33,78 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
         
         AYNModel.sharedInstance.remindersArr.removeAll()
         self.remindersTableView.reloadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         registerLocalNotifications()
         addRemindersObservers()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         // Remove Firebase observers
         removeRemindersObservers()
     }
     
-    @IBAction func newReminder(sender: UIBarButtonItem) {
+    @IBAction func newReminder(_ sender: UIBarButtonItem) {
         createReminder()
     }
     
     func createReminder() {
-        let alert = UIAlertController(title: "New Reminder", message: nil, preferredStyle: .Alert)
+        let alert = UIAlertController(title: "New Reminder", message: nil, preferredStyle: .alert)
         var titleTF: UITextField!
         var descriptionTF: UITextField!
         repeatPickerView.delegate = self
         repeatPickerView.dataSource = self
         
-        alert.addTextFieldWithConfigurationHandler { (titleTextField) in
+        alert.addTextField { (titleTextField) in
             titleTextField.placeholder = "Task"
-            titleTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
-            titleTextField.autocorrectionType = UITextAutocorrectionType.Yes
+            titleTextField.autocapitalizationType = UITextAutocapitalizationType.sentences
+            titleTextField.autocorrectionType = UITextAutocorrectionType.yes
             titleTF = titleTextField
         }
-        alert.addTextFieldWithConfigurationHandler { (descriptionTextField) in
+        alert.addTextField { (descriptionTextField) in
             descriptionTextField.placeholder = "Notes"
-            descriptionTextField.autocapitalizationType = UITextAutocapitalizationType.Sentences
-            descriptionTextField.autocorrectionType = UITextAutocorrectionType.Yes
+            descriptionTextField.autocapitalizationType = UITextAutocapitalizationType.sentences
+            descriptionTextField.autocorrectionType = UITextAutocorrectionType.yes
             descriptionTF = descriptionTextField
         }
-        alert.addTextFieldWithConfigurationHandler { (dateTextField) in
+        alert.addTextField { (dateTextField) in
             dateTextField.placeholder = "Due Date"
             let datePickerView: UIDatePicker = UIDatePicker()
-            datePickerView.datePickerMode = UIDatePickerMode.DateAndTime
+            datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
             dateTextField.inputView = datePickerView
-            datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+            datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
             self.dateTF = dateTextField
         }
-        alert.addTextFieldWithConfigurationHandler { (repeatsTextField) in
+        alert.addTextField { (repeatsTextField) in
             repeatsTextField.text = "Repeats None"
             repeatsTextField.inputView = self.repeatPickerView
             self.repeatsTF = repeatsTextField
         }
         
-        let confirmAction = UIAlertAction(title: "Create", style: .Default) { (action) in
+        let confirmAction = UIAlertAction(title: "Create", style: .default) { (action) in
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
                 // Store date as number (time interval)
-                let now = NSDate().timeIntervalSince1970
+                let now = Date().timeIntervalSince1970
                 
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
-                let dueDate = dateFormatter.dateFromString(self.dateTF.text!)?.timeIntervalSince1970
+                let dueDate = dateFormatter.date(from: self.dateTF.text!)?.timeIntervalSince1970
                 
-                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! ?? "", "createdDate":now.description, "dueDate":dueDate!.description]
+                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
-                let repeatsTFText = self.repeatsTF.text?.componentsSeparatedByString(" ")[1]
+                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
                 
                 if let repeatOption = repeatsTFText as String? {
                     newReminder["repeats"] = repeatOption
                 }
                 
-                FirebaseManager.createFamilyReminder(newReminder, completionHandler: { (error, newDatabaseRef) in
+                FirebaseManager.createFamilyReminder(newReminder as NSDictionary, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
                         // Success
                     }
@@ -111,12 +112,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
         }
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,37 +125,37 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AYNModel.sharedInstance.remindersArr.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:ReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("reminderCell")! as! ReminderTableViewCell
+    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell")! as! ReminderTableViewCell
         
-        let reminder = AYNModel.sharedInstance.remindersArr[indexPath.row]
+        let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
         cell.delegate = self
         cell.titleLabel.text = reminder.title
         
         // Format readable date
-        let date = NSDate(timeIntervalSince1970: Double(reminder.dueDate)!)
-        let dateFormatter = NSDateFormatter()
+        let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, h:mm a"
-        cell.dateLabel.text = "Due \(dateFormatter.stringFromDate(date))"
+        cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
         cell.descriptionLabel.text = reminder.reminderDescription
         
         if reminder.repeats != "None" {
             cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
-            cell.repeatsLabel.hidden = false
+            cell.repeatsLabel.isHidden = false
         } else {
-            cell.repeatsLabel.hidden = true
+            cell.repeatsLabel.isHidden = true
         }
     
         return cell
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let reminder = AYNModel.sharedInstance.remindersArr[indexPath.row]
+    private func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Observers catch deletion and properly update data source array and UI
@@ -162,7 +163,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 }
             })
         }
-        else if editingStyle == .Insert {
+        else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
@@ -172,9 +173,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         print("Adding Firebase observers")
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
-                if let userFamilyId = userDict?.valueForKey("familyId") as? String {
+                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
                     self.familyId = userFamilyId
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrderedByChild("dueDate").observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
 
                         if let reminderDict = snapshot.value! as? NSDictionary {
                             if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
@@ -183,10 +184,10 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                 AYNModel.sharedInstance.remindersArr.append(newReminder)
                                 
                                 // Schedule local notifications
-                                if let dueDate = NSDate(timeIntervalSince1970: Double(newReminder.dueDate)!) as NSDate? {
-                                    let now = NSDate()
+                                if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+                                    let now = Date()
                                     // Check that date has not passed
-                                    if !dueDate.earlierDate(now).isEqualToDate(dueDate) {
+                                    if (dueDate as NSDate).earlierDate(now) != dueDate {
                                         self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
                                     }
                                     else {
@@ -194,23 +195,23 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                     }
                                 }
 
-                                self.remindersTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: AYNModel.sharedInstance.remindersArr.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
                                 self.updateTabBadge()
                             }
                         }
                     })
                     
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observeEventType(FIRDataEventType.ChildRemoved, withBlock: { (snapshot) in
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
                         if let reminderId = snapshot.key as String? {
                             if let index = self.getIndex(reminderId) {
                                 print("Removing reminder in RTDB")
                                 
-                                AYNModel.sharedInstance.remindersArr.removeAtIndex(index)
+                                AYNModel.sharedInstance.remindersArr.remove(at: index)
                                 
                                 // Cancel any local notifications
                                 self.cancelLocalNotification(reminderId)
 
-                                self.remindersTableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                                self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
                                 self.updateTabBadge()
                             }
                         }
@@ -228,13 +229,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Tab bar
     func resetTabBadges() {
         let tabArray = tabBarController!.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         tabItem.badgeValue = nil
     }
     
     func updateTabBadge() {
         let tabArray = tabBarController!.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         
         if AYNModel.sharedInstance.remindersArr.count == 0 {
             tabItem.badgeValue = nil
@@ -245,8 +246,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - Reminders Array
-    func getIndex(id: String) -> Int? {
-        for (index, reminder) in AYNModel.sharedInstance.remindersArr.enumerate() {
+    func getIndex(_ id: String) -> Int? {
+        for (index, reminder) in AYNModel.sharedInstance.remindersArr.enumerated() {
             if reminder.id == id {
                 return index
             }
@@ -255,39 +256,39 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - Reminder Actions
-    func cellButtonTapped(cell: ReminderTableViewCell) {
-        let indexPath = self.remindersTableView.indexPathForRowAtPoint(cell.center)!
-        if let completedReminder = AYNModel.sharedInstance.remindersArr[indexPath.row] as Reminder? {
+    func cellButtonTapped(_ cell: ReminderTableViewCell) {
+        let indexPath = self.remindersTableView.indexPathForRow(at: cell.center)!
+        if let completedReminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row] as Reminder? {
             confirmCompleteReminder(completedReminder)
         }
     }
     
-    func confirmCompleteReminder(completedReminder: Reminder) {
-        let alertController = UIAlertController(title: "Are you sure you're done?", message: nil, preferredStyle: .Alert)
-        let confirmAction = UIAlertAction(title: "Yes!", style: .Default) { (action) in
+    func confirmCompleteReminder(_ completedReminder: Reminder) {
+        let alertController = UIAlertController(title: "Are you sure you're done?", message: nil, preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Yes!", style: .default) { (action) in
             FirebaseManager.completeFamilyReminder(completedReminder, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Success
-                    HUD.flash(.Success)
+                    // HUD.flash(.Success)
                 }
             })
         }
-        let cancelAction = UIAlertAction(title: "Nope", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Nope", style: .cancel, handler: nil)
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Present different VC's
-    @IBAction func showCompletedReminders(sender: UIButton) {
+    @IBAction func showCompletedReminders(_ sender: UIButton) {
         presentCompletedRemindersVC()
     }
     
     func presentCompletedRemindersVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewControllerWithIdentifier("completedReminders") as! CompleteRemindersViewController
+        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewController(withIdentifier: "completedReminders") as! CompleteRemindersViewController
         
         // Hide tab bar in updateProfileVC
         completeRemindersVC.hidesBottomBarWhenPushed = true
@@ -306,40 +307,44 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - Date Picker
-    func datePickerValueChanged(sender: UIDatePicker) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-        dateTF.text = dateFormatter.stringFromDate(sender.date)
+    func datePickerValueChanged(_ sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = DateFormatter.Style.medium
+        dateFormatter.timeStyle = DateFormatter.Style.short
+        dateTF.text = dateFormatter.string(from: sender.date)
     }
     
     // MARK: - Push Notifications
     func registerLocalNotifications() {
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
     }
     
-    func scheduleLocalNotification(reminderId: String, reminder: NSDictionary) {
+    func scheduleLocalNotification(_ reminderId: String, reminder: NSDictionary) {
         // Check if have permission to schedule push notifications
-        guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else { return }
+        guard let settings = UIApplication.shared.currentUserNotificationSettings else { return }
         
         // Permission denied
-        if settings.types == .None {
-            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of future tasks", preferredStyle: .Alert)
-            let enableAction = UIAlertAction(title: "Enable", style: .Default, handler: { (action) in
-                if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.sharedApplication().openURL(appSettings)
+        if settings.types == UIUserNotificationType() {
+            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of future tasks", preferredStyle: .alert)
+            let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
+                if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.openURL(appSettings)
                 }
             })
-            let cancelAction = UIAlertAction(title: "No thanks", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
             alertController.addAction(enableAction)
             alertController.addAction(cancelAction)
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
             return
         }
         
         // Check for existing notification for reminder
-        if let scheduledNotifications: [UILocalNotification]? = UIApplication.sharedApplication().scheduledLocalNotifications {
+        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notificationRequests) in
+            print(notificationRequests)
+        })
+        
+        if let scheduledNotifications: [UILocalNotification]? = UIApplication.shared.scheduledLocalNotifications {
             for notification in scheduledNotifications! {
                 if let userInfo = notification.userInfo {
                     if let existingReminderId = userInfo["reminderId"] as? String {
@@ -355,7 +360,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         // Permission granted & Notification does not already exist
         print("Scheduling local notification")
         let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSince1970: NSTimeInterval(reminder["dueDate"] as! String)!)
+        notification.fireDate = Date(timeIntervalSince1970: TimeInterval(reminder["dueDate"] as! String)!)
         
         // Handle repeated reminders
         if let reminderRepeats = reminder["repeats"] as! String? {
@@ -364,11 +369,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             case "None":
                 break
             case "Hourly":
-                notification.repeatInterval = NSCalendarUnit.Hour
+                notification.repeatInterval = NSCalendar.Unit.hour
             case "Daily":
-                notification.repeatInterval = NSCalendarUnit.Day
+                notification.repeatInterval = NSCalendar.Unit.day
             case "Weekly":
-                notification.repeatInterval = NSCalendarUnit.WeekOfYear
+                notification.repeatInterval = NSCalendar.Unit.weekOfYear
             // TESTING ONLY
 //            case "Minute":
 //                notification.repeatInterval = NSCalendarUnit.Minute
@@ -381,11 +386,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         notification.alertAction = "View"
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.userInfo = ["reminderId": reminderId]
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.shared.scheduleLocalNotification(notification)
     }
     
-    func cancelLocalNotification(reminderId: String) {
-        let scheduledNotifications: [UILocalNotification]? = UIApplication.sharedApplication().scheduledLocalNotifications
+    func cancelLocalNotification(_ reminderId: String) {
+        let scheduledNotifications: [UILocalNotification]? = UIApplication.shared.scheduledLocalNotifications
         guard scheduledNotifications != nil else { return }
         
         for notification in scheduledNotifications! {
@@ -393,7 +398,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 if let existingReminderId = userInfo["reminderId"] as? String {
                     if existingReminderId == reminderId {
                         print("Cancelling local notification")
-                        UIApplication.sharedApplication().cancelLocalNotification(notification)
+                        UIApplication.shared.cancelLocalNotification(notification)
                         break
                     }
                 }
@@ -402,19 +407,19 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - UIPickerView
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return repeatOptions.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return repeatOptions[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         repeatsTF.text = "Repeats \(repeatOptions[row])"
     }
     

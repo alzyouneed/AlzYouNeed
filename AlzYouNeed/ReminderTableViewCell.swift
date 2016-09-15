@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ReminderTableViewCellDelegate {
-    func cellButtonTapped(cell: ReminderTableViewCell)
+    func cellButtonTapped(_ cell: ReminderTableViewCell)
 }
 
 class ReminderTableViewCell: UITableViewCell {
@@ -23,7 +23,7 @@ class ReminderTableViewCell: UITableViewCell {
     
     var delegate: ReminderTableViewCellDelegate?
     
-    @IBAction func buttonTapped(sender: UIButton) {
+    @IBAction func buttonTapped(_ sender: UIButton) {
         delegate?.cellButtonTapped(self)
     }
     
@@ -32,7 +32,7 @@ class ReminderTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

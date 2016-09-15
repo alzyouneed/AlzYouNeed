@@ -18,10 +18,10 @@ class PushNotificationsViewController: UIViewController {
         configureView()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5) {
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.progressView.setProgress(0.5, animated: true)
-        }
+        }) 
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,53 +33,53 @@ class PushNotificationsViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
     }
     
-    @IBAction func enablePush(sender: UIButton) {
+    @IBAction func enablePush(_ sender: UIButton) {
         // TODO: Perform segue after user has clicked "Allow"
         registerPushNotifications()
-        performSegueWithIdentifier("familyStage", sender: self)
+        performSegue(withIdentifier: "familyStage", sender: self)
     }
     
-    @IBAction func disablePush(sender: UIButton) {
+    @IBAction func disablePush(_ sender: UIButton) {
         // Show alert with tip on how to enable later
-        let alertController = UIAlertController(title: "Tip", message: "You can enable notifications in Settings if you change your mind", preferredStyle: .Alert)
-        let confirmAction = UIAlertAction(title: "Got it", style: .Default) { (action) in
+        let alertController = UIAlertController(title: "Tip", message: "You can enable notifications in Settings if you change your mind", preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Got it", style: .default) { (action) in
             // Transition to next step in onboarding
-            self.performSegueWithIdentifier("familyStage", sender: self)
+            self.performSegue(withIdentifier: "familyStage", sender: self)
         }
-        let cancelAction = UIAlertAction(title: "I change my mind...", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "I change my mind...", style: .cancel, handler: nil)
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func registerPushNotifications() {
-        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        UIApplication.sharedApplication().registerForRemoteNotifications()
+        let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     
     // MARK: - Cancel Onboarding
-    @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
+    @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
         cancelAccountCreation()
     }
     
     func cancelAccountCreation() {
         
-        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
-        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func deleteUser() {
@@ -90,8 +90,8 @@ class PushNotificationsViewController: UIViewController {
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-                self.presentViewController(onboardingVC, animated: true, completion: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+                self.present(onboardingVC, animated: true, completion: nil)
             }
         }
     }

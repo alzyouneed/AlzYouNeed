@@ -23,14 +23,14 @@ class Contact: NSObject {
         super.init()
         
         self.userId = uID
-        self.fullName = userDict.valueForKey("name") as! String
-        self.email = userDict.valueForKey("email") as! String
-        self.phoneNumber = userDict.valueForKey("phoneNumber") as! String
-        self.patient = userDict.valueForKey("patient") as! String
+        self.fullName = userDict.value(forKey: "name") as! String
+        self.email = userDict.value(forKey: "email") as! String
+        self.phoneNumber = userDict.value(forKey: "phoneNumber") as! String
+        self.patient = userDict.value(forKey: "patient") as! String
 //        self.avatarId = userDict.valueForKey("avatarId") as! String
-        self.admin = userDict.valueForKey("admin") as? String ?? "false"
+        self.admin = userDict.value(forKey: "admin") as? String ?? "false"
         
-        self.photoUrl = userDict.valueForKey("photoUrl") as? String ?? ""
+        self.photoUrl = userDict.value(forKey: "photoUrl") as? String ?? ""
 
     }
 

@@ -15,7 +15,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     @IBOutlet var contactView: ContactView!
     
 //    func configureCell(contact: Contact) {
-    func configureCell(contact: Contact, row: Int) {
+    func configureCell(_ contact: Contact, row: Int) {
         contactView.nameLabel.text = contact.fullName
         
         // TODO: Change later to add functionality
@@ -44,10 +44,10 @@ class ContactCollectionViewCell: UICollectionViewCell {
         }
         
         // Load images on background thread to avoid choppiness
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
             if let imageUrl = contact.photoUrl {
                 if imageUrl.hasPrefix("gs://") {
-                    FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+                    FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
                         if let error = error {
                             // Error
                             print("Error downloading user profile image: \(error.localizedDescription)")
@@ -55,13 +55,13 @@ class ContactCollectionViewCell: UICollectionViewCell {
                         }
                         // Success
                             let image = UIImage(data: data!)
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self.contactView.contactImageView.image = image
                             })
                     })
-                } else if let url = NSURL(string: imageUrl), data = NSData(contentsOfURL: url) {
+                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
                         let image = UIImage(data: data)
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.contactView.contactImageView.image = image
                         })
                 }

@@ -70,6 +70,7 @@
 		096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
 		0A92C44ACB53CC07AA946F01 /* Pods_AlzYouNeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlzYouNeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3258817A8CCC0657AA5166 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
+		2D0C9D761D8A2BB500B97B80 /* AlzYouNeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlzYouNeed.entitlements; sourceTree = "<group>"; };
 		2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = beach.mp4; sourceTree = "<group>"; };
 		2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = actionButtonsDashboardView.xib; sourceTree = "<group>"; };
@@ -279,6 +280,7 @@
 		2D9834D61D0C4A91000977DC /* AlzYouNeed */ = {
 			isa = PBXGroup;
 			children = (
+				2D0C9D761D8A2BB500B97B80 /* AlzYouNeed.entitlements */,
 				2D9834D71D0C4A91000977DC /* AppDelegate.swift */,
 				2D9834DB1D0C4A91000977DC /* Main.storyboard */,
 				2DC8D5C91D12EAAF00952483 /* Onboarding */,
@@ -504,14 +506,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alz You Need";
 				TargetAttributes = {
 					2D9834D31D0C4A91000977DC = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 472W345FWN;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 							com.apple.Push = {
@@ -710,8 +716,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -755,8 +763,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -775,6 +785,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -783,14 +794,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1E3258817A8CCC0657AA5166 /* Pods-AlzYouNeed.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AlzYouNeed/AlzYouNeed.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 472W345FWN;
 				INFOPLIST_FILE = AlzYouNeed/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alzyouneed.AlzYouNeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -798,14 +814,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 096E123578C55E634847AF64 /* Pods-AlzYouNeed.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AlzYouNeed/AlzYouNeed.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 472W345FWN;
 				INFOPLIST_FILE = AlzYouNeed/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alzyouneed.AlzYouNeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

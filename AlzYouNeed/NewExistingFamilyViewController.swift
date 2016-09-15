@@ -24,14 +24,14 @@ class NewExistingFamilyViewController: UIViewController {
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5) {
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.progressView.setProgress(0.75, animated: true)
-        }
+        }) 
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +39,7 @@ class NewExistingFamilyViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
@@ -47,25 +47,25 @@ class NewExistingFamilyViewController: UIViewController {
         self.navigationItem.hidesBackButton = true
     }
     
-    @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
+    @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
         cancelAccountCreation()
     }
     
     // MARK: - Firebase
     func cancelAccountCreation() {
         
-        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
-        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func deleteUser() {
@@ -76,8 +76,8 @@ class NewExistingFamilyViewController: UIViewController {
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-                self.presentViewController(onboardingVC, animated: true, completion: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+                self.present(onboardingVC, animated: true, completion: nil)
             }
         }
     }
@@ -85,13 +85,19 @@ class NewExistingFamilyViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if let destinationVC = segue.destinationViewController as? FamilySignupViewController {
+        if let destinationVC = segue.destination as? FamilySignupViewController {
             // New family
-            if sender?.tag == 0 {
-               destinationVC.newFamily = true
+           // if (sender as AnyObject).tag == 0 {
+            if (sender as AnyObject?)?.tag == 0 {
+               // if let senderObject = sender as? AnyObject {
+                   // if senderObject.tag == 0 {
+                        destinationVC.newFamily = true
+                    //}
+               // }
+               // destinationVC.newFamily = true
                 
             }
             // Existing family

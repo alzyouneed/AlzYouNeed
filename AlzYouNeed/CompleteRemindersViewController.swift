@@ -19,9 +19,9 @@ class CompleteRemindersViewController: UIViewController, UITableViewDelegate {
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
-        self.tabBarController?.tabBar.hidden = true
+        self.tabBarController?.tabBar.isHidden = true
         
         AYNModel.sharedInstance.completedRemindersArr.removeAll()
         self.remindersTableView.reloadData()
@@ -49,27 +49,27 @@ class CompleteRemindersViewController: UIViewController, UITableViewDelegate {
     }
 
     // MARK: - UITableViewDelegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AYNModel.sharedInstance.completedRemindersArr.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:CompleteReminderTableViewCell = tableView.dequeueReusableCellWithIdentifier("completedReminderCell")! as! CompleteReminderTableViewCell
+    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell:CompleteReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "completedReminderCell")! as! CompleteReminderTableViewCell
         
-        let completedReminder = AYNModel.sharedInstance.completedRemindersArr[indexPath.row]
+        let completedReminder = AYNModel.sharedInstance.completedRemindersArr[(indexPath as NSIndexPath).row]
         
         cell.titleLabel.text = completedReminder.title
         cell.descriptionLabel.text = completedReminder.reminderDescription
         
         // Format readable date
-        let date = NSDate(timeIntervalSince1970: Double(completedReminder.completedDate)!)
-        let dateFormatter = NSDateFormatter()
+        let date = Date(timeIntervalSince1970: Double(completedReminder.completedDate)!)
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, h:mm a"
-        cell.dateLabel.text = "Completed \(dateFormatter.stringFromDate(date))"
+        cell.dateLabel.text = "Completed \(dateFormatter.string(from: date))"
         
         return cell
     }

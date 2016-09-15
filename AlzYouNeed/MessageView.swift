@@ -53,7 +53,7 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
         
@@ -62,56 +62,56 @@ import UIKit
         profileImageView.layer.masksToBounds = true
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 1
-        profileImageView.layer.borderColor = stormCloud.CGColor
+        profileImageView.layer.borderColor = stormCloud.cgColor
 
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "MessageView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
-    func userType(type: String) {
+    func userType(_ type: String) {
         switch type {
             case "sender":
             chatBubbleView.backgroundColor = caribbeanGreen
-            messageLabel.textColor = UIColor.whiteColor()
+            messageLabel.textColor = UIColor.white
 //            configureConstraints(true)
             case "receiver":
             chatBubbleView.backgroundColor = columbiaBlue
-            messageLabel.textColor = UIColor.blackColor()
+            messageLabel.textColor = UIColor.black
 //            configureConstraints(false)
         default:
             break
         }
     }
     
-    func configureConstraints(currentUser: Bool) {
+    func configureConstraints(_ currentUser: Bool) {
         // Configure recipient constraints
-        profileImageLeadingConstraintRecipient.active = !currentUser
-        chatBubbleLeadingConstraintRecipient.active = !currentUser
-        chatBubbleTrailingConstraintRecipient.active = !currentUser
-        nameLabelLeadingConstraintRecipient.active = !currentUser
-        messageLabelLeadingConstraintRecipient.active = !currentUser
-        dateLabelLeadingConstraintRecipient.active = !currentUser
-        dateLabelTrailingConstraintRecipient.active = !currentUser
+        profileImageLeadingConstraintRecipient.isActive = !currentUser
+        chatBubbleLeadingConstraintRecipient.isActive = !currentUser
+        chatBubbleTrailingConstraintRecipient.isActive = !currentUser
+        nameLabelLeadingConstraintRecipient.isActive = !currentUser
+        messageLabelLeadingConstraintRecipient.isActive = !currentUser
+        dateLabelLeadingConstraintRecipient.isActive = !currentUser
+        dateLabelTrailingConstraintRecipient.isActive = !currentUser
         
         // Configure sender (current user) constraints
-        profileImageTrailingConstraintSender.active = currentUser
+        profileImageTrailingConstraintSender.isActive = currentUser
         profileImageTrailingConstraintSender.constant = profileImageLeadingConstraintRecipient.constant
         
-        chatBubbleLeadingConstraintSender.active = currentUser
+        chatBubbleLeadingConstraintSender.isActive = currentUser
         chatBubbleLeadingConstraintSender.constant = chatBubbleTrailingConstraintRecipient.constant
         
-        chatBubbleTrailingConstraintSender.active = currentUser
+        chatBubbleTrailingConstraintSender.isActive = currentUser
         chatBubbleTrailingConstraintSender.constant = -chatBubbleLeadingConstraintRecipient.constant
         
         
         
-        nameLabel.hidden = currentUser
-        dateLabel.hidden = currentUser
+        nameLabel.isHidden = currentUser
+        dateLabel.isHidden = currentUser
     }
 
 }

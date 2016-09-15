@@ -19,7 +19,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
+        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
 //            if let currentUser = user {
             if let currentUser = FIRAuth.auth()?.currentUser {
                 // User is signed in.
@@ -59,11 +59,11 @@ class DashboardViewController: UIViewController {
 //        }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
-        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
         
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
@@ -77,8 +77,8 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        let now = NSDate()
+    override func viewDidAppear(_ animated: Bool) {
+        let now = Date()
         dateView.configureView(now)
         
         if self.navigationItem.title == "" {
@@ -95,18 +95,18 @@ class DashboardViewController: UIViewController {
         
     }
 
-    @IBAction func showSettings(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .ActionSheet)
+    @IBAction func showSettings(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
         
-        let updateAction = UIAlertAction(title: "Update Profile", style: .Default) { (action) in
+        let updateAction = UIAlertAction(title: "Update Profile", style: .default) { (action) in
             self.presentUpdateProfileVC()
         }
-        let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .Default) { (action) in
-            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.sharedApplication().openURL(appSettings)
+        let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .default) { (action) in
+            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.openURL(appSettings)
             }
         }
-        let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (action) in
+        let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in
             // Clean up current session
             AYNModel.sharedInstance.resetModel()
             self.updateTabBadge()
@@ -114,10 +114,10 @@ class DashboardViewController: UIViewController {
             print("User logged out")
             try! FIRAuth.auth()?.signOut()
         }
-        let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .Destructive) { (action) in
+        let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .destructive) { (action) in
             self.showDeleteAccountWarning()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
         
@@ -127,13 +127,13 @@ class DashboardViewController: UIViewController {
         alertController.addAction(deleteAccountAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func showDeleteAccountWarning() {
-        let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .actionSheet)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             FirebaseManager.deleteCurrentUser({ (error) in
                 if error == nil {
                     // Success
@@ -148,19 +148,19 @@ class DashboardViewController: UIViewController {
                 }
             })
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func presentUpdateProfileVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewControllerWithIdentifier("updateProfile") as! UpdateProfileViewController
+        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
         
         // Hide tab bar in updateProfileVC
         updateProfileVC.hidesBottomBarWhenPushed = true
@@ -168,30 +168,30 @@ class DashboardViewController: UIViewController {
     }
     
     func showLoginAlert() {
-        let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.alert)
         
         var emailTF: UITextField!
         var passwordTF: UITextField!
-        alert.addTextFieldWithConfigurationHandler { (emailTextField) in
+        alert.addTextField { (emailTextField) in
             emailTextField.placeholder = "Email"
-            emailTextField.autocapitalizationType = UITextAutocapitalizationType.None
-            emailTextField.autocorrectionType = UITextAutocorrectionType.No
-            emailTextField.spellCheckingType = UITextSpellCheckingType.No
-            emailTextField.keyboardType = UIKeyboardType.EmailAddress
+            emailTextField.autocapitalizationType = UITextAutocapitalizationType.none
+            emailTextField.autocorrectionType = UITextAutocorrectionType.no
+            emailTextField.spellCheckingType = UITextSpellCheckingType.no
+            emailTextField.keyboardType = UIKeyboardType.emailAddress
             emailTF = emailTextField
         }
-        alert.addTextFieldWithConfigurationHandler { (passwordTextField) in
+        alert.addTextField { (passwordTextField) in
             passwordTextField.placeholder = "Password"
-            passwordTextField.autocapitalizationType = UITextAutocapitalizationType.None
-            passwordTextField.autocorrectionType = UITextAutocorrectionType.No
-            passwordTextField.spellCheckingType = UITextSpellCheckingType.No
-            passwordTextField.keyboardType = UIKeyboardType.ASCIICapable
-            passwordTextField.secureTextEntry = true
+            passwordTextField.autocapitalizationType = UITextAutocapitalizationType.none
+            passwordTextField.autocorrectionType = UITextAutocorrectionType.no
+            passwordTextField.spellCheckingType = UITextSpellCheckingType.no
+            passwordTextField.keyboardType = UIKeyboardType.asciiCapable
+            passwordTextField.isSecureTextEntry = true
             passwordTF = passwordTextField
         }
         
-        let confirmAction = UIAlertAction(title: "Login", style: .Default) { (action) in
-            FIRAuth.auth()?.signInWithEmail(emailTF.text!, password: passwordTF.text!, completion: { (user, error) in
+        let confirmAction = UIAlertAction(title: "Login", style: .default) { (action) in
+            FIRAuth.auth()?.signIn(withEmail: emailTF.text!, password: passwordTF.text!, completion: { (user, error) in
                 if error == nil {
                     print("Login successful - showing delete account warning")
                     self.showDeleteAccountWarning()
@@ -204,34 +204,34 @@ class DashboardViewController: UIViewController {
         }
         
         alert.addAction(confirmAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: - Present different VC's
     func presentOnboardingVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-        self.presentViewController(onboardingVC, animated: true, completion: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
     }
     
     func presentFamilyVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewControllerWithIdentifier("familyVC") as! NewExistingFamilyViewController
+        let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewController(withIdentifier: "familyVC") as! NewExistingFamilyViewController
         let navController = UINavigationController(rootViewController: onboardingVC)
-        self.presentViewController(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
         
     }
     
     func presentUpdateUserVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateUserVC: UpdateUserViewController = storyboard.instantiateViewControllerWithIdentifier("updateUserVC") as! UpdateUserViewController
+        let updateUserVC: UpdateUserViewController = storyboard.instantiateViewController(withIdentifier: "updateUserVC") as! UpdateUserViewController
         let navController = UINavigationController(rootViewController: updateUserVC)
-        self.presentViewController(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
     }
     
     func updateTabBadge() {
         let tabArray = tabBarController!.tabBar.items as NSArray!
-        let tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         tabItem.badgeValue = nil
     }
     
@@ -251,24 +251,24 @@ class DashboardViewController: UIViewController {
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
-                    if let userName = userDict.objectForKey("name") as? String {
-                        dispatch_async(dispatch_get_main_queue(), {
+                    if let userName = userDict.object(forKey: "name") as? String {
+                        DispatchQueue.main.async(execute: {
                             self.userView.userNameLabel.text = userName
                         })
-                        if let familyId = userDict.objectForKey("familyId") as? String {
-                            dispatch_async(dispatch_get_main_queue(), {
+                        if let familyId = userDict.object(forKey: "familyId") as? String {
+                            DispatchQueue.main.async(execute: {
                                 self.userView.familyGroupLabel.text = familyId
                             })
                             AYNModel.sharedInstance.currentUserFamilyId = familyId
-                            if let admin = userDict.objectForKey("admin") as? String {
+                            if let admin = userDict.object(forKey: "admin") as? String {
                                 if admin == "true" {
-                                    dispatch_async(dispatch_get_main_queue(), {
+                                    DispatchQueue.main.async(execute: {
                                         self.userView.specialUser("admin")
                                     })
                                 } else {
-                                    if let patient = userDict.objectForKey("patient") as? String {
+                                    if let patient = userDict.object(forKey: "patient") as? String {
                                         if patient == "true" {
-                                            dispatch_async(dispatch_get_main_queue(), {
+                                            DispatchQueue.main.async(execute: {
                                                 self.userView.specialUser("patient")
                                             })
                                         } else {
@@ -277,7 +277,7 @@ class DashboardViewController: UIViewController {
                                     }
                                 }
                                 
-                                if let photoUrl = userDict.objectForKey("photoUrl") as? String {
+                                if let photoUrl = userDict.object(forKey: "photoUrl") as? String {
                                     self.configureDashboardView(photoUrl)
                                 }
                             }
@@ -288,9 +288,9 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    func configureDashboardView(imageUrl: String) {
+    func configureDashboardView(_ imageUrl: String) {
             if imageUrl.hasPrefix("gs://") {
-                FIRStorage.storage().referenceForURL(imageUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+                FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
                     if let error = error {
                         // Error
                         print("Error downloading user profile image: \(error.localizedDescription)")
@@ -299,7 +299,7 @@ class DashboardViewController: UIViewController {
                     // Success
                     if let image = UIImage(data: data!) as UIImage? {
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             self.userView.setImage(image)
                         })
                         AYNModel.sharedInstance.currentUserProfileImage = image
@@ -307,10 +307,10 @@ class DashboardViewController: UIViewController {
                         AYNModel.sharedInstance.wasReset = false
                     }
                 })
-            } else if let url = NSURL(string: imageUrl), data = NSData(contentsOfURL: url) {
+            } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
                 if let image = UIImage(data: data) as UIImage? {
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.userView.setImage(image)
                     })
                     AYNModel.sharedInstance.currentUserProfileImage = image

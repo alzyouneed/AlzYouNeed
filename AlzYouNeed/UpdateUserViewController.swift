@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import PKHUD
+// import PKHUD
 
 class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -35,33 +35,33 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.presentTransparentNavBar()
         
         // Add observers
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateUserViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.nameVTFView.textField.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        UIView.animateWithDuration(0.5) {
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0.5, animations: {
             self.progressView.setProgress(0.25, animated: true)
-        }
+        }) 
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Remove observers
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -78,8 +78,8 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         self.nameVTFView.textField.delegate = self
         self.phoneNumberVTFView.textField.delegate = self
         
-        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateUserViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
 
         self.addPhotoButton.layer.cornerRadius = self.addPhotoButton.frame.height/2
         
@@ -91,7 +91,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
-        profileImageView.layer.borderColor = slateBlue.CGColor
+        profileImageView.layer.borderColor = slateBlue.cgColor
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
         tap.numberOfTapsRequired = 1
@@ -101,57 +101,57 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func signUpButtonEnabled() {
         if validFields() {
-            signUpButton.enabled = true
+            signUpButton.isEnabled = true
             signUpButton.alpha = 1
         }
         else {
-            signUpButton.enabled = false
+            signUpButton.isEnabled = false
             signUpButton.alpha = 0.5
         }
     }
     
-    func signUpButtonEnabled(enabled: Bool) {
+    func signUpButtonEnabled(_ enabled: Bool) {
         if enabled {
-            signUpButton.enabled = true
+            signUpButton.isEnabled = true
             signUpButton.alpha = 1
         }
         else {
-            signUpButton.enabled = false
+            signUpButton.isEnabled = false
             signUpButton.alpha = 0.5
         }
     }
 
     // MARK: - UIImagePickerController Delegate
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.profileImageView.image = pickedImage
-            self.addPhotoLabel.hidden = true
+            self.addPhotoLabel.isHidden = true
         }
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func selectPhoto(tap: UITapGestureRecognizer) {
+    func selectPhoto(_ tap: UITapGestureRecognizer) {
         print("Select photo")
         self.imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            self.imagePicker.sourceType = .Camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            self.imagePicker.sourceType = .camera
         }
         else {
-            self.imagePicker.sourceType = .PhotoLibrary
+            self.imagePicker.sourceType = .photoLibrary
         }
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
     
-    @IBAction func addPhoto(sender: UIBarButtonItem) {
+    @IBAction func addPhoto(_ sender: UIBarButtonItem) {
 //        selectPhoto()
     }
     
@@ -180,7 +180,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         // Supports phone number entry without hyphens
         let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        let valid = phoneTest.evaluateWithObject(phoneNumberVTFView.textField.text!)
+        let valid = phoneTest.evaluate(with: phoneNumberVTFView.textField.text!)
         if valid {
             phoneNumberVTFView.isValid(true)
             return true
@@ -200,42 +200,42 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             interfaceEnabled(false)
             
             // Show progress view
-            HUD.show(.Progress)
+            // HUD.show(.Progress)
             
-            guard let name = nameVTFView.textField.text where !name.isEmpty, let phoneNumber = phoneNumberVTFView.textField.text where !phoneNumber.isEmpty else {
+            guard let name = nameVTFView.textField.text , !name.isEmpty, let phoneNumber = phoneNumberVTFView.textField.text , !phoneNumber.isEmpty else {
                 return
             }
             
 //            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
             
-            var imageData = NSData()
+            var imageData = Data()
             if let profileImage = profileImageView.image {
                 imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
             }
             
-            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patient":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData]
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patient":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData] as [String : Any]
             
-            FirebaseManager.updateUser(updates, completionHandler: { (error) in
+            FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update user
-                    HUD.hide({ (success) in
+                    // HUD.hide({ (success) in
                         self.interfaceEnabled(true)
-                    })
+                    // })
                 }
                 else {
                     // Updated user
-                    HUD.flash(.Success, delay: 0, completion: { (success) in
+                    // HUD.flash(.Success, delay: 0, completion: { (success) in
                         self.stepCompleted = true
                         self.view.endEditing(true)
-                        self.performSegueWithIdentifier("pushNotification", sender: self)
-                    })
+                        self.performSegue(withIdentifier: "pushNotification", sender: self)
+                    // })
                 }
             })
         }
     }
     
     func patientStatus() -> String {
-        if patientSwitch.on {
+        if patientSwitch.isOn {
             return "true"
         }
         else {
@@ -243,33 +243,33 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    @IBAction func completeSetup(sender: UIButton) {
+    @IBAction func completeSetup(_ sender: UIButton) {
         if validFields() {
             if let cancelButton = (self.navigationItem.rightBarButtonItems?.first) {
-                cancelButton.enabled = false
+                cancelButton.isEnabled = false
             }
             updateUserAccount()
         }
     }
     
-    @IBAction func cancelOnboarding(sender: UIBarButtonItem) {
+    @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
         cancelAccountCreation()
     }
     
     func cancelAccountCreation() {
         
-        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .ActionSheet)
-        let confirmAction = UIAlertAction(title: "Confirm", style: .Destructive) { (action) in
+        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
         
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func deleteUser() {
@@ -280,14 +280,14 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let onboardingVC: UINavigationController = storyboard.instantiateViewControllerWithIdentifier("onboardingNav") as! UINavigationController
-                self.presentViewController(onboardingVC, animated: true, completion: nil)
+                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+                self.present(onboardingVC, animated: true, completion: nil)
             }
         }
     }
     
     // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Switch between textFields by using return key
         let tag = textField.superview!.superview!.tag
         switch tag {
@@ -305,16 +305,16 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         return true
     }
     
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         let tag = textField.superview!.superview!.tag
         
         switch tag {
         // Name textField
         case 0:
-            validateName()
+            _ = validateName()
         // Phone number textField
         case 1:
-            validatePhoneNumber()
+            _ = validatePhoneNumber()
         default:
             break
         }
@@ -323,14 +323,14 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     // MARK: - Keyboard
-    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue 
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
         UIView.performWithoutAnimation({
             self.nameVTFView.layoutIfNeeded()
@@ -343,25 +343,25 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         else {
             self.nextButtonBottomConstraint.constant = 0
         }
-        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
     // MARK: - Interface Enable / Disable
-    func interfaceEnabled(enabled: Bool) {
+    func interfaceEnabled(_ enabled: Bool) {
         signUpButtonEnabled(enabled)
-        nameVTFView.textField.userInteractionEnabled = enabled
-        phoneNumberVTFView.textField.userInteractionEnabled = enabled
-        patientSwitch.userInteractionEnabled = enabled
+        nameVTFView.textField.isUserInteractionEnabled = enabled
+        phoneNumberVTFView.textField.isUserInteractionEnabled = enabled
+        patientSwitch.isUserInteractionEnabled = enabled
     }
     
 //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -414,7 +414,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
 //        }
 //    }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "pushNotification" {
             return stepCompleted
         }

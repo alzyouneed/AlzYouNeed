@@ -8,7 +8,19 @@
 
 import UIKit
 import Firebase
-import PKHUD
+// import PKHUD
+
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
@@ -31,30 +43,30 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         configureView()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.presentTransparentNavBar()
         
         // Add observers
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CreateUserViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateUserViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CreateUserViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.emailVTFView.textField.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Remove observers
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -71,19 +83,19 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         self.passwordVTFView.textField.delegate = self
         self.confirmPasswordVTFView.textField.delegate = self
         
-        self.emailVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.passwordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.emailVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.passwordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.confirmPasswordVTFView.textField.addTarget(self, action: #selector(CreateUserViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
 
         nextButtonEnabled()
     }
     
-    @IBAction func presentNextView(sender: UIButton) {
+    @IBAction func presentNextView(_ sender: UIButton) {
         signUpUser()
     }
     
     // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Switch between textFields by using return key
         let tag = textField.superview!.superview!.tag
         switch tag {
@@ -105,19 +117,19 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         let tag = textField.superview!.superview!.tag
         
         switch tag {
         // Email textField
         case 0:
-            validateEmail()
+            _ = validateEmail()
         // Password textField
         case 1:
-            validatePassword()
+            _ = validatePassword()
         // Confirm password textField
         case 2:
-            validateConfirmPassword()
+            _ = validateConfirmPassword()
         default:
             break
         }
@@ -127,22 +139,22 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func nextButtonEnabled() {
         if validFields() {
-            nextButton.enabled = true
+            nextButton.isEnabled = true
             nextButton.alpha = 1
         }
         else {
-            nextButton.enabled = false
+            nextButton.isEnabled = false
             nextButton.alpha = 0.5
         }
     }
     
-    func nextButtonEnabled(enabled: Bool) {
+    func nextButtonEnabled(_ enabled: Bool) {
         if enabled {
-            nextButton.enabled = true
+            nextButton.isEnabled = true
             nextButton.alpha = 1
         }
         else {
-            nextButton.enabled = false
+            nextButton.isEnabled = false
             nextButton.alpha = 0.5
         }
     }
@@ -155,15 +167,15 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             interfaceEnabled(false)
             
             // Show progress view
-            HUD.show(.Progress)
+            // HUD.show(.Progress)
             
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed -- show popoverView with reason
-                    HUD.hide({ (success) in
+                    // HUD.hide({ (success) in
                         self.showPopoverView(error!)
                         self.interfaceEnabled(true)
-                    })
+                    // })
                 }
                 else {
                     // Successfully signed up
@@ -171,16 +183,16 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                         
                         let updates = ["email": self.emailVTFView.textField.text!, "completedSignup": "updateUser"]
                         
-                        FirebaseManager.updateUser(updates, completionHandler: { (error) in
+                        FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                             if error == nil {
                                 // success -- Show progress view success
-                                HUD.flash(.Success, delay: 0, completion: { (success) in
+                                // HUD.flash(.Success, delay: 0, completion: { (success) in
                                     self.view.endEditing(true)
                                     self.userSignedUp = true
                                     AYNModel.sharedInstance.wasReset = true
                                     
-                                    self.performSegueWithIdentifier("updateUser", sender: self)
-                                })
+                                    self.performSegue(withIdentifier: "updateUser", sender: self)
+                                // })
                             }
                         })
                     }
@@ -205,7 +217,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             // Check valid
             let userEmailAddress = emailVTFView.textField.text
             let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-            let valid = NSPredicate(format: "SELF MATCHES %@", regex).evaluateWithObject(userEmailAddress)
+            let valid = NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: userEmailAddress)
             
             // For debugging
             if valid {
@@ -259,7 +271,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "updateUser" {
             return userSignedUp
         }
@@ -267,14 +279,14 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Keyboard
-    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue 
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
         UIView.performWithoutAnimation({
             self.emailVTFView.layoutIfNeeded()
@@ -288,21 +300,21 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         else {
             self.nextButtonBottomConstraint.constant = 0
         }
-        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
     // MARK: - Popover View
-    func showPopoverView(error: NSError) {
+    func showPopoverView(_ error: NSError) {
         // Hide keyboard
         self.view.endEditing(true)
         
@@ -311,35 +323,35 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         // Add popover message
         errorPopoverView.configureWithError(error)
         // Add target to hide view
-        errorPopoverView.confirmButton.addTarget(self, action: #selector(CreateUserViewController.hidePopoverView(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        errorPopoverView.confirmButton.addTarget(self, action: #selector(CreateUserViewController.hidePopoverView(_:)), for: UIControlEvents.touchUpInside)
         
         // Configure shadow view
         shadowView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        shadowView.backgroundColor = UIColor.blackColor()
+        shadowView.backgroundColor = UIColor.black
         
         self.view.addSubview(shadowView)
         self.view.addSubview(errorPopoverView)
         
-        errorPopoverView.hidden = false
+        errorPopoverView.isHidden = false
         errorPopoverView.alpha = 0
         
-        shadowView.hidden = false
+        shadowView.isHidden = false
         shadowView.alpha = 0
         
-        UIView.animateWithDuration(0.35, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.35, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.errorPopoverView.alpha = 1
             self.shadowView.alpha = 0.2
             }, completion: { (completed) in
         })
     }
     
-    func hidePopoverView(sender: UIButton) {
-        UIView.animateWithDuration(0.25, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+    func hidePopoverView(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.errorPopoverView.alpha = 0
             self.shadowView.alpha = 0
             }, completion: { (completed) in
-                self.errorPopoverView.hidden = true
-                self.shadowView.hidden = true
+                self.errorPopoverView.isHidden = true
+                self.shadowView.isHidden = true
                 
                 self.errorPopoverView.removeFromSuperview()
                 self.shadowView.removeFromSuperview()
@@ -350,11 +362,11 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     }
 
     // MARK: - Interface Enable / Disable
-    func interfaceEnabled(enabled: Bool) {
+    func interfaceEnabled(_ enabled: Bool) {
         nextButtonEnabled(enabled)
-        self.navigationController?.navigationItem.backBarButtonItem?.enabled = enabled
-        emailVTFView.textField.userInteractionEnabled = enabled
-        passwordVTFView.textField.userInteractionEnabled = enabled
-        confirmPasswordVTFView.userInteractionEnabled = enabled
+        self.navigationController?.navigationItem.backBarButtonItem?.isEnabled = enabled
+        emailVTFView.textField.isUserInteractionEnabled = enabled
+        passwordVTFView.textField.isUserInteractionEnabled = enabled
+        confirmPasswordVTFView.isUserInteractionEnabled = enabled
     }
 }

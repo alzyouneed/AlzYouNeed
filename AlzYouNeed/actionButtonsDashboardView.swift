@@ -35,7 +35,7 @@ import UIKit
         view = loadViewFromNib()
         
         view.frame = bounds
-        view.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
         
         addSubview(view)
         
@@ -44,31 +44,31 @@ import UIKit
     }
     
     // TODO: Update later to add functionality
-    func singleButton(button: String) {
+    func singleButton(_ button: String) {
         if button == "left" {
             stackView.removeArrangedSubview(rightButton)
-            rightButton.hidden = true
+            rightButton.isHidden = true
         }
         else {
             stackView.removeArrangedSubview(leftButton)
-            leftButton.hidden = true
+            leftButton.isHidden = true
         }
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "actionButtonsDashboardView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
     
     // Adjust button size on touch
-    @IBAction func buttonTouchEnded(sender: UIButton) {
-        sender.transform = CGAffineTransformMakeScale(1, 1)
+    @IBAction func buttonTouchEnded(_ sender: UIButton) {
+        sender.transform = CGAffineTransform(scaleX: 1, y: 1)
     }
     
-    @IBAction func buttonTouchStarted(sender: UIButton) {
-        sender.transform = CGAffineTransformMakeScale(0.95, 0.95)
+    @IBAction func buttonTouchStarted(_ sender: UIButton) {
+        sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
     }
 
 }

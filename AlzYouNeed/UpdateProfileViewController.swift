@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
-import PKHUD
+// import PKHUD
 
 class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -34,9 +34,9 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         FirebaseManager.getCurrentUser { (userDict, error) in
             if error == nil {
                 if let userDict = userDict {
-                    self.userName = userDict.objectForKey("name") as! String
-                    self.userPhoneNumber = userDict.objectForKey("phoneNumber") as! String
-                    self.userPhotoUrl = userDict.objectForKey("photoUrl") as! String
+                    self.userName = userDict.object(forKey: "name") as! String
+                    self.userPhoneNumber = userDict.object(forKey: "phoneNumber") as! String
+                    self.userPhotoUrl = userDict.object(forKey: "photoUrl") as! String
                     
                     self.configureView()
                 }
@@ -45,20 +45,20 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Add observers
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateProfileViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Remove observers
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +70,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         self.nameVTFView.nameMode()
         self.phoneNumberVTFView.phoneNumberMode()
         
-        dispatch_async(dispatch_get_main_queue()) { 
+        DispatchQueue.main.async { 
             self.nameVTFView.textField.placeholder = self.userName
             self.phoneNumberVTFView.textField.placeholder = self.userPhoneNumber
         }
@@ -78,29 +78,29 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         self.nameVTFView.textField.delegate = self
         self.phoneNumberVTFView.textField.delegate = self
         
-        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         
         configureImagePicker()
         configureProfileImage(userPhotoUrl)
-        updatesToSave()
+        _ = updatesToSave()
     }
     
-    func configureProfileImage(photoUrl: String) {
+    func configureProfileImage(_ photoUrl: String) {
         if photoUrl.hasPrefix("gs://") {
-            FIRStorage.storage().referenceForURL(photoUrl).dataWithMaxSize(INT64_MAX, completion: { (data, error) in
+            FIRStorage.storage().reference(forURL: photoUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
                 if let error = error {
                     // Error
                     print("Error downloading user profile image: \(error.localizedDescription)")
                     return
                 }
                 // Success
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.profileImageView.image = UIImage(data: data!)
                 })
             })
-        } else if let url = NSURL(string: photoUrl), data = NSData(contentsOfURL: url) {
-            dispatch_async(dispatch_get_main_queue(), {
+        } else if let url = URL(string: photoUrl), let data = try? Data(contentsOf: url) {
+            DispatchQueue.main.async(execute: {
                 self.profileImageView.image = UIImage(data: data)
             })
         }
@@ -110,7 +110,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         profileImageView.layer.cornerRadius = profileImageView.frame.height/2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
-        profileImageView.layer.borderColor = slateBlue.CGColor
+        profileImageView.layer.borderColor = slateBlue.cgColor
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
         tap.numberOfTapsRequired = 1
@@ -118,7 +118,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         print("configured image picker")
     }
     
-    @IBAction func updateProfile(sender: UIButton) {
+    @IBAction func updateProfile(_ sender: UIButton) {
         if updatesToSave() {
             // Update profile and return to previous VC
             print("Updates to save")
@@ -127,36 +127,36 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
             
             // Remove if no updates
             if nameUpdate() {
-                updates["name"] = nameVTFView.textField.text!
+                updates["name"] = nameVTFView.textField.text! as NSObject?
             }
             if phoneNumberUpdate() {
-                updates["phoneNumber"] = phoneNumberVTFView.textField.text!
+                updates["phoneNumber"] = phoneNumberVTFView.textField.text! as NSObject?
             }
             if profileImageUpdated {
-                var imageData = NSData()
+                var imageData = Data()
                 if let profileImage = profileImageView.image {
                     imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
                 }
-                updates["profileImage"] = imageData
+                updates["profileImage"] = imageData as NSObject?
             }
             
             // Show progress view
-            HUD.show(.Progress)
+            // HUD.show(.Progress)
 
-            FirebaseManager.updateUser(updates, completionHandler: { (error) in
+            FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                 if error == nil {
                     // Updated user -- Return to previous VC
-                    HUD.flash(.Success, delay: 0, completion: { (success) in
+                    //HUD.flash(.Success, delay: 0, completion: { (success) in
                         print("Profile updated -- returning to VC")
                         self.view.endEditing(true)
                         AYNModel.sharedInstance.profileWasUpdated = true
-                        self.navigationController?.popToRootViewControllerAnimated(true)
-                    })
+                        _ = self.navigationController?.popToRootViewController(animated: true)
+                    //})
                 } else {
                     // Error
-                    HUD.flash(.Error, delay: 0, completion: { (success) in
+                    //HUD.flash(.Error, delay: 0, completion: { (success) in
                         print("Error updating user")
-                    })
+                    //})
                 }
             })
             
@@ -208,7 +208,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
     func validatePhoneNumber() -> Bool {
         let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        let valid = phoneTest.evaluateWithObject(phoneNumberVTFView.textField.text!)
+        let valid = phoneTest.evaluate(with: phoneNumberVTFView.textField.text!)
         if valid {
             phoneNumberVTFView.isValid(true)
             return true
@@ -219,44 +219,44 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         }
     }
     
-    func enableUpdateButton(enable: Bool) {
+    func enableUpdateButton(_ enable: Bool) {
         if enable {
            updateButton.alpha = 1
-            updateButton.enabled = true
+            updateButton.isEnabled = true
         }
         else {
             updateButton.alpha = 0.5
-            updateButton.enabled = false
+            updateButton.isEnabled = false
         }
     }
     
     // MARK: - UITextFieldDelegate
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         let tag = textField.superview!.superview!.tag
         
         switch tag {
         // Name textField
         case 0:
-            validateName()
+            _ = validateName()
         // Phone number textField
         case 1:
-            validatePhoneNumber()
+            _ = validatePhoneNumber()
         default:
             break
         }
         
-        updatesToSave()
+        _ = updatesToSave()
     }
     
     // MARK: - Keyboard
-    func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
         let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
-        let animationCurveRaw = animationCurveRawNSNumber.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue 
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-        let changeInHeight = (CGRectGetHeight(keyboardFrame)) //* (show ? 1 : -1)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
         UIView.performWithoutAnimation({
             self.nameVTFView.layoutIfNeeded()
@@ -269,47 +269,47 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         else {
             self.updateButtonBottomConstraint.constant = 0
         }
-        UIView.animateWithDuration(animationDuration, delay: 0, options: animationCurve, animations: {
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
     
-    func keyboardWillShow(sender: NSNotification) {
+    func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
     }
     
-    func keyboardWillHide(sender: NSNotification) {
+    func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
     }
     
     // MARK: - UIImagePickerController Delegate
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.profileImageView.image = pickedImage
             profileImageUpdated = true
-            updatesToSave()
+            _ = updatesToSave()
         }
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
     }
     
-    func selectPhoto(tap: UITapGestureRecognizer) {
+    func selectPhoto(_ tap: UITapGestureRecognizer) {
         print("Select photo")
         self.imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = .photoLibrary
         
-        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
-            self.imagePicker.sourceType = .Camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            self.imagePicker.sourceType = .camera
         }
         else {
-            self.imagePicker.sourceType = .PhotoLibrary
+            self.imagePicker.sourceType = .photoLibrary
         }
         
-        presentViewController(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true, completion: nil)
     }
 
 }
