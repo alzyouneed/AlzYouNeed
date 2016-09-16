@@ -183,7 +183,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         }
         
         let url: URL = URL(string: "tel://\(contact.phoneNumber)")!
-        UIApplication.shared.openURL(url)
+//        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     @IBAction func closeContactDetailView(_ sender: AnyObject) {

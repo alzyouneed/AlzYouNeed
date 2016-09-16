@@ -103,7 +103,9 @@ class DashboardViewController: UIViewController {
         }
         let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .default) { (action) in
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.openURL(appSettings)
+//                UIApplication.shared.openURL(appSettings)
+                
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in

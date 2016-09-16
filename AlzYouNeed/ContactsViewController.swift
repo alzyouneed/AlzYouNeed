@@ -134,7 +134,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         
         let url: URL = URL(string: "tel://\(phoneNumber)")!
         
-        UIApplication.shared.openURL(url)
+//        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
     func rightButtonPressed(_ sender: UIButton) {
