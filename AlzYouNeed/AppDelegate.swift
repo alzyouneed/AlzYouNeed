@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Configure Firebase
-//        FIRApp.configure()
+//        FIRApp.configure()  -- caused crash on launch here
         
         // Remove navigation bar button text
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clear], for: UIControlState())
@@ -51,15 +51,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        tabItem.badgeValue = "8"
         
         // Local reminders
-        if let options = launchOptions {
-            if (options[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification) != nil {
-//            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-                tabBarController.selectedIndex = 2
-//                if let userInfo = notification.userInfo {
-//                    
-//                }
-            }
-        }
+//        if let options = launchOptions {
+//            if (options[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification) != nil {
+////            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+//                tabBarController.selectedIndex = 2
+////                if let userInfo = notification.userInfo {
+////                    
+////                }
+//            }
+//        }
         
         
 //        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)

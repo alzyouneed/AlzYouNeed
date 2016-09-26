@@ -129,8 +129,49 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         return AYNModel.sharedInstance.remindersArr.count
     }
     
-    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if let reminderCell = cell as? ReminderTableViewCell {
+//            let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
+//            reminderCell.delegate = self
+//            reminderCell.titleLabel.text = reminder.title
+//            
+//            // Format readable date
+//            let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "MMMM d, h:mm a"
+//            reminderCell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+//            reminderCell.descriptionLabel.text = reminder.reminderDescription
+//            
+//            if reminder.repeats != "None" {
+//                reminderCell.repeatsLabel.text = "Repeats \(reminder.repeats)"
+//                reminderCell.repeatsLabel.isHidden = false
+//            } else {
+//                reminderCell.repeatsLabel.isHidden = true
+//            }
+//        }
+////        let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
+////        cell.delegate = self
+////        cell.titleLabel.text = reminder.title
+////        
+////        // Format readable date
+////        let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
+////        let dateFormatter = DateFormatter()
+////        dateFormatter.dateFormat = "MMMM d, h:mm a"
+////        cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+////        cell.descriptionLabel.text = reminder.reminderDescription
+////        
+////        if reminder.repeats != "None" {
+////            cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
+////            cell.repeatsLabel.isHidden = false
+////        } else {
+////            cell.repeatsLabel.isHidden = true
+////        }
+//    }
+    
+    
+     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell")! as! ReminderTableViewCell
+//        let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath) as! ReminderTableViewCell
         
         let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
         cell.delegate = self
@@ -153,7 +194,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         return cell
     }
     
-    private func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
+     func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
         if editingStyle == .delete {
             let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
@@ -194,7 +235,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                         print("Reminder due date has passed -- skipping")
                                     }
                                 }
-
+                                
                                 self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
                                 self.updateTabBadge()
                             }

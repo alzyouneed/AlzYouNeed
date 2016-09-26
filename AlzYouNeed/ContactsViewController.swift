@@ -108,7 +108,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         return AYNModel.sharedInstance.contactsArr.count
     }
     
-    private func collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell", for: indexPath) as! ContactCollectionViewCell
         
         let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]

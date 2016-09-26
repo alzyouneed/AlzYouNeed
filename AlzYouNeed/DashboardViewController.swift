@@ -71,7 +71,7 @@ class DashboardViewController: UIViewController {
             configureView()
         }
         else if AYNModel.sharedInstance.profileWasUpdated {
-            print("Profile was udpated -- resetting UI")
+            print("Profile was updated -- resetting UI")
             AYNModel.sharedInstance.profileWasUpdated = false
             configureView()
         }
