@@ -35,7 +35,7 @@ class PushNotificationsViewController: UIViewController {
     
     @IBAction func enablePush(_ sender: UIButton) {
         // TODO: Perform segue after user has clicked "Allow"
-        registerPushNotifications()
+//        registerPushNotifications()
         performSegue(withIdentifier: "familyStage", sender: self)
     }
     
@@ -54,11 +54,11 @@ class PushNotificationsViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func registerPushNotifications() {
-        let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
-        UIApplication.shared.registerForRemoteNotifications()
-    }
+//    func registerPushNotifications() {
+//        let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+//        UIApplication.shared.registerUserNotificationSettings(settings)
+//        UIApplication.shared.registerForRemoteNotifications()
+//    }
     
     
     // MARK: - Cancel Onboarding

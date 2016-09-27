@@ -57,7 +57,7 @@ class CompleteRemindersViewController: UIViewController, UITableViewDelegate {
         return AYNModel.sharedInstance.completedRemindersArr.count
     }
     
-    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell:CompleteReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "completedReminderCell")! as! CompleteReminderTableViewCell
         
         let completedReminder = AYNModel.sharedInstance.completedRemindersArr[(indexPath as NSIndexPath).row]

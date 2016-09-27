@@ -41,7 +41,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        registerLocalNotifications()
+//        registerLocalNotifications()
         addRemindersObservers()
     }
     
@@ -200,7 +200,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Observers catch deletion and properly update data source array and UI
-                    self.cancelLocalNotification(reminder.id)
+//                    self.cancelLocalNotification(reminder.id)
                 }
             })
         }
@@ -229,7 +229,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                     let now = Date()
                                     // Check that date has not passed
                                     if (dueDate as NSDate).earlierDate(now) != dueDate {
-                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+//                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
                                     }
                                     else {
                                         print("Reminder due date has passed -- skipping")
@@ -250,7 +250,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                 AYNModel.sharedInstance.remindersArr.remove(at: index)
                                 
                                 // Cancel any local notifications
-                                self.cancelLocalNotification(reminderId)
+//                                self.cancelLocalNotification(reminderId)
 
                                 self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
                                 self.updateTabBadge()
@@ -356,6 +356,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - Push Notifications
+    /*
     func registerLocalNotifications() {
         let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(notificationSettings)
@@ -446,6 +447,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             }
         }
     }
+    */
     
     // MARK: - UIPickerView
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

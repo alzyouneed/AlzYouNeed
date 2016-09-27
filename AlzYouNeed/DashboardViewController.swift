@@ -101,13 +101,13 @@ class DashboardViewController: UIViewController {
         let updateAction = UIAlertAction(title: "Update Profile", style: .default) { (action) in
             self.presentUpdateProfileVC()
         }
-        let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .default) { (action) in
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-//                UIApplication.shared.openURL(appSettings)
-                
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
-        }
+//        let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .default) { (action) in
+//            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+////                UIApplication.shared.openURL(appSettings)
+//                
+//                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+//            }
+//        }
         let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in
             // Clean up current session
             AYNModel.sharedInstance.resetModel()
@@ -124,7 +124,7 @@ class DashboardViewController: UIViewController {
         }
         
         alertController.addAction(updateAction)
-        alertController.addAction(pushNotificationsAction)
+//        alertController.addAction(pushNotificationsAction)
         alertController.addAction(logoutAction)
         alertController.addAction(deleteAccountAction)
         alertController.addAction(cancelAction)

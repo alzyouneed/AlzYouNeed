@@ -84,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Push Notifications
+    /*
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
@@ -98,6 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("userInfo: \(userInfo)")
         }
     }
+   */
     
     // Remote
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
