@@ -309,7 +309,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         return messages.count
     }
     
-    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         
         let message = messages[(indexPath as NSIndexPath).row]
         
