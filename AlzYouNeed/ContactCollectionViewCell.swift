@@ -44,7 +44,8 @@ class ContactCollectionViewCell: UICollectionViewCell {
         }
         
         // Load images on background thread to avoid choppiness
-        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
+        DispatchQueue.global().async {
+            // Background thread
             if let imageUrl = contact.photoUrl {
                 if imageUrl.hasPrefix("gs://") {
                     FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
@@ -54,19 +55,46 @@ class ContactCollectionViewCell: UICollectionViewCell {
                             return
                         }
                         // Success
-                            let image = UIImage(data: data!)
-                            DispatchQueue.main.async(execute: {
-                                self.contactView.contactImageView.image = image
-                            })
-                    })
-                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
-                        let image = UIImage(data: data)
+                        let image = UIImage(data: data!)
                         DispatchQueue.main.async(execute: {
                             self.contactView.contactImageView.image = image
                         })
+                    })
+                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async(execute: {
+                        self.contactView.contactImageView.image = image
+                    })
                 }
             }
-        })
+        }
+        
+        
+        // Load images on background thread to avoid choppiness
+//        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
+//            if let imageUrl = contact.photoUrl {
+//                if imageUrl.hasPrefix("gs://") {
+//                    FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+//                        if let error = error {
+//                            // Error
+//                            print("Error downloading user profile image: \(error.localizedDescription)")
+//                            return
+//                        }
+//                        // Success
+//                            let image = UIImage(data: data!)
+//                            DispatchQueue.main.async(execute: {
+//                                self.contactView.contactImageView.image = image
+//                            })
+//                    })
+//                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
+//                        let image = UIImage(data: data)
+//                        DispatchQueue.main.async(execute: {
+//                            self.contactView.contactImageView.image = image
+//                        })
+//                }
+//            }
+//        })
+        
     }
   
 }
