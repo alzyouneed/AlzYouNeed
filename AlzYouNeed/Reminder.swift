@@ -40,10 +40,10 @@ class Reminder: NSObject {
     override var description: String {
         return "id: \(id) -- title: \(title) -- description: \(reminderDescription) -- createdDate: \(createdDate) -- dueDate: \(dueDate) -- completedDate: \(completedDate) -- repeats: \(repeats)"
     }
-    
-    func asDict() -> NSDictionary {
-        let reminderDict = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate, "completedDate": self.completedDate, "repeats": self.repeats]
-        return reminderDict as NSDictionary
+
+    func asDict() -> Dictionary<String, String> {
+        let reminderDict: Dictionary<String, String> = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate, "completedDate": self.completedDate, "repeats": self.repeats]
+        return reminderDict
     }
     
 }
