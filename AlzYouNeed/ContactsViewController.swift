@@ -129,12 +129,11 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
     // MARK: - Contact Card Actions
     
     func leftButtonPressed(_ sender: UIButton) {
-        let phoneNumber = AYNModel.sharedInstance.contactsArr[sender.tag].phoneNumber
+        let phoneNumber = AYNModel.sharedInstance.contactsArr[sender.tag].phoneNumber!
         print("Left button pressed -- row: \(sender.tag) -- Calling: \(phoneNumber) \n")
         
         let url: URL = URL(string: "tel://\(phoneNumber)")!
         
-//        UIApplication.shared.openURL(url)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
