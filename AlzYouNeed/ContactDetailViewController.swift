@@ -39,7 +39,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func configureView() {
         messagesTableView.delegate = self
         
-        userView.userNameLabel.text = "\(contact.fullName)"
+        userView.userNameLabel.text = "\(contact.fullName!)"
         userView.setImage(profileImage)
 
         userView.view.backgroundColor = caribbeanGreen
@@ -170,7 +170,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     // MARK: - Action Buttons
     func leftButtonPressed(_ sender: UIButton) {
-        print("Calling: \(contact.phoneNumber)")
+        print("Calling: \(contact.phoneNumber!)")
         
         // Save action in Firebase RTDB
         let now = Date().timeIntervalSince1970
@@ -182,7 +182,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             }
         }
         
-        let url: URL = URL(string: "tel://\(contact.phoneNumber)")!
+        let url: URL = URL(string: "tel://\(contact.phoneNumber!)")!
 //        UIApplication.shared.openURL(url)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
