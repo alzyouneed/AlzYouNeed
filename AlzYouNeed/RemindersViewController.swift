@@ -344,7 +344,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         remindersTableView.estimatedRowHeight = 99
         
         // completedButton
-        completedButton.layer.cornerRadius = completedButton.frame.height/2
+//        completedButton.layer.cornerRadius = completedButton.frame.height/2
     }
     
     // MARK: - Date Picker
