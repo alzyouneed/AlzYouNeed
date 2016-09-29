@@ -29,7 +29,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     @IBOutlet var messagesTableView: UITableView!
     
     @IBOutlet var toolbarBottomConstraint: NSLayoutConstraint!
-    @IBOutlet var scrollView: UIScrollView!
+    
+    @IBOutlet var tableViewTopConstraint: NSLayoutConstraint!
     
     var messageMode = false
     
@@ -243,57 +244,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
                                 DispatchQueue.main.async(execute: {
                                     self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
                                 })
-//                                self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
-//                                self.moveToLastMessage()
                             }
                         })
-                        
-//                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observeEventType(.ChildChanged, withBlock: { (snapshot) in
-//                            print("Child updated")
-//                            if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
-//                                self.messages.append(newMessage)
-//                                indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-//                                
-//                                // print("inserting new message into row")
-//                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-//                                
-//                                // self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-//                                
-//                                dispatch_async(dispatch_get_main_queue(), {
-//                                    self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: false)
-//                                })
-//                              self.moveToLastMessage()
-//                            }
-//                        })
                     })
-                    
-//                   self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(.ChildChanged, withBlock: { (snapshot) in
-//                        print("Child changed")
-//                    })
-                    
-//                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-//                        
-//                        var indexPaths: [NSIndexPath] = []
-//                        
-//                        self.messages.removeAll()
-//                        self.messagesTableView.reloadData()
-//                        
-//                        print("Messages: \(snapshot.childrenCount)")
-//
-//                        for item in snapshot.children {
-//                            if let item = item as? FIRDataSnapshot {
-//                                
-//                                if let newMessage = Message(messageId: item.key, messageDict: item.value as! NSDictionary) {
-//                                    self.messages.append(newMessage)
-//                                    indexPaths.append(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-//                                }
-//                            }
-//                        }
-//                        if !indexPaths.isEmpty {
-//                            self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-//                            self.messagesTableView.scrollToRowAtIndexPath(indexPaths.last!, atScrollPosition: .Bottom, animated: true)
-//                        }
-//                    })
                 }
             }
         }
@@ -324,15 +277,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             cell.delegate = self
             return cell
         }
-        
-        
-//        let cell:MessageTableViewCell = tableView.dequeueReusableCellWithIdentifier("messageCellMe")! as! MessageTableViewCell
-//        
-//        let message = messages[indexPath.row]
-//
-//        cell.configureCell(message, contact: contact, profileImage: profileImage)
-//        
-//        return cell
     }
     
     // MARK: - MessageTableViewCell Delegate
@@ -380,9 +324,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         if show {
             self.toolbarBottomConstraint.constant = changeInHeight
 
-            let bottomOffset: CGPoint = CGPoint(x: 0, y: changeInHeight)
+//            let bottomOffset: CGPoint = CGPoint(x: 0, y: changeInHeight)
             
-            scrollView.setContentOffset(bottomOffset, animated: false)
+//            scrollView.setContentOffset(bottomOffset, animated: false)
             scrollToBottom()
         } else {
             self.toolbarBottomConstraint.constant = 0
@@ -395,14 +339,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
-        scrollView.isScrollEnabled = false
+//        scrollView.isScrollEnabled = false
         
         configureMessageMode()
     }
     
     func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
-        scrollView.isScrollEnabled = true
+//        scrollView.isScrollEnabled = true
         
         configureMessageMode()
     }
@@ -448,22 +392,31 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func configureMessageMode() {
         if !messageMode {
             messageMode = true
-            
+
             self.navigationItem.title = "Messages"
-            
+            self.tableViewTopConstraint.constant = -100
+            self.tableViewTopConstraint.constant -= self.userView.frame.height
+
             UIView.animate(withDuration: 0.2, animations: { 
                 self.contactActionButtons.alpha = 0
                 self.lastCalledLabel.alpha = 0
+                self.view.layoutIfNeeded()
             })
         } else {
             messageMode = false
             
             self.navigationItem.title = nil
+            self.tableViewTopConstraint.constant = 8
             
-            UIView.animate(withDuration: 0.2, animations: { 
+            UIView.animate(withDuration: 0.2, animations: {
+//                self.contactActionButtons.alpha = 1
+//                self.lastCalledLabel.alpha = 1
+                self.view.layoutIfNeeded()
+            })
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: [], animations: {
                 self.contactActionButtons.alpha = 1
                 self.lastCalledLabel.alpha = 1
-            })
+                }, completion: nil)
         }
     }
 }
