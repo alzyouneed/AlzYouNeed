@@ -1004,7 +1004,7 @@
                                         <rect key="frame" x="0.0" y="56" width="375" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e3d-Pm-dad" id="vFo-hS-r4c">
-                                            <frame key="frameInset" width="375" height="98"/>
+                                            <frame key="frameInset" width="375" height="98.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
@@ -1048,7 +1048,7 @@
                                                         <action selector="buttonTapped:" destination="e3d-Pm-dad" eventType="touchUpInside" id="zgq-nn-j93"/>
                                                     </connections>
                                                 </button>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRl-JE-fif">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRl-JE-fif">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="sdL-7a-KTK"/>
                                                         <constraint firstAttribute="width" constant="119" id="siQ-pI-9kU"/>
@@ -1076,6 +1076,7 @@
                                                 <constraint firstItem="tRl-JE-fif" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="j90-6h-UIg"/>
                                                 <constraint firstItem="LhX-7Y-RQS" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="jFk-qP-a7G"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="lUh-RQ-lLp"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="qj2-VN-hgt"/>
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="leading" secondItem="vVg-7m-Tsh" secondAttribute="leading" id="tnp-OG-6R4"/>
                                                 <constraint firstItem="tRl-JE-fif" firstAttribute="leading" secondItem="oBZ-Wg-Ure" secondAttribute="trailing" constant="8" id="vLx-hl-dn4"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="yBw-cD-G8T"/>
@@ -1083,9 +1084,10 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Li7-L2-t3z"/>
-                                                    <exclude reference="6Jo-b3-n42"/>
                                                     <exclude reference="eYP-4a-uyv"/>
                                                     <exclude reference="lUh-RQ-lLp"/>
+                                                    <exclude reference="6Jo-b3-n42"/>
+                                                    <exclude reference="vLx-hl-dn4"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1156,11 +1158,11 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="completedReminderCell" rowHeight="99" id="BYL-01-Q9Y" customClass="CompleteReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="99"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="completedReminderCell" rowHeight="99" id="BYL-01-Q9Y" customClass="CompleteReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="56" width="1000" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="BYL-01-Q9Y" id="iv7-MI-aLS">
-                                            <frame key="frameInset" width="375" height="98"/>
+                                            <frame key="frameInset" width="1000" height="98.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFG-Sa-SIO">
@@ -1242,7 +1244,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1279,7 +1281,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="W9I-r8-WDP" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="cQV-2L-oxY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cQV-2L-oxY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

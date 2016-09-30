@@ -41,7 +41,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        registerLocalNotifications()
+        registerLocalNotifications()
         addRemindersObservers()
     }
     
@@ -81,11 +81,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
             self.dateTF = dateTextField
         }
-        alert.addTextField { (repeatsTextField) in
-            repeatsTextField.text = "Repeats None"
-            repeatsTextField.inputView = self.repeatPickerView
-            self.repeatsTF = repeatsTextField
-        }
+//        alert.addTextField { (repeatsTextField) in
+//            repeatsTextField.text = "Repeats None"
+//            repeatsTextField.inputView = self.repeatPickerView
+//            self.repeatsTF = repeatsTextField
+//        }
         
         let confirmAction = UIAlertAction(title: "Create", style: .default) { (action) in
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
@@ -98,11 +98,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
-                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
+//                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
                 
-                if let repeatOption = repeatsTFText as String? {
-                    newReminder["repeats"] = repeatOption
-                }
+//                if let repeatOption = repeatsTFText as String? {
+//                    newReminder["repeats"] = repeatOption
+//                }
                 
                 FirebaseManager.createFamilyReminder(newReminder as NSDictionary, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
@@ -200,7 +200,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
                 if error == nil {
                     // Observers catch deletion and properly update data source array and UI
-//                    self.cancelLocalNotification(reminder.id)
+                    self.cancelLocalNotification(reminder.id)
                 }
             })
         }
@@ -229,7 +229,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                     let now = Date()
                                     // Check that date has not passed
                                     if (dueDate as NSDate).earlierDate(now) != dueDate {
-//                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
                                     }
                                     else {
                                         print("Reminder due date has passed -- skipping")
@@ -250,7 +250,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                                 AYNModel.sharedInstance.remindersArr.remove(at: index)
                                 
                                 // Cancel any local notifications
-//                                self.cancelLocalNotification(reminderId)
+                                self.cancelLocalNotification(reminderId)
 
                                 self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
                                 self.updateTabBadge()
@@ -356,98 +356,73 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     // MARK: - Push Notifications
-    /*
     func registerLocalNotifications() {
-        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            if error != nil {
+                print("Error requesting push notification auth:", error)
+            } else {
+                if granted {
+                    print("Push notification auth granted")
+                } else {
+                    print("Push notification auth denied")
+                }
+            }
+        }
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     func scheduleLocalNotification(_ reminderId: String, reminder: NSDictionary) {
-        // Check if have permission to schedule push notifications
-        guard let settings = UIApplication.shared.currentUserNotificationSettings else { return }
-        
-        // Permission denied
-        if settings.types == UIUserNotificationType() {
-            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of future tasks", preferredStyle: .alert)
+        if UIApplication.shared.isRegisteredForRemoteNotifications {
+            UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (requests) in
+                for notification in requests {
+                    // Notification exists
+                    if notification.identifier == reminderId {
+                        print("Local notification already pending")
+                        return
+                    }
+                }
+                // Notification does not exist
+                let center = UNUserNotificationCenter.current()
+                
+                let content = UNMutableNotificationContent()
+                content.title = "Reminder"
+                content.body = reminder.value(forKey: "title") as! String
+                content.sound = UNNotificationSound.default()
+                
+                let dueDateInterval = TimeInterval(reminder.value(forKey: "dueDate") as! String)!
+                let date = Date(timeIntervalSince1970: dueDateInterval)
+                let calendar = Calendar.current
+                let dateComponents = calendar.dateComponents([.minute, .day], from: date)
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                let request = UNNotificationRequest(identifier: reminderId, content: content, trigger: trigger)
+                center.add(request, withCompletionHandler: { (error) in
+                    if error != nil {
+                        print("Error adding push notification request:", error)
+                    } else {
+                        print("Push notification request added")
+                    }
+                })
+            })
+        } else {
+            // Notifications disabled
+            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of items on your to-do list", preferredStyle: .alert)
             let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
                 if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.openURL(appSettings)
+                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
                 }
             })
             let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
             alertController.addAction(enableAction)
             alertController.addAction(cancelAction)
             present(alertController, animated: true, completion: nil)
-            return
         }
-        
-        // Check for existing notification for reminder
-        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (notificationRequests) in
-            print(notificationRequests)
-        })
-        
-        if let scheduledNotifications: [UILocalNotification]? = UIApplication.shared.scheduledLocalNotifications {
-            for notification in scheduledNotifications! {
-                if let userInfo = notification.userInfo {
-                    if let existingReminderId = userInfo["reminderId"] as? String {
-                        if existingReminderId == reminderId {
-                            print("Local notification already exists")
-                            return
-                        }
-                    }
-                }
-            }
-        }
-        
-        // Permission granted & Notification does not already exist
-        print("Scheduling local notification")
-        let notification = UILocalNotification()
-        notification.fireDate = Date(timeIntervalSince1970: TimeInterval(reminder["dueDate"] as! String)!)
-        
-        // Handle repeated reminders
-        if let reminderRepeats = reminder["repeats"] as! String? {
-            print("Repeated reminder")
-            switch reminderRepeats {
-            case "None":
-                break
-            case "Hourly":
-                notification.repeatInterval = NSCalendar.Unit.hour
-            case "Daily":
-                notification.repeatInterval = NSCalendar.Unit.day
-            case "Weekly":
-                notification.repeatInterval = NSCalendar.Unit.weekOfYear
-            // TESTING ONLY
-//            case "Minute":
-//                notification.repeatInterval = NSCalendarUnit.Minute
-            default:
-                break
-            }
-        }
-        
-        notification.alertBody = "Reminder: \(reminder["title"]!)"
-        notification.alertAction = "View"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.userInfo = ["reminderId": reminderId]
-        UIApplication.shared.scheduleLocalNotification(notification)
     }
     
     func cancelLocalNotification(_ reminderId: String) {
-        let scheduledNotifications: [UILocalNotification]? = UIApplication.shared.scheduledLocalNotifications
-        guard scheduledNotifications != nil else { return }
-        
-        for notification in scheduledNotifications! {
-            if let userInfo = notification.userInfo {
-                if let existingReminderId = userInfo["reminderId"] as? String {
-                    if existingReminderId == reminderId {
-                        print("Cancelling local notification")
-                        UIApplication.shared.cancelLocalNotification(notification)
-                        break
-                    }
-                }
-            }
-        }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminderId])
     }
-    */
     
     // MARK: - UIPickerView
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
