@@ -1426,8 +1426,8 @@
                                                         <mask key="constraints">
                                                             <exclude reference="RMh-ea-MDu"/>
                                                             <exclude reference="eAf-kl-xZ1"/>
-                                                            <exclude reference="Jek-ce-1jy"/>
                                                             <exclude reference="4ij-ya-glr"/>
+                                                            <exclude reference="Jek-ce-1jy"/>
                                                             <exclude reference="JbG-Xv-YMm"/>
                                                         </mask>
                                                     </variation>
@@ -1531,14 +1531,14 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="Nfb-ie-Y39"/>
                                                             <exclude reference="5Il-3q-B3N"/>
                                                             <exclude reference="TAm-Md-iC2"/>
                                                             <exclude reference="ibi-3w-R3e"/>
-                                                            <exclude reference="iRZ-fC-Z73"/>
-                                                            <exclude reference="GaA-hm-AXb"/>
-                                                            <exclude reference="nyU-C6-SQo"/>
+                                                            <exclude reference="Nfb-ie-Y39"/>
                                                             <exclude reference="6Os-Hx-CYN"/>
+                                                            <exclude reference="GaA-hm-AXb"/>
+                                                            <exclude reference="iRZ-fC-Z73"/>
+                                                            <exclude reference="nyU-C6-SQo"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
@@ -1610,10 +1610,10 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="O4z-tV-wUu"/>
-                                        <exclude reference="Xf5-TP-gbt"/>
                                         <exclude reference="Dw3-5l-lcV"/>
                                         <exclude reference="Gw5-Qp-xkv"/>
+                                        <exclude reference="O4z-tV-wUu"/>
+                                        <exclude reference="Xf5-TP-gbt"/>
                                     </mask>
                                 </variation>
                             </view>

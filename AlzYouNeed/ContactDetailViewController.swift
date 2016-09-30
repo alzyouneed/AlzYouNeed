@@ -316,17 +316,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
         let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
-//        UIView.performWithoutAnimation({
-//            self.nameVTFView.layoutIfNeeded()
-//            self.phoneNumberVTFView.layoutIfNeeded()
-//        })
-        
         if show {
             self.toolbarBottomConstraint.constant = changeInHeight
-
-//            let bottomOffset: CGPoint = CGPoint(x: 0, y: changeInHeight)
-            
-//            scrollView.setContentOffset(bottomOffset, animated: false)
             scrollToBottom()
         } else {
             self.toolbarBottomConstraint.constant = 0
@@ -339,15 +330,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     func keyboardWillShow(_ sender: Notification) {
         adjustingKeyboardHeight(true, notification: sender)
-//        scrollView.isScrollEnabled = false
-        
         configureMessageMode()
     }
     
     func keyboardWillHide(_ sender: Notification) {
         adjustingKeyboardHeight(false, notification: sender)
-//        scrollView.isScrollEnabled = true
-        
         configureMessageMode()
     }
     
