@@ -55,7 +55,11 @@ class FirebaseManager: NSObject {
             
             databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dict = snapshot.value! as? NSDictionary {
-//                    print("Current user retrieved")
+//                    print("Current user retrieved:", dict)
+                    // Used by UserDefaults to check auth of saved user before loading
+                    dict.setValue(snapshot.key, forKey: "userId")
+                    UserDefaultsManager.saveCurrentUser(_user: dict)
+//                    print("Current user retrieved:", dict)
                     completionHandler(dict, nil)
                 }
                 else {

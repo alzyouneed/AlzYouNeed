@@ -50,13 +50,6 @@ class DashboardViewController: UIViewController {
         }
         
         configureView()
-        
-//        let newMessage = ["timestamp" : NSDate().timeIntervalSince1970.description, "messageString" : "Want to hangout today?"]
-//        FirebaseManager.sendNewMessage("79nSgKxgI4QVcSMkavYYc7WUs7v2", message: newMessage) { (error) in
-//            if error == nil {
-////                print("Message sent")
-//            }
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -242,6 +235,7 @@ class DashboardViewController: UIViewController {
     
     // MARK: - Configuration
     func configureView() {
+        configureViewWithUserDefaults()
         configureUserNameLabel()
         configureActionButtons()
     }
@@ -318,6 +312,29 @@ class DashboardViewController: UIViewController {
                     AYNModel.sharedInstance.wasReset = false
                 }
             }
+    }
+    
+    func configureViewWithUserDefaults() {
+        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
+            if let savedUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUserId) as NSDictionary? {
+                if let userName = savedUserDict.object(forKey: "name") as? String,
+                    let familyId = savedUserDict.object(forKey: "familyId") as? String,
+                    let admin = savedUserDict.object(forKey: "admin") as? String,
+                    let patient = savedUserDict.object(forKey: "patient") as? String,
+                    let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
+                    self.userView.userNameLabel.text = userName
+                    self.userView.familyGroupLabel.text = familyId
+                    if admin == "true" {
+                        self.userView.specialUser("admin")
+                    } else if patient == "true" {
+                        self.userView.specialUser("patient")
+                    } else {
+                        self.userView.specialUser("none")
+                    }
+                    self.configureDashboardView(photoUrl)
+                }
+            }
+        }
     }
     
     func configureActionButtons() {

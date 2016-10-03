@@ -10,6 +10,35 @@ import UIKit
 
 class UserDefaultsManager: NSObject {
     
+    class func saveCurrentUser(_user: NSDictionary) {
+        let defaults = UserDefaults.standard
+        
+        defaults.set(_user, forKey: "currentUser")
+        defaults.synchronize()
+        print("Saved current user in UserDefaults")
+    }
+    
+    class func loadCurrentUser(_userId: String) -> NSDictionary? {
+        let defaults = UserDefaults.standard
+        if let savedUserDict = defaults.object(forKey: "currentUser") as? NSDictionary {
+            if let savedUserId = savedUserDict.value(forKey: "userId") as? String {
+                if savedUserId == _userId {
+                    print("Loading user from UserDefaults")
+//                    print("Loading user from UserDefaults:", savedUserDict)
+                    return savedUserDict
+                } else {
+                    // Not the same user -- return nil
+                    print("Different user in UserDefaults - skipping")
+                    return nil
+                }
+            }
+            print("Could not find userId in UserDefaults")
+            return nil
+        }
+        print("Could not find user in UserDefaults")
+        return nil
+    }
+    
 //    class func saveContact(person: Person) {
 //        
 //        // Only save if new person

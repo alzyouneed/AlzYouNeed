@@ -837,7 +837,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qfV-xL-rPd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="contactsIcon" id="QWF-CU-oK5"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="MFg-XF-DfL">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MFg-XF-DfL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -947,7 +947,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="d6k-9s-Qi8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="homeIcon" id="ebv-mc-t8K"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1084,10 +1084,10 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Li7-L2-t3z"/>
-                                                    <exclude reference="eYP-4a-uyv"/>
-                                                    <exclude reference="lUh-RQ-lLp"/>
                                                     <exclude reference="6Jo-b3-n42"/>
                                                     <exclude reference="vLx-hl-dn4"/>
+                                                    <exclude reference="eYP-4a-uyv"/>
+                                                    <exclude reference="lUh-RQ-lLp"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1158,11 +1158,11 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="completedReminderCell" rowHeight="99" id="BYL-01-Q9Y" customClass="CompleteReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56" width="1000" height="99"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="completedReminderCell" rowHeight="99" id="BYL-01-Q9Y" customClass="CompleteReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="99"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="BYL-01-Q9Y" id="iv7-MI-aLS">
-                                            <frame key="frameInset" width="1000" height="98.5"/>
+                                            <frame key="frameInset" width="375" height="98.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFG-Sa-SIO">
@@ -1263,7 +1263,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tR6-f2-aAc" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Reminders" image="remindersIcon" id="hre-Np-uSC"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="3nu-jH-bXc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3nu-jH-bXc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
