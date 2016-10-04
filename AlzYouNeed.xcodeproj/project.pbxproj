@@ -196,6 +196,7 @@
 			children = (
 				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
 				2D3C49061D35AFF7003A1C81 /* AYNModel.swift */,
+				2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -460,7 +461,6 @@
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
 			isa = PBXGroup;
 			children = (
-				2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */,
 				2DE890B31D11B998001DC19F /* Extensions.swift */,
 				2DE890B51D11B9A7001DC19F /* Constants.swift */,
 				2D7948461D1248F000FF1E51 /* .gitignore */,

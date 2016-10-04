@@ -222,32 +222,30 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     // MARK: - Firebase Observers
     func addConversationObservers() {
         print("Adding Firebase observers")
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error == nil {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    self.familyId = userFamilyId
-                    
-                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                self.familyId = userFamilyId
+                
+                self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
 //                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
-                        var indexPaths: [IndexPath] = []
-                        self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
-//                            print("Value: \(snapshot.value)")
-                            if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
-                                self.messages.append(newMessage)
-                                indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
-                                
-//                                print("inserting new message into row")
-                                self.messagesTableView.insertRows(at: indexPaths, with: .none)
-                                
-//                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-
-                                DispatchQueue.main.async(execute: {
-                                    self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
-                                })
-                            }
-                        })
+                    var indexPaths: [IndexPath] = []
+                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
+                        //                            print("Value: \(snapshot.value)")
+                        if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
+                            self.messages.append(newMessage)
+                            indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
+                            
+                            //                                print("inserting new message into row")
+                            self.messagesTableView.insertRows(at: indexPaths, with: .none)
+                            
+                            //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+                            
+                            DispatchQueue.main.async(execute: {
+                                self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
+                            })
+                        }
                     })
-                }
+                })
             }
         }
     }

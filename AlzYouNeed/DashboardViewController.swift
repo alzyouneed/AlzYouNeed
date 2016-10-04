@@ -19,35 +19,7 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-//            if let currentUser = user {
-            if let currentUser = FIRAuth.auth()?.currentUser {
-                // User is signed in.
-                print("\(currentUser) is logged in")
-//                // Check if current user has completed signup
-//                FirebaseManager.getUserSignUpStatus({ (status, error) in
-//                    if error == nil {
-//                        if let status = status {
-//                            switch status {
-//                            case "updateUser":
-//                                self.presentUpdateUserVC()
-//                            case "familySetup":
-//                                self.presentFamilyVC()
-//                            default:
-//                                break
-//                                
-//                            }
-//                        }
-//                    }
-//                })
-                
-            }
-            else {
-                // No user is signed in.
-                print("No user is signed in -- moving to onboarding flow")
-                self.presentOnboardingVC()
-            }
-        }
+        checkUserSignedIn()
 
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         configureView()
@@ -242,40 +214,35 @@ class DashboardViewController: UIViewController {
     }
     
     func configureUserNameLabel() {
-        //        print("Configure nav bar title")
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error == nil {
-                if let userDict = userDict {
-                    if let userName = userDict.object(forKey: "name") as? String {
-                        DispatchQueue.main.async(execute: {
-                            self.userView.userNameLabel.text = userName
-                        })
-                        if let familyId = userDict.object(forKey: "familyId") as? String {
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userName = AYNModel.sharedInstance.currentUser?.object(forKey: "name") as? String {
+                DispatchQueue.main.async(execute: {
+                    self.userView.userNameLabel.text = userName
+                })
+                if let familyId = AYNModel.sharedInstance.currentUser?.object(forKey: "familyId") as? String {
+                    DispatchQueue.main.async(execute: {
+                        self.userView.familyGroupLabel.text = familyId
+                    })
+//                    AYNModel.sharedInstance.currentUserFamilyId = familyId
+                    if let admin = AYNModel.sharedInstance.currentUser?.object(forKey: "admin") as? String {
+                        if admin == "true" {
                             DispatchQueue.main.async(execute: {
-                                self.userView.familyGroupLabel.text = familyId
+                                self.userView.specialUser("admin")
                             })
-                            AYNModel.sharedInstance.currentUserFamilyId = familyId
-                            if let admin = userDict.object(forKey: "admin") as? String {
-                                if admin == "true" {
+                        } else {
+                            if let patient = AYNModel.sharedInstance.currentUser?.object(forKey: "patient") as? String {
+                                if patient == "true" {
                                     DispatchQueue.main.async(execute: {
-                                        self.userView.specialUser("admin")
+                                        self.userView.specialUser("patient")
                                     })
                                 } else {
-                                    if let patient = userDict.object(forKey: "patient") as? String {
-                                        if patient == "true" {
-                                            DispatchQueue.main.async(execute: {
-                                                self.userView.specialUser("patient")
-                                            })
-                                        } else {
-                                            self.userView.specialUser("none")
-                                        }
-                                    }
-                                }
-                                
-                                if let photoUrl = userDict.object(forKey: "photoUrl") as? String {
-                                    self.configureDashboardView(photoUrl)
+                                    self.userView.specialUser("none")
                                 }
                             }
+                        }
+                        
+                        if let photoUrl = AYNModel.sharedInstance.currentUser?.object(forKey: "photoUrl") as? String {
+                            self.configureDashboardView(photoUrl)
                         }
                     }
                 }
@@ -352,6 +319,35 @@ class DashboardViewController: UIViewController {
 //        self.navigationController?.pushViewController(updateProfileVC, animated: true)
         
         self.performSegue(withIdentifier: "notepad", sender: self)
+    }
+    
+    func checkUserSignedIn() {
+        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
+            //            if let currentUser = user {
+            if let currentUser = FIRAuth.auth()?.currentUser {
+                // User is signed in.
+                print("\(currentUser) is logged in")
+                // Save current user from defaults first
+//                if let currentUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUser.uid) as NSDictionary? {
+//                    AYNModel.sharedInstance.currentUser = currentUserDict
+//                }
+                self.saveCurrentUserToModel()
+            }
+            else {
+                // No user is signed in.
+                print("No user is signed in -- moving to onboarding flow")
+                self.presentOnboardingVC()
+            }
+        }
+    }
+    
+    func saveCurrentUserToModel() {
+        FirebaseManager.getCurrentUser({ (userDict, error) in
+            if let userDict = userDict {
+                print("Saved current user to model")
+                AYNModel.sharedInstance.currentUser = userDict
+            }
+        })
     }
     
 }

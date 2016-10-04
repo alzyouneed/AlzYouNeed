@@ -26,24 +26,35 @@ class FirebaseManager: NSObject {
         })
     }
     
-    class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?, _ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let userId = user.uid
-            let databaseRef = FIRDatabase.database().reference()
-            
-            databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
-                if let dict = snapshot.value as? NSDictionary, let signupStatus = dict["completedSignup"] as? String {
-                //if let signupStatus = snapshot.value!["completedSignup"] as? String {   SWIFT 3 CHANGE
-                    print("User signup status retrieved")
-                    completionHandler(signupStatus, nil)
-                }
-                else {
-                    print("completedSignup field does not exist")
-                    completionHandler(nil, nil)
-                }
-            }) { (error) in
-                print("Error occurred while retrieving user signup status")
-                completionHandler(nil, error as NSError?)
+    class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?) -> Void) {
+//    class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?, _ error: NSError?) -> Void) {
+//        if let user = FIRAuth.auth()?.currentUser {
+//            let userId = user.uid
+//            let databaseRef = FIRDatabase.database().reference()
+//            
+//            databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+//                if let dict = snapshot.value as? NSDictionary, let signupStatus = dict["completedSignup"] as? String {
+//                //if let signupStatus = snapshot.value!["completedSignup"] as? String {   SWIFT 3 CHANGE
+//                    print("User signup status retrieved")
+//                    completionHandler(signupStatus, nil)
+//                }
+//                else {
+//                    print("completedSignup field does not exist")
+//                    completionHandler(nil, nil)
+//                }
+//            }) { (error) in
+//                print("Error occurred while retrieving user signup status")
+//                completionHandler(nil, error as NSError?)
+//            }
+//        }
+        
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let signupStatus = AYNModel.sharedInstance.currentUser?.value(forKey: "completedSignup") as? String {
+                print("User signup status retrieved")
+                completionHandler(signupStatus)
+            } else {
+                print("User signup field does not exist")
+                completionHandler(nil)
             }
         }
     }
@@ -202,38 +213,34 @@ class FirebaseManager: NSObject {
     // Helper func for updateUser
     fileprivate class func updateUserInFamily(_ updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if error == nil {
-                    if let userDict = userDict {
-                        // Check if key exists yet
-                        if let familyId = userDict.object(forKey: "familyId") as? String {
-                            let userId = user.uid
-                            let databaseRef = FIRDatabase.database().reference()
-                            let updatesDict = updates as! [AnyHashable: Any]
-                            
-                            databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                                if error != nil {
-                                    print("Error updating user in family")
-                                    completionHandler(error as NSError?)
-                                }
-                                else {
-                                    print("Updated user in family")
-                                    completionHandler(nil)
-                                }
-                            })
+            if AYNModel.sharedInstance.currentUser != nil {
+                // Check if key exists yet
+                if let familyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let userId = user.uid
+                    let databaseRef = FIRDatabase.database().reference()
+                    let updatesDict = updates as! [AnyHashable: Any]
+                    
+                    databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                        if error != nil {
+                            print("Error updating user in family")
+                            completionHandler(error as NSError?)
                         }
-                        // Key does not exist -- do not update
                         else {
-                            print("User does not belong to family -- skipping family update")
-                            let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
-                            completionHandler(error)
+                            print("Updated user in family")
+                            completionHandler(nil)
                         }
-                    }
+                    })
                 }
-            })
+                    // Key does not exist -- do not update
+                else {
+                    print("User does not belong to family -- skipping family update")
+                    let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
+                    completionHandler(error)
+                }
+            }
         }
     }
-    
+
     // Delete current auth user, and entry in real time database and in family group
     class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -317,39 +324,33 @@ class FirebaseManager: NSObject {
     // Helper func for deleteCurrentUser
     fileprivate class func deleteUserFromFamily(_ completionHandler: @escaping (_ error: NSError?, _ databaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if let userDict = userDict {
-                    let databaseRef = FIRDatabase.database().reference()
+            if AYNModel.sharedInstance.currentUser != nil {
+                let databaseRef = FIRDatabase.database().reference()
+                
+                // Check if key exists yet
+                if let familyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                     
-                    // Check if key exists yet
-                    if let familyId = userDict.object(forKey: "familyId") as? String {
-                        
-                        databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValue(completionBlock: { (error, oldRef) in
-                            if error != nil {
-                                print("Error deleting user from family group")
-                                completionHandler(error as NSError?, nil)
-                            }
-                            else {
-                                print("User deleted from family group")
-                                completionHandler(nil, oldRef)
-                            }
-                        })
-                    }
-                        // FamilyID does not exist
-                    else {
-                        print("User does not belong to family group -- skipping step")
-                        let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
-                        completionHandler(error, nil)
-                    }
+                    databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValue(completionBlock: { (error, oldRef) in
+                        if error != nil {
+                            print("Error deleting user from family group")
+                            completionHandler(error as NSError?, nil)
+                        }
+                        else {
+                            print("User deleted from family group")
+                            completionHandler(nil, oldRef)
+                        }
+                    })
                 }
-                else if error != nil {
-//                    print("error: \(error?.domain)")
+                    // FamilyID does not exist
+                else {
+                    print("User does not belong to family group -- skipping step")
+                    let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
                     completionHandler(error, nil)
                 }
-            })
+            }
         }
     }
-    
+
     fileprivate class func deleteUserProfileImage(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let storageRef = FIRStorage.storage().reference()
@@ -385,41 +386,39 @@ class FirebaseManager: NSObject {
                     if let familyExists = familyExists {
                         // Family already exists
                         if familyExists {
-                           // Don't create new family
+                            // Don't create new family
                             print("Family name already in use")
                             let error = NSError(domain: "ExistingFamilyGroupError", code: 00001, userInfo: nil)
                             completionHandler(error, nil)
                         }
                         else {
-                            getCurrentUser({ (userDict, error) in
-                                if let userInfo = userDict {
-                                    let databaseRef = FIRDatabase.database().reference()
-                                    
-                                    // Remove key for save to family group
-                                    let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
-                                    modifiedDict.removeObject(forKey: "completedSignup")
-                                    modifiedDict["admin"] = "true"
-                                    
-                                    let familyToSave = ["password": password, "members":[user.uid: modifiedDict]] as [String : Any]
-                                    
-                                    // Update current user and new family, and signup Status
-                                    let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                        "/users/\(user.uid)/completedSignup": "true",
-                                        "/users/\(user.uid)/admin": "true",
-                                        "/families/\(familyId)": familyToSave] as [String : Any]
-                                    
-                                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                        if error != nil {
-                                            print("Error creating new family group")
-                                            completionHandler(error as NSError?, databaseRef)
-                                        }
-                                        else {
-                                            print("New family group created -- joined Family: \(familyId)")
-                                            completionHandler(error as NSError?, databaseRef)
-                                        }
-                                    })
-                                }
-                            })
+                            if AYNModel.sharedInstance.currentUser != nil {
+                                let databaseRef = FIRDatabase.database().reference()
+                                
+                                // Remove key for save to family group
+                                let modifiedDict = AYNModel.sharedInstance.currentUser?.mutableCopy() as! NSMutableDictionary
+                                modifiedDict.removeObject(forKey: "completedSignup")
+                                modifiedDict["admin"] = "true"
+                                
+                                let familyToSave = ["password": password, "members":[user.uid: modifiedDict]] as [String : Any]
+                                
+                                // Update current user and new family, and signup Status
+                                let childUpdates = ["/users/\(user.uid)/familyId": familyId,
+                                                    "/users/\(user.uid)/completedSignup": "true",
+                                                    "/users/\(user.uid)/admin": "true",
+                                                    "/families/\(familyId)": familyToSave] as [String : Any]
+                                
+                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                    if error != nil {
+                                        print("Error creating new family group")
+                                        completionHandler(error as NSError?, databaseRef)
+                                    }
+                                    else {
+                                        print("New family group created -- joined Family: \(familyId)")
+                                        completionHandler(error as NSError?, databaseRef)
+                                    }
+                                })
+                            }
                         }
                     }
                 }
@@ -447,41 +446,38 @@ class FirebaseManager: NSObject {
                                     
                                     // Check that passwords match
                                     if actualFamilyPassword == password {
-                                        
-                                        getCurrentUser({ (userDict, error) in
-                                            if let userInfo = userDict {
-                                                let databaseRef = FIRDatabase.database().reference()
-                                                
-                                                // Remove key for save to family group
-                                                let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
-                                                modifiedDict.removeObject(forKey: "completedSignup")
-                                                
-                                                // Update current user and new family, and signUp status
-                                                let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                    "/users/\(user.uid)/completedSignup": "true",
-                                                    "/users/\(user.uid)/admin": "false"]
-                                                
-                                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                                    if error != nil {
-                                                        print("Error occurred while updating user with new family group values")
-                                                        completionHandler(error as NSError?, nil)
-                                                    }
-                                                    else {
-                                                        print("User family group values updated")
-                                                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(modifiedDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
-                                                            if error != nil {
-                                                                print("Error occurred while adding user to family")
-                                                                completionHandler(secondError as NSError?, secondDatabaseRef)
-                                                            }
-                                                            else {
-                                                                print("User added to family")
-                                                                completionHandler(nil, secondDatabaseRef)
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                            }
-                                        })
+                                        if AYNModel.sharedInstance.currentUser != nil {
+                                            let databaseRef = FIRDatabase.database().reference()
+                                            
+                                            // Remove key for save to family group
+                                            let modifiedDict = AYNModel.sharedInstance.currentUser?.mutableCopy() as! NSMutableDictionary
+                                            modifiedDict.removeObject(forKey: "completedSignup")
+                                            
+                                            // Update current user and new family, and signUp status
+                                            let childUpdates = ["/users/\(user.uid)/familyId": familyId,
+                                                                "/users/\(user.uid)/completedSignup": "true",
+                                                                "/users/\(user.uid)/admin": "false"]
+                                            
+                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                                if error != nil {
+                                                    print("Error occurred while updating user with new family group values")
+                                                    completionHandler(error as NSError?, nil)
+                                                }
+                                                else {
+                                                    print("User family group values updated")
+                                                    databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(modifiedDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                                        if error != nil {
+                                                            print("Error occurred while adding user to family")
+                                                            completionHandler(secondError as NSError?, secondDatabaseRef)
+                                                        }
+                                                        else {
+                                                            print("User added to family")
+                                                            completionHandler(nil, secondDatabaseRef)
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
                                     }
                                     else {
                                         print("Incorrect password to join family: \(familyId)")
@@ -494,54 +490,6 @@ class FirebaseManager: NSObject {
                     }
                 }
             })
-//            getFamilyPassword(familyId, completionHandler: { (familyPassword, error) in
-//                if let actualFamilyPassword = familyPassword {
-//                    
-//                    // Check that passwords match
-//                    if actualFamilyPassword == password {
-//                        
-//                        getCurrentUser({ (userDict, error) in
-//                            if let userInfo = userDict {
-//                                let databaseRef = FIRDatabase.database().reference()
-//                                
-//                                // Remove key for save to family group
-//                                let modifiedDict = userInfo.mutableCopy() as! NSMutableDictionary
-//                                modifiedDict.removeObjectForKey("completedSignup")
-//                                
-//                                // Update current user and new family, and signUp status
-//                                let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-//                                                    "/users/\(user.uid)/completedSignup": "true",
-//                                                    "/users/\(user.uid)/admin": "false"]
-//
-//                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-//                                    if error != nil {
-//                                        print("Error occurred while updating user with new family group values")
-//                                        completionHandler(error: error, newDatabaseRef: nil)
-//                                    }
-//                                    else {
-//                                        print("User family group values updated")
-//                                        databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(modifiedDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
-//                                            if error != nil {
-//                                                print("Error occurred while adding user to family")
-//                                                completionHandler(error: secondError, newDatabaseRef: secondDatabaseRef)
-//                                            }
-//                                            else {
-//                                                print("User added to family")
-//                                                completionHandler(error: nil, newDatabaseRef: secondDatabaseRef)
-//                                            }
-//                                        })
-//                                    }
-//                                })
-//                            }
-//                        })
-//                    }
-//                    else {
-//                        print("Incorrect password to join family: \(familyId)")
-//                        let wrongPasswordError = NSError(domain: "Incorrect password", code: 3, userInfo: nil)
-//                        completionHandler(error: wrongPasswordError, newDatabaseRef: nil)
-//                    }
-//                }
-//            })
         }
     }
 
@@ -579,41 +527,33 @@ class FirebaseManager: NSObject {
             // Reset unread messages
             AYNModel.sharedInstance.unreadMessagesCount = 0
             
-            getCurrentUser { (userDict, error) in
-                if error != nil {
-                    // Error
-                    completionHandler(nil, error)
-                }
-                else {
-                    let userId = user.uid
-                    // Search for members using current user's familyId
-                    if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                        let databaseRef = FIRDatabase.database().reference()
-                        var membersArr = [Contact]()
-                        
-                        databaseRef.child("families").child(userFamilyId).child("members").observeSingleEvent(of: .value, with: { (snapshot) in
-                            if let dict = snapshot.value! as? NSDictionary {
-                                for (key, value) in dict {
-                                    if let uId = key as? String {
-                                        // Prevent adding current user to array
-                                        if uId != userId {
-                                            if let memberDict = value as? NSDictionary {
-                                                if let contact = Contact(uID: uId, userDict: memberDict) {
-                                                    membersArr.append(contact)
-                                                    
-//                                                    if 
-                                                }
+            if AYNModel.sharedInstance.currentUser != nil {
+                let userId = user.uid
+                // Search for members using current user's familyId
+                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    var membersArr = [Contact]()
+                    
+                    databaseRef.child("families").child(userFamilyId).child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let dict = snapshot.value! as? NSDictionary {
+                            for (key, value) in dict {
+                                if let uId = key as? String {
+                                    // Prevent adding current user to array
+                                    if uId != userId {
+                                        if let memberDict = value as? NSDictionary {
+                                            if let contact = Contact(uID: uId, userDict: memberDict) {
+                                                membersArr.append(contact)
                                             }
                                         }
                                     }
                                 }
-                                print("Family members retrieved")
-                                completionHandler(membersArr, nil)
                             }
-                        }) { (error) in
-                            print("Error occurred while retrieving family members")
-                            
+                            print("Family members retrieved")
+                            completionHandler(membersArr, nil)
                         }
+                    }) { (error) in
+                        print("Error occurred while retrieving family members")
+                        
                     }
                 }
             }
@@ -623,60 +563,48 @@ class FirebaseManager: NSObject {
     // Custom UserInfo unique to each familyMember's instance of their relationship to others
     class func updateFamilyMemberUserInfo(_ contactUserId: String, updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if error != nil {
-                    // Error
-                    completionHandler(error)
-                }
-                else {
-                    if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                        let userId = user.uid
-                        let databaseRef = FIRDatabase.database().reference()
+            if AYNModel.sharedInstance.currentUser != nil {
+                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let userId = user.uid
+                    let databaseRef = FIRDatabase.database().reference()
                     
-                        let updatesDict = updates as! [AnyHashable: Any]
-                        
-                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                            if error != nil {
-                                // Error
-                                print("Error updating family member userInfo")
-                                completionHandler(error as NSError?)
-                            }
-                            else {
-                                // Success
-                                print("Updated family member userInfo")
-                                completionHandler(nil)
-                            }
-                        })
-                    }
+                    let updatesDict = updates as! [AnyHashable: Any]
+                    
+                    databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                        if error != nil {
+                            // Error
+                            print("Error updating family member userInfo")
+                            completionHandler(error as NSError?)
+                        }
+                        else {
+                            // Success
+                            print("Updated family member userInfo")
+                            completionHandler(nil)
+                        }
+                    })
                 }
-            })  
+            }
         }
     }
     
     class func getFamilyMemberUserInfo(_ contactUserId: String, completionHandler: @escaping (_ error: NSError?, _ userInfo: NSDictionary?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if error != nil {
-                    // Error
-                    completionHandler(error, nil)
-                }
-                else {
-                    if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                        let userId = user.uid
-                        let databaseRef = FIRDatabase.database().reference()
-                        
-                        databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).observeSingleEvent(of: .value, with: { (snapshot) in
-                            if let dict = snapshot.value! as? NSDictionary {
-                                print("Retrieved family member userInfo")
-                                completionHandler(nil, dict)
-                            }
-                        }) { (error) in
-                            print("Error retrieving family member userInfo")
-                            completionHandler(error as NSError?, nil)
+            if AYNModel.sharedInstance.currentUser != nil {
+                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let userId = user.uid
+                    let databaseRef = FIRDatabase.database().reference()
+                    
+                    databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let dict = snapshot.value! as? NSDictionary {
+                            print("Retrieved family member userInfo")
+                            completionHandler(nil, dict)
                         }
+                    }) { (error) in
+                        print("Error retrieving family member userInfo")
+                        completionHandler(error as NSError?, nil)
                     }
                 }
-            })
+            }
         }
     }
     
@@ -758,125 +686,102 @@ class FirebaseManager: NSObject {
     
     // MARK: - Reminders
     class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        getCurrentUser { (userDict, error) in
-            if error != nil {
-                // Error
-                completionHandler(error, nil)
-            }
-            else {
-                // Get user family id to save reminder
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    
-                    databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
-                        if error != nil {
-                            // Error
-                            print("Error creating reminder")
-                            completionHandler(error as NSError?, nil)
-                        }
-                        else {
-                            // Success
-                            print("Created new family reminder")
-                            completionHandler(nil, newDatabaseRef)
-                        }
-                    })
-                }
+        if AYNModel.sharedInstance.currentUser != nil {
+            // Get user family id to save reminder
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+                
+                databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
+                    if error != nil {
+                        // Error
+                        print("Error creating reminder")
+                        completionHandler(error as NSError?, nil)
+                    }
+                    else {
+                        // Success
+                        print("Created new family reminder")
+                        completionHandler(nil, newDatabaseRef)
+                    }
+                })
             }
         }
     }
     
     class func deleteFamilyReminder(_ reminderId: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        getCurrentUser { (userDict, error) in
-            if error != nil {
-                // Error
-                completionHandler(error, nil)
-            }
-            else {
-                // Get user family id to save reminder
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    
-                    databaseRef.child("families").child(userFamilyId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
-                        if error != nil {
-                            print("Error deleting reminder")
-                            completionHandler(error as NSError?, nil)
-                        }
-                        else {
-                            print("Reminder deleted")
-                            completionHandler(nil, oldRef)
-                        }
-                    })
-                }
+        if AYNModel.sharedInstance.currentUser != nil {
+            // Get user family id to save reminder
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+                
+                databaseRef.child("families").child(userFamilyId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
+                    if error != nil {
+                        print("Error deleting reminder")
+                        completionHandler(error as NSError?, nil)
+                    }
+                    else {
+                        print("Reminder deleted")
+                        completionHandler(nil, oldRef)
+                    }
+                })
             }
         }
     }
     
     class func completeFamilyReminder(_ reminder: Reminder, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        getCurrentUser { (userDict, error) in
-            if error != nil {
-                completionHandler(error, nil)
-            }
-            else {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    
-                    var modifiedReminderDict = reminder.asDict()
-                    
-                    modifiedReminderDict["completedDate"] = Date().timeIntervalSince1970.description
-
-                    let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id)": modifiedReminderDict]
-                    
-                    databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                        if error != nil {
-                            print("Error occurred while marking reminder as complete")
-                            completionHandler(error as NSError?, nil)
-                        }
-                        else {
-                            print("Reminder completed -- deleting from old location")
-                            deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
-                                if error != nil {
-                                    completionHandler(error, nil)
-                                }
-                                else {
-                                    completionHandler(nil, newDatabaseRef)
-                                }
-                            })
-                        }
-                    })
-                }
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+                
+                var modifiedReminderDict = reminder.asDict()
+                
+                modifiedReminderDict["completedDate"] = Date().timeIntervalSince1970.description
+                
+                let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id)": modifiedReminderDict]
+                
+                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                    if error != nil {
+                        print("Error occurred while marking reminder as complete")
+                        completionHandler(error as NSError?, nil)
+                    }
+                    else {
+                        print("Reminder completed -- deleting from old location")
+                        deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
+                            if error != nil {
+                                completionHandler(error, nil)
+                            }
+                            else {
+                                completionHandler(nil, newDatabaseRef)
+                            }
+                        })
+                    }
+                })
             }
         }
     }
     
     class func getCompletedFamilyReminders(_ completionHandler: @escaping (_ completedReminders: [Reminder]?, _ error: NSError?) -> Void) {
-        getCurrentUser { (userDict, error) in
-            if error != nil {
-                // Error
-                completionHandler(nil, error)
-            }
-            else {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    var remindersArr = [Reminder]()
-                    
-                    databaseRef.child("families").child(userFamilyId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let dict = snapshot.value! as? NSDictionary {
-                            for (key, value) in dict {
-                                if let reminderId = key as? String {
-                                    if let reminderDict = value as? NSDictionary {
-                                        if let completedReminder = Reminder(reminderId: reminderId, reminderDict: reminderDict) {
-                                            remindersArr.append(completedReminder)
-                                        }
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+                var remindersArr = [Reminder]()
+                
+                databaseRef.child("families").child(userFamilyId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let dict = snapshot.value! as? NSDictionary {
+                        for (key, value) in dict {
+                            if let reminderId = key as? String {
+                                if let reminderDict = value as? NSDictionary {
+                                    if let completedReminder = Reminder(reminderId: reminderId, reminderDict: reminderDict) {
+                                        remindersArr.append(completedReminder)
                                     }
                                 }
                             }
-                            print("Completed reminders retrieved")
-                            completionHandler(remindersArr, nil)
                         }
-                    }) { (error) in
-                        print("Error occurred while retrieving completed reminders")
-                        
+                        print("Completed reminders retrieved")
+                        completionHandler(remindersArr, nil)
                     }
+                }) { (error) in
+                    print("Error occurred while retrieving completed reminders")
+                    
                 }
             }
         }
@@ -885,114 +790,86 @@ class FirebaseManager: NSObject {
     // MARK: - Messages
     class func sendNewMessage(_ receiverId: String, conversationId: String, message: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if let error = error {
-                    // Error
-                    completionHandler(error)
-                } else {
-                    if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                        let databaseRef = FIRDatabase.database().reference()
-                        let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).childByAutoId().key
-                        
-                        // Add current user ID to message object
-                        let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
-                        modifiedMessage.setObject(user.uid, forKey: "senderId" as NSCopying)
-                        
-                        let favoritedDict = [user.uid : "false", receiverId : "false"]
-                        modifiedMessage.setObject(favoritedDict, forKey: "favorited" as NSCopying)
-                        
-                        databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
-                            if error != nil {
-                                // Error
-                                print("Error sending message")
-                                completionHandler(error as NSError?)
-                            }
-                            else {
-                                // Success
-                                print("Sent new message")
-                                completionHandler(nil)
-                            }
-                        })
-                    }
+            if AYNModel.sharedInstance.currentUser != nil {
+                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).childByAutoId().key
+                    
+                    // Add current user ID to message object
+                    let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
+                    modifiedMessage.setObject(user.uid, forKey: "senderId" as NSCopying)
+                    
+                    let favoritedDict = [user.uid : "false", receiverId : "false"]
+                    modifiedMessage.setObject(favoritedDict, forKey: "favorited" as NSCopying)
+                    
+                    databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
+                        if error != nil {
+                            // Error
+                            print("Error sending message")
+                            completionHandler(error as NSError?)
+                        }
+                        else {
+                            // Success
+                            print("Sent new message")
+                            completionHandler(nil)
+                        }
+                    })
                 }
-            })
+            }
         }
     }
     
     class func favoriteMessage(_ conversationId: String, messageId: String, favorited: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
-            getCurrentUser({ (userDict, error) in
-                if let error = error {
-                    // Error
-                    completionHandler(error)
-                } else {
-                    if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                        let databaseRef = FIRDatabase.database().reference()
-                        
-                        let childUpdates = [user.uid : favorited]
-                        databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
-                            if let error = error {
-                                // Error
-                                print("Error updating favorite value for message")
-                                completionHandler(error as NSError?)
-                            } else {
-                                // Success
-                                print("Updated favorite value for message")
-                                completionHandler(nil)
-                            }
-                        })
-                    }
+            if AYNModel.sharedInstance.currentUser != nil {
+                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    
+                    let childUpdates = [user.uid : favorited]
+                    databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
+                        if let error = error {
+                            // Error
+                            print("Error updating favorite value for message")
+                            completionHandler(error as NSError?)
+                        } else {
+                            // Success
+                            print("Updated favorite value for message")
+                            completionHandler(nil)
+                        }
+                    })
                 }
-            })
+            }
         }
     }
 
     class func getConversationId(_ familyId: String, receiverId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
         if (FIRAuth.auth()?.currentUser) != nil {
-            getCurrentUser({ (userDict, error) in
-                if let error = error {
-                    // Error
-                    completionHandler(error, nil)
-                } else {
-                    // Get list of current user's conversations (by ID)
-                    if let senderConversations = userDict?.object(forKey: "conversations") as? NSDictionary {
-                        // Lookup receiver
-                        getUserById(receiverId, completionHandler: { (userDict, error) in
-                            if let error = error {
-                                // Error
-                                completionHandler(error, nil)
-                            } else {
-                                // Get list of receiver's conversations (by ID)
-                                if let receiverConversations = userDict?.object(forKey: "conversations") as? NSDictionary {
-                                    if let senderConversationKeys = senderConversations.allKeys as [AnyObject]? {
-                                        // Iterate through each key of sender to find matching conversation ID
-                                        for key in senderConversationKeys {
-                                            if receiverConversations.object(forKey: key) != nil {
-//                                                print("Sender keys: \(senderConversationKeys)")
-                                                // Found matching conversation ID for both users
-                                                if let conversationId = key as? String {
-                                                    print("Found existing conversation ID for users")
-                                                    completionHandler(nil, conversationId)
-                                                    return
-                                                }
+            if AYNModel.sharedInstance.currentUser != nil {
+                // Get list of current user's conversations (by ID)
+                if let senderConversations = AYNModel.sharedInstance.currentUser?.object(forKey: "conversations") as? NSDictionary {
+                    // Lookup receiver
+                    getUserById(receiverId, completionHandler: { (userDict, error) in
+                        if let error = error {
+                            // Error
+                            completionHandler(error, nil)
+                        } else {
+                            // Get list of receiver's conversations (by ID)
+                            if let receiverConversations = userDict?.object(forKey: "conversations") as? NSDictionary {
+                                if let senderConversationKeys = senderConversations.allKeys as [AnyObject]? {
+                                    // Iterate through each key of sender to find matching conversation ID
+                                    for key in senderConversationKeys {
+                                        if receiverConversations.object(forKey: key) != nil {
+                                            //                                                print("Sender keys: \(senderConversationKeys)")
+                                            // Found matching conversation ID for both users
+                                            if let conversationId = key as? String {
+                                                print("Found existing conversation ID for users")
+                                                completionHandler(nil, conversationId)
+                                                return
                                             }
                                         }
-                                        // No matching conversation ID found
-                                        print("Could not find matching conversation ID for users -- creating new conversation")
-                                        // Create ID here
-                                        createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
-                                            if let error = error {
-                                                // Error
-                                                completionHandler(error, nil)
-                                            } else {
-                                                // Success
-                                                completionHandler(nil, conversationId)
-                                            }
-                                        })
                                     }
-                                } else {
-                                    // Receiver has no saved conversations
-                                    print("Receiver has no saved conversations -- creating new conversation")
+                                    // No matching conversation ID found
+                                    print("Could not find matching conversation ID for users -- creating new conversation")
                                     // Create ID here
                                     createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
                                         if let error = error {
@@ -1004,24 +881,37 @@ class FirebaseManager: NSObject {
                                         }
                                     })
                                 }
-                            }
-                        })
-                    } else {
-                        // Sender has no saved conversations
-                        print("Sender has no saved conversations -- creating new conversation")
-                        // Create ID here
-                        createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
-                            if let error = error {
-                                // Error
-                                completionHandler(error, nil)
                             } else {
-                                // Success
-                                completionHandler(nil, conversationId)
+                                // Receiver has no saved conversations
+                                print("Receiver has no saved conversations -- creating new conversation")
+                                // Create ID here
+                                createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                                    if let error = error {
+                                        // Error
+                                        completionHandler(error, nil)
+                                    } else {
+                                        // Success
+                                        completionHandler(nil, conversationId)
+                                    }
+                                })
                             }
-                        })
-                    }
+                        }
+                    })
+                } else {
+                    // Sender has no saved conversations
+                    print("Sender has no saved conversations -- creating new conversation")
+                    // Create ID here
+                    createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                        if let error = error {
+                            // Error
+                            completionHandler(error, nil)
+                        } else {
+                            // Success
+                            completionHandler(nil, conversationId)
+                        }
+                    })
                 }
-            })
+            }
         }
     }
     

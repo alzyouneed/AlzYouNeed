@@ -212,52 +212,50 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Firebase Observers
     func addRemindersObservers() {
         print("Adding Firebase observers")
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error == nil {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    self.familyId = userFamilyId
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
-
-                        if let reminderDict = snapshot.value! as? NSDictionary {
-                            if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
-                                print("New reminder in RTDB")
-                                
-                                AYNModel.sharedInstance.remindersArr.append(newReminder)
-                                
-                                // Schedule local notifications
-                                if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
-                                    let now = Date()
-                                    // Check that date has not passed
-                                    if (dueDate as NSDate).earlierDate(now) != dueDate {
-                                        self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
-                                    }
-                                    else {
-                                        print("Reminder due date has passed -- skipping")
-                                    }
-                                }
-                                
-                                self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
-                                self.updateTabBadge()
-                            }
-                        }
-                    })
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                self.familyId = userFamilyId
+                self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
                     
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
-                        if let reminderId = snapshot.key as String? {
-                            if let index = self.getIndex(reminderId) {
-                                print("Removing reminder in RTDB")
-                                
-                                AYNModel.sharedInstance.remindersArr.remove(at: index)
-                                
-                                // Cancel any local notifications
-                                self.cancelLocalNotification(reminderId)
-
-                                self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
-                                self.updateTabBadge()
+                    if let reminderDict = snapshot.value! as? NSDictionary {
+                        if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
+                            print("New reminder in RTDB")
+                            
+                            AYNModel.sharedInstance.remindersArr.append(newReminder)
+                            
+                            // Schedule local notifications
+                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+                                let now = Date()
+                                // Check that date has not passed
+                                if (dueDate as NSDate).earlierDate(now) != dueDate {
+                                    self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+                                }
+                                else {
+                                    print("Reminder due date has passed -- skipping")
+                                }
                             }
+                            
+                            self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+                            self.updateTabBadge()
                         }
-                    })
-                }
+                    }
+                })
+                
+                self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
+                    if let reminderId = snapshot.key as String? {
+                        if let index = self.getIndex(reminderId) {
+                            print("Removing reminder in RTDB")
+                            
+                            AYNModel.sharedInstance.remindersArr.remove(at: index)
+                            
+                            // Cancel any local notifications
+                            self.cancelLocalNotification(reminderId)
+                            
+                            self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
+                            self.updateTabBadge()
+                        }
+                    }
+                })
             }
         }
     }

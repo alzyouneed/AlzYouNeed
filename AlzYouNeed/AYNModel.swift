@@ -26,6 +26,8 @@ class AYNModel {
     var currentUserProfileImage: UIImage? = UIImage()
     var currentUserFamilyId: String? = String()
     
+    var currentUser: NSDictionary? = nil
+    
     var wasReset = false
     var contactsArrWasReset = false
     var profileWasUpdated = false
@@ -41,6 +43,7 @@ class AYNModel {
         
         currentUserProfileImage = nil
         currentUserFamilyId = nil
+        currentUser = nil
         
         wasReset = true
         contactsArrWasReset = true

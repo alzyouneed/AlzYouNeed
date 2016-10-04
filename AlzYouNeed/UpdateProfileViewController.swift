@@ -31,18 +31,13 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error == nil {
-                if let userDict = userDict {
-                    self.userName = userDict.object(forKey: "name") as! String
-                    self.userPhoneNumber = userDict.object(forKey: "phoneNumber") as! String
-                    self.userPhotoUrl = userDict.object(forKey: "photoUrl") as! String
-                    
-                    self.configureView()
-                }
-            }
+        if AYNModel.sharedInstance.currentUser != nil {
+            self.userName = AYNModel.sharedInstance.currentUser?.object(forKey: "name") as! String
+            self.userPhoneNumber = AYNModel.sharedInstance.currentUser?.object(forKey: "phoneNumber") as! String
+            self.userPhotoUrl = AYNModel.sharedInstance.currentUser?.object(forKey: "photoUrl") as! String
+            
+            self.configureView()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
