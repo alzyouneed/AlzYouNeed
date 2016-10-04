@@ -158,24 +158,19 @@
                             <constraint firstAttribute="trailingMargin" secondItem="T1N-4W-09d" secondAttribute="trailing" id="1Kr-OU-jfy"/>
                             <constraint firstItem="jbW-pv-4J8" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="2ZW-81-C6I"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="top" secondItem="flZ-i1-2Ak" secondAttribute="bottom" id="4Gi-Fm-fyD"/>
-                            <constraint firstItem="jbW-pv-4J8" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="DjS-Cv-GNC"/>
+                            <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="8FG-dI-jIw"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="MZq-Dh-PU2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="leading" id="NYk-Pi-9PY"/>
-                            <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="SWp-lW-rIB"/>
                             <constraint firstAttribute="leadingMargin" secondItem="T1N-4W-09d" secondAttribute="leading" id="Uph-vl-o0Y"/>
+                            <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="Wf3-8G-xuD"/>
                             <constraint firstItem="flZ-i1-2Ak" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="WgZ-o8-HPE"/>
+                            <constraint firstItem="flZ-i1-2Ak" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" id="gNN-ln-b7T"/>
                             <constraint firstAttribute="trailing" secondItem="JUi-qn-GDA" secondAttribute="trailing" id="hAy-hY-Xzy"/>
-                            <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="oij-3N-i8J"/>
+                            <constraint firstItem="jbW-pv-4J8" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="nTG-Fh-idf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="trailing" id="oql-97-ai0"/>
-                            <constraint firstItem="flZ-i1-2Ak" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" id="vpK-MO-tyd"/>
                             <constraint firstItem="vJ0-Ia-kPq" firstAttribute="top" secondItem="T1N-4W-09d" secondAttribute="bottom" constant="8" id="w0a-vN-iGL"/>
                             <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="jbW-pv-4J8" secondAttribute="bottom" constant="8" id="z25-O7-gPp"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="SWp-lW-rIB"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Update Profile" id="WMN-d2-IDR"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -184,12 +179,59 @@
                         <outlet property="phoneNumberVTFView" destination="vJ0-Ia-kPq" id="mBM-8i-zM5"/>
                         <outlet property="profileImageView" destination="jbW-pv-4J8" id="xKP-CP-EH0"/>
                         <outlet property="updateButton" destination="JUi-qn-GDA" id="nfP-Cy-ohj"/>
-                        <outlet property="updateButtonBottomConstraint" destination="oij-3N-i8J" id="PoD-Ty-ZGD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GG9-GA-mDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1395" y="1210"/>
+        </scene>
+        <!--Notepad-->
+        <scene sceneID="AL3-CM-caV">
+            <objects>
+                <viewController storyboardIdentifier="notepad" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QHr-IQ-0gS" customClass="NotepadViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rCl-2Q-OYm"/>
+                        <viewControllerLayoutGuide type="bottom" id="4lL-Al-wD5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8Xc-Kp-1WY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6b-PT-oDT">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" text="Start typing!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DN1-t5-MOw">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="4lL-Al-wD5" firstAttribute="top" secondItem="o6b-PT-oDT" secondAttribute="bottom" id="6ZI-C8-nJw"/>
+                            <constraint firstAttribute="trailing" secondItem="o6b-PT-oDT" secondAttribute="trailing" id="8tL-5d-V2l"/>
+                            <constraint firstItem="o6b-PT-oDT" firstAttribute="top" secondItem="rCl-2Q-OYm" secondAttribute="bottom" id="BO3-fJ-gtx"/>
+                            <constraint firstItem="DN1-t5-MOw" firstAttribute="top" secondItem="rCl-2Q-OYm" secondAttribute="bottom" id="OCJ-LK-bNx"/>
+                            <constraint firstItem="o6b-PT-oDT" firstAttribute="leading" secondItem="8Xc-Kp-1WY" secondAttribute="leading" id="ODD-Ds-wXQ"/>
+                            <constraint firstItem="4lL-Al-wD5" firstAttribute="top" secondItem="DN1-t5-MOw" secondAttribute="bottom" id="eLo-8o-RgE"/>
+                            <constraint firstItem="DN1-t5-MOw" firstAttribute="leading" secondItem="8Xc-Kp-1WY" secondAttribute="leading" id="hch-C1-Mpa"/>
+                            <constraint firstAttribute="trailing" secondItem="DN1-t5-MOw" secondAttribute="trailing" id="nFn-CL-qsi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Notepad" id="ko4-HV-TXc">
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="gpK-fO-gg1">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="1M1-0P-eN5">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="closeNotepad:" destination="QHr-IQ-0gS" id="Y0Y-UM-0Gs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I2h-i6-VuC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2757.5999999999999" y="1209.4452773613195"/>
         </scene>
         <!--Family Signup View Controller-->
         <scene sceneID="J92-rX-Nh6">
@@ -945,6 +987,7 @@
                         <outlet property="dashboardActionButtons" destination="DvW-BC-Ijy" id="oFI-W2-2dz"/>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
+                        <segue destination="2gG-ex-1CO" kind="presentation" identifier="notepad" id="J52-qJ-AkR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCy-rb-sTz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1664,6 +1707,24 @@
             </objects>
             <point key="canvasLocation" x="2244" y="448"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="od8-Vj-1yj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2gG-ex-1CO" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dmo-BZ-nYY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="QHr-IQ-0gS" kind="relationship" relationship="rootViewController" id="SOM-FA-bl7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ubI-uE-MN2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2064.8000000000002" y="1210.344827586207"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bareLogo" width="125" height="125"/>
@@ -1679,7 +1740,7 @@
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="L6i-Jh-g50"/>
+        <segue reference="NDI-Yo-xRX"/>
         <segue reference="d61-Gb-xHV"/>
     </inferredMetricsTieBreakers>
 </document>

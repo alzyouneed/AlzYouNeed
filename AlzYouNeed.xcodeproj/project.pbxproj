@@ -20,6 +20,7 @@
 		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
 		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
 		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
+		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
 		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
 		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
 		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
@@ -84,6 +85,7 @@
 		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
 		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
 		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
+		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
 		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
 		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
 		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 			isa = PBXGroup;
 			children = (
 				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
+				2D5125241DA32B5100006E65 /* NotepadViewController.swift */,
 				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
 			);
 			name = Controller;
@@ -674,6 +677,7 @@
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */,
 				2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */,
+				2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */,
 				2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,
 				2D39542E1D42A40700AC1674 /* ContactsViewController.swift in Sources */,

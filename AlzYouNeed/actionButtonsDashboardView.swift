@@ -41,6 +41,9 @@ import UIKit
         
         leftButton.layer.cornerRadius = 10
         rightButton.layer.cornerRadius = 10
+        
+        leftButton.backgroundColor = caribbeanGreen
+        leftButton.setTitle("Notepad", for: .normal)
     }
     
     // TODO: Update later to add functionality

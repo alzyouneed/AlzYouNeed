@@ -48,7 +48,8 @@ class DashboardViewController: UIViewController {
                 self.presentOnboardingVC()
             }
         }
-        
+
+        dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         configureView()
     }
     
@@ -340,6 +341,17 @@ class DashboardViewController: UIViewController {
     func configureActionButtons() {
         // TODO: Change later to add functionality
         dashboardActionButtons.singleButton("left")
+    }
+    
+    func notepadButtonPressed(_ sender: UIButton) {
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let updateProfileVC: NotepadViewController = storyboard.instantiateViewController(withIdentifier: "notepad") as! NotepadViewController
+//        
+//        // Hide tab bar in updateProfileVC
+//        updateProfileVC.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+        
+        self.performSegue(withIdentifier: "notepad", sender: self)
     }
     
 }

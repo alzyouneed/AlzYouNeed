@@ -680,6 +680,82 @@ class FirebaseManager: NSObject {
         }
     }
     
+    /*
+    class func getFamilyNote(completionHandler: @escaping (_ error: NSError?, _ familyNote: String?) -> Void) {
+        getCurrentUser({ (userDict, error) in
+            if error != nil {
+                // Error
+                completionHandler(error, nil)
+            }
+            else {
+                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    print("Looking for notepad")
+                    databaseRef.child("families").child(userFamilyId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let dict = snapshot.value! as? NSDictionary {
+                            print("dict:", dict)
+                            
+                        }
+                        else {
+                            // First time using notepad
+                            let firstNote = "Store your notes here!"
+                            saveFamilyNote(_changes: firstNote, completionHandler: { (error) in
+                                if error != nil {
+                                    completionHandler(error, nil)
+                                } else {
+                                    completionHandler(error, firstNote)
+                                }
+                            })
+                        }
+                    }) { (error) in
+                        print("Error retrieving family notepad:", error)
+                        completionHandler(error as NSError?, nil)
+                    }
+                }
+            }
+        })
+    }
+    
+    class func saveFamilyNote(_changes: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
+        getCurrentUser({ (userDict, error) in
+            if error != nil {
+                // Error
+                completionHandler(error)
+            }
+            else {
+                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
+                    let databaseRef = FIRDatabase.database().reference()
+                    
+                    // Get most recent note to avoid saving collisions
+                    getFamilyNote(completionHandler: { (error, familyNote) in
+//                        print("getting note")
+                        if error != nil {
+                            completionHandler(error)
+                        } else {
+                            if let familyNote = familyNote {
+//                                print("found family note")
+                                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": familyNote + _changes], withCompletionBlock: { (error, newRef) in
+                                    //                            databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
+                                    if error != nil {
+                                        // Error
+                                        print("Error saving note")
+                                        completionHandler(error as NSError?)
+                                    }
+                                    else {
+                                        // Success
+                                        print("Saved note")
+                                        completionHandler(nil)
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+ */
+    
     // MARK: - Reminders
     class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
         getCurrentUser { (userDict, error) in
