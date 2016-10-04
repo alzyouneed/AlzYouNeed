@@ -30,11 +30,14 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class ContactsViewController: UIViewController, UICollectionViewDelegate {
+class ContactsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - UI Elements
     @IBOutlet var contactsCollectionView: UICollectionView!
     var refreshControl: UIRefreshControl!
+    @IBOutlet var searchBar: UISearchBar!
+    var filteredContacts: [Contact] = []
+    var searchActive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +45,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         configureRefreshControl()
         loadContacts(false)
         contactsCollectionView.delegate = self
+        contactsCollectionView.dataSource = self
+        searchBar.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +57,13 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
             AYNModel.sharedInstance.contactsArrWasReset = false
             print("Model was reset -- loading contacts")
             loadContacts(false)
+        }
+        
+        if !(searchBar.text!.isEmpty) {
+            searchActive = true
+            searchBar.becomeFirstResponder()
+        } else {
+            searchActive = false
         }
     }
     
@@ -100,18 +112,28 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(_ collectionView: UICollectionView) -> Int {
+    @objc(numberOfSectionsInCollectionView:) func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return AYNModel.sharedInstance.contactsArr.count
+        if searchActive {
+            return filteredContacts.count
+        } else {
+            return AYNModel.sharedInstance.contactsArr.count
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
+    @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell", for: indexPath) as! ContactCollectionViewCell
         
-        let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+        let contact: Contact
+        if searchActive {
+            contact = filteredContacts[indexPath.row]
+        } else {
+            contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+        }
+//        let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
 
         // Configure cell
 //        dispatch_async(dispatch_get_main_queue()) { 
@@ -174,7 +196,14 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
             let detailNavController: UINavigationController = segue.destination as! UINavigationController
             if self.contactsCollectionView.indexPathsForSelectedItems?.count > 0 {
                 if let indexPath = self.contactsCollectionView.indexPathsForSelectedItems![0] as IndexPath? {
-                    let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+                    let contact: Contact
+                    if searchActive {
+                        contact = filteredContacts[(indexPath as NSIndexPath).row]
+                    } else {
+                        contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+                    }
+                    
+//                    let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
                     if let cell = self.contactsCollectionView.cellForItem(at: indexPath) as? ContactCollectionViewCell {
                         if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
                             detailVC.contact = contact
@@ -186,7 +215,14 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
         } else if segue.identifier == "contactDetailMessage" {
             let detailNavController: UINavigationController = segue.destination as! UINavigationController
             if let indexPath = IndexPath(item: (sender! as AnyObject).tag, section: 0) as IndexPath? {
-                let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+                let contact: Contact
+                if searchActive {
+                    contact = filteredContacts[(indexPath as NSIndexPath).row]
+                } else {
+                    contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
+                }
+                
+//                let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
                 if let cell = self.contactsCollectionView.cellForItem(at: indexPath) as? ContactCollectionViewCell {
                     if let detailVC: ContactDetailViewController = detailNavController.childViewControllers[0] as? ContactDetailViewController {
                         detailVC.contact = contact
@@ -198,5 +234,42 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate {
             }
         }
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.searchBar.resignFirstResponder()
+        self.searchBar.endEditing(true)
+        print("touch")
+    }
+}
 
+extension ContactsViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.text!.isEmpty {
+            searchActive = false
+        } else {
+            searchActive = true
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredContacts = AYNModel.sharedInstance.contactsArr.filter { $0.fullName.contains(searchText) }
+        if filteredContacts.count == 0 {
+            searchActive = false
+        } else {
+            searchActive = true
+        }
+        self.contactsCollectionView.reloadData()
+    }
 }
