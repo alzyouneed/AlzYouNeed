@@ -327,10 +327,6 @@ class DashboardViewController: UIViewController {
             if let currentUser = FIRAuth.auth()?.currentUser {
                 // User is signed in.
                 print("\(currentUser) is logged in")
-                // Save current user from defaults first
-//                if let currentUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUser.uid) as NSDictionary? {
-//                    AYNModel.sharedInstance.currentUser = currentUserDict
-//                }
                 self.saveCurrentUserToModel()
             }
             else {

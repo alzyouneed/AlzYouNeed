@@ -27,27 +27,6 @@ class FirebaseManager: NSObject {
     }
     
     class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?) -> Void) {
-//    class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?, _ error: NSError?) -> Void) {
-//        if let user = FIRAuth.auth()?.currentUser {
-//            let userId = user.uid
-//            let databaseRef = FIRDatabase.database().reference()
-//            
-//            databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
-//                if let dict = snapshot.value as? NSDictionary, let signupStatus = dict["completedSignup"] as? String {
-//                //if let signupStatus = snapshot.value!["completedSignup"] as? String {   SWIFT 3 CHANGE
-//                    print("User signup status retrieved")
-//                    completionHandler(signupStatus, nil)
-//                }
-//                else {
-//                    print("completedSignup field does not exist")
-//                    completionHandler(nil, nil)
-//                }
-//            }) { (error) in
-//                print("Error occurred while retrieving user signup status")
-//                completionHandler(nil, error as NSError?)
-//            }
-//        }
-        
         if AYNModel.sharedInstance.currentUser != nil {
             if let signupStatus = AYNModel.sharedInstance.currentUser?.value(forKey: "completedSignup") as? String {
                 print("User signup status retrieved")
@@ -66,11 +45,9 @@ class FirebaseManager: NSObject {
             
             databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dict = snapshot.value! as? NSDictionary {
-//                    print("Current user retrieved:", dict)
                     // Used by UserDefaults to check auth of saved user before loading
                     dict.setValue(snapshot.key, forKey: "userId")
                     UserDefaultsManager.saveCurrentUser(_user: dict)
-//                    print("Current user retrieved:", dict)
                     completionHandler(dict, nil)
                 }
                 else {
@@ -400,7 +377,7 @@ class FirebaseManager: NSObject {
                                 modifiedDict.removeObject(forKey: "completedSignup")
                                 modifiedDict["admin"] = "true"
                                 
-                                let familyToSave = ["password": password, "members":[user.uid: modifiedDict]] as [String : Any]
+                                let familyToSave = ["password": password, "members":[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
                                 
                                 // Update current user and new family, and signup Status
                                 let childUpdates = ["/users/\(user.uid)/familyId": familyId,
@@ -607,82 +584,6 @@ class FirebaseManager: NSObject {
             }
         }
     }
-    
-    /*
-    class func getFamilyNote(completionHandler: @escaping (_ error: NSError?, _ familyNote: String?) -> Void) {
-        getCurrentUser({ (userDict, error) in
-            if error != nil {
-                // Error
-                completionHandler(error, nil)
-            }
-            else {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    print("Looking for notepad")
-                    databaseRef.child("families").child(userFamilyId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
-                        if let dict = snapshot.value! as? NSDictionary {
-                            print("dict:", dict)
-                            
-                        }
-                        else {
-                            // First time using notepad
-                            let firstNote = "Store your notes here!"
-                            saveFamilyNote(_changes: firstNote, completionHandler: { (error) in
-                                if error != nil {
-                                    completionHandler(error, nil)
-                                } else {
-                                    completionHandler(error, firstNote)
-                                }
-                            })
-                        }
-                    }) { (error) in
-                        print("Error retrieving family notepad:", error)
-                        completionHandler(error as NSError?, nil)
-                    }
-                }
-            }
-        })
-    }
-    
-    class func saveFamilyNote(_changes: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        getCurrentUser({ (userDict, error) in
-            if error != nil {
-                // Error
-                completionHandler(error)
-            }
-            else {
-                if let userFamilyId = userDict?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
-                    
-                    // Get most recent note to avoid saving collisions
-                    getFamilyNote(completionHandler: { (error, familyNote) in
-//                        print("getting note")
-                        if error != nil {
-                            completionHandler(error)
-                        } else {
-                            if let familyNote = familyNote {
-//                                print("found family note")
-                                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": familyNote + _changes], withCompletionBlock: { (error, newRef) in
-                                    //                            databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
-                                    if error != nil {
-                                        // Error
-                                        print("Error saving note")
-                                        completionHandler(error as NSError?)
-                                    }
-                                    else {
-                                        // Success
-                                        print("Saved note")
-                                        completionHandler(nil)
-                                    }
-                                })
-                            }
-                        }
-                    })
-                }
-            }
-        })
-    }
- */
     
     // MARK: - Reminders
     class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
@@ -936,4 +837,90 @@ class FirebaseManager: NSObject {
         }
     }
     
+}
+
+extension FirebaseManager {
+    class func getFamilyNote(completionHandler: @escaping (_ error: NSError?, _ familyNote: String?) -> Void) {
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+
+                databaseRef.child("families").child(userFamilyId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
+                    if let familyNote = snapshot.value as? String {
+                        print("Retrieved family note")
+                        completionHandler(nil, familyNote)
+                    }
+                    else {
+                        let firstNote = "Store your notes here!"
+                        databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": firstNote], withCompletionBlock: { (error, newRef) in
+//                        databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
+                            if error != nil {
+                                // Error
+                                print("Error saving first note")
+                                completionHandler(error as NSError?, nil)
+                            }
+                            else {
+                                // Success
+                                print("Saved first note")
+                                completionHandler(nil, firstNote)
+                            }
+                        })
+                        
+                    }
+                }) { (error) in
+                    print("Error retrieving family notepad:", error)
+                    completionHandler(error as NSError?, nil)
+                }
+            }
+        }
+    }
+    
+    class func saveFamilyNote(_changes: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                let databaseRef = FIRDatabase.database().reference()
+                
+                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": _changes], withCompletionBlock: { (error, newRef) in
+                    if error != nil {
+                        // Error
+                        print("Error saving note")
+                        completionHandler(error as NSError?)
+                    }
+                    else {
+                        // Success
+                        print("Saved note")
+                        completionHandler(nil)
+                    }
+                })
+                
+                /*
+                // Get most recent note to avoid saving collisions
+                getFamilyNote(completionHandler: { (error, familyNote) in
+//                    print("getting note")
+                    if error != nil {
+                        completionHandler(error)
+                    } else {
+                        if let familyNote = familyNote {
+//                            print("found family note")
+                            databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": _changes], withCompletionBlock: { (error, newRef) in
+//                            databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": familyNote + _changes], withCompletionBlock: { (error, newRef) in
+//                            databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
+                                if error != nil {
+                                    // Error
+                                    print("Error saving note")
+                                    completionHandler(error as NSError?)
+                                }
+                                else {
+                                    // Success
+                                    print("Saved note")
+                                    completionHandler(nil)
+                                }
+                            })
+                        }
+                    }
+                })
+                */
+            }
+        }
+    }
 }
