@@ -31,7 +31,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.layoutIfNeeded()
         configureView()
     }
     

@@ -46,15 +46,7 @@ class DashboardViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let now = Date()
         dateView.configureView(now)
-        
-        if self.navigationItem.title == "" {
-            configureUserNameLabel()
-        }
     }
-    
-//    override func viewDidDisappear(animated: Bool) {
-//        self.navigationController?.hideTransparentNavBar()
-//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -208,46 +200,12 @@ class DashboardViewController: UIViewController {
     
     // MARK: - Configuration
     func configureView() {
-        configureViewWithUserDefaults()
-        configureUserNameLabel()
-        configureActionButtons()
-    }
-    
-    func configureUserNameLabel() {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userName = AYNModel.sharedInstance.currentUser?.object(forKey: "name") as? String {
-                DispatchQueue.main.async(execute: {
-                    self.userView.userNameLabel.text = userName
-                })
-                if let familyId = AYNModel.sharedInstance.currentUser?.object(forKey: "familyId") as? String {
-                    DispatchQueue.main.async(execute: {
-                        self.userView.familyGroupLabel.text = familyId
-                    })
-//                    AYNModel.sharedInstance.currentUserFamilyId = familyId
-                    if let admin = AYNModel.sharedInstance.currentUser?.object(forKey: "admin") as? String {
-                        if admin == "true" {
-                            DispatchQueue.main.async(execute: {
-                                self.userView.specialUser("admin")
-                            })
-                        } else {
-                            if let patient = AYNModel.sharedInstance.currentUser?.object(forKey: "patient") as? String {
-                                if patient == "true" {
-                                    DispatchQueue.main.async(execute: {
-                                        self.userView.specialUser("patient")
-                                    })
-                                } else {
-                                    self.userView.specialUser("none")
-                                }
-                            }
-                        }
-                        
-                        if let photoUrl = AYNModel.sharedInstance.currentUser?.object(forKey: "photoUrl") as? String {
-                            self.configureDashboardView(photoUrl)
-                        }
-                    }
-                }
-            }
+        if !AYNModel.sharedInstance.wasReset {
+            configureViewWithUserDefaults()
+        } else {
+            configureViewWithFirebase()
         }
+        configureActionButtons()
     }
     
     func configureDashboardView(_ imageUrl: String) {
@@ -283,6 +241,7 @@ class DashboardViewController: UIViewController {
     }
     
     func configureViewWithUserDefaults() {
+        print("Configuring view with UserDefaults")
         if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
             if let savedUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUserId) as NSDictionary? {
                 if let userName = savedUserDict.object(forKey: "name") as? String,
@@ -291,6 +250,7 @@ class DashboardViewController: UIViewController {
                     let patient = savedUserDict.object(forKey: "patient") as? String,
                     let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
                     self.userView.userNameLabel.text = userName
+                    print("username:", userName)
                     self.userView.familyGroupLabel.text = familyId
                     if admin == "true" {
                         self.userView.specialUser("admin")
@@ -300,6 +260,49 @@ class DashboardViewController: UIViewController {
                         self.userView.specialUser("none")
                     }
                     self.configureDashboardView(photoUrl)
+                }
+            }
+        }
+    }
+    
+    func configureViewWithFirebase() {
+        print("Configuring view with Firebase")
+        FirebaseManager.getCurrentUser { (userDict, error) in
+            if error != nil {
+                // Error getting user
+            } else {
+                if let userDict = userDict {
+                    if let userName = userDict.object(forKey: "name") as? String {
+                        DispatchQueue.main.async(execute: {
+                            self.userView.userNameLabel.text = userName
+                        })
+                        if let familyId = userDict.object(forKey: "familyId") as? String {
+                            DispatchQueue.main.async(execute: {
+                                self.userView.familyGroupLabel.text = familyId
+                            })
+                            if let admin = userDict.object(forKey: "admin") as? String {
+                                if admin == "true" {
+                                    DispatchQueue.main.async(execute: {
+                                        self.userView.specialUser("admin")
+                                    })
+                                } else {
+                                    if let patient = userDict.object(forKey: "patient") as? String {
+                                        if patient == "true" {
+                                            DispatchQueue.main.async(execute: {
+                                                self.userView.specialUser("patient")
+                                            })
+                                        } else {
+                                            self.userView.specialUser("none")
+                                        }
+                                    }
+                                }
+                                
+                                if let photoUrl = userDict.object(forKey: "photoUrl") as? String {
+                                    self.configureDashboardView(photoUrl)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -30,7 +30,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.layoutIfNeeded()
         if AYNModel.sharedInstance.currentUser != nil {
             self.userName = AYNModel.sharedInstance.currentUser?.object(forKey: "name") as! String
             self.userPhoneNumber = AYNModel.sharedInstance.currentUser?.object(forKey: "phoneNumber") as! String
