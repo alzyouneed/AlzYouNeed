@@ -742,49 +742,72 @@ class FirebaseManager: NSObject {
             }
         }
     }
-
+    
     class func getConversationId(_ familyId: String, receiverId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
         if (FIRAuth.auth()?.currentUser) != nil {
             if AYNModel.sharedInstance.currentUser != nil {
                 // Get list of current user's conversations (by ID)
-                if let senderConversations = AYNModel.sharedInstance.currentUser?.object(forKey: "conversations") as? NSDictionary {
-                    // Lookup receiver
-                    getUserById(receiverId, completionHandler: { (userDict, error) in
-                        if let error = error {
-                            // Error
-                            completionHandler(error, nil)
-                        } else {
-                            // Get list of receiver's conversations (by ID)
-                            if let receiverConversations = userDict?.object(forKey: "conversations") as? NSDictionary {
-                                if let senderConversationKeys = senderConversations.allKeys as [AnyObject]? {
-                                    // Iterate through each key of sender to find matching conversation ID
-                                    for key in senderConversationKeys {
-                                        if receiverConversations.object(forKey: key) != nil {
-                                            //                                                print("Sender keys: \(senderConversationKeys)")
-                                            // Found matching conversation ID for both users
-                                            if let conversationId = key as? String {
-                                                print("Found existing conversation ID for users")
-                                                completionHandler(nil, conversationId)
-                                                return
+                // Must use getCurrentUser to ensure most up-to-date information (newly created conversations)
+                getCurrentUser({ (userDict, error) in
+                    if error != nil {
+                        completionHandler(error, nil)
+                    } else {
+                        if let userDict = userDict {
+                            if let senderConversations = userDict.object(forKey: "conversations") as? NSDictionary {
+                                //                            if let senderConversations = AYNModel.sharedInstance.currentUser?.object(forKey: "conversations") as? NSDictionary {
+                                // Lookup receiver
+                                getUserById(receiverId, completionHandler: { (userDict, error) in
+                                    if let error = error {
+                                        // Error
+                                        completionHandler(error, nil)
+                                    } else {
+                                        // Get list of receiver's conversations (by ID)
+                                        if let receiverConversations = userDict?.object(forKey: "conversations") as? NSDictionary {
+                                            if let senderConversationKeys = senderConversations.allKeys as [AnyObject]? {
+                                                // Iterate through each key of sender to find matching conversation ID
+                                                for key in senderConversationKeys {
+                                                    if receiverConversations.object(forKey: key) != nil {
+                                                        //                                                print("Sender keys: \(senderConversationKeys)")
+                                                        // Found matching conversation ID for both users
+                                                        if let conversationId = key as? String {
+                                                            print("Found existing conversation ID for users")
+                                                            completionHandler(nil, conversationId)
+                                                            return
+                                                        }
+                                                    }
+                                                }
+                                                // No matching conversation ID found
+                                                print("Could not find matching conversation ID for users -- creating new conversation")
+                                                // Create ID here
+                                                createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                                                    if let error = error {
+                                                        // Error
+                                                        completionHandler(error, nil)
+                                                    } else {
+                                                        // Success
+                                                        completionHandler(nil, conversationId)
+                                                    }
+                                                })
                                             }
+                                        } else {
+                                            // Receiver has no saved conversations
+                                            print("Receiver has no saved conversations -- creating new conversation")
+                                            // Create ID here
+                                            createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
+                                                if let error = error {
+                                                    // Error
+                                                    completionHandler(error, nil)
+                                                } else {
+                                                    // Success
+                                                    completionHandler(nil, conversationId)
+                                                }
+                                            })
                                         }
                                     }
-                                    // No matching conversation ID found
-                                    print("Could not find matching conversation ID for users -- creating new conversation")
-                                    // Create ID here
-                                    createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
-                                        if let error = error {
-                                            // Error
-                                            completionHandler(error, nil)
-                                        } else {
-                                            // Success
-                                            completionHandler(nil, conversationId)
-                                        }
-                                    })
-                                }
+                                })
                             } else {
-                                // Receiver has no saved conversations
-                                print("Receiver has no saved conversations -- creating new conversation")
+                                // Sender has no saved conversations
+                                print("Sender has no saved conversations -- creating new conversation")
                                 // Create ID here
                                 createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
                                     if let error = error {
@@ -797,24 +820,12 @@ class FirebaseManager: NSObject {
                                 })
                             }
                         }
-                    })
-                } else {
-                    // Sender has no saved conversations
-                    print("Sender has no saved conversations -- creating new conversation")
-                    // Create ID here
-                    createNewConversation(receiverId, familyId: familyId, completionHandler: { (error, conversationId) in
-                        if let error = error {
-                            // Error
-                            completionHandler(error, nil)
-                        } else {
-                            // Success
-                            completionHandler(nil, conversationId)
-                        }
-                    })
-                }
+                    }
+                })
             }
         }
     }
+ 
     
     fileprivate class func createNewConversation(_ receiverId: String, familyId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -892,35 +903,13 @@ extension FirebaseManager {
                         completionHandler(nil)
                     }
                 })
-                
-                /*
-                // Get most recent note to avoid saving collisions
-                getFamilyNote(completionHandler: { (error, familyNote) in
-//                    print("getting note")
-                    if error != nil {
-                        completionHandler(error)
-                    } else {
-                        if let familyNote = familyNote {
-//                            print("found family note")
-                            databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": _changes], withCompletionBlock: { (error, newRef) in
-//                            databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": familyNote + _changes], withCompletionBlock: { (error, newRef) in
-//                            databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
-                                if error != nil {
-                                    // Error
-                                    print("Error saving note")
-                                    completionHandler(error as NSError?)
-                                }
-                                else {
-                                    // Success
-                                    print("Saved note")
-                                    completionHandler(nil)
-                                }
-                            })
-                        }
-                    }
-                })
-                */
             }
         }
     }
 }
+
+//extension FirebaseManager {
+//    class func getConversationId(_familyId: String, receiverId: String, completionHandler: @escaping (_error: NSError?, _conversationId: String?) -> Void) {
+//        
+//    }
+//}

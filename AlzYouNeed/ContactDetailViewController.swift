@@ -116,7 +116,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         }
         
         // Get conversation ID
-        if let userFamilyId = AYNModel.sharedInstance.currentUserFamilyId as String? {
+//        if let userFamilyId = AYNModel.sharedInstance.currentUserFamilyId as String? {
+        
+        if let userFamilyId = AYNModel.sharedInstance.currentUser?.object(forKey: "familyId") as? String {
             FirebaseManager.getConversationId(userFamilyId, receiverId: contact.userId) { (error, conversationId) in
                 if error == nil {
                     if let conversationId = conversationId {
@@ -126,14 +128,6 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
                 }
             }
         }
-        
-//        FirebaseManager.getConversationId(contact.userId) { (error, conversationId) in
-//            if error == nil {
-//                if let conversationId = conversationId {
-//                    self.conversationId = conversationId
-//                }
-//            }
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

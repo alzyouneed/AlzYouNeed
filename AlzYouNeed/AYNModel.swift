@@ -24,7 +24,7 @@ class AYNModel {
     var unreadMessagesCount = 0
     
     var currentUserProfileImage: UIImage? = UIImage()
-    var currentUserFamilyId: String? = String()
+//    var currentUserFamilyId: String? = String()
     
     var currentUser: NSDictionary? = nil
     
@@ -42,7 +42,7 @@ class AYNModel {
         unreadMessagesCount = 0
         
         currentUserProfileImage = nil
-        currentUserFamilyId = nil
+//        currentUserFamilyId = nil
         currentUser = nil
         
         wasReset = true
