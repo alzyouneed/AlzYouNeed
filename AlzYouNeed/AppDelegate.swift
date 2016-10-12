@@ -67,19 +67,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        application.registerUserNotificationSettings(settings)
 //        application.registerForRemoteNotifications()
         
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-            if error != nil {
-                print("Error requesting push notification auth:", error)
-            } else {
-                if granted {
-                    print("Push notification auth granted")
-                } else {
-                    print("Push notification auth denied")
-                }
-            }
-        }
-        application.registerForRemoteNotifications()
+//        let center = UNUserNotificationCenter.current()
+//        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+//            if error != nil {
+//                print("Error requesting push notification auth:", error)
+//            } else {
+//                if granted {
+//                    print("Push notification auth granted")
+//                } else {
+//                    print("Push notification auth denied")
+//                }
+//            }
+//        }
+//        application.registerForRemoteNotifications()
         
         
         // Add observer for InstanceID token refresh callback.

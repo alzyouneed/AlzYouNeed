@@ -250,7 +250,6 @@ class DashboardViewController: UIViewController {
                     let patient = savedUserDict.object(forKey: "patient") as? String,
                     let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
                     self.userView.userNameLabel.text = userName
-                    print("username:", userName)
                     self.userView.familyGroupLabel.text = familyId
                     if admin == "true" {
                         self.userView.specialUser("admin")

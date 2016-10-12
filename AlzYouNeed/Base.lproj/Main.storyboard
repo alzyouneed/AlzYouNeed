@@ -158,7 +158,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="T1N-4W-09d" secondAttribute="trailing" id="1Kr-OU-jfy"/>
                             <constraint firstItem="jbW-pv-4J8" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="2ZW-81-C6I"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="top" secondItem="flZ-i1-2Ak" secondAttribute="bottom" id="4Gi-Fm-fyD"/>
-                            <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="8FG-dI-jIw"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="MZq-Dh-PU2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="leading" id="NYk-Pi-9PY"/>
                             <constraint firstAttribute="leadingMargin" secondItem="T1N-4W-09d" secondAttribute="leading" id="Uph-vl-o0Y"/>
@@ -179,6 +178,7 @@
                         <outlet property="phoneNumberVTFView" destination="vJ0-Ia-kPq" id="mBM-8i-zM5"/>
                         <outlet property="profileImageView" destination="jbW-pv-4J8" id="xKP-CP-EH0"/>
                         <outlet property="updateButton" destination="JUi-qn-GDA" id="nfP-Cy-ohj"/>
+                        <outlet property="updateButtonBottomConstraint" destination="Wf3-8G-xuD" id="cwb-Br-0yc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GG9-GA-mDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
