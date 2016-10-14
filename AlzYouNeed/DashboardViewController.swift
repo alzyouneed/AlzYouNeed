@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import MessageUI
 
 class DashboardViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class DashboardViewController: UIViewController {
         checkUserSignedIn()
 
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
+        dashboardActionButtons.rightButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         configureView()
     }
     
@@ -309,18 +311,20 @@ class DashboardViewController: UIViewController {
     
     func configureActionButtons() {
         // TODO: Change later to add functionality
-        dashboardActionButtons.singleButton("left")
+//        dashboardActionButtons.singleButton("left")
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let updateProfileVC: NotepadViewController = storyboard.instantiateViewController(withIdentifier: "notepad") as! NotepadViewController
-//        
-//        // Hide tab bar in updateProfileVC
-//        updateProfileVC.hidesBottomBarWhenPushed = true
-//        self.navigationController?.pushViewController(updateProfileVC, animated: true)
-        
         self.performSegue(withIdentifier: "notepad", sender: self)
+    }
+    
+    func emergencyButtonPressed(_ sender: UIButton) {
+        print("Emergency button pressed")
+        let messageVC = MFMessageComposeViewController()
+        messageVC.body = "EMERGENCY: I need help now!"
+        messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
+        messageVC.messageComposeDelegate = self
+        present(messageVC, animated: true, completion: nil)
     }
     
     func checkUserSignedIn() {
@@ -344,8 +348,54 @@ class DashboardViewController: UIViewController {
             if let userDict = userDict {
                 print("Saved current user to model")
                 AYNModel.sharedInstance.currentUser = userDict
+                self.checkNotepadForChanges()
+                self.saveFamilyMemberContacts()
             }
         })
     }
     
+    func checkNotepadForChanges() {
+        // Retrieve last saved version from UserDefaults
+        FirebaseManager.getFamilyNote { (error, note) in
+            if let note = note {
+                if let familyNote = UserDefaultsManager.loadCurrentNote() {
+                    if note == familyNote {
+                        // No changes
+                        print("No changes to notepad have been made since last save")
+                    } else {
+                        // Changes
+                        print("Changes to notepad have been made since last save")
+                    }
+                }
+            }
+        }
+    }
+    
+    func saveFamilyMemberContacts() {
+        FirebaseManager.getFamilyMembers({ (contacts, error) in
+            if let contacts = contacts {
+                for contact in contacts {
+                    AYNModel.sharedInstance.familyMemberNumbers.append(contact.phoneNumber)
+                }
+                print("Saved contacts to AYNModel for emergency")
+            }
+        })
+    }
+    
+}
+
+extension DashboardViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result.rawValue {
+        case MessageComposeResult.cancelled.rawValue:
+            print("Message cancelled")
+        case MessageComposeResult.failed.rawValue:
+            print("Message failed")
+        case MessageComposeResult.sent.rawValue:
+            print("Message sent")
+        default:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
 }

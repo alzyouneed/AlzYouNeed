@@ -58,6 +58,9 @@ class NotepadViewController: UIViewController {
             if let familyNote = familyNote {
                 self.noteTextView.text = familyNote
                 self.originalNote = familyNote
+                
+                // Saved to UserDefaults to notify user to changes
+                UserDefaultsManager.saveCurrentUserNotepad(_note: familyNote)
             }
         }
     }

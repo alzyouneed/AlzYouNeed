@@ -501,8 +501,6 @@ class FirebaseManager: NSObject {
 
     class func getFamilyMembers(_ completionHandler: @escaping (_ members: [Contact]?, _ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser{
-            // Reset unread messages
-            AYNModel.sharedInstance.unreadMessagesCount = 0
             
             if AYNModel.sharedInstance.currentUser != nil {
                 let userId = user.uid

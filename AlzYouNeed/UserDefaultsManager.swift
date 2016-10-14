@@ -39,6 +39,30 @@ class UserDefaultsManager: NSObject {
         return nil
     }
     
+    class func saveCurrentUserNotepad(_note: String) {
+        let defaults = UserDefaults.standard
+        
+        if let userId = AYNModel.sharedInstance.currentUser?.object(forKey: "userId") as? String {
+            defaults.set(_note, forKey: userId)
+            defaults.synchronize()
+            print("Saved current user notepad to UserDefaults")
+        }
+    }
+    
+    class func loadCurrentNote() -> String? {
+        let defaults = UserDefaults.standard
+        if let userId = AYNModel.sharedInstance.currentUser?.object(forKey: "userId") as? String {
+            if let savedUserNote = defaults.object(forKey: userId) as? String {
+                print("Loading note from UserDefaults")
+                return savedUserNote
+            } else {
+                print("Could not find note in UserDefaults")
+                return nil
+            }
+        }
+        return nil
+    }
+    
 //    class func saveContact(person: Person) {
 //        
 //        // Only save if new person

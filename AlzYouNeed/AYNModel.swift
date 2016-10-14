@@ -21,12 +21,12 @@ class AYNModel {
     var contactsArr: [Contact] = []
     var remindersArr: [Reminder] = []
     var completedRemindersArr: [Reminder] = []
-    var unreadMessagesCount = 0
     
     var currentUserProfileImage: UIImage? = UIImage()
 //    var currentUserFamilyId: String? = String()
     
     var currentUser: NSDictionary? = nil
+    var familyMemberNumbers: [String] = []
     
     var wasReset = false
     var contactsArrWasReset = false
@@ -39,11 +39,11 @@ class AYNModel {
         contactsArr.removeAll()
         remindersArr.removeAll()
         completedRemindersArr.removeAll()
-        unreadMessagesCount = 0
         
         currentUserProfileImage = nil
 //        currentUserFamilyId = nil
         currentUser = nil
+        familyMemberNumbers.removeAll()
         
         wasReset = true
         contactsArrWasReset = true

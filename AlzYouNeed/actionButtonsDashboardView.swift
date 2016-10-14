@@ -44,6 +44,9 @@ import UIKit
         
         leftButton.backgroundColor = caribbeanGreen
         leftButton.setTitle("Notepad", for: .normal)
+        
+        rightButton.backgroundColor = sunsetOrange
+        rightButton.setTitle("Emergency", for: .normal)
     }
     
     // TODO: Update later to add functionality
