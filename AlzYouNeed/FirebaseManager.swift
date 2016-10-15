@@ -220,6 +220,7 @@ class FirebaseManager: NSObject {
 
     // Delete current auth user, and entry in real time database and in family group
     class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
+        print("FirebaseManager: Deleting current user")
         if let user = FIRAuth.auth()?.currentUser {
             deleteUserFromFamily { (error, databaseRef) in
                 // If user does not belong to family, proceed normally
@@ -245,7 +246,6 @@ class FirebaseManager: NSObject {
                             }
                         })
                     }
-                    
                 }
                 // Success
                 deleteUserFromRTDB({ (error, databaseRef) in

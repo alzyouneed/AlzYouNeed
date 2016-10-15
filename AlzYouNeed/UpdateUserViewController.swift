@@ -227,7 +227,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     // HUD.flash(.Success, delay: 0, completion: { (success) in
                         self.stepCompleted = true
                         self.view.endEditing(true)
-                        self.performSegue(withIdentifier: "pushNotification", sender: self)
+                        self.performSegue(withIdentifier: "relation", sender: self)
                     // })
                 }
             })
@@ -415,7 +415,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
 //    }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "pushNotification" {
+        if identifier == "relation" {
             return stepCompleted
         }
         return false
