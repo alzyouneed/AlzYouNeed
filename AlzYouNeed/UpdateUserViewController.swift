@@ -17,7 +17,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var addPhotoButton: UIButton!
-    @IBOutlet var patientSwitch: UISwitch!
     @IBOutlet var progressView: UIProgressView!
     @IBOutlet var cancelButton: UIBarButtonItem!
     
@@ -206,14 +205,12 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 return
             }
             
-//            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patientStatus":self.patientStatus(), "avatarId": self.selectionView.avatarId(), "completedSignup": "familySetup"]
-            
             var imageData = Data()
             if let profileImage = profileImageView.image {
                 imageData = UIImageJPEGRepresentation(profileImage, 0.1)!
             }
             
-            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "patient":self.patientStatus(), "completedSignup": "familySetup", "profileImage": imageData] as [String : Any]
+            let updates = ["name": self.nameVTFView.textField.text!, "phoneNumber": self.phoneNumberVTFView.textField.text!, "completedSignup": "familySetup", "profileImage": imageData] as [String : Any]
             
             FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                 if error != nil {
@@ -231,15 +228,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     // })
                 }
             })
-        }
-    }
-    
-    func patientStatus() -> String {
-        if patientSwitch.isOn {
-            return "true"
-        }
-        else {
-            return "false"
         }
     }
     
@@ -361,7 +349,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         signUpButtonEnabled(enabled)
         nameVTFView.textField.isUserInteractionEnabled = enabled
         phoneNumberVTFView.textField.isUserInteractionEnabled = enabled
-        patientSwitch.isUserInteractionEnabled = enabled
     }
     
 //    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
