@@ -63,8 +63,18 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             }
         }
         
-        // Hides redundant information
-        hideExtraUserViewItems()
+        // If current user is patient -- show relations
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let patientStatus = AYNModel.sharedInstance.currentUser!["patient"] as? String {
+                if patientStatus == "true" {
+                    if let relation = contact.relation as String? {
+                        showRelation(show: true, relation: relation)
+                    }
+                } else {
+                    showRelation(show: false, relation: "")
+                }
+            }
+        }
     }
     
     func configureActionButtons() {
@@ -88,9 +98,16 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         lastCalledLabel.isHidden = false
     }
     
-    func hideExtraUserViewItems() {
-        userView.familyGroupLabel.isHidden = true
-        userView.separatorView.isHidden = true
+    func showRelation(show: Bool, relation: String?) {
+        if show {
+            userView.familyGroupLabel.isHidden = false
+            userView.separatorView.isHidden = false
+            
+            userView.familyGroupLabel.text = relation!
+        } else {
+            userView.familyGroupLabel.isHidden = true
+            userView.separatorView.isHidden = true
+        }
     }
 
     override func viewDidLoad() {

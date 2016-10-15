@@ -357,109 +357,43 @@ class FirebaseManager: NSObject {
         if let user = FIRAuth.auth()?.currentUser {
             // Check if family group already exists
             lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
-                // No error
-                if error == nil {
-                    // Check that bool exists
-                    if let familyExists = familyExists {
-                        // Family already exists
-                        if familyExists {
-                            // Don't create new family
-                            print("Family name already in use")
-                            let error = NSError(domain: "ExistingFamilyGroupError", code: 00001, userInfo: nil)
-                            completionHandler(error, nil)
-                        }
-                        else {
-                            if AYNModel.sharedInstance.currentUser != nil {
-                                let databaseRef = FIRDatabase.database().reference()
-                                
-                                // Remove key for save to family group
-                                let modifiedDict = AYNModel.sharedInstance.currentUser?.mutableCopy() as! NSMutableDictionary
-                                modifiedDict.removeObject(forKey: "completedSignup")
-                                modifiedDict["admin"] = "true"
-                                
-                                let familyToSave = ["password": password, "members":[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
-                                
-                                // Update current user and new family, and signup Status
-                                let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                    "/users/\(user.uid)/completedSignup": "true",
-                                                    "/users/\(user.uid)/admin": "true",
-                                                    "/families/\(familyId)": familyToSave] as [String : Any]
-                                
-                                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                    if error != nil {
-                                        print("Error creating new family group")
-                                        completionHandler(error as NSError?, databaseRef)
-                                    }
-                                    else {
-                                        print("New family group created -- joined Family: \(familyId)")
-                                        completionHandler(error as NSError?, databaseRef)
-                                    }
-                                })
-                            }
-                        }
-                    }
-                }
-            })
-        }
-    }
-
-    class func joinFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
-                if let error = error {
-                    // Error
+                if error != nil {
                     completionHandler(error, nil)
                 } else {
                     if let familyExists = familyExists {
-                        // Family does not exist
-                        if !familyExists {
-                            print("Family does not exist")
-                            let familyError = NSError(domain: "familyIdError", code: 00004, userInfo: nil)
-                            completionHandler(familyError, nil)
+                        if familyExists {
+                            // Family exists - don't create new one
+                            print("Family name already in use")
+                            let error = NSError(domain: "ExistingFamilyGroupError", code: 00001, userInfo: nil)
+                            completionHandler(error, nil)
                         } else {
-                            // Family exists -- continue normally
-                            getFamilyPassword(familyId, completionHandler: { (familyPassword, error) in
-                                if let actualFamilyPassword = familyPassword {
-                                    
-                                    // Check that passwords match
-                                    if actualFamilyPassword == password {
-                                        if AYNModel.sharedInstance.currentUser != nil {
-                                            let databaseRef = FIRDatabase.database().reference()
-                                            
-                                            // Remove key for save to family group
-                                            let modifiedDict = AYNModel.sharedInstance.currentUser?.mutableCopy() as! NSMutableDictionary
-                                            modifiedDict.removeObject(forKey: "completedSignup")
-                                            
-                                            // Update current user and new family, and signUp status
-                                            let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                                "/users/\(user.uid)/completedSignup": "true",
-                                                                "/users/\(user.uid)/admin": "false"]
-                                            
-                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                                if error != nil {
-                                                    print("Error occurred while updating user with new family group values")
-                                                    completionHandler(error as NSError?, nil)
-                                                }
-                                                else {
-                                                    print("User family group values updated")
-                                                    databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(modifiedDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
-                                                        if error != nil {
-                                                            print("Error occurred while adding user to family")
-                                                            completionHandler(secondError as NSError?, secondDatabaseRef)
-                                                        }
-                                                        else {
-                                                            print("User added to family")
-                                                            completionHandler(nil, secondDatabaseRef)
-                                                        }
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    }
-                                    else {
-                                        print("Incorrect password to join family: \(familyId)")
-                                        let wrongPasswordError = NSError(domain: "Incorrect password", code: 3, userInfo: nil)
-                                        completionHandler(wrongPasswordError, nil)
+                            // Family name is free
+                            getCurrentUser({ (userDict, error) in
+                                if error != nil {
+                                    completionHandler(error, nil)
+                                } else {
+                                    if let userDict = userDict {
+                                        let databaseRef = FIRDatabase.database().reference()
+                                        let modifiedDict = userDict.mutableCopy() as! NSMutableDictionary
+                                        modifiedDict["admin"] = "true"
+                                        let familyToSave = ["password": password, "members":[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
+                                        
+                                        // Update current user and new family, and signup Status
+                                        let childUpdates = ["/users/\(user.uid)/familyId": familyId,
+                                                            "/users/\(user.uid)/completedSignup": "true",
+                                                            "/users/\(user.uid)/admin": "true",
+                                                            "/families/\(familyId)": familyToSave] as [String : Any]
+                                        
+                                        databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                            if error != nil {
+                                                print("Error creating new family group")
+                                                completionHandler(error as NSError?, databaseRef)
+                                            }
+                                            else {
+                                                print("New family group created -- joined Family: \(familyId)")
+                                                completionHandler(error as NSError?, databaseRef)
+                                            }
+                                        })
                                     }
                                 }
                             })
@@ -467,6 +401,79 @@ class FirebaseManager: NSObject {
                     }
                 }
             })
+        }
+    }
+    
+    class func joinFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
+                if error != nil {
+                    completionHandler(error, nil)
+                } else {
+                    if let familyExists = familyExists {
+                        if familyExists {
+                            // Family exists -- check password
+                            getFamilyPassword(familyId, completionHandler: { (familyPassword, error) in
+                                if error != nil {
+                                    completionHandler(error, nil)
+                                } else {
+                                    if let familyPassword = familyPassword {
+                                        // Compare password to user input
+                                        if password == familyPassword {
+                                            // Password correct
+                                            getCurrentUser({ (userDict, error) in
+                                                if error != nil {
+                                                    completionHandler(error, nil)
+                                                } else {
+                                                    if let userDict = userDict {
+                                                        let databaseRef = FIRDatabase.database().reference()
+                                                        // Update current user and new family, and signUp status
+                                                        let childUpdates = ["/users/\(user.uid)/familyId": familyId,
+                                                                            "/users/\(user.uid)/completedSignup": "true",
+                                                                            "/users/\(user.uid)/admin": "false"]
+                                                        
+                                                        databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                                                            if error != nil {
+                                                                print("Error occurred while updating user with new family group values")
+                                                                completionHandler(error as NSError?, nil)
+                                                            }
+                                                            else {
+                                                                print("User family group values updated")
+                                                                databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                                                    if error != nil {
+                                                                        print("Error occurred while adding user to family")
+                                                                        completionHandler(secondError as NSError?, secondDatabaseRef)
+                                                                    }
+                                                                    else {
+                                                                        print("User added to family")
+                                                                        completionHandler(nil, secondDatabaseRef)
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                            
+                                        } else {
+                                            // Password incorrect
+                                            print("Incorrect password to join family: \(familyId)")
+                                            let wrongPasswordError = NSError(domain: "Incorrect password", code: 3, userInfo: nil)
+                                            completionHandler(wrongPasswordError, nil)
+                                        }
+                                    }
+                                }
+                            })
+                        } else {
+                            // Family does not exist
+                            print("Family does not exist")
+                            let familyError = NSError(domain: "familyIdError", code: 00004, userInfo: nil)
+                            completionHandler(familyError, nil)
+                        }
+                    }
+                }
+            })
+            
         }
     }
 

@@ -18,6 +18,7 @@ class Contact: NSObject {
     var patient: String!
     var avatarId: String!
     var admin: String!
+    var relation: String?
     
     init?(uID: String, userDict: NSDictionary) {
         super.init()
@@ -31,7 +32,7 @@ class Contact: NSObject {
         self.admin = userDict.value(forKey: "admin") as? String ?? "false"
         
         self.photoUrl = userDict.value(forKey: "photoUrl") as? String ?? ""
-
+        self.relation = userDict.value(forKey: "relation") as? String ?? nil
     }
 
     override var description: String {
