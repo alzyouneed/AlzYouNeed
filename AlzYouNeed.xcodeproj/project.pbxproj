@@ -38,6 +38,9 @@
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D5901D38A5C600DD666C /* islandViewBW.gif */; };
+		2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */; };
+		2DB0AEF51DB80CA100F6CE5D /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */; };
+		2DB0AEF81DB80E5A00F6CE5D /* Reminders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */; };
 		2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */; };
 		2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */; };
 		2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */; };
@@ -103,6 +106,9 @@
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA8D5901D38A5C600DD666C /* islandViewBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = islandViewBW.gif; sourceTree = "<group>"; };
+		2DB0AEF11DB80BF400F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContactList.storyboard; sourceTree = "<group>"; };
+		2DB0AEF41DB80CA100F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Dashboard.storyboard; sourceTree = "<group>"; };
+		2DB0AEF71DB80E5A00F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Reminders.storyboard; sourceTree = "<group>"; };
 		2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -176,6 +182,7 @@
 		2D2244EE1D0F994E005D9DF5 /* ContactList */ = {
 			isa = PBXGroup;
 			children = (
+				2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */,
 				2D2244F11D0FAD6E005D9DF5 /* Model */,
 				2D2244F41D0FB103005D9DF5 /* View */,
 				2D6EBACC1D0F0FC8004AD135 /* Controller */,
@@ -343,6 +350,7 @@
 		2DC0B2BE1D3180800090C89A /* Reminders */ = {
 			isa = PBXGroup;
 			children = (
+				2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */,
 				2DC0B2BF1D31808D0090C89A /* Model */,
 				2DC0B2C01D3180910090C89A /* View */,
 				2DC0B2C11D3180980090C89A /* Controller */,
@@ -378,6 +386,7 @@
 		2DC8D5B81D12DBDD00952483 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */,
 				2DC8D5BC1D12DC0B00952483 /* View */,
 				2DC8D5B91D12DBF600952483 /* Controller */,
 			);
@@ -556,6 +565,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DB0AEF81DB80E5A00F6CE5D /* Reminders.storyboard in Resources */,
 				2D7948471D1248F000FF1E51 /* .gitignore in Resources */,
 				2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */,
 				2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */,
@@ -567,6 +577,7 @@
 				2DCC3C671D301208005D0EFD /* OpenSans-Regular.ttf in Resources */,
 				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
+				2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */,
 				2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */,
 				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
 				2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */,
@@ -574,6 +585,7 @@
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
 				2DCC3C641D301208005D0EFD /* OpenSans-Bold.ttf in Resources */,
 				2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */,
+				2DB0AEF51DB80CA100F6CE5D /* Dashboard.storyboard in Resources */,
 				2DC8D5C31D12E12F00952483 /* DateDashboardView.xib in Resources */,
 				2D1F6AC41D4A9BC20060E2CF /* beach.mp4 in Resources */,
 				2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */,
@@ -705,6 +717,30 @@
 				2D9834E11D0C4A91000977DC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DB0AEF11DB80BF400F6CE5D /* Base */,
+			);
+			name = ContactList.storyboard;
+			sourceTree = "<group>";
+		};
+		2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DB0AEF41DB80CA100F6CE5D /* Base */,
+			);
+			name = Dashboard.storyboard;
+			sourceTree = "<group>";
+		};
+		2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2DB0AEF71DB80E5A00F6CE5D /* Base */,
+			);
+			name = Reminders.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
