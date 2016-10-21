@@ -21,7 +21,6 @@
         <!--Family Signup View Controller-->
         <scene sceneID="J92-rX-Nh6">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rug-3z-N9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="cPi-aJ-y8T" customClass="FamilySignupViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KTh-5F-ABQ"/>
@@ -99,13 +98,13 @@
                         <outlet property="progressView" destination="fxS-gW-yTg" id="K8o-mM-yNT"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rug-3z-N9a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3039" y="-996"/>
         </scene>
         <!--Relation-->
         <scene sceneID="i3i-6h-fQC">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="or0-JQ-DGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bJs-Eh-iGj" customClass="RelationViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dga-R2-jrt"/>
@@ -183,7 +182,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Relation" id="hms-aa-8un">
-                        <barButtonItem key="rightBarButtonItem" image="E5940FDB-F946-4B4E-9F2A-1EC6360A99C2" id="Bx8-yR-QIg">
+                        <barButtonItem key="rightBarButtonItem" image="F9D643C5-7924-45E9-A130-8159D5A84C8A" id="Bx8-yR-QIg">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="bJs-Eh-iGj" id="uk0-g0-3L9"/>
@@ -196,13 +195,13 @@
                         <outlet property="relationPickerView" destination="v6x-o8-5dB" id="6Zw-cA-m1G"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="or0-JQ-DGx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="772" y="-996"/>
         </scene>
         <!--New User-->
         <scene sceneID="346-aL-I3p">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Pm7-s2-UnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="createUserVC" title="New User" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QMa-Ph-dOR" customClass="CreateUserViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RHD-Mt-PpB"/>
@@ -298,13 +297,13 @@
                         <outlet property="passwordVTFView" destination="shl-oi-30x" id="8Ko-jX-E55"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pm7-s2-UnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-785" y="-996"/>
         </scene>
         <!--Profile-->
         <scene sceneID="tc6-aw-isc">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mZh-rY-x0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="updateUserVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vu3-xn-OOF" customClass="UpdateUserViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="obU-Z5-mxt"/>
@@ -327,7 +326,7 @@
                                     <constraint firstAttribute="height" constant="46" id="SZD-8g-Gi9"/>
                                 </constraints>
                             </view>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DBE5C468-4A44-42F3-85AC-CEDB87321D8C" translatesAutoresizingMaskIntoConstraints="NO" id="6SM-Uo-3DD">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8A5434FE-A763-40D8-B815-A6A57EB8C5E3" translatesAutoresizingMaskIntoConstraints="NO" id="6SM-Uo-3DD">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="1tJ-cC-W0d"/>
                                     <constraint firstAttribute="width" constant="100" id="7IL-bU-ZGN"/>
@@ -409,7 +408,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="eA0-p4-RM7">
-                        <barButtonItem key="rightBarButtonItem" image="E5940FDB-F946-4B4E-9F2A-1EC6360A99C2" id="Wc0-Ns-kDf">
+                        <barButtonItem key="rightBarButtonItem" image="F9D643C5-7924-45E9-A130-8159D5A84C8A" id="Wc0-Ns-kDf">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="vu3-xn-OOF" id="od4-36-PUe"/>
@@ -428,13 +427,13 @@
                         <outlet property="signUpButton" destination="kCt-Ui-83L" id="WvY-4N-yTD"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mZh-rY-x0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-36" y="-996"/>
         </scene>
         <!--Push Notifications-->
         <scene sceneID="Hmw-c9-Tis">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nzN-oo-vH3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="dKb-Zr-60z" customClass="PushNotificationsViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DKA-SD-3OA"/>
@@ -546,7 +545,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Push Notifications" id="qCN-Rt-fz7">
-                        <barButtonItem key="rightBarButtonItem" image="E5940FDB-F946-4B4E-9F2A-1EC6360A99C2" id="Edo-7a-W3Q">
+                        <barButtonItem key="rightBarButtonItem" image="F9D643C5-7924-45E9-A130-8159D5A84C8A" id="Edo-7a-W3Q">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="dKb-Zr-60z" id="Gb1-3Q-Bug"/>
@@ -558,13 +557,13 @@
                         <segue destination="3ZR-OR-iiB" kind="show" identifier="familyStage" id="YZE-J6-Np1"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nzN-oo-vH3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1551" y="-996"/>
         </scene>
         <!--Family-->
         <scene sceneID="YSS-HU-EBv">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WOV-ro-sZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="familyVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3ZR-OR-iiB" customClass="NewExistingFamilyViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6II-VX-mYd"/>
@@ -622,7 +621,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Family" id="lHC-b7-xgV">
-                        <barButtonItem key="rightBarButtonItem" image="E5940FDB-F946-4B4E-9F2A-1EC6360A99C2" id="cf4-D6-ohH">
+                        <barButtonItem key="rightBarButtonItem" image="F9D643C5-7924-45E9-A130-8159D5A84C8A" id="cf4-D6-ohH">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelOnboarding:" destination="3ZR-OR-iiB" id="dBL-aI-DNv"/>
@@ -636,13 +635,13 @@
                         <outlet property="progressView" destination="suC-LP-9I8" id="LYc-uq-JOp"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WOV-ro-sZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2281" y="-996"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="6dU-ax-Uhd">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0jN-Ya-MSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="dEd-h1-zPp" customClass="OnboardingViewController" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8Hh-bb-hIh"/>
@@ -722,6 +721,7 @@
                         <outlet property="passwordVTFView" destination="1Bw-dF-VSA" id="1tX-Uq-XYk"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0jN-Ya-MSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-36" y="-287"/>
         </scene>
@@ -747,7 +747,6 @@
         <!--Navigation Controller-->
         <scene sceneID="L8o-Gi-PWo">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lnc-I3-Hht" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
@@ -759,6 +758,7 @@
                         <segue destination="dEd-h1-zPp" kind="relationship" relationship="rootViewController" id="uXE-Pa-wAp"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lnc-I3-Hht" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-785" y="-287"/>
         </scene>
@@ -818,7 +818,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DBE5C468-4A44-42F3-85AC-CEDB87321D8C" width="100" height="100">
+        <image name="8A5434FE-A763-40D8-B815-A6A57EB8C5E3" width="100" height="100">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -1536,7 +1536,7 @@ pfGl/KYFpgqmEqYVphqmKaYtpjSmPKZJpk6mUKZSplemX6Zipmemb6ZypoSmh6aMAAAAAAAAAgEAAAAA
 AAAAQQAAAAAAAAAAAAAAAAAApo4
 </mutableData>
         </image>
-        <image name="E5940FDB-F946-4B4E-9F2A-1EC6360A99C2" width="22" height="22">
+        <image name="F9D643C5-7924-45E9-A130-8159D5A84C8A" width="22" height="22">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
