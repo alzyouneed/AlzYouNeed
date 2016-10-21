@@ -104,9 +104,20 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func signUp() {
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let createUserVC: CreateUserViewController = storyboard.instantiateViewController(withIdentifier: "createUserVC") as! CreateUserViewController
+//        self.navigationController?.pushViewController(createUserVC, animated: true)
+        
+        presentOnboardingVC()
+    }
+    
+    func presentOnboardingVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let createUserVC: CreateUserViewController = storyboard.instantiateViewController(withIdentifier: "createUserVC") as! CreateUserViewController
-        self.navigationController?.pushViewController(createUserVC, animated: true)
+        //        let storyboard: UIStoryboard = UIStoryboard(name: "OnboardingInitial", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+//        self.navigationController?.present(onboardingVC, animated: true, completion: nil)
+//        self.present
+        self.present(onboardingVC, animated: true, completion: nil)
     }
     
     func loginUser() {

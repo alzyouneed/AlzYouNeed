@@ -94,6 +94,10 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         signUpUser()
     }
     
+    @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Switch between textFields by using return key

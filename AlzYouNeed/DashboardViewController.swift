@@ -171,23 +171,9 @@ class DashboardViewController: UIViewController {
     func presentOnboardingVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
 //        let storyboard: UIStoryboard = UIStoryboard(name: "OnboardingInitial", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+//        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
         self.present(onboardingVC, animated: true, completion: nil)
-    }
-    
-    func presentFamilyVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: NewExistingFamilyViewController = storyboard.instantiateViewController(withIdentifier: "familyVC") as! NewExistingFamilyViewController
-        let navController = UINavigationController(rootViewController: onboardingVC)
-        self.present(navController, animated: true, completion: nil)
-        
-    }
-    
-    func presentUpdateUserVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateUserVC: UpdateUserViewController = storyboard.instantiateViewController(withIdentifier: "updateUserVC") as! UpdateUserViewController
-        let navController = UINavigationController(rootViewController: updateUserVC)
-        self.present(navController, animated: true, completion: nil)
     }
     
     func updateTabBadge() {
