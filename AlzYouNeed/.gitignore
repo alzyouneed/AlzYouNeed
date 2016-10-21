@@ -1,4 +1,6 @@
 .DS_Store
 build/*
 *.xcuserdatad
+.xcodeproj/project.xcworkspace/xcuserdata/
+.xcworkspace/xcuserdata/
 GoogleService-Info.plist
