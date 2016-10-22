@@ -25,13 +25,18 @@ class DashboardViewController: UIViewController {
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         dashboardActionButtons.rightButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         configureView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
         self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        self.navigationController?.presentTransparentNavBar()
+//        
+//        self.tabBarController?.tabBar.layer.borderWidth = 0.5
+//        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
         
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {

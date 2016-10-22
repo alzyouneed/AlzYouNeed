@@ -44,10 +44,10 @@ class NotepadViewController: UIViewController {
                     // Didn't save note
                 } else {
                     // Saved note
-                    if _dismissAfter {
+//                    if _dismissAfter {
                         self.view.endEditing(true)
                         self.dismiss(animated: true, completion: nil)
-                    }
+//                    }
                 }
             }
         }
