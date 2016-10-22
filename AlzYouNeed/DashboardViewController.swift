@@ -381,8 +381,12 @@ class DashboardViewController: UIViewController {
  */
     
     func configureActionButtons() {
-        // TODO: Change later to add functionality
-//        dashboardActionButtons.singleButton("left")
+        dashboardActionButtons.leftButton.backgroundColor = crayolaYellow
+        dashboardActionButtons.leftButton.setImage(UIImage(named: "notepadIcon"), for: .normal)
+        dashboardActionButtons.leftButton.tintColor = UIColor.white
+        
+        dashboardActionButtons.rightButton.setImage(UIImage(named: "emergencyIcon"), for: .normal)
+        dashboardActionButtons.rightButton.tintColor = UIColor.white
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
