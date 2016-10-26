@@ -79,9 +79,6 @@ class DashboardViewController: UIViewController {
             print("User logged out")
             try! FIRAuth.auth()?.signOut()
         }
-        let deleteAccountAction = UIAlertAction(title: "Delete Account", style: .destructive) { (action) in
-            self.showDeleteAccountWarning()
-        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
         }
@@ -89,7 +86,6 @@ class DashboardViewController: UIViewController {
         alertController.addAction(updateAction)
         alertController.addAction(pushNotificationsAction)
         alertController.addAction(logoutAction)
-        alertController.addAction(deleteAccountAction)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
@@ -175,8 +171,6 @@ class DashboardViewController: UIViewController {
     // MARK: - Present different VC's
     func presentOnboardingVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let storyboard: UIStoryboard = UIStoryboard(name: "OnboardingInitial", bundle: nil)
-//        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
         let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
         self.present(onboardingVC, animated: true, completion: nil)
     }
@@ -203,26 +197,15 @@ class DashboardViewController: UIViewController {
     }
     
     func configureDashboardView(_ imageUrl: String) {
-            if imageUrl.hasPrefix("gs://") {
-                FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
-                    if let error = error {
-                        // Error
-                        print("Error downloading user profile image: \(error.localizedDescription)")
-                        return
-                    }
-                    // Success
-                    if let image = UIImage(data: data!) as UIImage? {
-                        
-                        DispatchQueue.main.async(execute: {
-                            self.userView.setImage(image)
-                        })
-                        AYNModel.sharedInstance.currentUserProfileImage = image
-                        // Reset variable only after configuration is complete
-                        AYNModel.sharedInstance.wasReset = false
-                    }
-                })
-            } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) as UIImage? {
+        if imageUrl.hasPrefix("gs://") {
+            FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+                if let error = error {
+                    // Error
+                    print("Error downloading user profile image: \(error.localizedDescription)")
+                    return
+                }
+                // Success
+                if let image = UIImage(data: data!) as UIImage? {
                     
                     DispatchQueue.main.async(execute: {
                         self.userView.setImage(image)
@@ -231,7 +214,18 @@ class DashboardViewController: UIViewController {
                     // Reset variable only after configuration is complete
                     AYNModel.sharedInstance.wasReset = false
                 }
+            })
+        } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
+            if let image = UIImage(data: data) as UIImage? {
+                
+                DispatchQueue.main.async(execute: {
+                    self.userView.setImage(image)
+                })
+                AYNModel.sharedInstance.currentUserProfileImage = image
+                // Reset variable only after configuration is complete
+                AYNModel.sharedInstance.wasReset = false
             }
+        }
     }
     
     func configureViewWithUserDefaults() {
@@ -272,24 +266,6 @@ class DashboardViewController: UIViewController {
                 } else {
                     self.userView.specialUser("none")
                 }
-//                self.configureDashboardView(photoUrl)
-                
-//                if let userName = savedUserDict.object(forKey: "name") as? String,
-//                    let familyId = savedUserDict.object(forKey: "familyId") as? String,
-//                    let admin = savedUserDict.object(forKey: "admin") as? String,
-//                    let patient = savedUserDict.object(forKey: "patient") as? String,
-//                    let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
-//                    self.userView.userNameLabel.text = userName
-//                    self.userView.familyGroupLabel.text = familyId
-//                    if admin == "true" {
-//                        self.userView.specialUser("admin")
-//                    } else if patient == "true" {
-//                        self.userView.specialUser("patient")
-//                    } else {
-//                        self.userView.specialUser("none")
-//                    }
-//                    self.configureDashboardView(photoUrl)
-//                }
             }
         }
     }
@@ -340,50 +316,6 @@ class DashboardViewController: UIViewController {
             }
         }
     }
-    
-    /*
-    func configureViewWithFirebase() {
-        print("Configuring view with Firebase")
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error != nil {
-                // Error getting user
-            } else {
-                if let userDict = userDict {
-                    if let userName = userDict.object(forKey: "name") as? String {
-                        DispatchQueue.main.async(execute: {
-                            self.userView.userNameLabel.text = userName
-                        })
-                        if let familyId = userDict.object(forKey: "familyId") as? String {
-                            DispatchQueue.main.async(execute: {
-                                self.userView.familyGroupLabel.text = familyId
-                            })
-                            if let admin = userDict.object(forKey: "admin") as? String {
-                                if admin == "true" {
-                                    DispatchQueue.main.async(execute: {
-                                        self.userView.specialUser("admin")
-                                    })
-                                } else {
-                                    if let patient = userDict.object(forKey: "patient") as? String {
-                                        if patient == "true" {
-                                            DispatchQueue.main.async(execute: {
-                                                self.userView.specialUser("patient")
-                                            })
-                                        } else {
-                                            self.userView.specialUser("none")
-                                        }
-                                    }
-                                }
-                                if let photoUrl = userDict.object(forKey: "photoUrl") as? String {
-                                    self.configureDashboardView(photoUrl)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
- */
     
     func configureActionButtons() {
         dashboardActionButtons.leftButton.backgroundColor = crayolaYellow

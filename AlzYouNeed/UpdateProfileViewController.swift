@@ -306,5 +306,78 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         
         present(imagePicker, animated: true, completion: nil)
     }
+    
+    // MARK: Delete Account
+    @IBAction func deleteAccountAction(_ sender: UIButton) {
+        showDeleteAccountWarning()
+    }
+    
+    func showDeleteAccountWarning() {
+        let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .actionSheet)
+        
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
+            FirebaseManager.deleteCurrentUser({ (error) in
+                if error == nil {
+                    // Success
+                }
+                else {
+                    // Error
+                    // Check for relevant error before showing alert
+                    if error?.code != 2 && error?.code != 17011 {
+                        print("Error deleting user: \(error)")
+                        self.showLoginAlert()
+                    }
+                }
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            // Cancel button pressed
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showLoginAlert() {
+        let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.alert)
+        
+        var emailTF: UITextField!
+        var passwordTF: UITextField!
+        alert.addTextField { (emailTextField) in
+            emailTextField.placeholder = "Email"
+            emailTextField.autocapitalizationType = UITextAutocapitalizationType.none
+            emailTextField.autocorrectionType = UITextAutocorrectionType.no
+            emailTextField.spellCheckingType = UITextSpellCheckingType.no
+            emailTextField.keyboardType = UIKeyboardType.emailAddress
+            emailTF = emailTextField
+        }
+        alert.addTextField { (passwordTextField) in
+            passwordTextField.placeholder = "Password"
+            passwordTextField.autocapitalizationType = UITextAutocapitalizationType.none
+            passwordTextField.autocorrectionType = UITextAutocorrectionType.no
+            passwordTextField.spellCheckingType = UITextSpellCheckingType.no
+            passwordTextField.keyboardType = UIKeyboardType.asciiCapable
+            passwordTextField.isSecureTextEntry = true
+            passwordTF = passwordTextField
+        }
+        
+        let confirmAction = UIAlertAction(title: "Login", style: .default) { (action) in
+            FIRAuth.auth()?.signIn(withEmail: emailTF.text!, password: passwordTF.text!, completion: { (user, error) in
+                if error == nil {
+                    print("Login successful - showing delete account warning")
+                    self.showDeleteAccountWarning()
+                }
+                else {
+                    print("Error logging in: \(error)")
+                    self.showLoginAlert()
+                }
+            })
+        }
+        
+        alert.addAction(confirmAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 
 }

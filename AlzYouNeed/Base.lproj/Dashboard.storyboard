@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -25,7 +25,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="flZ-i1-2Ak">
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKQ-Nv-Slk">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="F7W-ut-5Uk"/>
+                                            <constraint firstAttribute="width" constant="130" id="n0n-iH-Cye"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <state key="normal" title="Delete Account">
+                                            <color key="titleColor" red="0.93333333330000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="deleteAccountAction:" destination="ZGJ-4a-9Bt" eventType="touchUpInside" id="Ee7-dG-1es"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="cKQ-Nv-Slk" firstAttribute="centerX" secondItem="flZ-i1-2Ak" secondAttribute="centerX" id="cYn-vN-2L0"/>
+                                </constraints>
                             </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbW-pv-4J8">
                                 <constraints>
@@ -61,6 +79,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="flZ-i1-2Ak" secondAttribute="trailing" id="19u-H4-dd1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="T1N-4W-09d" secondAttribute="trailing" id="1Kr-OU-jfy"/>
+                            <constraint firstItem="cKQ-Nv-Slk" firstAttribute="top" secondItem="vJ0-Ia-kPq" secondAttribute="bottom" constant="30" id="1Qp-kD-z7C"/>
                             <constraint firstItem="jbW-pv-4J8" firstAttribute="centerX" secondItem="nrZ-5Q-xGE" secondAttribute="centerX" id="2ZW-81-C6I"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="top" secondItem="flZ-i1-2Ak" secondAttribute="bottom" id="4Gi-Fm-fyD"/>
                             <constraint firstItem="JUi-qn-GDA" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="MZq-Dh-PU2"/>
@@ -88,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GG9-GA-mDw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1395" y="1210"/>
+            <point key="canvasLocation" x="1394.4000000000001" y="1209.4452773613195"/>
         </scene>
         <!--Notepad-->
         <scene sceneID="AL3-CM-caV">
@@ -245,7 +264,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
