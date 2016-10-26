@@ -291,7 +291,15 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         imagePicker.dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func changePictureAction(_ sender: UIButton) {
+        presentImagePicker()
+    }
+    
     func selectPhoto(_ tap: UITapGestureRecognizer) {
+        presentImagePicker()
+    }
+    
+    func presentImagePicker() {
         print("Select photo")
         self.imagePicker.delegate = self
         imagePicker.allowsEditing = true

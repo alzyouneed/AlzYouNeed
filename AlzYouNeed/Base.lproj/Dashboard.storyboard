@@ -39,10 +39,24 @@
                                             <action selector="deleteAccountAction:" destination="ZGJ-4a-9Bt" eventType="touchUpInside" id="Ee7-dG-1es"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-iZ-gQi">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="TC2-QA-Eud"/>
+                                            <constraint firstAttribute="height" constant="30" id="w7w-i6-n3r"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <state key="normal" title="Change Picture">
+                                            <color key="titleColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changePictureAction:" destination="ZGJ-4a-9Bt" eventType="touchUpInside" id="d5G-wS-hX7"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="cKQ-Nv-Slk" firstAttribute="centerX" secondItem="flZ-i1-2Ak" secondAttribute="centerX" id="cYn-vN-2L0"/>
+                                    <constraint firstItem="b3o-iZ-gQi" firstAttribute="centerX" secondItem="flZ-i1-2Ak" secondAttribute="centerX" id="uAo-CD-7M4"/>
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbW-pv-4J8">
@@ -88,11 +102,12 @@
                             <constraint firstItem="A3E-cH-im7" firstAttribute="top" secondItem="JUi-qn-GDA" secondAttribute="bottom" id="Wf3-8G-xuD"/>
                             <constraint firstItem="flZ-i1-2Ak" firstAttribute="leading" secondItem="nrZ-5Q-xGE" secondAttribute="leading" id="WgZ-o8-HPE"/>
                             <constraint firstItem="flZ-i1-2Ak" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" id="gNN-ln-b7T"/>
+                            <constraint firstItem="b3o-iZ-gQi" firstAttribute="top" secondItem="jbW-pv-4J8" secondAttribute="bottom" constant="4" id="h25-jS-Lgk"/>
                             <constraint firstAttribute="trailing" secondItem="JUi-qn-GDA" secondAttribute="trailing" id="hAy-hY-Xzy"/>
                             <constraint firstItem="jbW-pv-4J8" firstAttribute="top" secondItem="Tzi-hX-Abc" secondAttribute="bottom" constant="12" id="nTG-Fh-idf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vJ0-Ia-kPq" secondAttribute="trailing" id="oql-97-ai0"/>
+                            <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="b3o-iZ-gQi" secondAttribute="bottom" constant="4" id="tVO-zx-nas"/>
                             <constraint firstItem="vJ0-Ia-kPq" firstAttribute="top" secondItem="T1N-4W-09d" secondAttribute="bottom" constant="8" id="w0a-vN-iGL"/>
-                            <constraint firstItem="T1N-4W-09d" firstAttribute="top" secondItem="jbW-pv-4J8" secondAttribute="bottom" constant="8" id="z25-O7-gPp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Update Profile" id="WMN-d2-IDR"/>
