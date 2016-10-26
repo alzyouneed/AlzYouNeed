@@ -37,6 +37,8 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
             self.userPhotoUrl = AYNModel.sharedInstance.currentUser?.object(forKey: "photoUrl") as! String
             
             self.configureView()
+        } else {
+            print("AYNModel currentUser is NIL")
         }
     }
     

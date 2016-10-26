@@ -346,6 +346,19 @@ class DashboardViewController: UIViewController {
                 // User is signed in.
                 print("\(currentUser) is logged in")
                 self.saveCurrentUserToModel()
+                
+                // Check if user completed signup
+//                FirebaseManager.getUserSignUpStatus({ (status) in
+//                    if let status = status {
+//                        if status == "true" {
+//                            print("User completed signup")
+////                            self.saveCurrentUserToModel()
+//                        } else {
+//                            print("User did not complete signup -- deleting account (DISABLED)")
+////                            self.deleteAccount()
+//                        }
+//                    }
+//                })
             }
             else {
                 // No user is signed in.
@@ -353,6 +366,22 @@ class DashboardViewController: UIViewController {
                 self.presentOnboardingVC()
             }
         }
+    }
+    
+    func deleteAccount() {
+        FirebaseManager.deleteCurrentUser({ (error) in
+            if error == nil {
+                // Success
+            }
+            else {
+                // Error
+                // Check for relevant error before showing alert
+                if error?.code != 2 && error?.code != 17011 {
+                    print("Error deleting user: \(error)")
+                    self.showLoginAlert()
+                }
+            }
+        })
     }
     
     func saveCurrentUserToModel() {

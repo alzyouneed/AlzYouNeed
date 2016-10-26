@@ -48,6 +48,8 @@ class FirebaseManager: NSObject {
                     // Used by UserDefaults to check auth of saved user before loading
                     dict.setValue(snapshot.key, forKey: "userId")
                     UserDefaultsManager.saveCurrentUser(_user: dict)
+                    AYNModel.sharedInstance.currentUser = dict
+                    
                     completionHandler(dict, nil)
                 }
                 else {
@@ -131,7 +133,7 @@ class FirebaseManager: NSObject {
                                         completionHandler(error as NSError?)
                                     }
                                     else {
-                                        print("Updated user in RTDB -- Updating in family")
+                                        print("Updated user in RTDB -- Updating in family 1")
                                         updateUserInFamily(updatesDict as NSDictionary, completionHandler: { (error) in
                                             if error != nil {
                                                 // Key does not exist -- proceed normally
@@ -158,31 +160,31 @@ class FirebaseManager: NSObject {
                 })
             }
             else {
-            databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                if error != nil {
-                    print("Error updating user")
-                    completionHandler(error as NSError?)
-                }
-                else {
-                    print("Updated user in RTDB -- Updating in family")
-                    updateUserInFamily(updatesDict as NSDictionary, completionHandler: { (error) in
-                        if error != nil {
-                            // Key does not exist -- proceed normally
-                            if error?.code == 0 {
-                                completionHandler(nil)
+                databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                    if error != nil {
+                        print("Error updating user")
+                        completionHandler(error as NSError?)
+                    }
+                    else {
+                        print("Updated user in RTDB -- Updating in family 2")
+                        updateUserInFamily(updatesDict as NSDictionary, completionHandler: { (error) in
+                            if error != nil {
+                                // Key does not exist -- proceed normally
+                                if error?.code == 0 {
+                                    completionHandler(nil)
+                                }
+                                else {
+                                    // Error
+                                    completionHandler(error)
+                                }
                             }
                             else {
-                                // Error
-                                completionHandler(error)
+                                // Success
+                                completionHandler(nil)
                             }
-                        }
-                        else {
-                            // Success
-                            completionHandler(nil)
-                        }
-                    })
-                }
-            })
+                        })
+                    }
+                })
             }
         }
     }
@@ -214,6 +216,10 @@ class FirebaseManager: NSObject {
                     let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
                     completionHandler(error)
                 }
+            } else {
+                print("Onboarding -- User does not belong to family -- skipping family update")
+                let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
+                completionHandler(error)
             }
         }
     }
@@ -391,6 +397,7 @@ class FirebaseManager: NSObject {
                                             }
                                             else {
                                                 print("New family group created -- joined Family: \(familyId)")
+                                                AYNModel.sharedInstance.currentUser = modifiedDict
                                                 completionHandler(error as NSError?, databaseRef)
                                             }
                                         })
@@ -446,6 +453,7 @@ class FirebaseManager: NSObject {
                                                                     }
                                                                     else {
                                                                         print("User added to family")
+                                                                        AYNModel.sharedInstance.currentUser = userDict
                                                                         completionHandler(nil, secondDatabaseRef)
                                                                     }
                                                                 })
