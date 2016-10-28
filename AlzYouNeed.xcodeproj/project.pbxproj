@@ -501,9 +501,9 @@
 				2D9834D01D0C4A91000977DC /* Sources */,
 				2D9834D11D0C4A91000977DC /* Frameworks */,
 				2D9834D21D0C4A91000977DC /* Resources */,
-				2DE3EB2D1D4A4AAC0005A5EE /* ShellScript */,
 				ED74013B301149C10C6F95A8 /* [CP] Embed Pods Frameworks */,
 				CBB2E52C0AB93CD184557D3D /* [CP] Copy Pods Resources */,
+				2DB3BE871DC3BC0700AD01B6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -596,18 +596,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2DE3EB2D1D4A4AAC0005A5EE /* ShellScript */ = {
+		2DB3BE871DC3BC0700AD01B6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
+			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:637933247383:ios:8a900da39dc609e7\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/Users/Cwybro/Desktop/Xcode/Wybro/Alz You need/Extra Files/Alz You Need-c15e539ef453.json\"";
 		};
 		CBB2E52C0AB93CD184557D3D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
