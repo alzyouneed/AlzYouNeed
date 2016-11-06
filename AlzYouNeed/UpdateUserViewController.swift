@@ -243,6 +243,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
+        AYNModel.sharedInstance.onboarding = false
         cancelAccountCreation()
     }
     

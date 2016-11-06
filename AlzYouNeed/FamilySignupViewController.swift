@@ -105,12 +105,13 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 // Successfully created new family
                 // HUD.flash(.Success, delay: 0.2, completion: { (success) in
                     self.view.endEditing(true)
+                    AYNModel.sharedInstance.onboarding = false
                     
                     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
                     tabBarController.selectedIndex = 1
                     self.present(tabBarController, animated: true, completion: nil)
-                    
+                
 //                    self.dismissViewControllerAnimated(true, completion: nil)
                 // })
             }
@@ -136,7 +137,8 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 // Successfully joined family
                 // HUD.flash(.Success, delay: 0, completion: { (success) in
                     self.view.endEditing(true)
-                    
+                    AYNModel.sharedInstance.onboarding = false
+                
                     let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
                     tabBarController.selectedIndex = 1

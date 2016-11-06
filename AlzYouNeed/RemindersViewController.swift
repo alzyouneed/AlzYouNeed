@@ -358,7 +358,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
-                print("Error requesting push notification auth:", error)
+                print("Error requesting push notification auth:", error!)
             } else {
                 if granted {
                     print("Push notification auth granted")
@@ -397,7 +397,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let request = UNNotificationRequest(identifier: reminderId, content: content, trigger: trigger)
                 center.add(request, withCompletionHandler: { (error) in
                     if error != nil {
-                        print("Error adding push notification request:", error)
+                        print("Error adding push notification request:", error!)
                     } else {
                         print("Push notification request added")
                     }

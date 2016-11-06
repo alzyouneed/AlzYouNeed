@@ -173,6 +173,8 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             // Show progress view
             // HUD.show(.Progress)
             
+            AYNModel.sharedInstance.onboarding = true
+            
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed -- show popoverView with reason
@@ -196,7 +198,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                                     self.view.endEditing(true)
                                     self.userSignedUp = true
                                     AYNModel.sharedInstance.wasReset = true
-                                    
+                                
                                     self.performSegue(withIdentifier: "updateUser", sender: self)
                                 // })
                             }

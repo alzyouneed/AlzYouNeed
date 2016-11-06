@@ -63,6 +63,7 @@ class PushNotificationsViewController: UIViewController {
     
     // MARK: - Cancel Onboarding
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
+        AYNModel.sharedInstance.onboarding = false
         cancelAccountCreation()
     }
     

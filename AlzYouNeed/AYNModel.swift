@@ -34,6 +34,8 @@ class AYNModel {
 //    var remindersArrWasReset = false
 //    var completedRemindersArrWasReset = false
     
+    var onboarding = false
+    
     func resetModel() {
         print("Resetting model")
         contactsArr.removeAll()

@@ -48,6 +48,7 @@ class NewExistingFamilyViewController: UIViewController {
     }
     
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
+        AYNModel.sharedInstance.onboarding = false
         cancelAccountCreation()
     }
     

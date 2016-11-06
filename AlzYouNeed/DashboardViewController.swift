@@ -119,15 +119,6 @@ class DashboardViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func presentUpdateProfileVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
-        
-        // Hide tab bar in updateProfileVC
-        updateProfileVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(updateProfileVC, animated: true)
-    }
-    
     func showLoginAlert() {
         let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -173,6 +164,15 @@ class DashboardViewController: UIViewController {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
         self.present(onboardingVC, animated: true, completion: nil)
+    }
+    
+    func presentUpdateProfileVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
+        
+        // Hide tab bar in updateProfileVC
+        updateProfileVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
     }
     
     func updateTabBadge() {
@@ -240,7 +240,7 @@ class DashboardViewController: UIViewController {
                         // Delete here
                         FirebaseManager.deleteCurrentUser({ (error) in
                             if error != nil {
-                                print("Error:", error)
+                                print("Error:", error!)
                             } else {
                                 try! FIRAuth.auth()?.signOut()
                             }
@@ -340,32 +340,59 @@ class DashboardViewController: UIViewController {
     }
     
     func checkUserSignedIn() {
-        FIRAuth.auth()?.addStateDidChangeListener { auth, user in
-            //            if let currentUser = user {
-            if let currentUser = FIRAuth.auth()?.currentUser {
-                // User is signed in.
-                print("\(currentUser) is logged in")
-                self.saveCurrentUserToModel()
-                
-                // Check if user completed signup
-//                FirebaseManager.getUserSignUpStatus({ (status) in
-//                    if let status = status {
-//                        if status == "true" {
-//                            print("User completed signup")
-////                            self.saveCurrentUserToModel()
-//                        } else {
-//                            print("User did not complete signup -- deleting account (DISABLED)")
-////                            self.deleteAccount()
-//                        }
-//                    }
-//                })
-            }
-            else {
-                // No user is signed in.
+        // Check for current user
+        FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if user != nil {
+                // Try to get userDict from Firebase
+                FirebaseManager.getCurrentUser({ (userDict, error) in
+                    if error != nil {
+                        // userDict not retrieved -- check why
+                        print("Error getting userDict:", error!)
+                        // if userDict does not exist -- delete account & force sign up
+                        // otherwise logout user
+                        try! FIRAuth.auth()!.signOut()
+                    } else {
+                        // Make sure we don't check during onboarding
+                        if !AYNModel.sharedInstance.onboarding {
+                            print("User is not onboarding")
+                            // userDict retrieved -- check if completed signup
+                            if let userDict = userDict {
+                                if let completedSignup = userDict.object(forKey: "completedSignup") as? String {
+                                    if completedSignup == "true" {
+                                        print("User has completed signup")
+                                        self.saveCurrentUserToModel()
+                                        self.configureViewWithFirebase()
+                                    } else {
+                                        print("User has not completed signup")
+                                        // Delete account and force sign up
+                                        FirebaseManager.deleteCurrentUser({ (error) in
+                                            if error != nil {
+                                                // Error deleting user -- sign out
+                                                try! FIRAuth.auth()!.signOut()
+                                            }
+                                        })
+                                    }
+                                } else {
+                                    // Key doesn't exist -- delete account & force sign up
+                                    FirebaseManager.deleteCurrentUser({ (error) in
+                                        if error != nil {
+                                            // Error deleting user -- sign out
+                                            try! FIRAuth.auth()!.signOut()
+                                        }
+                                    })
+                                }
+                            }
+                        } else {
+                            print("User is onboarding -- don't delete account")
+                        }
+                    }
+                })
+            } else {
+                // Present onboarding VC
                 print("No user is signed in -- moving to onboarding flow")
                 self.presentOnboardingVC()
             }
-        }
+        })
     }
     
     func deleteAccount() {

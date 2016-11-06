@@ -838,7 +838,6 @@ class FirebaseManager: NSObject {
             }
         }
     }
- 
     
     fileprivate class func createNewConversation(_ receiverId: String, familyId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -921,8 +920,3 @@ extension FirebaseManager {
     }
 }
 
-//extension FirebaseManager {
-//    class func getConversationId(_familyId: String, receiverId: String, completionHandler: @escaping (_error: NSError?, _conversationId: String?) -> Void) {
-//        
-//    }
-//}

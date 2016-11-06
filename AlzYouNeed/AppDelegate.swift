@@ -17,15 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     override init() {
+        super.init()
         // Firebase init
         FIRApp.configure()
-//        FIRDatabase.database().persistenceEnabled = true
+        FIRDatabase.database().persistenceEnabled = true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Configure Firebase
 //        FIRApp.configure()  -- caused crash on launch here
+//        FIRDatabase.database().persistenceEnabled = true
         
         // Remove navigation bar button text
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clear], for: UIControlState())
