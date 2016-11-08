@@ -31,6 +31,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         super.viewDidLoad()
         
         configureView()
+        
+        checkTutorialStatus()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -437,6 +439,28 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         repeatsTF.text = "Repeats \(repeatOptions[row])"
+    }
+    
+    // MARK: Tutorial
+    func checkTutorialStatus() {
+        if let reminderTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "reminders") as String? {
+            if reminderTutorialCompleted == "false" {
+                showTutorial()
+            } else {
+                print("Reminder tutorial completed")
+            }
+        }
+    }
+    
+    func showTutorial() {
+        let alertController = UIAlertController(title: "Tutorial", message: "Create and manage all family reminders here!", preferredStyle: .alert)
+        
+        let completeAction = UIAlertAction(title: "Got it!", style: .default) { (action) in
+            UserDefaultsManager.completeTutorial(tutorial: "reminders")
+        }
+        
+        alertController.addAction(completeAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     /*

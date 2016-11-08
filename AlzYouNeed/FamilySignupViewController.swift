@@ -44,6 +44,9 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         configureView()
+        
+        // Set tutorial preferences
+        UserDefaultsManager.resetUserTutorials()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -151,6 +154,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func createOrJoinFamily(_ sender: UIButton) {
+        
         // Check if fields valid
         if validFields() {
             // Create family

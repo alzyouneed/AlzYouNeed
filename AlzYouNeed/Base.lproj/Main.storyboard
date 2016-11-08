@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FWg-a8-Cxv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FWg-a8-Cxv">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,24 +34,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q5h-Jz-Y6o">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jqI-9Z-ILZ" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="20" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cBb-qZ-WJz"/>
                                 </constraints>
                             </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5N5-aV-aQM" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="74" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="zX0-gU-kHn"/>
                                 </constraints>
                             </view>
                             <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbZ-PY-koH" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="128" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="1Lc-kf-gHB"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFR-c8-gcw">
+                                <rect key="frame" x="0.0" y="543" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="7SJ-E2-p91"/>
@@ -62,6 +70,7 @@
                                 </connections>
                             </button>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="fxS-gW-yTg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="trackTintColor" red="0.70196078431372544" green="0.75686274509803919" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
@@ -115,19 +124,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7i7-zR-cX8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6x-o8-5dB">
+                                <rect key="frame" x="0.0" y="131" width="375" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="HVx-Ou-mV9"/>
                                 </constraints>
                             </pickerView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HKC-hq-uCP">
+                                <rect key="frame" x="239.5" y="290" width="51" height="31"/>
                                 <connections>
                                     <action selector="patientStatusChanged:" destination="bJs-Eh-iGj" eventType="valueChanged" id="Nf6-8V-4bH"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How are you related to the patient?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q8Y-SA-h9e">
+                                <rect key="frame" x="86.5" y="65" width="202" height="58"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="1mH-Y5-9vp"/>
                                     <constraint firstAttribute="width" constant="202" id="Nuc-1g-sx1"/>
@@ -137,6 +150,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvr-Ik-p0x">
+                                <rect key="frame" x="86.5" y="291" width="99" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="99" id="psk-Zd-xt3"/>
                                     <constraint firstAttribute="height" constant="29" id="ujn-6u-Cav"/>
@@ -146,6 +160,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0BI-uO-7fJ">
+                                <rect key="frame" x="0.0" y="543" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.63137254899999995" green="0.25490196079999999" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="99W-1b-AGS"/>
@@ -212,24 +227,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89W-f9-zdd">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shl-oi-30x" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="74" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="H0g-Ce-vvO"/>
                                 </constraints>
                             </view>
                             <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y5s-1d-YtL" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="128" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="zbb-Vh-Y7V"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vsc-YU-cNl" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="20" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="1hX-Bk-61X"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tfQ-MJ-m4q">
+                                <rect key="frame" x="0.0" y="543" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="173" id="Buy-Td-q4b"/>
@@ -251,6 +271,7 @@
                                 </connections>
                             </button>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="leS-dh-Fda">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="trackTintColor" red="0.70196078431372544" green="0.75686274509803919" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
@@ -320,25 +341,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ynf-lc-5fM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLf-c8-Ma4" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="172" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="Jqc-aT-RJa"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-ou-Rs8" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="118" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="SZD-8g-Gi9"/>
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="6SM-Uo-3DD">
+                                <rect key="frame" x="137.5" y="10" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="1tJ-cC-W0d"/>
                                     <constraint firstAttribute="width" constant="100" id="7IL-bU-ZGN"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8v1-4n-gli">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="Vf9-Xy-1Ux"/>
@@ -353,6 +379,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kCt-Ui-83L">
+                                <rect key="frame" x="0.0" y="543" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0hp-mE-mZn"/>
@@ -367,10 +394,12 @@
                                 </connections>
                             </button>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A8e-QK-eYv">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="trackTintColor" red="0.70196078431372544" green="0.75686274509803919" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-OV-DO3">
+                                <rect key="frame" x="142" y="48.5" width="91" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="6kd-uz-m6G"/>
                                     <constraint firstAttribute="height" constant="23" id="8ua-QL-Muc"/>
@@ -450,11 +479,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U8O-ST-OUF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="vXo-Ua-RJM">
+                                <rect key="frame" x="0.0" y="266" width="375" height="337"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-P4-4wk">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="167.5"/>
                                         <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
                                         <state key="normal" title="Enable">
@@ -465,6 +497,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOI-I0-31Y">
+                                        <rect key="frame" x="0.0" y="169.5" width="375" height="167.5"/>
                                         <color key="backgroundColor" red="0.99607843137254903" green="0.37254901960784315" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
                                         <state key="normal" title="No thanks">
@@ -477,8 +510,10 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Etk-c6-A0r">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="266"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications are used to alert you of important information such as reminders" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvA-4k-y4o">
+                                        <rect key="frame" x="8" y="86" width="359" height="94"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="346" id="eNj-Mx-fAi"/>
                                             <constraint firstAttribute="height" constant="94" id="mzy-en-KHU"/>
@@ -493,6 +528,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable to improve the AlzYouNeed experience" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yp4-f5-Grl">
+                                        <rect key="frame" x="8" y="176" width="359" height="46.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="421" id="BPJ-Zd-wjX"/>
                                             <constraint firstAttribute="height" constant="40" id="OCO-kg-xRx"/>
@@ -520,6 +556,7 @@
                                 </constraints>
                             </view>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="bzW-VP-7jV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.63137254899999995" green="0.25490196079999999" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="trackTintColor" red="0.76078431369999999" green="0.73333333329999995" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
@@ -580,11 +617,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RoF-lq-s5J">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="2TR-Km-nQO">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="603"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytd-RQ-DZR">
+                                        <rect key="frame" x="0.0" y="0.0" width="383" height="300.5"/>
                                         <color key="backgroundColor" red="0.023529411764705882" green="0.83921568627450982" blue="0.62745098039215685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
                                         <state key="normal" title="New Family">
@@ -595,6 +635,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="98z-69-oIU">
+                                        <rect key="frame" x="0.0" y="302.5" width="383" height="300.5"/>
                                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="20"/>
                                         <state key="normal" title="Existing Family">
@@ -607,6 +648,7 @@
                                 </subviews>
                             </stackView>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="suC-LP-9I8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <color key="progressTintColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="trackTintColor" red="0.76078431372549016" green="0.73333333333333328" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
@@ -658,6 +700,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alz You Need" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78x-OC-pb2">
+                                <rect key="frame" x="0.0" y="263" width="375" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="edK-k5-K3V"/>
                                 </constraints>
@@ -666,22 +709,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-Xk-n5I" customClass="loginButtonsView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" identifier="loginHeight" id="yqy-p1-b0v"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQv-JJ-nf8" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="477" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="DwU-9R-Dlx"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bw-dF-VSA" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="531" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="G2Y-bB-1Lu"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bareLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pTn-uj-d6L">
+                                <rect key="frame" x="125" y="130" width="125" height="125"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="125" id="k61-mw-C7p"/>
                                     <constraint firstAttribute="height" constant="125" id="qkI-28-Qq0"/>
@@ -755,7 +802,7 @@
             <objects>
                 <navigationController storyboardIdentifier="loginNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -827,7 +874,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlw-5s-TrC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="chV-hS-NTa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chV-hS-NTa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

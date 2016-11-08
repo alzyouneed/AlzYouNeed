@@ -19,6 +19,10 @@ class NotepadViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor(red: 136/255, green: 132/255, blue: 255/255, alpha: 1)
         
         loadNote()
+        
+        // Check tutorial completion
+        checkTutorialStatus()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +87,28 @@ class NotepadViewController: UIViewController {
         alertController.addAction(closeAction)
         alertController.addAction(saveAction)
         
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: Tutorial
+    func checkTutorialStatus() {
+        if let notepadTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "notepad") as String? {
+            if notepadTutorialCompleted == "false" {
+                showTutorial()
+            } else {
+                print("Notepad tutorial completed")
+            }
+        }
+    }
+    
+    func showTutorial() {
+        let alertController = UIAlertController(title: "Tutorial", message: "Store anything important here!", preferredStyle: .alert)
+        
+        let completeAction = UIAlertAction(title: "Got it!", style: .default) { (action) in
+            UserDefaultsManager.completeTutorial(tutorial: "notepad")
+        }
+        
+        alertController.addAction(completeAction)
         present(alertController, animated: true, completion: nil)
     }
 }

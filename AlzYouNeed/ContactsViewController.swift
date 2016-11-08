@@ -47,6 +47,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         contactsCollectionView.delegate = self
         contactsCollectionView.dataSource = self
         searchBar.delegate = self
+        
+        checkTutorialStatus()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -271,5 +273,27 @@ extension ContactsViewController: UISearchBarDelegate {
             searchActive = true
         }
         self.contactsCollectionView.reloadData()
+    }
+    
+    // MARK: Tutorial
+    func checkTutorialStatus() {
+        if let contactListTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "contactList") as String? {
+            if contactListTutorialCompleted == "false" {
+                showTutorial()
+            } else {
+                print("ContactList tutorial completed")
+            }
+        }
+    }
+    
+    func showTutorial() {
+        let alertController = UIAlertController(title: "Tutorial", message: "Family members will show up here. Call or message them, or tap on their card to see their profile.", preferredStyle: .alert)
+        
+        let completeAction = UIAlertAction(title: "Got it!", style: .default) { (action) in
+            UserDefaultsManager.completeTutorial(tutorial: "contactList")
+        }
+        
+        alertController.addAction(completeAction)
+        present(alertController, animated: true, completion: nil)
     }
 }

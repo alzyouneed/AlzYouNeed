@@ -63,91 +63,53 @@ class UserDefaultsManager: NSObject {
         return nil
     }
     
-//    class func saveContact(person: Person) {
-//        
-//        // Only save if new person
-//        if !contactExists(person.identifier) {
-//            let defaults = NSUserDefaults.standardUserDefaults()
-//        
-//            var contacts = getAllContacts()
-//        
-//            // Add new contact to old list
-//            contacts?.append(person)
-//        
-//            // Encode data for storage
-//            let encodedData = NSKeyedArchiver.archivedDataWithRootObject(contacts!)
-//            defaults.setObject(encodedData, forKey: "savedContacts")
-//            defaults.synchronize()
-//        }
-//        else {
-//            print("Contact already exists: \(person.firstName) | \(person.identifier)")
-//        }
-//    }
-//    
-//    class func getAllContacts() -> [Person]? {
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        
-//        var savedContacts = [Person]()
-//        
-//        if let decoded = defaults.objectForKey("savedContacts") as? NSData {
-//            let decodedContacts = NSKeyedUnarchiver.unarchiveObjectWithData(decoded) as! [Person]
-//            savedContacts = decodedContacts
-//        }
-//        return savedContacts
-//    }
-//    
-//    class func contactExists(identifier: String) -> Bool {
-//        let contacts = getAllContacts()
-//        
-//        for person in contacts! {
-//            if person.identifier == identifier {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-//
-//    class func deleteContact(identifier: String) {
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        
-//        var contacts = getAllContacts()
-//        
-//        // Iterate through contacts to find match by identifier
-//        for (index, person) in contacts!.enumerate() {
-//            if person.identifier == identifier {
-//                contacts?.removeAtIndex(index)
-//            }
-//        }
-//        
-//        // Encode data for storage
-//        let encodedData = NSKeyedArchiver.archivedDataWithRootObject(contacts!)
-//        defaults.setObject(encodedData, forKey: "savedContacts")
-//        defaults.synchronize()
-//    }
+    // Handle first time using certain features
+    class func resetUserTutorials() {
+        let defaults = UserDefaults.standard
+        
+        // Dict of features with tutorials
+        let newPrefs = ["notepad": "false",
+                        "contactList" : "false",
+                        "reminders" : "false"]
+        defaults.setValue(newPrefs, forKeyPath: "completedTutorials")
+        defaults.synchronize()
+        print("Reset user tutorial prefs")
+    }
+    
+    class func completeTutorial(tutorial: String) {
+        let defaults = UserDefaults.standard
+        
+        if let completedTutorials = defaults.object(forKey: "completedTutorials") as? [String:String] {
+            if (completedTutorials[tutorial] as String?) != nil {
+                print("Found requested tutorial -- completing")
+                var modifiedDict = completedTutorials
+                modifiedDict[tutorial] = "true"
 
-//    class func login() {
-////        print("Logging in -- logged in: \(loggedIn())")
-//        if !loggedIn() {
-//            let defaults = NSUserDefaults.standardUserDefaults()
-//            defaults.setBool(true, forKey: "loggedIn")
-//            defaults.synchronize()
-//        }
-//    }
-//    
-//    class func logout() {
-////        print("Logging Out -- logged in: \(loggedIn())")
-//        if loggedIn() {
-//            let defaults = NSUserDefaults.standardUserDefaults()
-//            defaults.setBool(false, forKey: "loggedIn")
-//            defaults.synchronize()
-//        }
-//    }
-//    
-//    // Check if user is logged in
-//    class func loggedIn() -> Bool {
-//        let defaults = NSUserDefaults.standardUserDefaults()
-////        print("Logged in: \(defaults.boolForKey("loggedIn"))")
-//        return defaults.boolForKey("loggedIn")
-//    }
+                defaults.setValue(modifiedDict, forKeyPath: "completedTutorials")
+                defaults.synchronize()
+                
+                print("Tutorials:", modifiedDict)
+            } else {
+                print("Tutorial doesn't exist -- not completing:", tutorial)
+            }
+        } else {
+            print("No completedTutorials dictionary found")
+        }
+    }
+    
+    class func getTutorialCompletion(tutorial: String) -> String? {
+        let defaults = UserDefaults.standard
+        
+        if let completedTutorials = defaults.object(forKey: "completedTutorials") as? [String:String] {
+            if let requestedTutorial = completedTutorials[tutorial] as String? {
+                print("Found requested tutorial")
+                return requestedTutorial
+            } else {
+                print("Tutorial doesn't exist:", tutorial)
+            }
+        }
+        print("No completedTutorials dictionary found")
+        return nil
+    }
     
 }
