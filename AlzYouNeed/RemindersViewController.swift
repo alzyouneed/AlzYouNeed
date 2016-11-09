@@ -443,7 +443,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     // MARK: Tutorial
     func checkTutorialStatus() {
-        if let reminderTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "reminders") as String? {
+        if let reminderTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: Tutorials.reminders.rawValue) as String? {
             if reminderTutorialCompleted == "false" {
                 showTutorial()
             } else {

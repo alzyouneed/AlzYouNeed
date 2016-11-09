@@ -26,3 +26,9 @@ let caribbeanGreen = UIColor(red: 6/255, green: 214/255, blue: 160/255, alpha: 1
 let slateBlue = UIColor(red: 136/255, green: 132/255, blue: 255/255, alpha: 1)
 let columbiaBlue = UIColor(red: 208/255, green: 219/255, blue: 226/255, alpha: 1)
 let crayolaYellow = UIColor(red: 255/255, green: 182/255, blue: 39/255, alpha: 1)
+
+enum Tutorials: String {
+    case notepad
+    case contactList
+    case reminders
+}

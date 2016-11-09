@@ -277,7 +277,7 @@ extension ContactsViewController: UISearchBarDelegate {
     
     // MARK: Tutorial
     func checkTutorialStatus() {
-        if let contactListTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "contactList") as String? {
+        if let contactListTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: Tutorials.contactList.rawValue) as String? {
             if contactListTutorialCompleted == "false" {
                 showTutorial()
             } else {

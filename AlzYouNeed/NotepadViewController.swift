@@ -92,7 +92,7 @@ class NotepadViewController: UIViewController {
     
     // MARK: Tutorial
     func checkTutorialStatus() {
-        if let notepadTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: "notepad") as String? {
+        if let notepadTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: Tutorials.notepad.rawValue) as String? {
             if notepadTutorialCompleted == "false" {
                 showTutorial()
             } else {

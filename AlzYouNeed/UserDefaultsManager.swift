@@ -68,9 +68,9 @@ class UserDefaultsManager: NSObject {
         let defaults = UserDefaults.standard
         
         // Dict of features with tutorials
-        let newPrefs = ["notepad": "false",
-                        "contactList" : "false",
-                        "reminders" : "false"]
+        let newPrefs = [Tutorials.notepad.rawValue : "false",
+                        Tutorials.contactList.rawValue : "false",
+                        Tutorials.reminders.rawValue : "false"]
         defaults.setValue(newPrefs, forKeyPath: "completedTutorials")
         defaults.synchronize()
         print("Reset user tutorial prefs")
