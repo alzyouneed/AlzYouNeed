@@ -45,56 +45,53 @@ class ContactCollectionViewCell: UICollectionViewCell {
         
         // Load images on background thread to avoid choppiness
         DispatchQueue.global().async {
-            // Background thread
-            if let imageUrl = contact.photoUrl {
-                if imageUrl.hasPrefix("gs://") {
-                    FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
-                        if let error = error {
-                            // Error
-                            print("Error downloading user profile image: \(error.localizedDescription)")
-                            return
-                        }
-                        // Success
-                        let image = UIImage(data: data!)
+            var foundCache = false
+            for arrContact in AYNModel.sharedInstance.contactsArr {
+                if arrContact.userId == contact.userId {
+                    // Found user -- check for image
+                    if let userPhoto = arrContact.photo {
+                        print("Found cached user photo")
+                        foundCache = true
+                        DispatchQueue.main.async(execute: {
+                            self.contactView.contactImageView.image = userPhoto
+                        })
+                        return
+                    }
+                }
+            }
+            if !foundCache {
+                print("No cached user photo -- downloading")
+                
+                // Background thread
+                if let imageUrl = contact.photoUrl {
+                    
+                    // TODO: Creates problem when filtering contacts by search
+                    if imageUrl.hasPrefix("gs://") {
+                        FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+                            if let error = error {
+                                // Error
+                                print("Error downloading user profile image: \(error.localizedDescription)")
+                                return
+                            }
+                            // Success
+                            let image = UIImage(data: data!)
+                            DispatchQueue.main.async(execute: {
+                                self.contactView.contactImageView.image = image
+                                // Save image for later reuse
+                                AYNModel.sharedInstance.contactsArr[row].photo = image
+                            })
+                        })
+                    } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
+                        let image = UIImage(data: data)
                         DispatchQueue.main.async(execute: {
                             self.contactView.contactImageView.image = image
+                            // save image for later reuse
+                            AYNModel.sharedInstance.contactsArr[row].photo = image
                         })
-                    })
-                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
-                    let image = UIImage(data: data)
-                    DispatchQueue.main.async(execute: {
-                        self.contactView.contactImageView.image = image
-                    })
+                    }
                 }
             }
         }
-        
-        
-        // Load images on background thread to avoid choppiness
-//        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: {
-//            if let imageUrl = contact.photoUrl {
-//                if imageUrl.hasPrefix("gs://") {
-//                    FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
-//                        if let error = error {
-//                            // Error
-//                            print("Error downloading user profile image: \(error.localizedDescription)")
-//                            return
-//                        }
-//                        // Success
-//                            let image = UIImage(data: data!)
-//                            DispatchQueue.main.async(execute: {
-//                                self.contactView.contactImageView.image = image
-//                            })
-//                    })
-//                } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
-//                        let image = UIImage(data: data)
-//                        DispatchQueue.main.async(execute: {
-//                            self.contactView.contactImageView.image = image
-//                        })
-//                }
-//            }
-//        })
-        
     }
-  
+    
 }

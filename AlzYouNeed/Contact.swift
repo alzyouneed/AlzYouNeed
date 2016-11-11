@@ -20,6 +20,8 @@ class Contact: NSObject {
     var admin: String!
     var relation: String?
     
+    var photo: UIImage?
+    
     init?(uID: String, userDict: NSDictionary) {
         super.init()
         

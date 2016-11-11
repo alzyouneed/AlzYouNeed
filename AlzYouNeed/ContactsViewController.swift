@@ -130,17 +130,13 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell", for: indexPath) as! ContactCollectionViewCell
         
         let contact: Contact
+
         if searchActive {
             contact = filteredContacts[indexPath.row]
         } else {
             contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
         }
-//        let contact = AYNModel.sharedInstance.contactsArr[(indexPath as NSIndexPath).row]
 
-        // Configure cell
-//        dispatch_async(dispatch_get_main_queue()) { 
-//            cell.configureCell(contact, row: indexPath.row)
-//        }
         cell.configureCell(contact, row: (indexPath as NSIndexPath).row)
         
         // Add targets for both buttons
