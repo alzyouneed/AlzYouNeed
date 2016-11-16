@@ -109,6 +109,8 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = slateBlue.cgColor
         
+        self.imagePicker.delegate = self
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
         tap.numberOfTapsRequired = 1
         profileImageView.addGestureRecognizer(tap)
@@ -303,18 +305,34 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
     
     func presentImagePicker() {
         print("Select photo")
-        self.imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        imagePicker.sourceType = .photoLibrary
+//        self.imagePicker.delegate = self
+//        imagePicker.allowsEditing = true
+//        imagePicker.sourceType = .photoLibrary
+//        
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            self.imagePicker.sourceType = .camera
+//        }
+//        else {
+//            self.imagePicker.sourceType = .photoLibrary
+//        }
+//        
+//        present(imagePicker, animated: true, completion: nil)
         
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            print("Selecting from Camera")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
             self.imagePicker.sourceType = .camera
+            present(imagePicker, animated: true, completion: nil)
         }
         else {
+            print("Selecting from Photo Library")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
             self.imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
         }
         
-        present(imagePicker, animated: true, completion: nil)
     }
     
     // MARK: Delete Account
