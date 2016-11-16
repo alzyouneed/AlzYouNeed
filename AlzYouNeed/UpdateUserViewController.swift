@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 // import PKHUD
 
-class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
     // MARK: - UI Elements
     @IBOutlet var nameVTFView: validateTextFieldView!
@@ -122,43 +122,43 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
 
-    // MARK: - UIImagePickerController Delegate
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            self.profileImageView.image = pickedImage
-            self.addPhotoLabel.isHidden = true
-        }
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-    
-    func selectPhoto(_ tap: UITapGestureRecognizer) {
-        print("Select photo")
-//        self.imagePicker.delegate = self
-//        imagePicker.allowsEditing = true
-//        imagePicker.sourceType = .photoLibrary
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            print("Selecting from Camera")
-//            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .camera
-            present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            print("Selecting from Photo Library")
-//            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: nil)
-        }
-        
-//        present(imagePicker, animated: true, completion: nil)
-    }
+//    // MARK: - UIImagePickerController Delegate
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+//            self.profileImageView.image = pickedImage
+//            self.addPhotoLabel.isHidden = true
+//        }
+//        imagePicker.dismiss(animated: true, completion: nil)
+//    }
+//    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        imagePicker.dismiss(animated: true, completion: nil)
+//    }
+//    
+//    func selectPhoto(_ tap: UITapGestureRecognizer) {
+//        print("Select photo")
+////        self.imagePicker.delegate = self
+////        imagePicker.allowsEditing = true
+////        imagePicker.sourceType = .photoLibrary
+//        
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            print("Selecting from Camera")
+////            self.imagePicker.delegate = self
+//            imagePicker.allowsEditing = true
+//            self.imagePicker.sourceType = .camera
+//            present(imagePicker, animated: true, completion: nil)
+//        }
+//        else {
+//            print("Selecting from Photo Library")
+////            self.imagePicker.delegate = self
+//            imagePicker.allowsEditing = true
+//            self.imagePicker.sourceType = .photoLibrary
+//            present(imagePicker, animated: true, completion: nil)
+//        }
+//        
+////        present(imagePicker, animated: true, completion: nil)
+//    }
     
     @IBAction func addPhoto(_ sender: UIBarButtonItem) {
 //        selectPhoto()
@@ -422,14 +422,41 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UIImagePi
         return false
     }
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+// MARK: - UIImagePickerController Delegate
+extension UpdateUserViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.profileImageView.image = pickedImage
+            self.addPhotoLabel.isHidden = true
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
     }
-    */
-
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func selectPhoto(_ tap: UITapGestureRecognizer) {
+        print("Select photo")
+        //        self.imagePicker.delegate = self
+        //        imagePicker.allowsEditing = true
+        //        imagePicker.sourceType = .photoLibrary
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            print("Selecting from Camera")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            self.imagePicker.sourceType = .camera
+            present(imagePicker, animated: true, completion: nil)
+        }
+        else {
+            print("Selecting from Photo Library")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            self.imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
 }

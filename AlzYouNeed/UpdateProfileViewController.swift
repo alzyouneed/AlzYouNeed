@@ -11,7 +11,7 @@ import Firebase
 import FirebaseStorage
 // import PKHUD
 
-class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
     
     // MARK: - UI Elements
     @IBOutlet var profileImageView: UIImageView!
@@ -281,58 +281,12 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         adjustingKeyboardHeight(false, notification: sender)
     }
     
-    // MARK: - UIImagePickerController Delegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-            self.profileImageView.image = pickedImage
-            profileImageUpdated = true
-            _ = updatesToSave()
-        }
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        imagePicker.dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func changePictureAction(_ sender: UIButton) {
         presentImagePicker()
     }
     
     func selectPhoto(_ tap: UITapGestureRecognizer) {
         presentImagePicker()
-    }
-    
-    func presentImagePicker() {
-        print("Select photo")
-//        self.imagePicker.delegate = self
-//        imagePicker.allowsEditing = true
-//        imagePicker.sourceType = .photoLibrary
-//        
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            self.imagePicker.sourceType = .camera
-//        }
-//        else {
-//            self.imagePicker.sourceType = .photoLibrary
-//        }
-//        
-//        present(imagePicker, animated: true, completion: nil)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            print("Selecting from Camera")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .camera
-            present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            print("Selecting from Photo Library")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: nil)
-        }
-        
     }
     
     // MARK: Delete Account
@@ -408,4 +362,52 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UIImag
         self.present(alert, animated: true, completion: nil)
     }
 
+}
+
+// MARK: - UIImagePickerController Delegate
+extension UpdateProfileViewController: UIImagePickerControllerDelegate {
+    func presentImagePicker() {
+        print("Select photo")
+        //        self.imagePicker.delegate = self
+        //        imagePicker.allowsEditing = true
+        //        imagePicker.sourceType = .photoLibrary
+        //
+        //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+        //            self.imagePicker.sourceType = .camera
+        //        }
+        //        else {
+        //            self.imagePicker.sourceType = .photoLibrary
+        //        }
+        //
+        //        present(imagePicker, animated: true, completion: nil)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            print("Selecting from Camera")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            self.imagePicker.sourceType = .camera
+            present(imagePicker, animated: true, completion: nil)
+        }
+        else {
+            print("Selecting from Photo Library")
+            //            self.imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            self.imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.profileImageView.image = pickedImage
+            profileImageUpdated = true
+            _ = updatesToSave()
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
 }
