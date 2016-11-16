@@ -121,44 +121,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
             signUpButton.alpha = 0.5
         }
     }
-
-//    // MARK: - UIImagePickerController Delegate
-//    
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-//            self.profileImageView.image = pickedImage
-//            self.addPhotoLabel.isHidden = true
-//        }
-//        imagePicker.dismiss(animated: true, completion: nil)
-//    }
-//    
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        imagePicker.dismiss(animated: true, completion: nil)
-//    }
-//    
-//    func selectPhoto(_ tap: UITapGestureRecognizer) {
-//        print("Select photo")
-////        self.imagePicker.delegate = self
-////        imagePicker.allowsEditing = true
-////        imagePicker.sourceType = .photoLibrary
-//        
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            print("Selecting from Camera")
-////            self.imagePicker.delegate = self
-//            imagePicker.allowsEditing = true
-//            self.imagePicker.sourceType = .camera
-//            present(imagePicker, animated: true, completion: nil)
-//        }
-//        else {
-//            print("Selecting from Photo Library")
-////            self.imagePicker.delegate = self
-//            imagePicker.allowsEditing = true
-//            self.imagePicker.sourceType = .photoLibrary
-//            present(imagePicker, animated: true, completion: nil)
-//        }
-//        
-////        present(imagePicker, animated: true, completion: nil)
-//    }
     
     @IBAction func addPhoto(_ sender: UIBarButtonItem) {
 //        selectPhoto()
@@ -176,7 +138,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
             return true
         }
         else {
-//            print("Name field empty")
             nameVTFView.isValid(false)
             return false
         }
@@ -258,7 +219,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
     }
     
     func cancelAccountCreation() {
-        
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
@@ -281,7 +241,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
                 let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
                 self.present(onboardingVC, animated: true, completion: nil)
             }
@@ -364,56 +323,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
         nameVTFView.textField.isUserInteractionEnabled = enabled
         phoneNumberVTFView.textField.isUserInteractionEnabled = enabled
     }
-    
-//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-//        let tag = textField.superview!.superview!.tag
-//        
-//        if (tag == 1)
-//        {
-//            let newString = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
-//            let components = newString.componentsSeparatedByCharactersInSet(NSCharacterSet.decimalDigitCharacterSet().invertedSet)
-//            
-//            let decimalString = components.joinWithSeparator("") as NSString
-//            let length = decimalString.length
-//            let hasLeadingOne = length > 0 && decimalString.characterAtIndex(0) == (1 as unichar)
-//            
-//            if length == 0 || (length > 10 && !hasLeadingOne) || length > 11
-//            {
-//                let newLength = (textField.text! as NSString).length + (string as NSString).length - range.length as Int
-//                
-//                return (newLength > 10) ? false : true
-//            }
-//            var index = 0 as Int
-//            let formattedString = NSMutableString()
-//            
-//            if hasLeadingOne
-//            {
-//                formattedString.appendString("1 ")
-//                index += 1
-//            }
-//            if (length - index) > 3
-//            {
-//                let areaCode = decimalString.substringWithRange(NSMakeRange(index, 3))
-//                formattedString.appendFormat("(%@)", areaCode)
-//                index += 3
-//            }
-//            if length - index > 3
-//            {
-//                let prefix = decimalString.substringWithRange(NSMakeRange(index, 3))
-//                formattedString.appendFormat("%@-", prefix)
-//                index += 3
-//            }
-//            
-//            let remainder = decimalString.substringFromIndex(index)
-//            formattedString.appendString(remainder)
-//            textField.text = formattedString as String
-//            return false
-//        }
-//        else
-//        {
-//            return true
-//        }
-//    }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "relation" {

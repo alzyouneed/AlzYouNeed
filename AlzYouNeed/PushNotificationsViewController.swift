@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class PushNotificationsViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class PushNotificationsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         UIView.animate(withDuration: 0.5, animations: {
             self.progressView.setProgress(0.5, animated: true)
-        }) 
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,7 +36,7 @@ class PushNotificationsViewController: UIViewController {
     
     @IBAction func enablePush(_ sender: UIButton) {
         // TODO: Perform segue after user has clicked "Allow"
-//        registerPushNotifications()
+        registerLocalNotifications()
         performSegue(withIdentifier: "familyStage", sender: self)
     }
     
@@ -54,12 +55,22 @@ class PushNotificationsViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-//    func registerPushNotifications() {
-//        let settings: UIUserNotificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-//        UIApplication.shared.registerUserNotificationSettings(settings)
-//        UIApplication.shared.registerForRemoteNotifications()
-//    }
-    
+    // MARK: - Push Notifications
+    func registerLocalNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            if error != nil {
+                print("Error requesting push notification auth:", error!)
+            } else {
+                if granted {
+                    print("Push notification auth granted")
+                } else {
+                    print("Push notification auth denied")
+                }
+            }
+        }
+        UIApplication.shared.registerForRemoteNotifications()
+    }
     
     // MARK: - Cancel Onboarding
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
@@ -91,22 +102,9 @@ class PushNotificationsViewController: UIViewController {
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
                 let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
                 self.present(onboardingVC, animated: true, completion: nil)
             }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

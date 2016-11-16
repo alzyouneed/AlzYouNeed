@@ -217,7 +217,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     func validateEmail() -> Bool {
         // Check empty
         if emailVTFView.textField.text!.isEmpty {
-//            print("Email field empty")
             emailVTFView.isValid(false)
             return false
         }
@@ -233,7 +232,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                 return true
             }
             else {
-//                print("Invalid email")
                 emailVTFView.isValid(false)
                 return false
             }
@@ -242,13 +240,11 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func validatePassword() -> Bool {
         if passwordVTFView.textField.text!.isEmpty {
-//            print("Password field empty")
             passwordVTFView.isValid(false)
             return false
         }
         
         if passwordVTFView.textField.text?.characters.count < 6 {
-//            print("Password not long enough")
             passwordVTFView.isValid(false)
             return false
         }
@@ -259,7 +255,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     
     func validateConfirmPassword() -> Bool {
         if confirmPasswordVTFView.textField.text!.isEmpty {
-//            print("Confirm password field empty")
             confirmPasswordVTFView.isValid(false)
             return false
         }
@@ -273,7 +268,6 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             return true
         }
         else {
-//            print("Passwords do not match")
             confirmPasswordVTFView.isValid(false)
             return false
         }

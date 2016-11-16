@@ -14,7 +14,6 @@ class RelationViewController: UIViewController {
     @IBOutlet var patientSwitch: UISwitch!
     @IBOutlet var nextButton: UIButton!
     
-    
     let pickerData = ["Daughter", "Son", "Granddaughter", "Grandson", "Mother", "Father", "Friend", "Other"]
     
     var selectedRelation = ""
@@ -70,14 +69,12 @@ class RelationViewController: UIViewController {
         updateUserRelation()
     }
     
-    
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
         AYNModel.sharedInstance.onboarding = false
         cancelAccountCreation()
     }
     
     func cancelAccountCreation() {
-        
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
@@ -100,7 +97,6 @@ class RelationViewController: UIViewController {
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
                 let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
                 self.present(onboardingVC, animated: true, completion: nil)
             }

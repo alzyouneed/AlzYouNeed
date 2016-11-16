@@ -54,7 +54,6 @@ class NewExistingFamilyViewController: UIViewController {
     
     // MARK: - Firebase
     func cancelAccountCreation() {
-        
         let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
             self.deleteUser()
@@ -77,7 +76,6 @@ class NewExistingFamilyViewController: UIViewController {
             else {
                 // Successfully deleted user
                 let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
                 let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
                 self.present(onboardingVC, animated: true, completion: nil)
             }
@@ -88,19 +86,10 @@ class NewExistingFamilyViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if let destinationVC = segue.destination as? FamilySignupViewController {
             // New family
-           // if (sender as AnyObject).tag == 0 {
             if (sender as AnyObject?)?.tag == 0 {
-               // if let senderObject = sender as? AnyObject {
-                   // if senderObject.tag == 0 {
-                        destinationVC.newFamily = true
-                    //}
-               // }
-               // destinationVC.newFamily = true
-                
+                destinationVC.newFamily = true
             }
             // Existing family
             else {
@@ -109,6 +98,4 @@ class NewExistingFamilyViewController: UIViewController {
         }
         
     }
- 
-
 }

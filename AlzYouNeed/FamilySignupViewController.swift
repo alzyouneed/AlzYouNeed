@@ -247,7 +247,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                 }
                 else {
                     // Join family
-//                    print("Join family")
                     joinFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
                 }
             }
@@ -255,7 +254,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             if validateConfirmPassword() {
                 self.view.endEditing(true)
                 // create family
-//                print("Create family")
                 createNewFamily(familyIdVTFView.textField.text!, password: passwordVTFView.textField.text!)
             }
         default:
@@ -297,7 +295,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     func validateFamilyId() -> Bool {
         // Check empty
         if familyIdVTFView.textField.text!.isEmpty {
-//            print("FamilyId field empty")
             familyIdVTFView.isValid(false)
             return false
         }
@@ -309,13 +306,11 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     func validatePassword() -> Bool {
         if passwordVTFView.textField.text!.isEmpty {
-//            print("Password field empty")
             passwordVTFView.isValid(false)
             return false
         }
         
         if passwordVTFView.textField.text?.characters.count < 6 {
-//            print("Password not long enough")
             passwordVTFView.isValid(false)
             return false
         }
@@ -326,7 +321,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
     
     func validateConfirmPassword() -> Bool {
         if confirmPasswordVTFView.textField.text!.isEmpty {
-//            print("Confirm password field empty")
             confirmPasswordVTFView.isValid(false)
             return false
         }
@@ -340,7 +334,6 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
             return true
         }
         else {
-            //            print("Passwords do not match")
             confirmPasswordVTFView.isValid(false)
             return false
         }
