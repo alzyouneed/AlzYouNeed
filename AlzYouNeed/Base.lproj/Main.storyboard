@@ -528,7 +528,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable to improve the AlzYouNeed experience" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yp4-f5-Grl">
-                                        <rect key="frame" x="8" y="176" width="359" height="46.5"/>
+                                        <rect key="frame" x="8" y="176" width="359" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="421" id="BPJ-Zd-wjX"/>
                                             <constraint firstAttribute="height" constant="40" id="OCO-kg-xRx"/>
@@ -756,8 +756,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="RNw-lT-OGc"/>
                                 <exclude reference="JJd-wv-IAR"/>
+                                <exclude reference="RNw-lT-OGc"/>
                             </mask>
                         </variation>
                     </view>
@@ -860,14 +860,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcw-aK-Dtq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-41" y="580"/>
-        </scene>
-        <!--completedReminders-->
-        <scene sceneID="6tG-Cd-YR3">
-            <objects>
-                <viewControllerPlaceholder storyboardIdentifier="completedReminders" storyboardName="Reminders" referencedIdentifier="completedReminders" id="ed9-2C-BJG" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Uvd-Tf-MdQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="207" y="580"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CgY-Ll-yam">

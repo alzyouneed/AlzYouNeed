@@ -11,7 +11,6 @@
 		2D1F6AC41D4A9BC20060E2CF /* beach.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */; };
 		2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */; };
 		2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */; };
-		2D1F93DE1D3DC5810050794F /* CompleteRemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F93DD1D3DC5810050794F /* CompleteRemindersViewController.swift */; };
 		2D2244F31D0FAD93005D9DF5 /* ContactView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2244F21D0FAD93005D9DF5 /* ContactView.xib */; };
 		2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F51D0FB11D005D9DF5 /* ContactView.swift */; };
 		2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */; };
@@ -63,7 +62,6 @@
 		2DCC3C681D301208005D0EFD /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */; };
 		2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */; };
 		2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCC3C6D1D303F53005D0EFD /* popoverView.swift */; };
-		2DCFE4191D37365200F4C093 /* CompleteReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */; };
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
@@ -77,7 +75,6 @@
 		2D1F6AC31D4A9BC20060E2CF /* beach.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = beach.mp4; sourceTree = "<group>"; };
 		2D1F93D71D3D7E4D0050794F /* actionButtonsDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = actionButtonsDashboardView.xib; sourceTree = "<group>"; };
 		2D1F93D91D3D7E650050794F /* actionButtonsDashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actionButtonsDashboardView.swift; sourceTree = "<group>"; };
-		2D1F93DD1D3DC5810050794F /* CompleteRemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteRemindersViewController.swift; sourceTree = "<group>"; };
 		2D2244F21D0FAD93005D9DF5 /* ContactView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactView.xib; sourceTree = "<group>"; };
 		2D2244F51D0FB11D005D9DF5 /* ContactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -131,7 +128,6 @@
 		2DCC3C631D301208005D0EFD /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		2DCC3C6B1D303F3C005D0EFD /* popoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = popoverView.xib; sourceTree = "<group>"; };
 		2DCC3C6D1D303F53005D0EFD /* popoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = popoverView.swift; sourceTree = "<group>"; };
-		2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteReminderTableViewCell.swift; sourceTree = "<group>"; };
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -378,7 +374,6 @@
 			children = (
 				2DC0B2C41D3182810090C89A /* RemindersViewController.swift */,
 				2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */,
-				2DCFE4131D37347500F4C093 /* CompletedReminders */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -467,15 +462,6 @@
 				2DCC3C6D1D303F53005D0EFD /* popoverView.swift */,
 			);
 			name = View;
-			sourceTree = "<group>";
-		};
-		2DCFE4131D37347500F4C093 /* CompletedReminders */ = {
-			isa = PBXGroup;
-			children = (
-				2D1F93DD1D3DC5810050794F /* CompleteRemindersViewController.swift */,
-				2DCFE4181D37365200F4C093 /* CompleteReminderTableViewCell.swift */,
-			);
-			name = CompletedReminders;
 			sourceTree = "<group>";
 		};
 		2DE890B71D11B9B7001DC19F /* Extras */ = {
@@ -663,7 +649,6 @@
 			files = (
 				2DC2AD3B1DB2C5C300859F88 /* RelationViewController.swift in Sources */,
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
-				2D1F93DE1D3DC5810050794F /* CompleteRemindersViewController.swift in Sources */,
 				2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
@@ -687,7 +672,6 @@
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */,
-				2DCFE4191D37365200F4C093 /* CompleteReminderTableViewCell.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,

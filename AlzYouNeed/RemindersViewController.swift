@@ -14,7 +14,7 @@ import UserNotifications
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet var remindersTableView: UITableView!
-    @IBOutlet var completedButton: UIButton!
+    @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
@@ -45,6 +45,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     override func viewDidAppear(_ animated: Bool) {
         registerLocalNotifications()
         addRemindersObservers()
+        getCompletedFamilyReminders()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -98,7 +99,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
                 let dueDate = dateFormatter.date(from: self.dateTF.text!)?.timeIntervalSince1970
                 
-                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
+                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
 //                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
                 
@@ -128,86 +129,77 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AYNModel.sharedInstance.remindersArr.count
+        if reminderSegmentedControl.selectedSegmentIndex == 0 {
+            // Incomplete reminders
+            return AYNModel.sharedInstance.remindersArr.count
+        } else {
+            // Completed reminders
+            return AYNModel.sharedInstance.completedRemindersArr.count
+        }
+        
+//        return AYNModel.sharedInstance.remindersArr.count
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if let reminderCell = cell as? ReminderTableViewCell {
-//            let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
-//            reminderCell.delegate = self
-//            reminderCell.titleLabel.text = reminder.title
-//            
-//            // Format readable date
-//            let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "MMMM d, h:mm a"
-//            reminderCell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
-//            reminderCell.descriptionLabel.text = reminder.reminderDescription
-//            
-//            if reminder.repeats != "None" {
-//                reminderCell.repeatsLabel.text = "Repeats \(reminder.repeats)"
-//                reminderCell.repeatsLabel.isHidden = false
-//            } else {
-//                reminderCell.repeatsLabel.isHidden = true
-//            }
-//        }
-////        let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
-////        cell.delegate = self
-////        cell.titleLabel.text = reminder.title
-////        
-////        // Format readable date
-////        let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
-////        let dateFormatter = DateFormatter()
-////        dateFormatter.dateFormat = "MMMM d, h:mm a"
-////        cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
-////        cell.descriptionLabel.text = reminder.reminderDescription
-////        
-////        if reminder.repeats != "None" {
-////            cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
-////            cell.repeatsLabel.isHidden = false
-////        } else {
-////            cell.repeatsLabel.isHidden = true
-////        }
-//    }
-    
     
      func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
         let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell")! as! ReminderTableViewCell
 //        let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath) as! ReminderTableViewCell
         
-        let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
-        cell.delegate = self
-        cell.titleLabel.text = reminder.title
-        
-        // Format readable date
-        let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, h:mm a"
-        cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
-        cell.descriptionLabel.text = reminder.reminderDescription
-        
-        if reminder.repeats != "None" {
-            cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
-            cell.repeatsLabel.isHidden = false
+        if reminderSegmentedControl.selectedSegmentIndex == 0 {
+            let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
+            cell.delegate = self
+            cell.titleLabel.text = reminder.title
+            
+            // Format readable date
+            let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM d, h:mm a"
+            cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+            cell.descriptionLabel.text = reminder.reminderDescription
+            
+            cell.completedButton.isHidden = false
+            
+            if reminder.repeats != "None" {
+                cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
+                cell.repeatsLabel.isHidden = false
+            } else {
+                cell.repeatsLabel.isHidden = true
+            }
+            cell.isUserInteractionEnabled = true
         } else {
+            let reminder = AYNModel.sharedInstance.completedRemindersArr[(indexPath as NSIndexPath).row]
+            cell.delegate = self
+            cell.titleLabel.text = reminder.title
+            
+            // Format readable date
+            let date = Date(timeIntervalSince1970: Double(reminder.completedDate)!)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM d, h:mm a"
+            cell.dateLabel.text = "Completed \(dateFormatter.string(from: date))"
+            cell.descriptionLabel.text = reminder.reminderDescription
+            
             cell.repeatsLabel.isHidden = true
+            cell.completedButton.isHidden = true
+            cell.isUserInteractionEnabled = false
         }
-    
         return cell
     }
     
-     func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
-            FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
-                if error == nil {
-                    // Observers catch deletion and properly update data source array and UI
-                    self.cancelLocalNotification(reminder.id)
-                }
-            })
-        }
-        else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
+        // Only allow editing if incomplete reminders
+        if reminderSegmentedControl.selectedSegmentIndex == 0 {
+            
+            if editingStyle == .delete {
+                let reminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row]
+                FirebaseManager.deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
+                    if error == nil {
+                        // Observers catch deletion and properly update data source array and UI
+                        self.cancelLocalNotification(reminder.id)
+                    }
+                })
+            }
+            else if editingStyle == .insert {
+                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+            }
         }
     }
     
@@ -298,9 +290,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     // MARK: - Reminder Actions
     func cellButtonTapped(_ cell: ReminderTableViewCell) {
-        let indexPath = self.remindersTableView.indexPathForRow(at: cell.center)!
-        if let completedReminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row] as Reminder? {
-            confirmCompleteReminder(completedReminder)
+        if reminderSegmentedControl.selectedSegmentIndex == 0 {
+            let indexPath = self.remindersTableView.indexPathForRow(at: cell.center)!
+            if let completedReminder = AYNModel.sharedInstance.remindersArr[(indexPath as NSIndexPath).row] as Reminder? {
+                confirmCompleteReminder(completedReminder)
+            }
         }
     }
     
@@ -324,17 +318,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     // MARK: - Present different VC's
     @IBAction func showCompletedReminders(_ sender: UIButton) {
-        presentCompletedRemindersVC()
+//        presentCompletedRemindersVC()
     }
     
-    func presentCompletedRemindersVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewController(withIdentifier: "completedReminders") as! CompleteRemindersViewController
-        
-        // Hide tab bar in updateProfileVC
-        completeRemindersVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(completeRemindersVC, animated: true)
-    }
+//    func presentCompletedRemindersVC() {
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewController(withIdentifier: "completedReminders") as! CompleteRemindersViewController
+//        
+//        // Hide tab bar in updateProfileVC
+//        completeRemindersVC.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(completeRemindersVC, animated: true)
+//    }
     
     // MARK: - Configuration
     func configureView() {
@@ -463,14 +457,30 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         present(alertController, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Segmented Control
+    @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            // Show To do's
+            print("Show incomplete reminders")
+        } else if sender.selectedSegmentIndex == 1 {
+            // Show completed reminders
+            print("Show completed reminders")
+        }
+        remindersTableView.reloadData()
     }
-    */
+}
 
+// MARK: - Completed Reminders
+extension RemindersViewController {
+    func getCompletedFamilyReminders() {
+        FirebaseManager.getCompletedFamilyReminders { (completedReminders, error) in
+            if error == nil {
+                // Success
+                if let completedReminders = completedReminders {
+                    AYNModel.sharedInstance.completedRemindersArr = completedReminders
+                    self.remindersTableView.reloadData()
+                }
+            }
+        }
+    }
 }
