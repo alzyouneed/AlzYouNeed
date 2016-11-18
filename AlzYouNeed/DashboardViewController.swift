@@ -16,6 +16,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var dateView: DateDashboardView!
     @IBOutlet var dashboardActionButtons: actionButtonsDashboardView!
+    @IBOutlet var reminderActionButtonView: actionButtonsDashboardView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +25,10 @@ class DashboardViewController: UIViewController {
 
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         dashboardActionButtons.rightButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
-        configureView()
         
+        reminderActionButtonView.leftButton.addTarget(self, action: #selector(DashboardViewController.reminderButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
+        
+        configureView()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -324,6 +327,13 @@ class DashboardViewController: UIViewController {
         
         dashboardActionButtons.rightButton.setImage(UIImage(named: "emergencyIcon"), for: .normal)
         dashboardActionButtons.rightButton.tintColor = UIColor.white
+        
+        reminderActionButtonView.singleButton("left")
+        reminderActionButtonView.leftButton.setTitle("Add Reminder", for: .normal)
+        reminderActionButtonView.leftButton.backgroundColor = caribbeanGreen
+        reminderActionButtonView.leftButton.setImage(UIImage(named: "addButton"), for: .normal)
+        reminderActionButtonView.leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 0)
+        reminderActionButtonView.leftButton.tintColor = UIColor.white
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
@@ -337,6 +347,14 @@ class DashboardViewController: UIViewController {
         messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
         messageVC.messageComposeDelegate = self
         present(messageVC, animated: true, completion: nil)
+    }
+    
+    func reminderButtonPressed(_ sender: UIButton) {
+        print("Create new reminder")
+//        self.tabBarController?.selectedIndex = 2
+//        createReminder()
+//        let delegate: ReminderDelegate = self
+//        delegate.createReminder()
     }
     
     func checkUserSignedIn() {
@@ -449,7 +467,6 @@ class DashboardViewController: UIViewController {
             }
         })
     }
-    
 }
 
 extension DashboardViewController: MFMessageComposeViewControllerDelegate {
@@ -466,4 +483,19 @@ extension DashboardViewController: MFMessageComposeViewControllerDelegate {
         }
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK: - Navigation
+extension DashboardViewController {
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "contactDetail" {
+//            let tabBarController: UITa
+//            
+//            let detailNavController: UINavigationController = segue.destination as! UINavigationController
+//            if let reminderVC: RemindersViewController = detailNavController.childViewControllers[0] as? RemindersViewController {
+//                detailVC.contact = contact
+//                detailVC.profileImage = cell.contactView.contactImageView.image
+//            }
+//        }
+//    }
 }

@@ -24,6 +24,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     var repeatsTF: UITextField!
     let repeatPickerView: UIPickerView! = UIPickerView()
     let repeatOptions = ["None", "Hourly", "Daily", "Weekly"]
+    
+//    var delegate: ReminderViewControllerDelegate?
     // TESTING ONLY
 //    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
     
@@ -315,20 +317,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    // MARK: - Present different VC's
-    @IBAction func showCompletedReminders(_ sender: UIButton) {
-//        presentCompletedRemindersVC()
-    }
-    
-//    func presentCompletedRemindersVC() {
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let completeRemindersVC: CompleteRemindersViewController = storyboard.instantiateViewController(withIdentifier: "completedReminders") as! CompleteRemindersViewController
-//        
-//        // Hide tab bar in updateProfileVC
-//        completeRemindersVC.hidesBottomBarWhenPushed = true
-//        self.navigationController?.pushViewController(completeRemindersVC, animated: true)
-//    }
     
     // MARK: - Configuration
     func configureView() {

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,8 +28,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="flZ-i1-2Ak">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="543"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKQ-Nv-Slk">
+                                        <rect key="frame" x="122.5" y="280" width="130" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="F7W-ut-5Uk"/>
                                             <constraint firstAttribute="width" constant="130" id="n0n-iH-Cye"/>
@@ -40,6 +45,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-iZ-gQi">
+                                        <rect key="frame" x="122.5" y="116" width="130" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="130" id="TC2-QA-Eud"/>
                                             <constraint firstAttribute="height" constant="30" id="w7w-i6-n3r"/>
@@ -60,22 +66,26 @@
                                 </constraints>
                             </view>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jbW-pv-4J8">
+                                <rect key="frame" x="137.5" y="12" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="aoK-cr-li2"/>
                                     <constraint firstAttribute="width" constant="100" id="iOx-Q3-sft"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-4W-09d" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="150" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="FdR-Rr-cy4"/>
                                 </constraints>
                             </view>
                             <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vJ0-Ia-kPq" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="204" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cmU-YZ-Hj9"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUi-qn-GDA">
+                                <rect key="frame" x="0.0" y="543" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="irI-U3-QYb"/>
@@ -137,9 +147,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6b-PT-oDT">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" text="Store your notes here!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DN1-t5-MOw">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -191,9 +203,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IFC-jY-2FC">
+                                <rect key="frame" x="0.0" y="154" width="375" height="400"/>
+                                <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NAm-gW-sfD" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="202" width="359" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Dc8-MS-PPz"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="NAm-gW-sfD" firstAttribute="leading" secondItem="IFC-jY-2FC" secondAttribute="leading" constant="8" id="Aup-r2-JPD"/>
+                                    <constraint firstAttribute="trailing" secondItem="NAm-gW-sfD" secondAttribute="trailing" constant="8" id="Q82-fm-yok"/>
+                                    <constraint firstItem="NAm-gW-sfD" firstAttribute="centerX" secondItem="IFC-jY-2FC" secondAttribute="centerX" id="hf5-bG-GaC"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLL-Sp-XmI" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="154"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0U2-Gl-dV4"/>
                                     <constraint firstAttribute="height" constant="154" id="S8m-2M-wW3"/>
@@ -207,12 +234,14 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="59.5" y="246" width="256" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="0Tc-ll-KHY"/>
                                     <constraint firstAttribute="height" constant="90" id="vQp-5R-Am2"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvW-BC-Ijy" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                <rect key="frame" x="16" y="162" width="343" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="L3p-GA-VX8"/>
                                 </constraints>
@@ -226,6 +255,7 @@
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="Zri-OK-PIv" secondAttribute="centerX" id="7BK-7m-1su"/>
                             <constraint firstItem="DvW-BC-Ijy" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" id="HTl-cz-JDD"/>
                             <constraint firstItem="DvW-BC-Ijy" firstAttribute="leading" secondItem="Zri-OK-PIv" secondAttribute="leadingMargin" id="J4q-FZ-N8O"/>
+                            <constraint firstItem="NAm-gW-sfD" firstAttribute="top" secondItem="OU6-lO-WOk" secondAttribute="bottom" constant="20" id="NVm-0a-6xZ"/>
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="leading" secondItem="Zri-OK-PIv" secondAttribute="leading" id="Qgi-ki-hby"/>
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="xLL-Sp-XmI" secondAttribute="centerX" id="R0i-Xl-EBf"/>
                             <constraint firstAttribute="trailing" secondItem="xLL-Sp-XmI" secondAttribute="trailing" id="SEe-n3-7Kw"/>
@@ -242,13 +272,13 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Uq8-UP-Qlu"/>
+                                <exclude reference="lxA-EI-pkt"/>
                                 <exclude reference="48W-sw-l0h"/>
                                 <exclude reference="5Ii-xX-Br5"/>
                                 <exclude reference="HTl-cz-JDD"/>
                                 <exclude reference="4x1-1o-ixj"/>
                                 <exclude reference="R0i-Xl-EBf"/>
-                                <exclude reference="Uq8-UP-Qlu"/>
-                                <exclude reference="lxA-EI-pkt"/>
                             </mask>
                         </variation>
                     </view>
@@ -263,6 +293,7 @@
                     <connections>
                         <outlet property="dashboardActionButtons" destination="DvW-BC-Ijy" id="oFI-W2-2dz"/>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
+                        <outlet property="reminderActionButtonView" destination="NAm-gW-sfD" id="yJl-ac-PYl"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
                         <segue destination="2gG-ex-1CO" kind="presentation" identifier="notepad" id="J52-qJ-AkR"/>
                     </connections>
@@ -279,7 +310,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -297,7 +328,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2gG-ex-1CO" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dmo-BZ-nYY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dmo-BZ-nYY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
