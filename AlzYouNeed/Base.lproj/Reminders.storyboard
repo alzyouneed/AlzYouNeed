@@ -30,10 +30,20 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="99" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="99" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
                                 <rect key="frame" x="0.0" y="28" width="375" height="526"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mar-id-RTh">
+                                    <rect key="frame" x="0.0" y="173" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
+                                    <color key="tintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" title="Add Reminder"/>
+                                    <connections>
+                                        <action selector="addReminder:" destination="bGj-vw-7yG" eventType="touchUpInside" id="tq4-eq-z9R"/>
+                                    </connections>
+                                </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="99" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="56" width="375" height="99"/>
@@ -124,10 +134,10 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Li7-L2-t3z"/>
-                                                    <exclude reference="6Jo-b3-n42"/>
-                                                    <exclude reference="vLx-hl-dn4"/>
                                                     <exclude reference="eYP-4a-uyv"/>
                                                     <exclude reference="lUh-RQ-lLp"/>
+                                                    <exclude reference="6Jo-b3-n42"/>
+                                                    <exclude reference="vLx-hl-dn4"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -190,6 +200,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="addReminderTableButton" destination="mar-id-RTh" id="asz-rS-LCR"/>
                         <outlet property="reminderSegmentedControl" destination="ZSv-lg-fnn" id="9he-Nh-ejA"/>
                         <outlet property="remindersTableView" destination="wV5-JN-i28" id="l0l-7Z-2ug"/>
                     </connections>

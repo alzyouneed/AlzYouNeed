@@ -15,6 +15,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
 
     @IBOutlet var remindersTableView: UITableView!
     @IBOutlet var reminderSegmentedControl: UISegmentedControl!
+    @IBOutlet var addReminderTableButton: UIButton!
     
     let databaseRef = FIRDatabase.database().reference()
     var familyId: String!
@@ -58,6 +59,10 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     @IBAction func newReminder(_ sender: UIBarButtonItem) {
         createReminder()
     }
+    @IBAction func addReminder(_ sender: UIButton) {
+        createReminder()
+    }
+
     
     func createReminder() {
         let alert = UIAlertController(title: "New Reminder", message: nil, preferredStyle: .alert)
@@ -67,13 +72,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         repeatPickerView.dataSource = self
         
         alert.addTextField { (titleTextField) in
-            titleTextField.placeholder = "Task"
+            titleTextField.placeholder = "Remind me to..."
             titleTextField.autocapitalizationType = UITextAutocapitalizationType.sentences
             titleTextField.autocorrectionType = UITextAutocorrectionType.yes
             titleTF = titleTextField
         }
         alert.addTextField { (descriptionTextField) in
-            descriptionTextField.placeholder = "Notes"
+            descriptionTextField.placeholder = "Notes (e.g. Why, Where, Who)"
             descriptionTextField.autocapitalizationType = UITextAutocapitalizationType.sentences
             descriptionTextField.autocorrectionType = UITextAutocorrectionType.yes
             descriptionTF = descriptionTextField
@@ -450,9 +455,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         if sender.selectedSegmentIndex == 0 {
             // Show To do's
             print("Show incomplete reminders")
+            addReminderTableButton.isHidden = false
         } else if sender.selectedSegmentIndex == 1 {
             // Show completed reminders
             print("Show completed reminders")
+            addReminderTableButton.isHidden = true
         }
         remindersTableView.reloadData()
     }
