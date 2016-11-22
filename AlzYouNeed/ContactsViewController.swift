@@ -49,6 +49,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         searchBar.delegate = self
         
         checkTutorialStatus()
+        
+//        testLoadContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,6 +107,54 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
                 // HUD.hide()
             }
         }
+    }
+    
+    func testLoadContacts() {
+        var members: [Contact] = []
+        
+        FirebaseManager.getFamilyMembers { (familyMembers, error) in
+            if error == nil {
+                if let familyMembers = familyMembers {
+                    print("TEST - GOT FAMILY MEMBERS")
+                    members = familyMembers
+                    
+//                    let queue = DispatchQueue(label: "com.AlzYouNeed.gcd", attributes: .concurrent, target: .main)
+                    
+                    
+//                    queue.async {
+                        for member in members {
+                            print("TEST - Starting async lookup of user in family: \(member.fullName)")
+                            FirebaseManager.getUserById(member.userId, completionHandler: { (userDict, error) in
+                                if error == nil {
+                                    if let userDict = userDict {
+                                        print("TEST - Retrieved user: \(userDict)")
+                                    }
+                                }
+                            })
+//                        }
+                    }
+                }
+            }
+        }
+        
+
+//        let queue = DispatchQueue(label: "com.AlzYouNeed.gcd", attributes: .concurrent, target: .main)
+//        
+//        
+//        queue.sync {
+//            for member in members {
+//                print("TEST - Starting async lookup of user in family: \(member.fullName)")
+//                FirebaseManager.getUserById(member.userId, completionHandler: { (userDict, error) in
+//                    if error == nil {
+//                        if let userDict = userDict {
+//                            print("TEST - Retrieved user: \(userDict)")
+//                        }
+//                    }
+//                })
+//            }
+//        }
+        
+        
     }
     
     func refresh(_ control: UIRefreshControl) {

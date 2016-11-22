@@ -47,6 +47,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         
         // Set tutorial preferences
         UserDefaultsManager.resetUserTutorials()
+        PKHUD.sharedHUD.dimsBackground = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

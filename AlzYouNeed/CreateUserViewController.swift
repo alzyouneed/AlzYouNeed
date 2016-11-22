@@ -41,6 +41,8 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         configureView()
+        
+        PKHUD.sharedHUD.dimsBackground = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

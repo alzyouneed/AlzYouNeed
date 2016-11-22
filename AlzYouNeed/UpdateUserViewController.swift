@@ -32,6 +32,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         configureView()
+        PKHUD.sharedHUD.dimsBackground = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
