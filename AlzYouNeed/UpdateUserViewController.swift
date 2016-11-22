@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-// import PKHUD
+import PKHUD
 
 class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
@@ -170,7 +170,7 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
             interfaceEnabled(false)
             
             // Show progress view
-            // HUD.show(.Progress)
+            HUD.show(.progress)
             
             guard let name = nameVTFView.textField.text , !name.isEmpty, let phoneNumber = phoneNumberVTFView.textField.text , !phoneNumber.isEmpty else {
                 return
@@ -188,17 +188,17 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
             FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                 if error != nil {
                     // Failed to update user
-                    // HUD.hide({ (success) in
+                    HUD.hide({ (success) in
                         self.interfaceEnabled(true)
-                    // })
+                    })
                 }
                 else {
                     // Updated user
-                    // HUD.flash(.Success, delay: 0, completion: { (success) in
+                    HUD.flash(.success, delay: 0, completion: { (success) in
                         self.stepCompleted = true
                         self.view.endEditing(true)
                         self.performSegue(withIdentifier: "relation", sender: self)
-                    // })
+                    })
                 }
             })
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-// import PKHUD
+import PKHUD
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -94,19 +94,19 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         interfaceEnabled(false)
         
         // Show progress view
-        // HUD.show(.Progress)
+        HUD.show(.progress)
         
         FirebaseManager.createNewFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error creating new family
-                // HUD.hide({ (success) in
+                HUD.hide({ (success) in
                     self.showPopoverView(error!)
                     self.interfaceEnabled(true)
-                // })
+                })
             }
             else {
                 // Successfully created new family
-                // HUD.flash(.Success, delay: 0.2, completion: { (success) in
+                HUD.flash(.success, delay: 0.2, completion: { (success) in
                     self.view.endEditing(true)
                     AYNModel.sharedInstance.onboarding = false
                     
@@ -116,7 +116,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                     self.present(tabBarController, animated: true, completion: nil)
                 
 //                    self.dismissViewControllerAnimated(true, completion: nil)
-                // })
+                })
             }
         }
     }
@@ -126,19 +126,19 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
         interfaceEnabled(false)
         
         // Show progress view
-        // HUD.show(.Progress)
+        HUD.show(.progress)
         
         FirebaseManager.joinFamilyGroup(familyId, password: password) { (error, newDatabaseRef) in
             if error != nil {
                 // Error joining family
-                // HUD.hide({ (success) in
+                HUD.hide({ (success) in
                     self.showPopoverView(error!)
                     self.interfaceEnabled(true)
-                // })
+                })
             }
             else {
                 // Successfully joined family
-                // HUD.flash(.Success, delay: 0, completion: { (success) in
+                HUD.flash(.success, delay: 0, completion: { (success) in
                     self.view.endEditing(true)
                     AYNModel.sharedInstance.onboarding = false
                 
@@ -148,7 +148,7 @@ class FamilySignupViewController: UIViewController, UITextFieldDelegate {
                     self.present(tabBarController, animated: true, completion: nil)
                     
 //                    self.dismissViewControllerAnimated(true, completion: nil)
-                // })
+                 })
             }
         }
     }
