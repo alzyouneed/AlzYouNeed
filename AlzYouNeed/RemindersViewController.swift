@@ -394,7 +394,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             })
         } else {
             // Notifications disabled
-            let alertController = UIAlertController(title: "Tip", message: "Enable push notifications to be reminded of items on your to-do list", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Tip", message: "Enable notifications to be reminded of items on your to-do list", preferredStyle: .alert)
             let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
                 if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)

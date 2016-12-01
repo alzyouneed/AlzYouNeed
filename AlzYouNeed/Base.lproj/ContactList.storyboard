@@ -110,11 +110,11 @@
             </objects>
             <point key="canvasLocation" x="728.79999999999995" y="447.52623688155927"/>
         </scene>
-        <!--Contacts-->
+        <!--Family-->
         <scene sceneID="I0w-bp-nSU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qfV-xL-rPd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" image="contactsIcon" id="QWF-CU-oK5"/>
+                    <tabBarItem key="tabBarItem" title="Family" image="contactsIcon" id="QWF-CU-oK5"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="MFg-XF-DfL">
@@ -291,11 +291,11 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="RMh-ea-MDu"/>
-                                                            <exclude reference="eAf-kl-xZ1"/>
+                                                            <exclude reference="JbG-Xv-YMm"/>
                                                             <exclude reference="4ij-ya-glr"/>
                                                             <exclude reference="Jek-ce-1jy"/>
-                                                            <exclude reference="JbG-Xv-YMm"/>
+                                                            <exclude reference="RMh-ea-MDu"/>
+                                                            <exclude reference="eAf-kl-xZ1"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
@@ -404,14 +404,14 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="5Il-3q-B3N"/>
-                                                            <exclude reference="TAm-Md-iC2"/>
-                                                            <exclude reference="ibi-3w-R3e"/>
-                                                            <exclude reference="Nfb-ie-Y39"/>
                                                             <exclude reference="6Os-Hx-CYN"/>
                                                             <exclude reference="GaA-hm-AXb"/>
                                                             <exclude reference="iRZ-fC-Z73"/>
                                                             <exclude reference="nyU-C6-SQo"/>
+                                                            <exclude reference="Nfb-ie-Y39"/>
+                                                            <exclude reference="TAm-Md-iC2"/>
+                                                            <exclude reference="ibi-3w-R3e"/>
+                                                            <exclude reference="5Il-3q-B3N"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>

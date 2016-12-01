@@ -69,7 +69,7 @@ class DashboardViewController: UIViewController {
         let updateAction = UIAlertAction(title: "Update Profile", style: .default) { (action) in
             self.presentUpdateProfileVC()
         }
-        let pushNotificationsAction = UIAlertAction(title: "Push Notifications", style: .default) { (action) in
+        let pushNotificationsAction = UIAlertAction(title: "Notifications", style: .default) { (action) in
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
                 UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
