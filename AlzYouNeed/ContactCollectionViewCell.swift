@@ -62,6 +62,9 @@ class ContactCollectionViewCell: UICollectionViewCell {
             if !foundCache {
                 print("No cached user photo -- downloading")
                 
+                // Disable user interaction with cell for now to prevent unwrapping errors
+                self.isUserInteractionEnabled = false
+                
                 // Background thread
                 if let imageUrl = contact.photoUrl {
                     
@@ -79,6 +82,9 @@ class ContactCollectionViewCell: UICollectionViewCell {
                                 self.contactView.contactImageView.image = image
                                 // Save image for later reuse
                                 AYNModel.sharedInstance.contactsArr[row].photo = image
+                                
+                                // Enable user interaction again
+                                self.isUserInteractionEnabled = true
                             })
                         })
                     } else if let url = URL(string: imageUrl), let data = try? Data(contentsOf: url) {
@@ -87,6 +93,9 @@ class ContactCollectionViewCell: UICollectionViewCell {
                             self.contactView.contactImageView.image = image
                             // save image for later reuse
                             AYNModel.sharedInstance.contactsArr[row].photo = image
+                            
+                            // Enable user interaction again
+                            self.isUserInteractionEnabled = true
                         })
                     }
                 }

@@ -87,6 +87,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Add observer for InstanceID token refresh callback.
         NotificationCenter.default.addObserver(self, selector: #selector(self.tokenRefreshNotification), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
         
+        setupNotifications()
+        
+        let center  = UNUserNotificationCenter.current()
+        center.delegate = self
+        
         return true
     }
     
@@ -200,5 +205,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+}
+
+// MARK: - Push Notifications
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func setupNotifications() {
+        let action = UNNotificationAction(identifier: "snooze", title: "Snooze", options: [])
+        let category = UNNotificationCategory.init(identifier: "reminderCategory", actions: [action], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+    }
+    
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Notification center did receive response")
+        if response.actionIdentifier == "snooze" {
+            print("Snooze action")
+
+            let newTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (5*60), repeats: false)
+            let oldRequest = response.notification.request
+            
+            let newRequest = UNNotificationRequest(identifier: oldRequest.identifier, content: oldRequest.content, trigger: newTrigger)
+
+            let center = UNUserNotificationCenter.current()
+            center.add(newRequest, withCompletionHandler: { (error) in
+                if error != nil {
+                    print("Error adding push notification request:", error!)
+                } else {
+                    print("Push notification request added")
+                    completionHandler()
+                }
+            })
+        }
+    }
 }
 

@@ -351,6 +351,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             } else {
                 if granted {
                     print("Push notification auth granted")
+//                    let action = UNNotificationAction(identifier: "snooze", title: "Snooze", options: [])
+//                    let category = UNNotificationCategory(identifier: "reminderCategory", actions: [action], intentIdentifiers: [], options: [])
+//                    UNUserNotificationCenter.current().setNotificationCategories([category])
                 } else {
                     print("Push notification auth denied")
                 }
@@ -376,6 +379,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 content.title = "Reminder"
                 content.body = reminder.value(forKey: "title") as! String
                 content.sound = UNNotificationSound.default()
+                content.categoryIdentifier = "reminderCategory"
                 
                 let dueDateInterval = TimeInterval(reminder.value(forKey: "dueDate") as! String)!
                 let date = Date(timeIntervalSince1970: dueDateInterval)
