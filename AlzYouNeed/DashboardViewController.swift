@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 import MessageUI
+import UserNotifications
 
 class DashboardViewController: UIViewController {
     
@@ -79,6 +80,12 @@ class DashboardViewController: UIViewController {
             AYNModel.sharedInstance.resetModel()
             self.updateTabBadge()
             self.resetView()
+            
+            // Remove any pending notifications
+            if UIApplication.shared.isRegisteredForRemoteNotifications {
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                print("Removed pending notifications")
+            }
             print("User logged out")
             try! FIRAuth.auth()?.signOut()
         }
