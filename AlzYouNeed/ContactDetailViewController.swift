@@ -25,6 +25,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     var conversationId: String!
     var familyId: String!
     
+    var conversationHandle: UInt?
+    
     var messages: [Message] = []
     @IBOutlet var messagesTableView: UITableView!
     
@@ -237,7 +239,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 self.familyId = userFamilyId
                 
-                self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
+                conversationHandle = self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
 //                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
                     var indexPaths: [IndexPath] = []
                     self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
@@ -263,7 +265,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     func removeConversationObservers() {
         print("Removing Firebase observers")
-        self.databaseRef.child("families").child(familyId).child("conversations").child(conversationId).removeAllObservers()
+//        self.databaseRef.child("families").child(familyId).child("conversations").child(conversationId).removeAllObservers()
+        
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                if conversationHandle != nil {
+                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).removeObserver(withHandle: conversationHandle!)
+                    conversationHandle = nil
+                    print("Removed conversationHandle")
+                }
+            }
+        }
     }
     
     // MARK: - UITableViewDelegate
