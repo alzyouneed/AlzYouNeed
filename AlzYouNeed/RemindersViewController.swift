@@ -24,15 +24,16 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     var badgeCount = 0
     
     // Class-scope for valueChanged function
+    let datePickerView: UIDatePicker = UIDatePicker()
     var dateTF: UITextField!
     var repeatsTF: UITextField!
     let repeatPickerView: UIPickerView! = UIPickerView()
 //    let repeatOptions = ["None", "Hourly", "Daily", "Weekly"]
-    let repeatOptions = ["No", "Yes"]
+//    let repeatOptions = ["No", "Yes"]
     
 //    var delegate: ReminderViewControllerDelegate?
     // TESTING ONLY
-//    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
+    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,14 +94,15 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         }
         alert.addTextField { (dateTextField) in
             dateTextField.placeholder = "Due Date"
-            let datePickerView: UIDatePicker = UIDatePicker()
-            datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
-            dateTextField.inputView = datePickerView
-            datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
+//            let datePickerView: UIDatePicker = UIDatePicker()
+            self.datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
+            dateTextField.inputView = self.datePickerView
+            self.datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
             self.dateTF = dateTextField
         }
         alert.addTextField { (repeatsTextField) in
-            repeatsTextField.text = "Repeats - No"
+//            repeatsTextField.text = "Repeats - No"
+            repeatsTextField.text = "Repeats None"
             repeatsTextField.inputView = self.repeatPickerView
             self.repeatsTF = repeatsTextField
         }
@@ -109,6 +111,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
                 // Store date as number (time interval)
                 let now = Date().timeIntervalSince1970
+//                let dateFormatter = DateFormatter()
+                // Handle repeating differently
+//                if self.repeatsTF.text != "Repeats None" {
+//                    dateFormatter.dateFormat = "h:mm a"
+//                } else {
+//                    dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
+//                }
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
@@ -116,7 +125,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
-                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " - ")[1]
+//                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " - ")[1]
+                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
                 
                 if let repeatOption = repeatsTFText as String? {
                     newReminder["repeats"] = repeatOption
@@ -167,18 +177,25 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             // Format readable date
             let date = Date(timeIntervalSince1970: Double(reminder.dueDate)!)
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM d, h:mm a"
-            cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
-            cell.descriptionLabel.text = reminder.reminderDescription
+//            dateFormatter.dateFormat = "MMMM d, h:mm a"
+//            cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+//            cell.descriptionLabel.text = reminder.reminderDescription
             
             cell.completedButton.isHidden = false
             
-            if reminder.repeats == "Yes" {
-//                cell.repeatsLabel.text = "Repeats \(reminder.repeats!)"
-                cell.repeatsLabel.text = "Repeats"
+            if reminder.repeats != "None" {
+//            if reminder.repeats == "Yes" {
+                cell.repeatsLabel.text = "Repeats \(reminder.repeats!)"
+//                cell.repeatsLabel.text = "Repeats"
                 cell.repeatsLabel.isHidden = false
+                dateFormatter.dateFormat = "h:mm a"
+                cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+                cell.descriptionLabel.text = reminder.reminderDescription
             } else {
                 cell.repeatsLabel.isHidden = true
+                dateFormatter.dateFormat = "MMMM d, h:mm a"
+                cell.dateLabel.text = "Due \(dateFormatter.string(from: date))"
+                cell.descriptionLabel.text = reminder.reminderDescription
             }
             cell.isUserInteractionEnabled = true
         } else {
@@ -243,12 +260,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
                                 let now = Date()
                                 // Check that date has not passed
-                                if (dueDate as NSDate).earlierDate(now) != dueDate {
+//                                if (dueDate as NSDate).earlierDate(now) != dueDate {
                                     self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
-                                }
-                                else {
-                                    print("Reminder due date has passed -- skipping")
-                                }
+//                                }
+//                                else {
+//                                    print("Reminder due date has passed -- skipping")
+//                                }
                             }
                             
                             self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
@@ -359,7 +376,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     
                     // Check if repeating to reschedule
                     print("Completed reminder repeats:", completedReminder.repeats)
-                    if completedReminder.repeats == "Yes" {
+                    if completedReminder.repeats != "None" {
+//                    if completedReminder.repeats == "Yes" {
                         FirebaseManager.createFamilyReminder(completedReminder.asDict() as NSDictionary, completionHandler: { (error, databaseRef) in
                             if error != nil {
                                 print("Error rescheduling repeated reminder:", error!)
@@ -394,6 +412,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Date Picker
     func datePickerValueChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
+//        if !repeatsTF.text!.isEmpty {
+//            if repeatsTF.text != "Repeats None" {
+//                dateFormatter.timeStyle = DateFormatter.Style.short
+//            } else {
+//                dateFormatter.dateStyle = DateFormatter.Style.medium
+//                dateFormatter.timeStyle = DateFormatter.Style.short
+//            }
+//        }
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.short
         dateTF.text = dateFormatter.string(from: sender.date)
@@ -441,21 +467,47 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let dueDateInterval = TimeInterval(reminder.value(forKey: "dueDate") as! String)!
                 let date = Date(timeIntervalSince1970: dueDateInterval)
                 let calendar = Calendar.current
-                let dateComponents = calendar.dateComponents([.minute, .day], from: date)
+//                let dateComponents = calendar.dateComponents([.minute, .hour, .day], from: date)
+                var dateComponents = DateComponents()
                 
                 // Check if reminder should repeat
                 var shouldRepeat = false
 
+//                if let repeatOption = reminder["repeats"] as? String {
+//                    switch repeatOption {
+//                        case "Yes":
+//                            shouldRepeat = true
+//                        case "No":
+//                            shouldRepeat = false
+////                        case "None":
+////                            shouldRepeat = false
+////                        case "Hourly", "Daily", "Weekly":
+////                            shouldRepeat = true
+//                    default:
+//                        break
+//                    }
+//                }
+                
                 if let repeatOption = reminder["repeats"] as? String {
                     switch repeatOption {
-                        case "Yes":
-                            shouldRepeat = true
-                        case "No":
-                            shouldRepeat = false
-//                        case "None":
-//                            shouldRepeat = false
-//                        case "Hourly", "Daily", "Weekly":
-//                            shouldRepeat = true
+                    case "None":
+                        shouldRepeat = false
+                    // TODO: TESTING
+                    case "Minute":
+                        shouldRepeat = true
+                        dateComponents = calendar.dateComponents([.second], from: date)
+                    case "Hourly":
+                        shouldRepeat = true
+                        // Only look at minute to repeat each hour
+                        dateComponents = calendar.dateComponents([.minute], from: date)
+                    case "Daily":
+                        shouldRepeat = true
+                        // Only look at minute, hour to repeat each day
+                        dateComponents = calendar.dateComponents([.minute, .hour], from: date)
+                    case "Weekly":
+                        shouldRepeat = true
+                        // Only look at minute, hour, day to repeat each week
+                        dateComponents = calendar.dateComponents([.minute, .hour, .day], from: date)
                     default:
                         break
                     }
@@ -475,6 +527,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             self.badgeCount += 1
                             self.updateTabBadge()
                         })
+                        
+                        print("Should Repeat: \(shouldRepeat)")
+                        print("Next repeat: \(trigger.nextTriggerDate())")
+                        if shouldRepeat {
+                            print("Time before next trigger: \(Date().timeIntervalSince(trigger.nextTriggerDate()!)) seconds --OR-- \(Date().timeIntervalSince(trigger.nextTriggerDate()!)/60) minutes")
+                        }
                     }
                 })
             })
@@ -511,7 +569,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        repeatsTF.text = "Repeats - \(repeatOptions[row])"
+//        repeatsTF.text = "Repeats - \(repeatOptions[row])"
+        repeatsTF.text = "Repeats \(repeatOptions[row])"
+        
+//        if repeatOptions[row] != "None" {
+//            self.datePickerView.datePickerMode = UIDatePickerMode.time
+//        } else {
+//            self.datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
+//        }
     }
     
     // MARK: Tutorial
