@@ -18,7 +18,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     @IBOutlet var addReminderTableButton: UIButton!
     
     let databaseRef = FIRDatabase.database().reference()
-    var observerArr = [UInt]()
+    var addReminderHandle: UInt?
+    var removeReminderHandle: UInt?
     
     // Class-scope for valueChanged function
     var dateTF: UITextField!
@@ -53,7 +54,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         addRemindersObservers()
         getCompletedFamilyReminders()
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         // Remove Firebase observers
         removeRemindersObservers()
@@ -218,10 +219,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         print("Adding Firebase observers")
         if AYNModel.sharedInstance.currentUser != nil {
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-//                self.familyId = userFamilyId
-               let addedHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
-//                self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
-                
+               addReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
                     if let reminderDict = snapshot.value! as? NSDictionary {
                         if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
                             print("New reminder in RTDB")
@@ -245,8 +243,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         }
                     }
                 })
-                let removedHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
-//                self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
+                removeReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
                     if let reminderId = snapshot.key as String? {
                         if let index = self.getIndex(reminderId) {
                             print("Removing reminder in RTDB")
@@ -261,21 +258,28 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         }
                     }
                 })
-                
-                // Add observers to arr
-                observerArr.append(addedHandle)
-                observerArr.append(removedHandle)
+
+//                print("addReminderHandle: \(addReminderHandle) -- removeReminderHandle: \(removeReminderHandle)")
             }
         }
     }
     
     func removeRemindersObservers() {
-        print("Removing Firebase observers")
-        for handle in observerArr {
-//            print("Removing Firebase observer with handle:", handle)
-            self.databaseRef.removeObserver(withHandle: handle)
+//        print("Removing Firebase observers")
+        if AYNModel.sharedInstance.currentUser != nil {
+            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                if addReminderHandle != nil {
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: addReminderHandle!)
+                    addReminderHandle = nil
+                    print("Removed addedReminderHandle")
+                }
+                if removeReminderHandle != nil {
+                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: removeReminderHandle!)
+                    removeReminderHandle = nil
+                    print("Removed removeReminderHandle")
+                }
+            }
         }
-        observerArr.removeAll()
     }
     
     // MARK: - Tab bar
