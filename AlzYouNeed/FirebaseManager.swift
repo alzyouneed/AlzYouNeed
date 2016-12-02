@@ -650,7 +650,7 @@ class FirebaseManager: NSObject {
                 
                 modifiedReminderDict["completedDate"] = Date().timeIntervalSince1970.description
                 
-                let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id)": modifiedReminderDict]
+                let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id!)": modifiedReminderDict]
                 
                 databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                     if error != nil {

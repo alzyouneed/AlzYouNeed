@@ -91,11 +91,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
             self.dateTF = dateTextField
         }
-//        alert.addTextField { (repeatsTextField) in
-//            repeatsTextField.text = "Repeats None"
-//            repeatsTextField.inputView = self.repeatPickerView
-//            self.repeatsTF = repeatsTextField
-//        }
+        alert.addTextField { (repeatsTextField) in
+            repeatsTextField.text = "Repeats None"
+            repeatsTextField.inputView = self.repeatPickerView
+            self.repeatsTF = repeatsTextField
+        }
         
         let confirmAction = UIAlertAction(title: "Create", style: .default) { (action) in
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
@@ -106,13 +106,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
                 let dueDate = dateFormatter.date(from: self.dateTF.text!)?.timeIntervalSince1970
                 
-                let newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
+                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
-//                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
+                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
                 
-//                if let repeatOption = repeatsTFText as String? {
-//                    newReminder["repeats"] = repeatOption
-//                }
+                if let repeatOption = repeatsTFText as String? {
+                    newReminder["repeats"] = repeatOption
+                }
                 
                 FirebaseManager.createFamilyReminder(newReminder as NSDictionary, completionHandler: { (error, newDatabaseRef) in
                     if error == nil {
@@ -312,6 +312,21 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 if error == nil {
                     // Success
                     // HUD.flash(.Success)
+                    
+                    // Check if repeating to reschedule
+//                    if let repeats = completedReminder.repeats {
+//                        print("Scheduling repeat reminder:", repeats)
+//                        FirebaseManager.createFamilyReminder(completedReminder.asDict() as NSDictionary, completionHandler: { (error, ref) in
+//                            if error != nil {
+//                                print("Error rescheduling repeated reminder:", error!)
+//                            } else {
+//                                print("Created new reminder")
+//                            }
+//                        })
+//                        
+////                        print("Scheduling repeat reminder:", repeats)
+////                        self.scheduleLocalNotification(completedReminder.id, reminder: completedReminder.asDict() as NSDictionary)
+//                    }
                 }
             })
         }

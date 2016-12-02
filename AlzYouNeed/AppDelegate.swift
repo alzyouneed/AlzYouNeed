@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
         // Firebase init
         FIRApp.configure()
-        FIRDatabase.database().persistenceEnabled = true
+//        FIRDatabase.database().persistenceEnabled = true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -223,7 +223,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print("Notification center did receive response")
         if response.actionIdentifier == "snooze" {
             print("Snooze action")
-
             let newTrigger = UNTimeIntervalNotificationTrigger(timeInterval: (5*60), repeats: false)
             let oldRequest = response.notification.request
             
