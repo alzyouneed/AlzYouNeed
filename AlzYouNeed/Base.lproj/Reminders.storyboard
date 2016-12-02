@@ -30,12 +30,12 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="99" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="130" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="wV5-JN-i28">
                                 <rect key="frame" x="0.0" y="28" width="375" height="526"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="separatorColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mar-id-RTh">
-                                    <rect key="frame" x="0.0" y="173" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="204" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
                                     <color key="tintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -45,18 +45,17 @@
                                     </connections>
                                 </button>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="99" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="99"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="reminderCell" rowHeight="130" id="e3d-Pm-dad" customClass="ReminderTableViewCell" customModule="AlzYouNeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="56" width="375" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e3d-Pm-dad" id="vFo-hS-r4c">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="98"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
                                                     <rect key="frame" x="62" y="8" width="305" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="hpk-Ht-68g"/>
-                                                        <constraint firstAttribute="height" constant="26" id="xCj-Sb-UB6"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="19"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,16 +67,13 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
-                                                    <rect key="frame" x="62" y="42" width="305" height="18"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="Z2b-qE-qp0"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="62" y="42" width="305" height="22"/>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBZ-Wg-Ure">
-                                                    <rect key="frame" x="62" y="68" width="305" height="22"/>
+                                                    <rect key="frame" x="62" y="72" width="305" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="Gnd-p5-gIV"/>
                                                     </constraints>
@@ -98,10 +94,9 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRl-JE-fif">
-                                                    <rect key="frame" x="248" y="68" width="119" height="22"/>
+                                                    <rect key="frame" x="62" y="100" width="305" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="sdL-7a-KTK"/>
-                                                        <constraint firstAttribute="width" constant="119" id="siQ-pI-9kU"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="14"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -115,17 +110,17 @@
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="6Jo-b3-n42"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" id="7Dg-4Q-GA4"/>
                                                 <constraint firstItem="LhX-7Y-RQS" firstAttribute="top" secondItem="vFo-hS-r4c" secondAttribute="topMargin" constant="2" id="Bb4-au-TS6"/>
-                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="L6c-P5-ZQS"/>
+                                                <constraint firstItem="tRl-JE-fif" firstAttribute="leading" secondItem="oBZ-Wg-Ure" secondAttribute="leading" id="Cdm-FD-xZ4"/>
+                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="top" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="8" id="LVF-vq-vkj"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="Li7-L2-t3z"/>
-                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="MAi-eC-7Qs"/>
-                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="top" secondItem="tRl-JE-fif" secondAttribute="top" id="PYO-OE-3AQ"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="leading" secondItem="LhX-7Y-RQS" secondAttribute="trailing" constant="9" id="W6A-Yz-d8g"/>
-                                                <constraint firstItem="oBZ-Wg-Ure" firstAttribute="top" secondItem="vVg-7m-Tsh" secondAttribute="bottom" constant="8" id="c0t-QN-5h4"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="eYP-4a-uyv"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="hiv-xm-X4U"/>
-                                                <constraint firstItem="tRl-JE-fif" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="j90-6h-UIg"/>
                                                 <constraint firstItem="LhX-7Y-RQS" firstAttribute="leading" secondItem="vFo-hS-r4c" secondAttribute="leadingMargin" id="jFk-qP-a7G"/>
+                                                <constraint firstItem="tRl-JE-fif" firstAttribute="top" secondItem="oBZ-Wg-Ure" secondAttribute="bottom" constant="5.5" id="kgo-7p-5tz"/>
                                                 <constraint firstItem="vVg-7m-Tsh" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="lUh-RQ-lLp"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="tRl-JE-fif" secondAttribute="trailing" id="pex-kp-g4n"/>
+                                                <constraint firstItem="vVg-7m-Tsh" firstAttribute="top" secondItem="YgS-6r-X0I" secondAttribute="bottom" constant="8" id="qLZ-9F-244"/>
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="qj2-VN-hgt"/>
                                                 <constraint firstItem="oBZ-Wg-Ure" firstAttribute="leading" secondItem="vVg-7m-Tsh" secondAttribute="leading" id="tnp-OG-6R4"/>
                                                 <constraint firstItem="tRl-JE-fif" firstAttribute="leading" secondItem="oBZ-Wg-Ure" secondAttribute="trailing" constant="8" id="vLx-hl-dn4"/>

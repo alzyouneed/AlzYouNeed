@@ -24,7 +24,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     var dateTF: UITextField!
     var repeatsTF: UITextField!
     let repeatPickerView: UIPickerView! = UIPickerView()
-    let repeatOptions = ["None", "Hourly", "Daily", "Weekly"]
+//    let repeatOptions = ["None", "Hourly", "Daily", "Weekly"]
+    let repeatOptions = ["No", "Yes"]
     
 //    var delegate: ReminderViewControllerDelegate?
     // TESTING ONLY
@@ -34,8 +35,10 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         super.viewDidLoad()
         
         configureView()
-        
         checkTutorialStatus()
+        
+        remindersTableView.estimatedRowHeight = 100
+        remindersTableView.rowHeight = UITableViewAutomaticDimension
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,7 +95,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             self.dateTF = dateTextField
         }
         alert.addTextField { (repeatsTextField) in
-            repeatsTextField.text = "Repeats None"
+            repeatsTextField.text = "Repeats - No"
             repeatsTextField.inputView = self.repeatPickerView
             self.repeatsTF = repeatsTextField
         }
@@ -108,7 +111,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
                 
-                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
+                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " - ")[1]
                 
                 if let repeatOption = repeatsTFText as String? {
                     newReminder["repeats"] = repeatOption
@@ -165,8 +168,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             
             cell.completedButton.isHidden = false
             
-            if reminder.repeats != "None" {
-                cell.repeatsLabel.text = "Repeats \(reminder.repeats)"
+            if reminder.repeats == "Yes" {
+//                cell.repeatsLabel.text = "Repeats \(reminder.repeats!)"
+                cell.repeatsLabel.text = "Repeats"
                 cell.repeatsLabel.isHidden = false
             } else {
                 cell.repeatsLabel.isHidden = true
@@ -314,19 +318,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     // HUD.flash(.Success)
                     
                     // Check if repeating to reschedule
-//                    if let repeats = completedReminder.repeats {
-//                        print("Scheduling repeat reminder:", repeats)
-//                        FirebaseManager.createFamilyReminder(completedReminder.asDict() as NSDictionary, completionHandler: { (error, ref) in
-//                            if error != nil {
-//                                print("Error rescheduling repeated reminder:", error!)
-//                            } else {
-//                                print("Created new reminder")
-//                            }
-//                        })
-//                        
-////                        print("Scheduling repeat reminder:", repeats)
-////                        self.scheduleLocalNotification(completedReminder.id, reminder: completedReminder.asDict() as NSDictionary)
-//                    }
+                    print("Completed reminder repeats:", completedReminder.repeats)
+                    if completedReminder.repeats == "Yes" {
+                        FirebaseManager.createFamilyReminder(completedReminder.asDict() as NSDictionary, completionHandler: { (error, databaseRef) in
+                            if error != nil {
+                                print("Error rescheduling repeated reminder:", error!)
+                            } else {
+                                print("Rescheduled repeated reminder")
+                            }
+                        })
+                    }
+
                 }
             })
         }
@@ -401,7 +403,27 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let calendar = Calendar.current
                 let dateComponents = calendar.dateComponents([.minute, .day], from: date)
                 
-                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                // Check if reminder should repeat
+                var shouldRepeat = false
+
+                if let repeatOption = reminder["repeats"] as? String {
+                    switch repeatOption {
+                        case "Yes":
+                            shouldRepeat = true
+                        case "No":
+                            shouldRepeat = false
+//                        case "None":
+//                            shouldRepeat = false
+//                        case "Hourly", "Daily", "Weekly":
+//                            shouldRepeat = true
+                    default:
+                        break
+                    }
+                }
+                
+//                print("Reminder to schedule should repeat:", shouldRepeat)
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: shouldRepeat)
                 let request = UNNotificationRequest(identifier: reminderId, content: content, trigger: trigger)
                 center.add(request, withCompletionHandler: { (error) in
                     if error != nil {
@@ -444,7 +466,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        repeatsTF.text = "Repeats \(repeatOptions[row])"
+        repeatsTF.text = "Repeats - \(repeatOptions[row])"
     }
     
     // MARK: Tutorial
