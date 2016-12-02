@@ -21,6 +21,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     var addReminderHandle: UInt?
     var removeReminderHandle: UInt?
     
+    var badgeCount = 0
+    
     // Class-scope for valueChanged function
     var dateTF: UITextField!
     var repeatsTF: UITextField!
@@ -53,6 +55,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         registerLocalNotifications()
         addRemindersObservers()
         getCompletedFamilyReminders()
+        // Reset badge count
+        badgeCount = 0
+        updateTabBadge()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -205,6 +210,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     if error == nil {
                         // Observers catch deletion and properly update data source array and UI
                         self.cancelLocalNotification(reminder.id)
+                        
+                        // Adjust badge count
+                        if self.badgeCount > 0 {
+                            DispatchQueue.main.async(execute: {
+                                self.badgeCount -= 1
+                                self.updateTabBadge()
+                            })
+                        }
                     }
                 })
             }
@@ -239,7 +252,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             }
                             
                             self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
-                            self.updateTabBadge()
+//                            self.updateTabBadge()
                         }
                     }
                 })
@@ -293,12 +306,19 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         let tabArray = tabBarController!.tabBar.items as NSArray!
         let tabItem = tabArray?.object(at: 2) as! UITabBarItem
         
-        if AYNModel.sharedInstance.remindersArr.count == 0 {
+        if badgeCount > 0 {
+            tabItem.badgeValue = "\(badgeCount)"
+        } else {
             tabItem.badgeValue = nil
         }
-        else {
-            tabItem.badgeValue = "\(AYNModel.sharedInstance.remindersArr.count)"
-        }
+        
+//        if AYNModel.sharedInstance.remindersArr.count == 0 {
+//            tabItem.badgeValue = nil
+//        }
+//        else {
+////            tabItem.badgeValue = "\(AYNModel.sharedInstance.remindersArr.count)"
+//            tabItem.badgeValue = "\(badgeCount)"
+//        }
     }
     
     // MARK: - Reminders Array
@@ -328,6 +348,14 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 if error == nil {
                     // Success
                     // HUD.flash(.Success)
+                    
+                    // Adjust badge count
+                    if self.badgeCount > 0 {
+                        DispatchQueue.main.async(execute: {
+                            self.badgeCount -= 1
+                            self.updateTabBadge()
+                        })
+                    }
                     
                     // Check if repeating to reschedule
                     print("Completed reminder repeats:", completedReminder.repeats)
@@ -441,7 +469,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     if error != nil {
                         print("Error adding push notification request:", error!)
                     } else {
+                        
                         print("Push notification request added")
+                        DispatchQueue.main.async(execute: {
+                            self.badgeCount += 1
+                            self.updateTabBadge()
+                        })
                     }
                 })
             })
