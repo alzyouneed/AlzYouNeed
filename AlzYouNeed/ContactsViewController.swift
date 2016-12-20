@@ -8,7 +8,7 @@
 
 import UIKit
 import MessageUI
-//import PKHUD
+import PKHUD
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -53,6 +53,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         checkTutorialStatus()
         configureEmergencyButton()
+        
+//        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
 //        testLoadContacts()
     }
     
@@ -86,13 +88,13 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         if !refreshing {
             // Show progress view
-            //HUD.show(.Progress)
+            HUD.show(.progress)
         }
         
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
-                    // HUD.hide()
+                     HUD.hide()
                     print("Loaded \(members.count) contacts from Firebase")
                     AYNModel.sharedInstance.contactsArr = members
                     
@@ -107,7 +109,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
                 }
             } else {
                 // Error
-                // HUD.hide()
+                 HUD.hide()
             }
         }
     }
