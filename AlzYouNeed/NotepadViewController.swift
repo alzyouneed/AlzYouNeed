@@ -9,6 +9,8 @@
 import UIKit
 
 class NotepadViewController: UIViewController {
+    
+    @IBOutlet var scrollViewBottomConstraint: NSLayoutConstraint!
 
     @IBOutlet var noteTextView: UITextView!
     var originalNote = ""
@@ -23,6 +25,12 @@ class NotepadViewController: UIViewController {
         // Check tutorial completion
         checkTutorialStatus()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Add observers
+        NotificationCenter.default.addObserver(self, selector: #selector(NotepadViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotepadViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,5 +118,37 @@ class NotepadViewController: UIViewController {
         
         alertController.addAction(completeAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+        let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue
+        let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
+        
+        if show {
+            self.scrollViewBottomConstraint.constant = changeInHeight
+//            scrollToBottom()
+        } else {
+            self.scrollViewBottomConstraint.constant = 0
+        }
+        
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func keyboardWillShow(_ sender: Notification) {
+        adjustingKeyboardHeight(true, notification: sender)
+//        configureMessageMode()
+    }
+    
+    func keyboardWillHide(_ sender: Notification) {
+        adjustingKeyboardHeight(false, notification: sender)
+//        configureMessageMode()
     }
 }

@@ -257,8 +257,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             AYNModel.sharedInstance.remindersArr.append(newReminder)
                             
                             // Schedule local notifications
-                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
-                                let now = Date()
+//                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+//                                let now = Date()
                                 // Check that date has not passed
 //                                if (dueDate as NSDate).earlierDate(now) != dueDate {
                                     self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
@@ -266,7 +266,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
 //                                else {
 //                                    print("Reminder due date has passed -- skipping")
 //                                }
-                            }
+//                            }
                             
                             self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
 //                            self.updateTabBadge()
