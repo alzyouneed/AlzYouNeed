@@ -366,8 +366,8 @@ extension ContactsViewController: MFMessageComposeViewControllerDelegate {
 // MARK: - Emergency button
 extension ContactsViewController {
     func configureEmergencyButton() {
-        print("Configuring emergency button")
-        emergencyButton.backgroundColor = sunsetOrange
+        print("Configuring group chat button")
+        emergencyButton.backgroundColor = caribbeanGreen
         emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
         emergencyButton.layer.shadowRadius = 1
         emergencyButton.layer.shadowColor = UIColor.black.cgColor
@@ -378,9 +378,9 @@ extension ContactsViewController {
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {
-        print("Emergency button pressed")
+        print("Group chat button pressed")
         let messageVC = MFMessageComposeViewController()
-        messageVC.body = "EMERGENCY: I need help now!"
+//        messageVC.body = "EMERGENCY: I need help now!"
         messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
         messageVC.messageComposeDelegate = self
         present(messageVC, animated: true, completion: nil)
