@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 //import PKHUD
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -39,6 +40,8 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
     var filteredContacts: [Contact] = []
     var searchActive = false
     
+    @IBOutlet var emergencyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +52,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         searchBar.delegate = self
         
         checkTutorialStatus()
-        
+        configureEmergencyButton()
 //        testLoadContacts()
     }
     
@@ -342,4 +345,45 @@ extension ContactsViewController: UISearchBarDelegate {
         alertController.addAction(completeAction)
         present(alertController, animated: true, completion: nil)
     }
+}
+
+extension ContactsViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result.rawValue {
+        case MessageComposeResult.cancelled.rawValue:
+            print("Message cancelled")
+        case MessageComposeResult.failed.rawValue:
+            print("Message failed")
+        case MessageComposeResult.sent.rawValue:
+            print("Message sent")
+        default:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Emergency button
+extension ContactsViewController {
+    func configureEmergencyButton() {
+        print("Configuring emergency button")
+        emergencyButton.backgroundColor = sunsetOrange
+        emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
+        emergencyButton.layer.shadowRadius = 1
+        emergencyButton.layer.shadowColor = UIColor.black.cgColor
+        emergencyButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        emergencyButton.layer.shadowOpacity = 0.5
+        
+        emergencyButton.addTarget(self, action: #selector(ContactsViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+    }
+    
+    func emergencyButtonPressed(_ sender: UIButton) {
+        print("Emergency button pressed")
+        let messageVC = MFMessageComposeViewController()
+        messageVC.body = "EMERGENCY: I need help now!"
+        messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
+        messageVC.messageComposeDelegate = self
+        present(messageVC, animated: true, completion: nil)
+    }
+    
 }

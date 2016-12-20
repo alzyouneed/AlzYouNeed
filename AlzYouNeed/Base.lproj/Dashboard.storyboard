@@ -247,12 +247,23 @@
                                     <constraint firstAttribute="height" constant="60" id="L3p-GA-VX8"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Tr-ho-3Vv">
+                                <rect key="frame" x="309" y="489" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hHV-1r-bXz"/>
+                                    <constraint firstAttribute="width" constant="50" id="z39-1k-Bgi"/>
+                                </constraints>
+                                <state key="normal" image="emergencyIcon"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="8Tr-ho-3Vv" secondAttribute="trailing" id="0S3-MG-cLl"/>
                             <constraint firstItem="DvW-BC-Ijy" firstAttribute="leading" secondItem="Zri-OK-PIv" secondAttribute="leadingMargin" id="48W-sw-l0h"/>
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" constant="59" id="4x1-1o-ixj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DvW-BC-Ijy" secondAttribute="trailing" id="5Ii-xX-Br5"/>
+                            <constraint firstItem="ZlT-Ga-xyb" firstAttribute="top" secondItem="8Tr-ho-3Vv" secondAttribute="bottom" constant="15" id="5dl-8O-8qu"/>
                             <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="Zri-OK-PIv" secondAttribute="centerX" id="7BK-7m-1su"/>
                             <constraint firstItem="DvW-BC-Ijy" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" id="HTl-cz-JDD"/>
                             <constraint firstItem="DvW-BC-Ijy" firstAttribute="leading" secondItem="Zri-OK-PIv" secondAttribute="leadingMargin" id="J4q-FZ-N8O"/>
@@ -294,6 +305,7 @@
                     <connections>
                         <outlet property="dashboardActionButtons" destination="DvW-BC-Ijy" id="oFI-W2-2dz"/>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
+                        <outlet property="emergencyButton" destination="8Tr-ho-3Vv" id="BNw-mt-WrH"/>
                         <outlet property="reminderActionButtonView" destination="NAm-gW-sfD" id="yJl-ac-PYl"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
                         <segue destination="2gG-ex-1CO" kind="presentation" identifier="notepad" id="J52-qJ-AkR"/>
@@ -345,6 +357,7 @@
     </scenes>
     <resources>
         <image name="cancelIcon" width="22" height="22"/>
+        <image name="emergencyIcon" width="30" height="30"/>
         <image name="homeIcon" width="25" height="25"/>
         <image name="settingsIcon" width="22" height="22"/>
     </resources>

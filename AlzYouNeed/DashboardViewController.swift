@@ -19,17 +19,19 @@ class DashboardViewController: UIViewController {
     @IBOutlet var dashboardActionButtons: actionButtonsDashboardView!
     @IBOutlet var reminderActionButtonView: actionButtonsDashboardView!
 
+    @IBOutlet var emergencyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         checkUserSignedIn()
 
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
-        dashboardActionButtons.rightButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         
-        reminderActionButtonView.leftButton.addTarget(self, action: #selector(DashboardViewController.reminderButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
+//        reminderActionButtonView.leftButton.addTarget(self, action: #selector(DashboardViewController.reminderButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         
         configureView()
+        configureEmergencyButton()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -37,11 +39,6 @@ class DashboardViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.presentTransparentNavBar()
-//        
-//        self.tabBarController?.tabBar.layer.borderWidth = 0.5
-//        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
-        
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
             print("Model was reset -- reseting UI")
@@ -328,12 +325,10 @@ class DashboardViewController: UIViewController {
     }
     
     func configureActionButtons() {
+        dashboardActionButtons.singleButton("left")
         dashboardActionButtons.leftButton.backgroundColor = crayolaYellow
         dashboardActionButtons.leftButton.setImage(UIImage(named: "notepadIcon"), for: .normal)
         dashboardActionButtons.leftButton.tintColor = UIColor.white
-        
-        dashboardActionButtons.rightButton.setImage(UIImage(named: "emergencyIcon"), for: .normal)
-        dashboardActionButtons.rightButton.tintColor = UIColor.white
         
         reminderActionButtonView.singleButton("left")
         reminderActionButtonView.leftButton.setTitle("Add Reminder", for: .normal)
@@ -347,22 +342,13 @@ class DashboardViewController: UIViewController {
         self.performSegue(withIdentifier: "notepad", sender: self)
     }
     
-    func emergencyButtonPressed(_ sender: UIButton) {
-        print("Emergency button pressed")
-        let messageVC = MFMessageComposeViewController()
-        messageVC.body = "EMERGENCY: I need help now!"
-        messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
-        messageVC.messageComposeDelegate = self
-        present(messageVC, animated: true, completion: nil)
-    }
-    
-    func reminderButtonPressed(_ sender: UIButton) {
-        print("Create new reminder")
+//    func reminderButtonPressed(_ sender: UIButton) {
+//        print("Create new reminder")
 //        self.tabBarController?.selectedIndex = 2
 //        createReminder()
 //        let delegate: ReminderDelegate = self
 //        delegate.createReminder()
-    }
+//    }
     
     func checkUserSignedIn() {
         // Check for current user
@@ -474,6 +460,10 @@ class DashboardViewController: UIViewController {
             }
         })
     }
+    
+    func emergencyAction(sender: UIButton) {
+        print("Emergency button pressed")
+    }
 }
 
 extension DashboardViewController: MFMessageComposeViewControllerDelegate {
@@ -505,4 +495,29 @@ extension DashboardViewController {
 //            }
 //        }
 //    }
+}
+
+// MARK: - Emergency button
+extension DashboardViewController {
+    func configureEmergencyButton() {
+        print("Configuring emergency button")
+        emergencyButton.backgroundColor = sunsetOrange
+        emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
+        emergencyButton.layer.shadowRadius = 1
+        emergencyButton.layer.shadowColor = UIColor.black.cgColor
+        emergencyButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        emergencyButton.layer.shadowOpacity = 0.5
+        
+        emergencyButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+    }
+    
+    func emergencyButtonPressed(_ sender: UIButton) {
+        print("Emergency button pressed")
+        let messageVC = MFMessageComposeViewController()
+        messageVC.body = "EMERGENCY: I need help now!"
+        messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
+        messageVC.messageComposeDelegate = self
+        present(messageVC, animated: true, completion: nil)
+    }
+
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -52,7 +52,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YgS-6r-X0I">
                                                     <rect key="frame" x="62" y="8" width="305" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="hpk-Ht-68g"/>
@@ -66,14 +66,14 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVg-7m-Tsh">
                                                     <rect key="frame" x="62" y="42" width="305" height="22"/>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBZ-Wg-Ure">
-                                                    <rect key="frame" x="62" y="72" width="305" height="22"/>
+                                                    <rect key="frame" x="62" y="71" width="305" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="Gnd-p5-gIV"/>
                                                     </constraints>
@@ -94,7 +94,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRl-JE-fif">
-                                                    <rect key="frame" x="62" y="100" width="305" height="22"/>
+                                                    <rect key="frame" x="62" y="99" width="305" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="sdL-7a-KTK"/>
                                                     </constraints>
@@ -167,13 +167,24 @@
                                     <action selector="segmentedControlValueChanged:" destination="bGj-vw-7yG" eventType="valueChanged" id="J9B-DZ-hbV"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ASo-3A-5iS">
+                                <rect key="frame" x="309" y="489" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="NLd-bc-HBT"/>
+                                    <constraint firstAttribute="height" constant="50" id="dmE-FI-7Qa"/>
+                                </constraints>
+                                <state key="normal" image="emergencyIcon"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="COk-1b-AU7" firstAttribute="top" secondItem="wV5-JN-i28" secondAttribute="bottom" id="8XQ-Wb-edS"/>
                             <constraint firstItem="ZSv-lg-fnn" firstAttribute="top" secondItem="GYq-y8-9xx" secondAttribute="bottom" id="Gl3-YM-WYs"/>
                             <constraint firstAttribute="trailing" secondItem="ZSv-lg-fnn" secondAttribute="trailing" id="Vqa-ee-h9l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ASo-3A-5iS" secondAttribute="trailing" id="Z3h-Gj-JNt"/>
                             <constraint firstItem="ZSv-lg-fnn" firstAttribute="leading" secondItem="dPO-7O-ikM" secondAttribute="leading" id="ebc-Wm-oJK"/>
+                            <constraint firstItem="COk-1b-AU7" firstAttribute="top" secondItem="ASo-3A-5iS" secondAttribute="bottom" constant="15" id="hg6-1g-fHK"/>
                             <constraint firstItem="wV5-JN-i28" firstAttribute="leading" secondItem="dPO-7O-ikM" secondAttribute="leading" id="moR-Uq-wI6"/>
                             <constraint firstItem="wV5-JN-i28" firstAttribute="top" secondItem="ZSv-lg-fnn" secondAttribute="bottom" id="sZe-Ws-AEi"/>
                             <constraint firstItem="COk-1b-AU7" firstAttribute="top" secondItem="wV5-JN-i28" secondAttribute="bottom" id="vZm-cl-hhh"/>
@@ -196,6 +207,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="addReminderTableButton" destination="mar-id-RTh" id="asz-rS-LCR"/>
+                        <outlet property="emergencyButton" destination="ASo-3A-5iS" id="l4S-bv-RvD"/>
                         <outlet property="reminderSegmentedControl" destination="ZSv-lg-fnn" id="9he-Nh-ejA"/>
                         <outlet property="remindersTableView" destination="wV5-JN-i28" id="l0l-7Z-2ug"/>
                     </connections>
@@ -212,7 +224,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="3nu-jH-bXc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="3nu-jH-bXc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -227,6 +239,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="emergencyIcon" width="30" height="30"/>
         <image name="reminderComplete" width="45" height="45"/>
         <image name="remindersCompleteHL" width="45" height="45"/>
         <image name="remindersIcon" width="25" height="25"/>

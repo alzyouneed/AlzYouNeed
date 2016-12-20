@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import UserNotifications
+import MessageUI
 // import PKHUD
 
 class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -35,6 +36,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // TESTING ONLY
     let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
     
+    @IBOutlet var emergencyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +46,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         
         remindersTableView.estimatedRowHeight = 100
         remindersTableView.rowHeight = UITableViewAutomaticDimension
+        
+        configureEmergencyButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -629,4 +634,45 @@ extension RemindersViewController {
             }
         }
     }
+}
+
+extension RemindersViewController: MFMessageComposeViewControllerDelegate {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch result.rawValue {
+        case MessageComposeResult.cancelled.rawValue:
+            print("Message cancelled")
+        case MessageComposeResult.failed.rawValue:
+            print("Message failed")
+        case MessageComposeResult.sent.rawValue:
+            print("Message sent")
+        default:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Emergency button
+extension RemindersViewController {
+    func configureEmergencyButton() {
+        print("Configuring emergency button")
+        emergencyButton.backgroundColor = sunsetOrange
+        emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
+        emergencyButton.layer.shadowRadius = 1
+        emergencyButton.layer.shadowColor = UIColor.black.cgColor
+        emergencyButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        emergencyButton.layer.shadowOpacity = 0.5
+        
+        emergencyButton.addTarget(self, action: #selector(RemindersViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+    }
+    
+    func emergencyButtonPressed(_ sender: UIButton) {
+        print("Emergency button pressed")
+        let messageVC = MFMessageComposeViewController()
+        messageVC.body = "EMERGENCY: I need help now!"
+        messageVC.recipients = AYNModel.sharedInstance.familyMemberNumbers
+        messageVC.messageComposeDelegate = self
+        present(messageVC, animated: true, completion: nil)
+    }
+    
 }
