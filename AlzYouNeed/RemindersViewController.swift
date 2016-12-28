@@ -34,7 +34,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
 //    var delegate: ReminderViewControllerDelegate?
     // TESTING ONLY
-    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
+//    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
+    let repeatOptions = ["None", "Minute", "Daily", "Weekly"]
     
     @IBOutlet var emergencyButton: UIButton!
     
