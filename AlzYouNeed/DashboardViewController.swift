@@ -73,6 +73,9 @@ class DashboardViewController: UIViewController {
             }
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in
+            // Log analytics event
+            FIRAnalytics.logEvent(withName: "logout", parameters: nil)
+            
             // Clean up current session
             AYNModel.sharedInstance.resetModel()
             self.updateTabBadge()

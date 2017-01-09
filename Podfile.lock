@@ -62,6 +62,7 @@ PODS:
 DEPENDENCIES:
   - Firebase
   - Firebase/Auth
+  - Firebase/Core
   - Firebase/Crash
   - Firebase/Database
   - Firebase/Messaging
@@ -84,6 +85,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   PKHUD: 2bb45c936bb8afa39f3cd33ec14e8cc89f624255
 
-PODFILE CHECKSUM: 9f6e4b4f925c125aa8511589035e26154c7e63e8
+PODFILE CHECKSUM: 4f6b49edc48dc531d13b00c154821ef3a2487a95
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0.beta.3

@@ -11,6 +11,7 @@ pod ‘Firebase/Auth’
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Messaging'
+pod 'Firebase/Core'
 pod 'PKHUD', '~> 4.0'
 # pod 'PKHUD'
 
