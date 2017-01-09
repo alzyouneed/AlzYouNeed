@@ -123,10 +123,6 @@ class UpdateUserViewController: UIViewController, UITextFieldDelegate, UINavigat
         }
     }
     
-    @IBAction func addPhoto(_ sender: UIBarButtonItem) {
-//        selectPhoto()
-    }
-    
     // MARK: - Validation
     func validFields() -> Bool {
         return validateName() && validatePhoneNumber()
@@ -349,24 +345,33 @@ extension UpdateUserViewController: UIImagePickerControllerDelegate {
     }
     
     func selectPhoto(_ tap: UITapGestureRecognizer) {
-        print("Select photo")
-        //        self.imagePicker.delegate = self
-        //        imagePicker.allowsEditing = true
-        //        imagePicker.sourceType = .photoLibrary
+        showPhotoOptions()
+    }
+    
+    func showPhotoOptions() {
+        let photoSheet = UIAlertController(title: nil, message: "Select a source", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                print("Selecting from Camera")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let libraryAction = UIAlertAction(title: "Browse photo library", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                print("Selecting from Photo Library")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            print("Selecting from Camera")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .camera
-            present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            print("Selecting from Photo Library")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: nil)
-        }
+        photoSheet.addAction(cameraAction)
+        photoSheet.addAction(libraryAction)
+        photoSheet.addAction(cancelAction)
+        
+        present(photoSheet, animated: true, completion: nil)
     }
 }

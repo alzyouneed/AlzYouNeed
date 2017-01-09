@@ -282,11 +282,11 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
     }
     
     @IBAction func changePictureAction(_ sender: UIButton) {
-        presentImagePicker()
+        showPhotoOptions()
     }
     
     func selectPhoto(_ tap: UITapGestureRecognizer) {
-        presentImagePicker()
+        showPhotoOptions()
     }
     
     // MARK: Delete Account
@@ -366,37 +366,6 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
 
 // MARK: - UIImagePickerController Delegate
 extension UpdateProfileViewController: UIImagePickerControllerDelegate {
-    func presentImagePicker() {
-        print("Select photo")
-        //        self.imagePicker.delegate = self
-        //        imagePicker.allowsEditing = true
-        //        imagePicker.sourceType = .photoLibrary
-        //
-        //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-        //            self.imagePicker.sourceType = .camera
-        //        }
-        //        else {
-        //            self.imagePicker.sourceType = .photoLibrary
-        //        }
-        //
-        //        present(imagePicker, animated: true, completion: nil)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            print("Selecting from Camera")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .camera
-            present(imagePicker, animated: true, completion: nil)
-        }
-        else {
-            print("Selecting from Photo Library")
-            //            self.imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            self.imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: nil)
-        }
-        
-    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
@@ -409,5 +378,32 @@ extension UpdateProfileViewController: UIImagePickerControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func showPhotoOptions() {
+        let photoSheet = UIAlertController(title: nil, message: "Select a source", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                print("Selecting from Camera")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let libraryAction = UIAlertAction(title: "Browse photo library", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                print("Selecting from Photo Library")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        photoSheet.addAction(cameraAction)
+        photoSheet.addAction(libraryAction)
+        photoSheet.addAction(cancelAction)
+        
+        present(photoSheet, animated: true, completion: nil)
     }
 }
