@@ -263,17 +263,17 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             AYNModel.sharedInstance.remindersArr.append(newReminder)
                             
                             // Schedule local notifications
-//                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
-//                                let now = Date()
+                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+                                let now = Date()
                                 // Check that date has not passed
-//                                if (dueDate as NSDate).earlierDate(now) != dueDate {
+                                if newReminder.repeats != "false" || (dueDate as NSDate).earlierDate(now) != dueDate {
                                     self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
-//                                }
-//                                else {
-//                                    print("Reminder due date has passed -- skipping")
-//                                }
-//                            }
-                            
+                                }
+                                else {
+                                    print("Reminder due date has passed -- skipping")
+                                }
+                            }
+                        
                             self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
 //                            self.updateTabBadge()
                         }
@@ -294,14 +294,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         }
                     }
                 })
-
-//                print("addReminderHandle: \(addReminderHandle) -- removeReminderHandle: \(removeReminderHandle)")
             }
         }
     }
     
     func removeRemindersObservers() {
-//        print("Removing Firebase observers")
         if AYNModel.sharedInstance.currentUser != nil {
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 if addReminderHandle != nil {
@@ -455,21 +452,16 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         if UIApplication.shared.isRegisteredForRemoteNotifications {
             var reminderScheduled = false
             UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (requests) in
-//                print("reminderId:", reminderId)
-                print("requests:", requests)
                 for notification in requests {
                     // Notification exists
-                    print("notification identifier:", notification.identifier)
                     if notification.identifier == reminderId {
                         print("Local notification already pending")
                         reminderScheduled = true
                     }
                 }
-                guard case reminderScheduled = false else {return}
-                print("here")
                 
-                // Notification does not exist
-                let center = UNUserNotificationCenter.current()
+                // Stops scheduling if already pending
+                guard case reminderScheduled = false else {return}
                 
                 let content = UNMutableNotificationContent()
                 content.title = "Reminder"
@@ -480,7 +472,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let dueDateInterval = TimeInterval(reminder.value(forKey: "dueDate") as! String)!
                 let date = Date(timeIntervalSince1970: dueDateInterval)
                 let calendar = Calendar.current
-//                let dateComponents = calendar.dateComponents([.minute, .hour, .day], from: date)
                 var dateComponents = DateComponents()
                 
                 // Check if reminder should repeat
@@ -490,7 +481,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     switch repeatOption {
                     case "None":
                         shouldRepeat = false
-                    // TODO: TESTING
                     case "Minute":
                         shouldRepeat = true
                         dateComponents = calendar.dateComponents([.second], from: date)
@@ -511,22 +501,24 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     }
                 }
                 
+                if !shouldRepeat {
+                    dateComponents = calendar.dateComponents([.second, .minute, .hour, .day], from: date)
+                }
+                
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: shouldRepeat)
                 let request = UNNotificationRequest(identifier: reminderId, content: content, trigger: trigger)
-                print("request identifier:", request.identifier)
-                center.add(request, withCompletionHandler: { (error) in
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: { (error) in
                     if error != nil {
                         print("Error adding push notification request:", error!)
                     } else {
                         
                         print("Push notification request added")
+                        
                         DispatchQueue.main.async(execute: {
                             self.badgeCount += 1
                             self.updateTabBadge()
                         })
-                        
-//                        print("Should Repeat: \(shouldRepeat)")
-//                        print("Next repeat: \(trigger.nextTriggerDate())")
+
                         if shouldRepeat {
                             print("Time before next trigger: \(Date().timeIntervalSince(trigger.nextTriggerDate()!)) seconds --OR-- \(Date().timeIntervalSince(trigger.nextTriggerDate()!)/60) minutes")
                         }
