@@ -50,6 +50,7 @@ class MessageTableViewCell: UITableViewCell {
         
         
         // Configure favorited
+        /*
         if message.favorited.count > 0 {
             if let currentUser = FIRAuth.auth()?.currentUser {
                 for userId in message.favorited.keys {
@@ -65,6 +66,7 @@ class MessageTableViewCell: UITableViewCell {
                 }
             }
         }
+        */
         
         self.messageLabel.text = message.messageString
         // Format readable date

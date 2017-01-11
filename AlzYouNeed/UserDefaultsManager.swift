@@ -88,7 +88,7 @@ class UserDefaultsManager: NSObject {
                 defaults.setValue(modifiedDict, forKeyPath: "completedTutorials")
                 defaults.synchronize()
                 
-                print("Tutorials:", modifiedDict)
+//                print("Tutorials:", modifiedDict)
             } else {
                 print("Tutorial doesn't exist -- not completing:", tutorial)
             }

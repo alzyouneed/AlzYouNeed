@@ -22,16 +22,15 @@
 		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
 		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
 		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
+		2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68D3081E26B0EC008A582B /* DataObjects.swift */; };
 		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
 		2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */; };
 		2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3831D1C88F90048333C /* CreateUserViewController.swift */; };
 		2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */; };
-		2D72834B1D1EF5B800389CFC /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D72834A1D1EF5B800389CFC /* Contact.swift */; };
 		2D7948471D1248F000FF1E51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D7948461D1248F000FF1E51 /* .gitignore */; };
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
 		2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */; };
 		2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */; };
-		2D958B9F1D46D927002F16BD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D958B9E1D46D927002F16BD /* Message.swift */; };
 		2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9834D71D0C4A91000977DC /* AppDelegate.swift */; };
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
@@ -45,7 +44,6 @@
 		2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */; };
 		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */; };
-		2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C21D3180C10090C89A /* Reminder.swift */; };
 		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
 		2DC2AD3B1DB2C5C300859F88 /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */; };
 		2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */; };
@@ -86,16 +84,15 @@
 		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
 		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
 		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
+		2D68D3081E26B0EC008A582B /* DataObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataObjects.swift; sourceTree = "<group>"; };
 		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		2D70C3831D1C88F90048333C /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
 		2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
-		2D72834A1D1EF5B800389CFC /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Extra Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginButtonsView.xib; sourceTree = "<group>"; };
 		2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginButtonsView.swift; sourceTree = "<group>"; };
-		2D958B9E1D46D927002F16BD /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9834D71D0C4A91000977DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D9834DC1D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,7 +108,6 @@
 		2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsViewController.swift; sourceTree = "<group>"; };
-		2DC0B2C21D3180C10090C89A /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
 		2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
@@ -179,20 +175,10 @@
 			isa = PBXGroup;
 			children = (
 				2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */,
-				2D2244F11D0FAD6E005D9DF5 /* Model */,
 				2D2244F41D0FB103005D9DF5 /* View */,
 				2D6EBACC1D0F0FC8004AD135 /* Controller */,
 			);
 			name = ContactList;
-			sourceTree = "<group>";
-		};
-		2D2244F11D0FAD6E005D9DF5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2D72834A1D1EF5B800389CFC /* Contact.swift */,
-				2D958B9E1D46D927002F16BD /* Message.swift */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		2D2244F41D0FB103005D9DF5 /* View */ = {
@@ -207,6 +193,7 @@
 		2D3C49051D35AE56003A1C81 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2D68D3081E26B0EC008A582B /* DataObjects.swift */,
 				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
 				2D3C49061D35AFF7003A1C81 /* AYNModel.swift */,
 				2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */,
@@ -347,19 +334,10 @@
 			isa = PBXGroup;
 			children = (
 				2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */,
-				2DC0B2BF1D31808D0090C89A /* Model */,
 				2DC0B2C01D3180910090C89A /* View */,
 				2DC0B2C11D3180980090C89A /* Controller */,
 			);
 			name = Reminders;
-			sourceTree = "<group>";
-		};
-		2DC0B2BF1D31808D0090C89A /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2DC0B2C21D3180C10090C89A /* Reminder.swift */,
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		2DC0B2C01D3180910090C89A /* View */ = {
@@ -652,7 +630,6 @@
 				2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
-				2DC0B2C31D3180C10090C89A /* Reminder.swift in Sources */,
 				2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */,
 				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */,
@@ -661,18 +638,17 @@
 				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
-				2D958B9F1D46D927002F16BD /* Message.swift in Sources */,
 				2DCC3C6E1D303F53005D0EFD /* popoverView.swift in Sources */,
 				2D1BCD391D1D6FFB0060B55C /* FirebaseManager.swift in Sources */,
 				2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */,
-				2D72834B1D1EF5B800389CFC /* Contact.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
+				2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */,

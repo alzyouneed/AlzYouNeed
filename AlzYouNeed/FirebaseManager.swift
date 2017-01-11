@@ -494,7 +494,7 @@ class FirebaseManager: NSObject {
                 completionHandler(nil, groupExists)
             }
         }) { (error) in
-            print("Error occurred while looking up family group")
+            print("Family group error:", error)
             completionHandler(error as NSError?, nil)
         }
     }
@@ -531,7 +531,7 @@ class FirebaseManager: NSObject {
                                     // Prevent adding current user to array
                                     if uId != userId {
                                         if let memberDict = value as? NSDictionary {
-                                            if let contact = Contact(uID: uId, userDict: memberDict) {
+                                            if let contact = Contact(userId: uId, userDict: memberDict) {
                                                 membersArr.append(contact)
                                             }
                                         }
