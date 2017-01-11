@@ -35,9 +35,7 @@ class PushNotificationsViewController: UIViewController {
     }
     
     @IBAction func enablePush(_ sender: UIButton) {
-        // TODO: Perform segue after user has clicked "Allow"
         registerLocalNotifications()
-        performSegue(withIdentifier: "familyStage", sender: self)
     }
     
     @IBAction func disablePush(_ sender: UIButton) {
@@ -66,6 +64,11 @@ class PushNotificationsViewController: UIViewController {
                     print("Push notification auth granted")
                 } else {
                     print("Push notification auth denied")
+                }
+                
+                UserDefaultsManager.setNotificationStatus(status: granted)
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "familyStage", sender: self)
                 }
             }
         }

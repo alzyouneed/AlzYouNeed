@@ -453,14 +453,21 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     
     func scheduleLocalNotification(_ reminderId: String, reminder: NSDictionary) {
         if UIApplication.shared.isRegisteredForRemoteNotifications {
+            var reminderScheduled = false
             UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (requests) in
+//                print("reminderId:", reminderId)
+                print("requests:", requests)
                 for notification in requests {
                     // Notification exists
+                    print("notification identifier:", notification.identifier)
                     if notification.identifier == reminderId {
                         print("Local notification already pending")
-                        return
+                        reminderScheduled = true
                     }
                 }
+                guard case reminderScheduled = false else {return}
+                print("here")
+                
                 // Notification does not exist
                 let center = UNUserNotificationCenter.current()
                 
@@ -478,21 +485,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 // Check if reminder should repeat
                 var shouldRepeat = false
-
-//                if let repeatOption = reminder["repeats"] as? String {
-//                    switch repeatOption {
-//                        case "Yes":
-//                            shouldRepeat = true
-//                        case "No":
-//                            shouldRepeat = false
-////                        case "None":
-////                            shouldRepeat = false
-////                        case "Hourly", "Daily", "Weekly":
-////                            shouldRepeat = true
-//                    default:
-//                        break
-//                    }
-//                }
                 
                 if let repeatOption = reminder["repeats"] as? String {
                     switch repeatOption {
@@ -519,10 +511,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     }
                 }
                 
-//                print("Reminder to schedule should repeat:", shouldRepeat)
-                
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: shouldRepeat)
                 let request = UNNotificationRequest(identifier: reminderId, content: content, trigger: trigger)
+                print("request identifier:", request.identifier)
                 center.add(request, withCompletionHandler: { (error) in
                     if error != nil {
                         print("Error adding push notification request:", error!)
@@ -534,8 +525,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             self.updateTabBadge()
                         })
                         
-                        print("Should Repeat: \(shouldRepeat)")
-                        print("Next repeat: \(trigger.nextTriggerDate())")
+//                        print("Should Repeat: \(shouldRepeat)")
+//                        print("Next repeat: \(trigger.nextTriggerDate())")
                         if shouldRepeat {
                             print("Time before next trigger: \(Date().timeIntervalSince(trigger.nextTriggerDate()!)) seconds --OR-- \(Date().timeIntervalSince(trigger.nextTriggerDate()!)/60) minutes")
                         }

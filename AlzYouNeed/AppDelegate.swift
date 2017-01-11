@@ -54,44 +54,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        tabItem.badgeValue = "8"
         
         // Local reminders
-//        if let options = launchOptions {
-//            if (options[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification) != nil {
-////            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-//                tabBarController.selectedIndex = 2
-////                if let userInfo = notification.userInfo {
-////                    
-////                }
-//            }
-//        }
-        
-        
-//        let settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-//        application.registerUserNotificationSettings(settings)
-//        application.registerForRemoteNotifications()
-        
-//        let center = UNUserNotificationCenter.current()
-//        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-//            if error != nil {
-//                print("Error requesting push notification auth:", error)
-//            } else {
-//                if granted {
-//                    print("Push notification auth granted")
-//                } else {
-//                    print("Push notification auth denied")
-//                }
-//            }
-//        }
-//        application.registerForRemoteNotifications()
+        if UserDefaultsManager.getNotificationStatus() {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+                if let error = error {
+                    print("Error:", error)
+                } else {
+                    if granted {
+                        print("Authorization successful")
+                    }
+                }
+            }
+        }
         
         
         // Add observer for InstanceID token refresh callback.
         NotificationCenter.default.addObserver(self, selector: #selector(self.tokenRefreshNotification), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
         
         setupNotifications()
-        
-        let center  = UNUserNotificationCenter.current()
-        center.delegate = self
-        
+
         return true
     }
     

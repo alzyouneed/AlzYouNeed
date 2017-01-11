@@ -112,4 +112,18 @@ class UserDefaultsManager: NSObject {
         return nil
     }
     
+    class func getNotificationStatus() -> Bool {
+        let defaults = UserDefaults.standard
+        let status = defaults.bool(forKey: "notificationStatus")
+        print("Get notification status:", status)
+        return status
+    }
+    
+    class func setNotificationStatus(status: Bool) {
+        print("Set notification status:", status)
+        let defaults = UserDefaults.standard
+        defaults.set(status, forKey: "notificationStatus")
+        defaults.synchronize()
+    }
+    
 }
