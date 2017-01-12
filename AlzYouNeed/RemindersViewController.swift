@@ -37,6 +37,12 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
 //    let repeatOptions = ["None", "Hourly", "Daily", "Weekly", "Minute"]
     let repeatOptions = ["None", "Minute", "Daily", "Weekly"]
     
+    var alertBeforeTF: UITextField!
+    let alertBeforePickerView: UIPickerView! = UIPickerView()
+    // TESTING ONLY
+//    let alertOptions = ["None", "1 minute before", "15 minutes before", "1 hour before", "1 day before"]
+    let alertOptions = ["None", "15 minutes before", "1 hour before", "1 day before"]
+    
     @IBOutlet var emergencyButton: UIButton!
     
     override func viewDidLoad() {
@@ -85,6 +91,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         var descriptionTF: UITextField!
         repeatPickerView.delegate = self
         repeatPickerView.dataSource = self
+        repeatPickerView.tag = 0
+        
+        alertBeforePickerView.delegate = self
+        alertBeforePickerView.dataSource = self
+        alertBeforePickerView.tag = 1
         
         alert.addTextField { (titleTextField) in
             titleTextField.placeholder = "Remind me to..."
@@ -105,6 +116,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             dateTextField.inputView = self.datePickerView
             self.datePickerView.addTarget(self, action: #selector(RemindersViewController.datePickerValueChanged(_:)), for: UIControlEvents.valueChanged)
             self.dateTF = dateTextField
+        }
+        alert.addTextField { (alertBeforeTextField) in
+            alertBeforeTextField.text = "Alert: None"
+            alertBeforeTextField.inputView = self.alertBeforePickerView
+            self.alertBeforeTF = alertBeforeTextField
         }
         alert.addTextField { (repeatsTextField) in
 //            repeatsTextField.text = "Repeats - No"
@@ -129,7 +145,24 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
                 let dueDate = dateFormatter.date(from: self.dateTF.text!)?.timeIntervalSince1970
                 
-                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description]
+                // Time interval in seconds
+                var alertBeforeInterval = TimeInterval(0)
+                switch self.alertBeforeTF.text! {
+                   case "Alert: None":
+                        alertBeforeInterval = TimeInterval(0)
+                    case "Alert: 1 minute before":
+                        alertBeforeInterval = TimeInterval(60)
+                    case "Alert: 15 minutes before":
+                        alertBeforeInterval = TimeInterval(15 * 60)
+                    case "Alert: 1 hour before":
+                        alertBeforeInterval = TimeInterval(60 * 60)
+                    case "Alert: 1 day before":
+                        alertBeforeInterval = TimeInterval(24 * 60 * 60)
+                default:
+                    break
+                }
+                
+                var newReminder = ["title":titleTF.text!, "description":descriptionTF.text! , "createdDate":now.description, "dueDate":dueDate!.description, "alertBeforeInterval":"\(alertBeforeInterval)"]
                 
 //                let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " - ")[1]
                 let repeatsTFText = self.repeatsTF.text?.components(separatedBy: " ")[1]
@@ -265,8 +298,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                             // Schedule local notifications
                             if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
                                 let now = Date()
+                                let calendar = Calendar.current
                                 // Check that date has not passed
-                                if newReminder.repeats != "false" || (dueDate as NSDate).earlierDate(now) != dueDate {
+                                if calendar.compare(dueDate, to: now, toGranularity: .second) == .orderedDescending || newReminder.repeats != "None" {
                                     self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
                                 }
                                 else {
@@ -377,8 +411,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                         })
                     }
                     
+                    // Update complete reminders arr
+                    self.getCompletedFamilyReminders()
+                    
                     // Check if repeating to reschedule
-                    print("Completed reminder repeats:", completedReminder.repeats)
+//                    print("Completed reminder repeats:", completedReminder.repeats)
                     if completedReminder.repeats != "None" {
 //                    if completedReminder.repeats == "Yes" {
                         FirebaseManager.createFamilyReminder(completedReminder.asDict() as NSDictionary, completionHandler: { (error, databaseRef) in
@@ -415,14 +452,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Date Picker
     func datePickerValueChanged(_ sender: UIDatePicker) {
         let dateFormatter = DateFormatter()
-//        if !repeatsTF.text!.isEmpty {
-//            if repeatsTF.text != "Repeats None" {
-//                dateFormatter.timeStyle = DateFormatter.Style.short
-//            } else {
-//                dateFormatter.dateStyle = DateFormatter.Style.medium
-//                dateFormatter.timeStyle = DateFormatter.Style.short
-//            }
-//        }
         dateFormatter.dateStyle = DateFormatter.Style.medium
         dateFormatter.timeStyle = DateFormatter.Style.short
         dateTF.text = dateFormatter.string(from: sender.date)
@@ -437,9 +466,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             } else {
                 if granted {
                     print("Push notification auth granted")
-//                    let action = UNNotificationAction(identifier: "snooze", title: "Snooze", options: [])
-//                    let category = UNNotificationCategory(identifier: "reminderCategory", actions: [action], intentIdentifiers: [], options: [])
-//                    UNUserNotificationCenter.current().setNotificationCategories([category])
                 } else {
                     print("Push notification auth denied")
                 }
@@ -454,8 +480,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { (requests) in
                 for notification in requests {
                     // Notification exists
-                    if notification.identifier == reminderId {
-                        print("Local notification already pending")
+                    if notification.identifier == reminderId || notification.identifier == "\(reminderId).alertBefore" {
+                        print("Local notification already pending:", notification.identifier)
                         reminderScheduled = true
                     }
                 }
@@ -474,6 +500,16 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 let calendar = Calendar.current
                 var dateComponents = DateComponents()
                 
+                var alertBeforeDate:Date? = nil
+                var alertBeforeDateComponents: DateComponents? = nil
+                var alertInterval: TimeInterval? = nil
+                if let alertBeforeInterval = TimeInterval((reminder.value(forKey: "alertBeforeInterval") as? String)!) {
+                    if alertBeforeInterval != 0.0 {
+                        alertBeforeDate = Date(timeIntervalSince1970: dueDateInterval - alertBeforeInterval)
+                        alertInterval = alertBeforeInterval
+                    }
+                }
+                
                 // Check if reminder should repeat
                 var shouldRepeat = false
                 
@@ -484,18 +520,30 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     case "Minute":
                         shouldRepeat = true
                         dateComponents = calendar.dateComponents([.second], from: date)
+                        if alertBeforeDate != nil {
+                            alertBeforeDateComponents = calendar.dateComponents([.second], from: alertBeforeDate!)
+                        }
                     case "Hourly":
                         shouldRepeat = true
                         // Only look at minute to repeat each hour
                         dateComponents = calendar.dateComponents([.minute], from: date)
+                        if alertBeforeDate != nil {
+                            alertBeforeDateComponents = calendar.dateComponents([.minute], from: alertBeforeDate!)
+                        }
                     case "Daily":
                         shouldRepeat = true
                         // Only look at minute, hour to repeat each day
                         dateComponents = calendar.dateComponents([.minute, .hour], from: date)
+                        if alertBeforeDate != nil {
+                            alertBeforeDateComponents = calendar.dateComponents([.minute, .hour], from: alertBeforeDate!)
+                        }
                     case "Weekly":
                         shouldRepeat = true
                         // Only look at minute, hour, day to repeat each week
                         dateComponents = calendar.dateComponents([.minute, .hour, .day], from: date)
+                        if alertBeforeDate != nil {
+                            alertBeforeDateComponents = calendar.dateComponents([.minute, .hour, .day], from: alertBeforeDate!)
+                        }
                     default:
                         break
                     }
@@ -503,6 +551,9 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 
                 if !shouldRepeat {
                     dateComponents = calendar.dateComponents([.second, .minute, .hour, .day], from: date)
+                    if alertBeforeDate != nil {
+                        alertBeforeDateComponents = calendar.dateComponents([.second, .minute, .hour, .day], from: alertBeforeDate!)
+                    }
                 }
                 
                 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: shouldRepeat)
@@ -513,6 +564,38 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     } else {
                         
                         print("Push notification request added")
+                        
+                        // Add additional reminder if alertBeforeInterval > 0.0 -- TODO: Change repeats value
+                        if alertBeforeDateComponents != nil {
+                            // Don't allow snooze
+                            content.categoryIdentifier = ""
+                            
+                            // Modify notification message
+                            if alertInterval != nil {
+                                switch alertInterval! {
+                                    case TimeInterval(60):
+                                        content.body = "\(content.body) in 1 minute"
+                                    case TimeInterval(15 * 60):
+                                        content.body = "\(content.body) in 15 minutes"
+                                    case TimeInterval(60 * 60):
+                                        content.body = "\(content.body) in 1 hour"
+                                    case TimeInterval(24 * 60 * 60):
+                                        content.body = "\(content.body) in 1 day"
+                                default:
+                                    break
+                                }
+                            }
+                            
+                            let alertBeforeTrigger = UNCalendarNotificationTrigger(dateMatching: alertBeforeDateComponents!, repeats: false)
+                            let alertBeforeRequest = UNNotificationRequest(identifier: "\(reminderId).alertBefore", content: content, trigger: alertBeforeTrigger)
+                            UNUserNotificationCenter.current().add(alertBeforeRequest, withCompletionHandler: { (error) in
+                                if error != nil {
+                                    print("Error adding alertBefore request:", error!)
+                                } else {
+                                    print("alertBefore request added")
+                                }
+                            })
+                        }
                         
                         DispatchQueue.main.async(execute: {
                             self.badgeCount += 1
@@ -541,7 +624,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func cancelLocalNotification(_ reminderId: String) {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminderId])
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminderId, "\(reminderId).alertBefore"])
     }
     
     // MARK: - UIPickerView
@@ -550,22 +633,27 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return repeatOptions.count
+        if pickerView.tag == 0 {
+            return repeatOptions.count
+        } else {
+            return alertOptions.count
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return repeatOptions[row]
+        if pickerView.tag == 0 {
+            return repeatOptions[row]
+        } else {
+            return alertOptions[row]
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        repeatsTF.text = "Repeats - \(repeatOptions[row])"
-        repeatsTF.text = "Repeats \(repeatOptions[row])"
-        
-//        if repeatOptions[row] != "None" {
-//            self.datePickerView.datePickerMode = UIDatePickerMode.time
-//        } else {
-//            self.datePickerView.datePickerMode = UIDatePickerMode.dateAndTime
-//        }
+        if pickerView.tag == 0 {
+            repeatsTF.text = "Repeats \(repeatOptions[row])"
+        } else {
+            alertBeforeTF.text = "Alert: \(alertOptions[row])"
+        }
     }
     
     // MARK: Tutorial
@@ -594,11 +682,11 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             // Show To do's
-            print("Show incomplete reminders")
+//            print("Show incomplete reminders")
             addReminderTableButton.isHidden = false
         } else if sender.selectedSegmentIndex == 1 {
             // Show completed reminders
-            print("Show completed reminders")
+//            print("Show completed reminders")
             addReminderTableButton.isHidden = true
         }
         remindersTableView.reloadData()
@@ -613,6 +701,7 @@ extension RemindersViewController {
                 // Success
                 if let completedReminders = completedReminders {
                     AYNModel.sharedInstance.completedRemindersArr = completedReminders
+                    
                     self.remindersTableView.reloadData()
                 }
             }

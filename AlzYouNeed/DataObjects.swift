@@ -73,6 +73,7 @@ struct Reminder {
     var createdDate: String!
     var dueDate: String!
     var completedDate: String!
+    var alertBeforeInterval: String!
     var repeats: String!
     
     init?(reminderId: String, reminderDict: NSDictionary) {
@@ -90,6 +91,9 @@ struct Reminder {
         guard let dueDate = reminderDict.value(forKey: "dueDate") as? String else {return nil}
         self.dueDate = dueDate
         
+        guard let alertBeforeInterval = reminderDict.value(forKey: "alertBeforeInterval") as? String else {return nil}
+        self.alertBeforeInterval = alertBeforeInterval
+        
         guard let repeats = reminderDict.value(forKey: "repeats") as? String else {return nil}
         self.repeats = repeats
         
@@ -97,7 +101,7 @@ struct Reminder {
     }
     
     func asDict() -> Dictionary<String, String> {
-        let reminderDict: Dictionary<String, String> = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate, "completedDate": self.completedDate, "repeats": self.repeats]
+        let reminderDict: Dictionary<String, String> = ["title": self.title, "description": self.reminderDescription, "createdDate": self.createdDate, "dueDate": self.dueDate, "completedDate": self.completedDate, "repeats": self.repeats, "alertBeforeInterval": self.alertBeforeInterval]
         return reminderDict
     }
 }
