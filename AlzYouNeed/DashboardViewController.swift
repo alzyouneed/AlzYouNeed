@@ -54,6 +54,8 @@ class DashboardViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let now = Date()
         dateView.configureView(now)
+        
+        registerNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -276,6 +278,9 @@ class DashboardViewController: UIViewController {
                 } else {
                     self.userView.specialUser("none")
                 }
+                
+                // Save device token here: TODO
+                
             }
         }
     }
@@ -466,6 +471,23 @@ class DashboardViewController: UIViewController {
     
     func emergencyAction(sender: UIButton) {
         print("Emergency button pressed")
+    }
+    
+    // MARK: - Push Notifications
+    func registerNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            if error != nil {
+                print("Error requesting push notification auth:", error!)
+            } else {
+                if granted {
+                    print("Push notification auth granted")
+                } else {
+                    print("Push notification auth denied")
+                }
+            }
+        }
+        UIApplication.shared.registerForRemoteNotifications()
     }
 }
 

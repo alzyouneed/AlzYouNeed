@@ -15,12 +15,13 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var ref: FIRDatabaseReference!
 
     override init() {
         super.init()
         // Firebase init
         FIRApp.configure()
-//        FIRDatabase.database().persistenceEnabled = true
+        ref = FIRDatabase.database().reference()
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -107,19 +108,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Remote
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
-        var tokenString = ""
+//        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
+//        var tokenString = ""
+//        
+//        for i in 0..<deviceToken.count {
+//            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+//        }
+////        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
+//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.prod)
         
-        for i in 0..<deviceToken.count {
-            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        // Convert token to string
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        
+        // Print it to console
+        print("APNs device token: \(deviceTokenString)")
+        
+        // Persist it in your backend in case it's new
+        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
+            if ref != nil {
+                self.ref.child("users").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                
+                if let familyName = AYNModel.sharedInstance.currentUser?["familyId"] as? String {
+                    self.ref.child("families").child(familyName).child("members").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                }
+            }
         }
-        
-
-//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
-//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
-        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.prod)
-//        print("Device Token:", tokenString)
-//        print("FCM Token:", FIRInstanceID.instanceID().token()!)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

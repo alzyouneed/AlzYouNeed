@@ -163,6 +163,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         if messageContact {
             messageTextField.becomeFirstResponder()
         }
+        print("Contact:", contact)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -226,8 +227,24 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
                 sender.isEnabled = true
             } else {
                 // Success
+                self.sendNotification(message: self.messageTextField.text!)
                 self.messageTextField.text = ""
                 sender.isEnabled = true
+            }
+        }
+    }
+    
+    func sendNotification(message: String) {
+        let ref = FIRDatabase.database().reference()
+        
+        if let userName = AYNModel.sharedInstance.currentUser?["name"] as? String {
+            if contact.deviceToken != nil {
+                let notification = ["fromId": FIRAuth.auth()?.currentUser!.uid,
+                                    "toId": contact.userId,
+                                    "message" : "\(userName): \(message)",
+                                    "deviceToken": contact.deviceToken!]
+                ref.child("notifications").childByAutoId().setValue(notification)
+                print("Sent notification")
             }
         }
     }

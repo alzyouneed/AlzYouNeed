@@ -19,6 +19,7 @@ struct Contact {
     var patient: String!
     var admin: String!
     var relation: String?
+    var deviceToken: String?
     
     var photo: UIImage?
     
@@ -40,6 +41,7 @@ struct Contact {
         self.admin = userDict.value(forKey: "admin") as? String ?? "false"
         self.photoUrl = userDict.value(forKey: "photoUrl") as? String ?? ""
         self.relation = userDict.value(forKey: "relation") as? String ?? nil
+        self.deviceToken = userDict.value(forKey: "deviceToken") as? String ?? nil
     }
 }
 
