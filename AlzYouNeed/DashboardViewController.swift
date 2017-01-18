@@ -54,8 +54,6 @@ class DashboardViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let now = Date()
         dateView.configureView(now)
-        
-        registerNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -437,6 +435,8 @@ class DashboardViewController: UIViewController {
                 AYNModel.sharedInstance.currentUser = userDict
                 self.checkNotepadForChanges()
                 self.saveFamilyMemberContacts()
+                
+                self.registerNotifications()
             }
         })
     }
