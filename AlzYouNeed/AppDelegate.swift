@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FirebaseMessaging
 import UserNotifications
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -74,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.tokenRefreshNotification), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
         
         setupNotifications()
+        Fabric.with([Crashlytics.self])
 
         return true
     }
