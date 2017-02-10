@@ -11,6 +11,7 @@ import Firebase
 import FirebaseStorage
 import MessageUI
 import UserNotifications
+import Crashlytics
 
 class DashboardViewController: UIViewController {
     
@@ -74,7 +75,9 @@ class DashboardViewController: UIViewController {
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in
             // Log analytics event
-            FIRAnalytics.logEvent(withName: "logout", parameters: nil)
+//            FIRAnalytics.logEvent(withName: "logout", parameters: nil)
+            Answers.logCustomEvent(withName: "logout",
+                                           customAttributes: [:])
             
             // Clean up current session
             AYNModel.sharedInstance.resetModel()
