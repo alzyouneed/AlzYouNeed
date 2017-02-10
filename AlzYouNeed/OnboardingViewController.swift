@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import AVFoundation
 // import PKHUD
+import Crashlytics
 
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
@@ -126,6 +127,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                     if error == nil {
                         print("Login successful")
                         // HUD.flash(.Success, delay: 0, completion: { (success) in
+                        Answers.logLogin(withMethod: "Email",
+                                                   success: true,
+                                                   customAttributes: [:])
                             self.view.endEditing(true)
                             AYNModel.sharedInstance.resetModel()
                             self.dismiss(animated: true, completion: nil)
@@ -134,6 +138,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                     else {
                         print(error!)
                         // HUD.hide({ (success) in
+                        Answers.logLogin(withMethod: "Email",
+                                                   success: false,
+                                                   customAttributes: [:])
                             self.showPopoverView(error! as NSError)
                         // })
                     }

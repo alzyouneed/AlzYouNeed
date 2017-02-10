@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import PKHUD
+import Crashlytics
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -180,6 +181,9 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             FirebaseManager.createNewUserWithEmail(emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completionHandler: { (user, error) in
                 if error != nil {
                     // Sign up failed -- show popoverView with reason
+                    Answers.logSignUp(withMethod: "Email",
+                                                success: false,
+                                                customAttributes: [:])
                     HUD.hide({ (success) in
                         self.showPopoverView(error!)
                         self.interfaceEnabled(true)
@@ -195,12 +199,15 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                         
                         FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
                             if error == nil {
+                                Answers.logSignUp(withMethod: "Email",
+                                                  success: true,
+                                                  customAttributes: [:])
+                                
                                 // success -- Show progress view success
                                 HUD.flash(.success, delay: 0, completion: { (success) in
                                     self.view.endEditing(true)
                                     self.userSignedUp = true
                                     AYNModel.sharedInstance.wasReset = true
-                                
                                     self.performSegue(withIdentifier: "updateUser", sender: self)
                                 })
                             }
