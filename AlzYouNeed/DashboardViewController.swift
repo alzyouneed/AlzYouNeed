@@ -20,7 +20,14 @@ class DashboardViewController: UIViewController {
     @IBOutlet var dashboardActionButtons: actionButtonsDashboardView!
     @IBOutlet var reminderActionButtonView: actionButtonsDashboardView!
 
+    @IBOutlet var settingsButton: UIBarButtonItem!
     @IBOutlet var emergencyButton: UIButton!
+    
+    @IBOutlet var bottomSectionView: UIView!
+    var notepadActive = false
+    @IBOutlet var notepadView: notepadView!
+    @IBOutlet var notepadTopConstraint: NSLayoutConstraint!
+    @IBOutlet var notepadVeryTopConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +40,7 @@ class DashboardViewController: UIViewController {
         
         configureView()
         configureEmergencyButton()
+        configureNotepadView()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -347,6 +355,20 @@ class DashboardViewController: UIViewController {
         reminderActionButtonView.leftButton.tintColor = UIColor.white
     }
     
+    func configureNotepadView() {
+        notepadView.notesTextView.isUserInteractionEnabled = false
+//        notepadView.notesTextView.isScrollEnabled = false
+        notepadView.saveButton.isHidden = true
+        notepadView.cancelButton.isHidden = true
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotepad))
+        notepadView.addGestureRecognizer(tap)
+        
+//        let cancelTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.collapseNotepad))
+//        notepadView.cancelButton.addGestureRecognizer(cancelTap)
+        notepadView.cancelButton.addTarget(self, action: #selector(DashboardViewController.collapseNotepad), for: [UIControlEvents.touchUpInside])
+    }
+    
     func notepadButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "notepad", sender: self)
     }
@@ -548,4 +570,64 @@ extension DashboardViewController {
         present(messageVC, animated: true, completion: nil)
     }
 
+}
+
+// MARK: - Notepad View
+extension DashboardViewController {
+    func tappedNotepad() {
+        if !notepadActive {
+            print("expand")
+            expandNotepad()
+        } else {
+            print("collapse")
+            collapseNotepad()
+        }
+    }
+    
+    func expandNotepad() {
+        if !notepadActive {
+            notepadActive = true
+            
+            
+            notepadView.saveButton.isHidden = false
+            notepadView.cancelButton.isHidden = false
+            notepadView.saveButton.alpha = 0
+            notepadView.cancelButton.alpha = 0
+            
+            notepadTopConstraint.isActive = false
+            notepadVeryTopConstraint.isActive = true
+            
+            settingsButton.title = "Cancel"
+            settingsButton.image = nil
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.notepadView.saveButton.alpha = 1
+                self.notepadView.cancelButton.alpha = 1
+                self.view.layoutIfNeeded()
+            })
+        }
+        notepadView.notesTextView.isUserInteractionEnabled = true
+    }
+    
+    func collapseNotepad() {
+        if notepadActive {
+            notepadActive = false
+            
+            notepadTopConstraint.isActive = true
+            notepadVeryTopConstraint.isActive = false
+            
+            settingsButton.title = nil
+            settingsButton.image = #imageLiteral(resourceName: "settingsIcon")
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.notepadView.saveButton.alpha = 0
+                self.notepadView.cancelButton.alpha = 0
+                self.view.layoutIfNeeded()
+            })
+            
+//            self.view.insertSubview(notepadView, aboveSubview: bottomSectionView)
+//            notepadView.isUserInteractionEnabled = false
+            notepadView.notesTextView.isUserInteractionEnabled = false
+        }
+    }
 }

@@ -226,8 +226,8 @@
 		2D4C872C1E68849C00FB3B7E /* notepadView */ = {
 			isa = PBXGroup;
 			children = (
-				2D4C872D1E6884B400FB3B7E /* notepadView.swift */,
 				2D4C872F1E6884C400FB3B7E /* notepadView.xib */,
+				2D4C872D1E6884B400FB3B7E /* notepadView.swift */,
 			);
 			name = notepadView;
 			sourceTree = "<group>";
