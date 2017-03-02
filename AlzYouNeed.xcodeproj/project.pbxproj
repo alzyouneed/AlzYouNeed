@@ -19,6 +19,8 @@
 		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
 		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
 		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
+		2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C872D1E6884B400FB3B7E /* notepadView.swift */; };
+		2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C872F1E6884C400FB3B7E /* notepadView.xib */; };
 		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
 		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
 		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
@@ -81,6 +83,8 @@
 		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
 		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
 		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
+		2D4C872D1E6884B400FB3B7E /* notepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notepadView.swift; sourceTree = "<group>"; };
+		2D4C872F1E6884C400FB3B7E /* notepadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = notepadView.xib; path = ../../../../../../notepadView.xib; sourceTree = "<group>"; };
 		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
 		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
 		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +221,15 @@
 				2D417BF11D21878E0045C80F /* avatarSelectionView.swift */,
 			);
 			name = avatarSelection;
+			sourceTree = "<group>";
+		};
+		2D4C872C1E68849C00FB3B7E /* notepadView */ = {
+			isa = PBXGroup;
+			children = (
+				2D4C872D1E6884B400FB3B7E /* notepadView.swift */,
+				2D4C872F1E6884C400FB3B7E /* notepadView.xib */,
+			);
+			name = notepadView;
 			sourceTree = "<group>";
 		};
 		2D6D2FBB1D186B7F0050589C /* Controller */ = {
@@ -379,6 +392,7 @@
 		2DC8D5BC1D12DC0B00952483 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D4C872C1E68849C00FB3B7E /* notepadView */,
 				2D1F93D61D3D7E1E0050794F /* actionButtonsDashboardView */,
 				2DC8D5C11D12E11800952483 /* UserDashboardView */,
 				2DC8D5C61D12E14300952483 /* DateDashboardView */,
@@ -538,6 +552,7 @@
 				2DCC3C661D301208005D0EFD /* OpenSans-Light.ttf in Resources */,
 				2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */,
 				2D36370C1D47E23C0050812E /* islandView3.mp4 in Resources */,
+				2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
 				2DCC3C671D301208005D0EFD /* OpenSans-Regular.ttf in Resources */,
 				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
@@ -657,6 +672,7 @@
 				2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */,
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */,
+				2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,

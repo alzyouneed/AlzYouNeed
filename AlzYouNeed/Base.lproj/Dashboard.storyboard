@@ -219,6 +219,11 @@
                                     <constraint firstAttribute="trailing" secondItem="NAm-gW-sfD" secondAttribute="trailing" constant="8" id="Q82-fm-yok"/>
                                     <constraint firstItem="NAm-gW-sfD" firstAttribute="centerX" secondItem="IFC-jY-2FC" secondAttribute="centerX" id="hf5-bG-GaC"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="NAm-gW-sfD"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLL-Sp-XmI" customClass="UserDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="154"/>
@@ -323,7 +328,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
