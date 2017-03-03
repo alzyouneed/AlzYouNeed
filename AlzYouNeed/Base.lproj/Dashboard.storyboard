@@ -310,6 +310,7 @@
                         <outlet property="dashboardActionButtons" destination="DvW-BC-Ijy" id="oFI-W2-2dz"/>
                         <outlet property="dateView" destination="OU6-lO-WOk" id="VuF-nT-nOG"/>
                         <outlet property="emergencyButton" destination="8Tr-ho-3Vv" id="BNw-mt-WrH"/>
+                        <outlet property="notepadBottomConstraint" destination="0kU-e3-oGr" id="DiQ-a0-zl7"/>
                         <outlet property="notepadTopConstraint" destination="DaC-zE-cMN" id="Niv-QJ-Gbk"/>
                         <outlet property="notepadVeryTopConstraint" destination="raJ-0x-arG" id="Dxm-oP-B3V"/>
                         <outlet property="notepadView" destination="Clo-Lc-1mw" id="FNK-dg-KGx"/>

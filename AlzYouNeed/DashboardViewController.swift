@@ -28,6 +28,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var notepadView: notepadView!
     @IBOutlet var notepadTopConstraint: NSLayoutConstraint!
     @IBOutlet var notepadVeryTopConstraint: NSLayoutConstraint!
+    @IBOutlet var notepadBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,11 +59,20 @@ class DashboardViewController: UIViewController {
             AYNModel.sharedInstance.profileWasUpdated = false
             configureView()
         }
+        
+        // Configure for keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillShow(sender:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillHide(sender:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         let now = Date()
         dateView.configureView(now)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -357,16 +367,16 @@ class DashboardViewController: UIViewController {
     
     func configureNotepadView() {
         notepadView.notesTextView.isUserInteractionEnabled = false
-//        notepadView.notesTextView.isScrollEnabled = false
-        notepadView.saveButton.isHidden = true
-        notepadView.cancelButton.isHidden = true
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotepad))
         notepadView.addGestureRecognizer(tap)
         
-//        let cancelTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.collapseNotepad))
-//        notepadView.cancelButton.addGestureRecognizer(cancelTap)
-        notepadView.cancelButton.addTarget(self, action: #selector(DashboardViewController.collapseNotepad), for: [UIControlEvents.touchUpInside])
+        let notesTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotes))
+        notepadView.notesTextView.addGestureRecognizer(notesTap)
+        
+        // Round the bounds
+        notepadView.layer.cornerRadius = 10
+        notepadView.layer.masksToBounds = true
     }
     
     func configureSettings() {
@@ -556,6 +566,7 @@ extension DashboardViewController {
 // MARK: - Notepad View
 extension DashboardViewController {
     func tappedNotepad() {
+        print("tapped notepad")
         if !notepadActive {
             expandNotepad()
         } else {
@@ -563,30 +574,27 @@ extension DashboardViewController {
         }
     }
     
+    func tappedNotes() {
+        print("tapped notes view")
+    }
+    
     func expandNotepad() {
         if !notepadActive {
             notepadActive = true
             
-            
-//            notepadView.saveButton.isHidden = false
-//            notepadView.cancelButton.isHidden = false
-//            notepadView.saveButton.alpha = 0
-//            notepadView.cancelButton.alpha = 0
-            
+            // Change active constraints
             notepadTopConstraint.isActive = false
             notepadVeryTopConstraint.isActive = true
             
-            UIView.animate(withDuration: 0.2, animations: { 
-//                self.notepadView.saveButton.alpha = 1
-//                self.notepadView.cancelButton.alpha = 1
+            UIView.animate(withDuration: 0.2, animations: {
                 self.view.layoutIfNeeded()
             }, completion: { (completed) in
+                // Adjust navigation bar buttons
                 self.settingsButton.title = "Cancel"
                 self.settingsButton.image = nil
                 self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
                 self.notepadView.notesTextView.isUserInteractionEnabled = true
-                
-//                let saveButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.done, target: self, action: #selector(DashboardViewController.saveNotepad))
+
                 let saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.save, target: self, action: #selector(DashboardViewController.saveNotepad))
 
                 self.navigationItem.setLeftBarButton(saveButton, animated: false)
@@ -598,30 +606,58 @@ extension DashboardViewController {
         if notepadActive {
             notepadActive = false
             
+            // Change active constraints
             notepadTopConstraint.isActive = true
             notepadVeryTopConstraint.isActive = false
             
+            // Reset navigation bar buttons
             settingsButton.title = nil
             settingsButton.image = #imageLiteral(resourceName: "settingsIcon")
             settingsButton.action = #selector(DashboardViewController.showSettings(_:))
+            self.navigationItem.setLeftBarButton(nil, animated: false)
             
             self.view.endEditing(true)
             
-            self.navigationItem.setLeftBarButton(nil, animated: false)
-            
             UIView.animate(withDuration: 0.2, animations: {
-//                self.notepadView.saveButton.alpha = 0
-//                self.notepadView.cancelButton.alpha = 0
                 self.view.layoutIfNeeded()
             })
-            
-//            self.view.insertSubview(notepadView, aboveSubview: bottomSectionView)
-//            notepadView.isUserInteractionEnabled = false
             notepadView.notesTextView.isUserInteractionEnabled = false
         }
     }
     
     func saveNotepad() {
         print("saved notepad")
+    }
+}
+
+// MARK: - Keyboard
+extension DashboardViewController {
+    // MARK: - Keyboard
+    func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
+        let userInfo = (notification as NSNotification).userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+        let animationCurveRawNSNumber = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber
+        let animationCurveRaw = animationCurveRawNSNumber.uintValue
+        let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+        let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
+        
+        if show {
+            self.notepadBottomConstraint.constant = changeInHeight - (self.tabBarController?.tabBar.frame.height)!
+        } else {
+            self.notepadBottomConstraint.constant = 0
+        }
+        
+        UIView.animate(withDuration: animationDuration, delay: 0, options: animationCurve, animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        adjustingKeyboardHeight(true, notification: sender as Notification)
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        adjustingKeyboardHeight(false, notification: sender as Notification)
     }
 }

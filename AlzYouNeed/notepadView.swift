@@ -10,9 +10,7 @@ import UIKit
 
 @IBDesignable class notepadView: UIView {
     var view: UIView!
-    
-    @IBOutlet var saveButton: UIButton!
-    @IBOutlet var cancelButton: UIButton!
+
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var changesLabel: UILabel!
     @IBOutlet var notesTextView: UITextView!
@@ -45,9 +43,5 @@ import UIKit
         let nib = UINib(nibName: "notepadView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
-    }
-
-    @IBAction func cancelTapped(_ sender: Any) {
-        print("cancel tapped")
     }
 }
