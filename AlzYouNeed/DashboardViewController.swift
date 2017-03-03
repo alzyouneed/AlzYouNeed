@@ -21,6 +21,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var reminderActionButtonView: actionButtonsDashboardView!
 
     @IBOutlet var settingsButton: UIBarButtonItem!
+    @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var emergencyButton: UIButton!
     
     @IBOutlet var bottomSectionView: UIView!
@@ -28,6 +29,8 @@ class DashboardViewController: UIViewController {
     @IBOutlet var notepadView: notepadView!
     @IBOutlet var notepadTopConstraint: NSLayoutConstraint!
     @IBOutlet var notepadVeryTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var notepadTopUserViewConstraint: NSLayoutConstraint!
     @IBOutlet var notepadBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
@@ -42,6 +45,8 @@ class DashboardViewController: UIViewController {
         configureView()
         configureEmergencyButton()
         configureNotepadView()
+        configureSettings()
+        configureSave()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -225,6 +230,10 @@ class DashboardViewController: UIViewController {
             configureViewWithFirebase()
         }
         configureActionButtons()
+        
+        // Configure save button
+        saveButton.isEnabled = false
+        saveButton.tintColor = UIColor.clear
     }
     
     func configureDashboardView(_ imageUrl: String) {
@@ -377,10 +386,15 @@ class DashboardViewController: UIViewController {
         // Round the bounds
         notepadView.layer.cornerRadius = 10
         notepadView.layer.masksToBounds = true
+//        notepadView.clipsToBounds = true
     }
     
     func configureSettings() {
         settingsButton.action = #selector(DashboardViewController.showSettings(_:))
+    }
+    
+    func configureSave() {
+        saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
@@ -584,20 +598,24 @@ extension DashboardViewController {
             
             // Change active constraints
             notepadTopConstraint.isActive = false
-            notepadVeryTopConstraint.isActive = true
+//            notepadVeryTopConstraint.isActive = true
+            notepadTopUserViewConstraint.isActive = true
+            self.saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
             
             UIView.animate(withDuration: 0.2, animations: {
+                self.notepadView.changesLabel.alpha = 0
                 self.view.layoutIfNeeded()
+//                self.notepadView.layoutSubviews()
             }, completion: { (completed) in
                 // Adjust navigation bar buttons
                 self.settingsButton.title = "Cancel"
                 self.settingsButton.image = nil
                 self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
                 self.notepadView.notesTextView.isUserInteractionEnabled = true
-
-                let saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.save, target: self, action: #selector(DashboardViewController.saveNotepad))
-
-                self.navigationItem.setLeftBarButton(saveButton, animated: false)
+                
+//                self.saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
+                self.saveButton.isEnabled = true
+                self.saveButton.tintColor = UIColor.white
             })
         }
     }
@@ -608,24 +626,29 @@ extension DashboardViewController {
             
             // Change active constraints
             notepadTopConstraint.isActive = true
-            notepadVeryTopConstraint.isActive = false
+//            notepadVeryTopConstraint.isActive = false
+            notepadTopUserViewConstraint.isActive = false
             
             // Reset navigation bar buttons
             settingsButton.title = nil
             settingsButton.image = #imageLiteral(resourceName: "settingsIcon")
             settingsButton.action = #selector(DashboardViewController.showSettings(_:))
-            self.navigationItem.setLeftBarButton(nil, animated: false)
+//            self.navigationItem.setLeftBarButton(nil, animated: false)
             
             self.view.endEditing(true)
             
+            saveButton.isEnabled = false
+            saveButton.tintColor = UIColor.clear
+            
             UIView.animate(withDuration: 0.2, animations: {
+                self.notepadView.changesLabel.alpha = 1
                 self.view.layoutIfNeeded()
             })
             notepadView.notesTextView.isUserInteractionEnabled = false
         }
     }
     
-    func saveNotepad() {
+    func saveNotepad(_ sender: UIBarButtonItem) {
         print("saved notepad")
     }
 }

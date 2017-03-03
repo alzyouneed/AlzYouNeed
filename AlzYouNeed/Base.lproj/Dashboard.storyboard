@@ -287,6 +287,7 @@
                             <constraint firstItem="IFC-jY-2FC" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="bottom" id="lCx-eF-aCa"/>
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" constant="33" id="lxA-EI-pkt"/>
                             <constraint firstItem="xLL-Sp-XmI" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" id="mbG-sV-y2s"/>
+                            <constraint firstItem="Clo-Lc-1mw" firstAttribute="top" secondItem="xLL-Sp-XmI" secondAttribute="top" priority="999" id="niN-fx-IFi"/>
                             <constraint firstItem="Clo-Lc-1mw" firstAttribute="top" secondItem="aJU-23-cUd" secondAttribute="bottom" priority="999" id="raJ-0x-arG"/>
                             <constraint firstAttribute="trailing" secondItem="IFC-jY-2FC" secondAttribute="trailing" id="wpM-eT-Q1g"/>
                         </constraints>
@@ -294,10 +295,14 @@
                             <mask key="constraints">
                                 <exclude reference="Uq8-UP-Qlu"/>
                                 <exclude reference="lxA-EI-pkt"/>
+                                <exclude reference="raJ-0x-arG"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="JRu-Ga-1J2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="UuH-Yz-HH6">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="3Dj-7z-xYC">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -312,9 +317,11 @@
                         <outlet property="emergencyButton" destination="8Tr-ho-3Vv" id="BNw-mt-WrH"/>
                         <outlet property="notepadBottomConstraint" destination="0kU-e3-oGr" id="DiQ-a0-zl7"/>
                         <outlet property="notepadTopConstraint" destination="DaC-zE-cMN" id="Niv-QJ-Gbk"/>
+                        <outlet property="notepadTopUserViewConstraint" destination="niN-fx-IFi" id="iWg-58-PqW"/>
                         <outlet property="notepadVeryTopConstraint" destination="raJ-0x-arG" id="Dxm-oP-B3V"/>
                         <outlet property="notepadView" destination="Clo-Lc-1mw" id="FNK-dg-KGx"/>
                         <outlet property="reminderActionButtonView" destination="NAm-gW-sfD" id="yJl-ac-PYl"/>
+                        <outlet property="saveButton" destination="UuH-Yz-HH6" id="6aE-p9-IkV"/>
                         <outlet property="settingsButton" destination="3Dj-7z-xYC" id="uhK-ho-jN4"/>
                         <outlet property="userView" destination="xLL-Sp-XmI" id="UqT-yZ-VCk"/>
                         <segue destination="2gG-ex-1CO" kind="presentation" identifier="notepad" id="J52-qJ-AkR"/>
