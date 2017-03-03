@@ -369,17 +369,13 @@ class DashboardViewController: UIViewController {
         notepadView.cancelButton.addTarget(self, action: #selector(DashboardViewController.collapseNotepad), for: [UIControlEvents.touchUpInside])
     }
     
+    func configureSettings() {
+        settingsButton.action = #selector(DashboardViewController.showSettings(_:))
+    }
+    
     func notepadButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "notepad", sender: self)
     }
-    
-//    func reminderButtonPressed(_ sender: UIButton) {
-//        print("Create new reminder")
-//        self.tabBarController?.selectedIndex = 2
-//        createReminder()
-//        let delegate: ReminderDelegate = self
-//        delegate.createReminder()
-//    }
     
     func checkUserSignedIn() {
         // Check for current user
@@ -532,21 +528,6 @@ extension DashboardViewController: MFMessageComposeViewControllerDelegate {
     }
 }
 
-// MARK: - Navigation
-extension DashboardViewController {
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "contactDetail" {
-//            let tabBarController: UITa
-//            
-//            let detailNavController: UINavigationController = segue.destination as! UINavigationController
-//            if let reminderVC: RemindersViewController = detailNavController.childViewControllers[0] as? RemindersViewController {
-//                detailVC.contact = contact
-//                detailVC.profileImage = cell.contactView.contactImageView.image
-//            }
-//        }
-//    }
-}
-
 // MARK: - Emergency button
 extension DashboardViewController {
     func configureEmergencyButton() {
@@ -576,10 +557,8 @@ extension DashboardViewController {
 extension DashboardViewController {
     func tappedNotepad() {
         if !notepadActive {
-            print("expand")
             expandNotepad()
         } else {
-            print("collapse")
             collapseNotepad()
         }
     }
@@ -589,24 +568,30 @@ extension DashboardViewController {
             notepadActive = true
             
             
-            notepadView.saveButton.isHidden = false
-            notepadView.cancelButton.isHidden = false
-            notepadView.saveButton.alpha = 0
-            notepadView.cancelButton.alpha = 0
+//            notepadView.saveButton.isHidden = false
+//            notepadView.cancelButton.isHidden = false
+//            notepadView.saveButton.alpha = 0
+//            notepadView.cancelButton.alpha = 0
             
             notepadTopConstraint.isActive = false
             notepadVeryTopConstraint.isActive = true
             
-            settingsButton.title = "Cancel"
-            settingsButton.image = nil
-            
-            UIView.animate(withDuration: 0.2, animations: {
-                self.notepadView.saveButton.alpha = 1
-                self.notepadView.cancelButton.alpha = 1
+            UIView.animate(withDuration: 0.2, animations: { 
+//                self.notepadView.saveButton.alpha = 1
+//                self.notepadView.cancelButton.alpha = 1
                 self.view.layoutIfNeeded()
+            }, completion: { (completed) in
+                self.settingsButton.title = "Cancel"
+                self.settingsButton.image = nil
+                self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
+                self.notepadView.notesTextView.isUserInteractionEnabled = true
+                
+//                let saveButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.done, target: self, action: #selector(DashboardViewController.saveNotepad))
+                let saveButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.save, target: self, action: #selector(DashboardViewController.saveNotepad))
+
+                self.navigationItem.setLeftBarButton(saveButton, animated: false)
             })
         }
-        notepadView.notesTextView.isUserInteractionEnabled = true
     }
     
     func collapseNotepad() {
@@ -618,10 +603,15 @@ extension DashboardViewController {
             
             settingsButton.title = nil
             settingsButton.image = #imageLiteral(resourceName: "settingsIcon")
+            settingsButton.action = #selector(DashboardViewController.showSettings(_:))
+            
+            self.view.endEditing(true)
+            
+            self.navigationItem.setLeftBarButton(nil, animated: false)
             
             UIView.animate(withDuration: 0.2, animations: {
-                self.notepadView.saveButton.alpha = 0
-                self.notepadView.cancelButton.alpha = 0
+//                self.notepadView.saveButton.alpha = 0
+//                self.notepadView.cancelButton.alpha = 0
                 self.view.layoutIfNeeded()
             })
             
@@ -629,5 +619,9 @@ extension DashboardViewController {
 //            notepadView.isUserInteractionEnabled = false
             notepadView.notesTextView.isUserInteractionEnabled = false
         }
+    }
+    
+    func saveNotepad() {
+        print("saved notepad")
     }
 }
