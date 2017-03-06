@@ -129,10 +129,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Persist it in your backend in case it's new
         if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
             if ref != nil {
-                self.ref.child("users").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
                 
-                if let familyName = AYNModel.sharedInstance.currentUser?["familyId"] as? String {
-                    self.ref.child("families").child(familyName).child("members").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                // See if device token updated
+                if let savedDeviceToken = UserDefaultsManager.getDeviceToken() {
+                    
+                    if deviceTokenString != savedDeviceToken {
+                        print("New device token")
+                        UserDefaultsManager.saveDeviceToken(token: deviceTokenString)
+                        
+                        // New device token
+                        self.ref.child("users").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                        
+                        if let familyName = AYNModel.sharedInstance.currentUser?["familyId"] as? String {
+                            // Update token in Firebase
+                            self.ref.child("families").child(familyName).child("members").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                        }
+                    }
                 }
             }
         }

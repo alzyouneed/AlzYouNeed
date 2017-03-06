@@ -14,12 +14,8 @@ class ContactCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var contactView: ContactView!
     
-//    func configureCell(contact: Contact) {
     func configureCell(_ contact: Contact, row: Int) {
         contactView.nameLabel.text = contact.fullName
-        
-        // TODO: Change later to add functionality
-//        contactView.singleButton("left")
         
         // Saves row in tag for contact-specific actions
         contactView.leftButton.tag = row
@@ -67,8 +63,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
                 
                 // Background thread
                 if let imageUrl = contact.photoUrl {
-                    
-                    // TODO: Creates problem when filtering contacts by search
+
                     if imageUrl.hasPrefix("gs://") {
                         FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
                             if let error = error {

@@ -49,7 +49,6 @@ import UIKit
         rightButton.setTitle("Emergency", for: .normal)
     }
     
-    // TODO: Update later to add functionality
     func singleButton(_ button: String) {
         if button == "left" {
             stackView.removeArrangedSubview(rightButton)

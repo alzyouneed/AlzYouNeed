@@ -50,6 +50,7 @@ class AYNModel {
         wasReset = true
         contactsArrWasReset = true
         UserDefaultsManager.setNotificationStatus(status: false)
+        UserDefaultsManager.saveDeviceToken(token: "")
 //        remindersArrWasReset = true
 //        completedRemindersArrWasReset = true
     }

@@ -81,13 +81,4 @@ import UIKit
             break
         }
     }
-    
-    /*
-    MARK: - TODO
-    func configureView() {
-        
-    }
-    */
-    
-
 }

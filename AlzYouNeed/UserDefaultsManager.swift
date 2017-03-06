@@ -126,4 +126,17 @@ class UserDefaultsManager: NSObject {
         defaults.synchronize()
     }
     
+    // MARK: - Device Token
+    class func saveDeviceToken(token: String) {
+        let defaults = UserDefaults.standard
+        defaults.set(token, forKey: "deviceToken")
+        defaults.synchronize()
+    }
+    
+    class func getDeviceToken() -> String? {
+        let defaults = UserDefaults.standard
+        let deviceToken = defaults.string(forKey: "deviceToken")
+        return deviceToken
+    }
+    
 }
