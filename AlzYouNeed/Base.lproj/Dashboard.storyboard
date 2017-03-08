@@ -227,7 +227,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OU6-lO-WOk" customClass="DateDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="59" y="128" width="256" height="90"/>
+                                        <rect key="frame" x="59" y="40" width="256" height="90"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="256" id="0Tc-ll-KHY"/>
                                             <constraint firstAttribute="height" constant="90" id="vQp-5R-Am2"/>
@@ -240,7 +240,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Clo-Lc-1mw" customClass="notepadView" customModule="AlzYouNeed" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="226" width="375" height="174"/>
+                                        <rect key="frame" x="0.0" y="210" width="375" height="190"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -250,7 +250,7 @@
                                     <constraint firstAttribute="trailing" secondItem="DvW-BC-Ijy" secondAttribute="trailing" constant="16" id="2S3-3V-j8I"/>
                                     <constraint firstItem="NAm-gW-sfD" firstAttribute="leading" secondItem="IFC-jY-2FC" secondAttribute="leading" constant="8" id="Aup-r2-JPD"/>
                                     <constraint firstItem="DvW-BC-Ijy" firstAttribute="leading" secondItem="IFC-jY-2FC" secondAttribute="leading" constant="16" id="C9Y-gr-sgM"/>
-                                    <constraint firstItem="Clo-Lc-1mw" firstAttribute="top" secondItem="OU6-lO-WOk" secondAttribute="bottom" constant="8" id="DaC-zE-cMN"/>
+                                    <constraint firstItem="Clo-Lc-1mw" firstAttribute="top" secondItem="OU6-lO-WOk" secondAttribute="bottom" constant="80" id="DaC-zE-cMN"/>
                                     <constraint firstItem="OU6-lO-WOk" firstAttribute="centerX" secondItem="IFC-jY-2FC" secondAttribute="centerX" id="NFv-as-cWB"/>
                                     <constraint firstItem="OU6-lO-WOk" firstAttribute="top" secondItem="DvW-BC-Ijy" secondAttribute="bottom" constant="60" id="OZk-k7-8vG"/>
                                     <constraint firstItem="Clo-Lc-1mw" firstAttribute="leading" secondItem="IFC-jY-2FC" secondAttribute="leading" id="Oc2-Eu-HMj"/>
@@ -258,10 +258,12 @@
                                     <constraint firstAttribute="trailing" secondItem="Clo-Lc-1mw" secondAttribute="trailing" id="buB-Lo-XIs"/>
                                     <constraint firstItem="NAm-gW-sfD" firstAttribute="centerX" secondItem="IFC-jY-2FC" secondAttribute="centerX" id="hf5-bG-GaC"/>
                                     <constraint firstItem="DvW-BC-Ijy" firstAttribute="top" secondItem="IFC-jY-2FC" secondAttribute="top" constant="8" id="sXT-ql-lWg"/>
+                                    <constraint firstItem="OU6-lO-WOk" firstAttribute="top" secondItem="IFC-jY-2FC" secondAttribute="top" constant="40" id="skU-od-7je"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="NAm-gW-sfD"/>
+                                        <exclude reference="DvW-BC-Ijy"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -342,7 +344,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -360,7 +362,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2gG-ex-1CO" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dmo-BZ-nYY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dmo-BZ-nYY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

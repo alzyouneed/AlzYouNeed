@@ -391,6 +391,10 @@ class DashboardViewController: UIViewController {
         notepadView.layer.cornerRadius = 10
         notepadView.layer.masksToBounds = true
 //        notepadView.clipsToBounds = true
+//        notepadView.layer.shadowColor = UIColor.black.cgColor
+//        notepadView.layer.shadowOffset = CGSize(width: 0, height: -1)
+//        notepadView.layer.shadowOpacity = 0.9
+//        notepadView.layer.shadowRadius = 5
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
@@ -607,25 +611,22 @@ extension DashboardViewController {
 //            notepadVeryTopConstraint.isActive = true
             notepadTopUserViewConstraint.isActive = true
             
-            UIView.animate(withDuration: 0.2, animations: {
+            
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self.notepadView.changesLabel.alpha = 0
-//                self.view.layoutIfNeeded()
                 self.notepadView.superview?.layoutIfNeeded()
-//                self.view.backgroundColor = crayolaYellow
             }, completion: { (completed) in
                 // Adjust navigation bar buttons
                 self.settingsButton.title = "Cancel"
                 self.settingsButton.image = nil
-//                self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
                 self.settingsButton.action = #selector(DashboardViewController.closeNotepad(_:))
                 
                 self.notepadView.notesTextView.isUserInteractionEnabled = true
-
+                
                 self.saveButton.isEnabled = true
                 self.saveButton.tintColor = UIColor.white
                 
                 self.checkTutorialStatus()
-//                self.title = "Notepad"
             })
         }
     }
