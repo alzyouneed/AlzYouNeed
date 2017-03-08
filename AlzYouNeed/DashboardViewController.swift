@@ -26,6 +26,7 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet var bottomSectionView: UIView!
     var notepadActive = false
+    var originalNote = ""
     @IBOutlet var notepadView: notepadView!
     @IBOutlet var notepadTopConstraint: NSLayoutConstraint!
     @IBOutlet var notepadVeryTopConstraint: NSLayoutConstraint!
@@ -45,8 +46,6 @@ class DashboardViewController: UIViewController {
         configureView()
         configureEmergencyButton()
         configureNotepadView()
-        configureSettings()
-        configureSave()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -125,6 +124,11 @@ class DashboardViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveNotepad(_ sender: UIBarButtonItem) {
+        print("saved notepad")
+        saveNote(_dismissAfter: true)
     }
     
     func showDeleteAccountWarning() {
@@ -389,14 +393,6 @@ class DashboardViewController: UIViewController {
 //        notepadView.clipsToBounds = true
     }
     
-    func configureSettings() {
-        settingsButton.action = #selector(DashboardViewController.showSettings(_:))
-    }
-    
-    func configureSave() {
-        saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
-    }
-    
     func notepadButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "notepad", sender: self)
     }
@@ -478,9 +474,9 @@ class DashboardViewController: UIViewController {
             if let userDict = userDict {
                 print("Saved current user to model")
                 AYNModel.sharedInstance.currentUser = userDict
-                self.checkNotepadForChanges()
+//                self.checkNotepadForChanges()
                 self.saveFamilyMemberContacts()
-                
+                self.loadNote()
                 self.registerNotifications()
             }
         })
@@ -491,7 +487,7 @@ class DashboardViewController: UIViewController {
         FirebaseManager.getFamilyNote { (error, note) in
             if let note = note {
                 if let familyNote = UserDefaultsManager.loadCurrentNote() {
-                    if note == familyNote {
+                    if note["note"] == familyNote {
                         // No changes
                         print("No changes to notepad have been made since last save")
                     } else {
@@ -592,30 +588,44 @@ extension DashboardViewController {
         print("tapped notes view")
     }
     
+    @IBAction func closeNotepad(_ sender: UIBarButtonItem) {
+        if notepadView.notesTextView.text != originalNote {
+            // Unsaved changes - warn user
+            showChangesWarning()
+        } else {
+            // No changes - dismiss
+            collapseNotepad()
+        }
+    }
+    
     func expandNotepad() {
         if !notepadActive {
             notepadActive = true
-            
+
             // Change active constraints
             notepadTopConstraint.isActive = false
 //            notepadVeryTopConstraint.isActive = true
             notepadTopUserViewConstraint.isActive = true
-            self.saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
             
             UIView.animate(withDuration: 0.2, animations: {
                 self.notepadView.changesLabel.alpha = 0
-                self.view.layoutIfNeeded()
-//                self.notepadView.layoutSubviews()
+//                self.view.layoutIfNeeded()
+                self.notepadView.superview?.layoutIfNeeded()
+//                self.view.backgroundColor = crayolaYellow
             }, completion: { (completed) in
                 // Adjust navigation bar buttons
                 self.settingsButton.title = "Cancel"
                 self.settingsButton.image = nil
-                self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
-                self.notepadView.notesTextView.isUserInteractionEnabled = true
+//                self.settingsButton.action = #selector(DashboardViewController.collapseNotepad)
+                self.settingsButton.action = #selector(DashboardViewController.closeNotepad(_:))
                 
-//                self.saveButton.action = #selector(DashboardViewController.saveNotepad(_:))
+                self.notepadView.notesTextView.isUserInteractionEnabled = true
+
                 self.saveButton.isEnabled = true
                 self.saveButton.tintColor = UIColor.white
+                
+                self.checkTutorialStatus()
+//                self.title = "Notepad"
             })
         }
     }
@@ -633,23 +643,95 @@ extension DashboardViewController {
             settingsButton.title = nil
             settingsButton.image = #imageLiteral(resourceName: "settingsIcon")
             settingsButton.action = #selector(DashboardViewController.showSettings(_:))
-//            self.navigationItem.setLeftBarButton(nil, animated: false)
             
             self.view.endEditing(true)
             
             saveButton.isEnabled = false
             saveButton.tintColor = UIColor.clear
             
+//            self.title = nil
+            
             UIView.animate(withDuration: 0.2, animations: {
                 self.notepadView.changesLabel.alpha = 1
-                self.view.layoutIfNeeded()
+//                self.view.backgroundColor = slateBlue
+//                self.view.layoutIfNeeded()
+                self.notepadView.superview?.layoutIfNeeded()
             })
             notepadView.notesTextView.isUserInteractionEnabled = false
         }
     }
     
-    func saveNotepad(_ sender: UIBarButtonItem) {
-        print("saved notepad")
+    func loadNote() {
+        FirebaseManager.getFamilyNote { (error, familyNote) in
+            if let familyNote = familyNote {
+                if let note = familyNote["note"] as String? {
+                    self.originalNote = note
+                    DispatchQueue.main.async {
+                        self.notepadView.notesTextView.text = note
+                    }
+                    
+                    // Saved to UserDefaults to notify user to changes
+                    UserDefaultsManager.saveCurrentUserNotepad(_note: note)
+                }
+
+                if let lastChangedName = familyNote["lastChangedName"] as String? {
+                    self.notepadView.changesLabel.text = "Last change: \(lastChangedName)"
+                }
+            }
+        }
+    }
+    
+    func saveNote(_dismissAfter: Bool) {
+        if !notepadView.notesTextView.text.isEmpty {
+            FirebaseManager.saveFamilyNote(_changes: notepadView.notesTextView.text) { (error) in
+                if error != nil {
+                    // Didn't save note
+                } else {
+                    // Saved note
+                    self.originalNote = self.notepadView.notesTextView.text
+                    self.collapseNotepad()
+                }
+            }
+        }
+    }
+    
+    // MARK: Tutorial
+    func checkTutorialStatus() {
+        if let notepadTutorialCompleted = UserDefaultsManager.getTutorialCompletion(tutorial: Tutorials.notepad.rawValue) as String? {
+            if notepadTutorialCompleted == "false" {
+                showTutorial()
+            } else {
+                print("Notepad tutorial completed")
+            }
+        }
+    }
+    
+    func showTutorial() {
+        let alertController = UIAlertController(title: "Tutorial", message: "Store anything important here!", preferredStyle: .alert)
+        
+        let completeAction = UIAlertAction(title: "Got it!", style: .default) { (action) in
+            UserDefaultsManager.completeTutorial(tutorial: "notepad")
+        }
+        
+        alertController.addAction(completeAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showChangesWarning() {
+        let alertController = UIAlertController(title: "Unsaved Changes", message: "All changes will be lost unless you save them", preferredStyle: .actionSheet)
+        
+        let closeAction = UIAlertAction(title: "Close without saving", style: .destructive) { (action) in
+            self.collapseNotepad()
+            self.notepadView.notesTextView.text = self.originalNote
+        }
+        let saveAction = UIAlertAction(title: "Save changes", style: .default) { (action) in
+            self.saveNote(_dismissAfter: true)
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(closeAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

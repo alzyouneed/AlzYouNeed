@@ -233,7 +233,7 @@
                                             <constraint firstAttribute="height" constant="90" id="vQp-5R-Am2"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvW-BC-Ijy" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DvW-BC-Ijy" customClass="actionButtonsDashboardView" customModule="AlzYouNeed" customModuleProvider="target">
                                         <rect key="frame" x="16" y="8" width="343" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="L3p-GA-VX8"/>
@@ -302,6 +302,9 @@
                     <navigationItem key="navigationItem" id="JRu-Ga-1J2">
                         <barButtonItem key="leftBarButtonItem" systemItem="save" id="UuH-Yz-HH6">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="saveNotepad:" destination="fTz-C2-Fo8" id="nTv-Lz-Ext"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="settingsIcon" id="3Dj-7z-xYC">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -339,7 +342,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -357,7 +360,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2gG-ex-1CO" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dmo-BZ-nYY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dmo-BZ-nYY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

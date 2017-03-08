@@ -109,7 +109,10 @@ class UserDefaultsManager: NSObject {
             }
         }
         print("No completedTutorials dictionary found")
-        return nil
+        // Create new dict and try again 
+        resetUserTutorials()
+        return getTutorialCompletion(tutorial: tutorial)
+//        return nil
     }
     
     class func getNotificationStatus() -> Bool {
