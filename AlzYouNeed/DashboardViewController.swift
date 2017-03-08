@@ -580,7 +580,7 @@ extension DashboardViewController {
 // MARK: - Notepad View
 extension DashboardViewController {
     func tappedNotepad() {
-        print("tapped notepad")
+//        print("tapped notepad")
         if !notepadActive {
             expandNotepad()
         } else {
@@ -589,7 +589,7 @@ extension DashboardViewController {
     }
     
     func tappedNotes() {
-        print("tapped notes view")
+//        print("tapped notes view")
     }
     
     @IBAction func closeNotepad(_ sender: UIBarButtonItem) {
@@ -610,7 +610,6 @@ extension DashboardViewController {
             notepadTopConstraint.isActive = false
 //            notepadVeryTopConstraint.isActive = true
             notepadTopUserViewConstraint.isActive = true
-            
             
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self.notepadView.changesLabel.alpha = 0
