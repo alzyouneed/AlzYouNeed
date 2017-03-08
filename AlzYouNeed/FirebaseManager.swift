@@ -881,7 +881,8 @@ extension FirebaseManager {
                     }
                     else {
                         let firstNote = "Store your notes here!"
-                        let firstNoteData = ["notepad": ["note": firstNote, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": AYNModel.sharedInstance.currentUser?["name"]!]]
+                        let firstName = (AYNModel.sharedInstance.currentUser?["name"] as! String).components(separatedBy: " ").first
+                        let firstNoteData = ["notepad": ["note": firstNote, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]]
                             
 //                            ["notepad": ["note": firstNote, "notepadLastChanged":["user":FIRAuth.auth()?.currentUser?.uid, "name": AYNModel.sharedInstance.currentUser?["name"]!]]]
                         databaseRef.child("families").child(userFamilyId).updateChildValues(firstNoteData, withCompletionBlock: { (error, newRef) in
@@ -894,7 +895,7 @@ extension FirebaseManager {
                             else {
                                 // Success
                                 print("Saved first note")
-                                completionHandler(nil, ["note": firstNote, "lastChangedUser":(FIRAuth.auth()?.currentUser?.uid)!, "lastChangedName": AYNModel.sharedInstance.currentUser?["name"]! as! String])
+                                completionHandler(nil, ["note": firstNote, "lastChangedUser":(FIRAuth.auth()?.currentUser?.uid)!, "lastChangedName": firstName!])
                             }
                         })
                         
@@ -912,7 +913,9 @@ extension FirebaseManager {
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 let databaseRef = FIRDatabase.database().reference()
                 
-                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": AYNModel.sharedInstance.currentUser?["name"]!]], withCompletionBlock: { (error, newRef) in
+                let firstName = (AYNModel.sharedInstance.currentUser?["name"] as! String).components(separatedBy: " ").first
+                
+                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]], withCompletionBlock: { (error, newRef) in
                     if error != nil {
                         // Error
                         print("Error saving note")

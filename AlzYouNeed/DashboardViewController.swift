@@ -677,6 +677,12 @@ extension DashboardViewController {
                 if let lastChangedName = familyNote["lastChangedName"] as String? {
                     self.notepadView.changesLabel.text = "Last change: \(lastChangedName)"
                 }
+                
+                if let lastChangedUser = familyNote["lastChangedUser"] as String? {
+                    if lastChangedUser == FIRAuth.auth()?.currentUser?.uid {
+                        self.notepadView.changesLabel.text = "Last change: You"
+                    }
+                }
             }
         }
     }
