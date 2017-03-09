@@ -695,6 +695,7 @@ extension DashboardViewController {
                 } else {
                     // Saved note
                     self.originalNote = self.notepadView.notesTextView.text
+                    self.notepadView.changesLabel.text = "Last change: You"
                     self.collapseNotepad()
                 }
             }
