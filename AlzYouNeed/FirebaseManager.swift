@@ -224,7 +224,22 @@ class FirebaseManager: NSObject {
         }
     }
 
+    class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
+        print("FirebaseManager: Deleting current user")
+        if let user = FIRAuth.auth()?.currentUser {
+            user.delete(completion: { (error) in
+                if error != nil {
+                    print("Error deleting account: \(error)")
+                    completionHandler(error as NSError?)
+                } else {
+                    print("Account deleted")
+                    completionHandler(nil)
+                }
+            })
+        }
+    }
     // Delete current auth user, and entry in real time database and in family group
+    /*
     class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
         print("FirebaseManager: Deleting current user")
         if let user = FIRAuth.auth()?.currentUser {
@@ -284,6 +299,7 @@ class FirebaseManager: NSObject {
             }
         }
     }
+ */
     
     // Helper func for deleteCurrentUser
     fileprivate class func deleteUserFromRTDB(_ completionHandler: @escaping (_ error: NSError?, _ databaseRef: FIRDatabaseReference?) -> Void) {
