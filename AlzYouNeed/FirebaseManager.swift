@@ -224,129 +224,22 @@ class FirebaseManager: NSObject {
         }
     }
 
-    class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
-        print("FirebaseManager: Deleting current user")
-        if let user = FIRAuth.auth()?.currentUser {
-            user.delete(completion: { (error) in
-                if error != nil {
-                    print("Error deleting account: \(error)")
-                    completionHandler(error as NSError?)
-                } else {
-                    print("Account deleted")
-                    completionHandler(nil)
-                }
-            })
-        }
-    }
     // Delete current auth user, and entry in real time database and in family group
-    /*
     class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
         print("FirebaseManager: Deleting current user")
         if let user = FIRAuth.auth()?.currentUser {
-            deleteUserFromFamily { (error, databaseRef) in
-                // If user does not belong to family, proceed normally
-                if error != nil {
-                    // Check that user belongs to family and exists in RTDB
-                    if error?.code != 0 && error?.code != 2 {
-                        // Error
-                        print("Error occurred while deleting account from family")
-                        completionHandler(error)
-                    }
-                    // Delete account immediately since it cannot be found in RTDB
-                    else if error?.code == 2 {
-                        user.delete(completion: { (error) in
-                            if error != nil {
-                                // Error
-                                print("Error occurred while deleting account: \(error)")
-                                completionHandler(error as NSError?)
-                            }
-                            else {
-                                // Success
-                                print("Account deleted")
-                                completionHandler(nil)
-                            }
-                        })
-                    }
-                }
-                // Success
-                deleteUserFromRTDB({ (error, databaseRef) in
+            // Delete profile image
+            deleteUserProfileImage({ (imageError) in
+                user.delete(completion: { (error) in
                     if error != nil {
-                        // Error
-                        completionHandler(error)
-                    }
-                    else {
-                        deleteUserProfileImage({ (error) in
-                            if let error = error {
-                                completionHandler(error)
-                            } else {
-                                // Success
-                                user.delete(completion: { (error) in
-                                    if error != nil {
-                                        // Error
-                                        print("Error occurred while deleting account: \(error)")
-                                        completionHandler(error as NSError?)
-                                    }
-                                    else {
-                                        // Success
-                                        print("Account deleted")
-                                        completionHandler(nil)
-                                    }
-                                })
-                            }
-                        })
+                        print("Error deleting account: \(error)")
+                        completionHandler(error as NSError?)
+                    } else {
+                        print("Account deleted")
+                        completionHandler(nil)
                     }
                 })
-            }
-        }
-    }
- */
-    
-    // Helper func for deleteCurrentUser
-    fileprivate class func deleteUserFromRTDB(_ completionHandler: @escaping (_ error: NSError?, _ databaseRef: FIRDatabaseReference?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            
-            let databaseRef = FIRDatabase.database().reference()
-            
-            databaseRef.child("users").child(user.uid).removeValue(completionBlock: { (error, oldRef) in
-                if error != nil {
-                    print("Error deleting user from real time database")
-                    completionHandler(error as NSError?, nil)
-                }
-                else {
-                    print("User deleted from real time database")
-                    completionHandler(nil, oldRef)
-                }
             })
-        }
-    }
-    
-    // Helper func for deleteCurrentUser
-    fileprivate class func deleteUserFromFamily(_ completionHandler: @escaping (_ error: NSError?, _ databaseRef: FIRDatabaseReference?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            if AYNModel.sharedInstance.currentUser != nil {
-                let databaseRef = FIRDatabase.database().reference()
-                
-                // Check if key exists yet
-                if let familyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                    
-                    databaseRef.child("families").child(familyId).child("members").child(user.uid).removeValue(completionBlock: { (error, oldRef) in
-                        if error != nil {
-                            print("Error deleting user from family group")
-                            completionHandler(error as NSError?, nil)
-                        }
-                        else {
-                            print("User deleted from family group")
-                            completionHandler(nil, oldRef)
-                        }
-                    })
-                }
-                    // FamilyID does not exist
-                else {
-                    print("User does not belong to family group -- skipping step")
-                    let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
-                    completionHandler(error, nil)
-                }
-            }
         }
     }
 
