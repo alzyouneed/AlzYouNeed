@@ -306,7 +306,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
                     // Error
                     // Check for relevant error before showing alert
                     if error?.code != 2 && error?.code != 17011 {
-                        print("Error deleting user: \(error)")
+                        print("Error deleting user: \(String(describing: error))")
                         self.showLoginAlert()
                     }
                 }
@@ -352,7 +352,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
                     self.showDeleteAccountWarning()
                 }
                 else {
-                    print("Error logging in: \(error)")
+                    print("Error logging in: \(String(describing: error))")
                     self.showLoginAlert()
                 }
             })

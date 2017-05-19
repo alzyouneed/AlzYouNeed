@@ -17,8 +17,6 @@
 		2D36370C1D47E23C0050812E /* islandView3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 2D36370B1D47E23C0050812E /* islandView3.mp4 */; };
 		2D39542E1D42A40700AC1674 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D39542D1D42A40700AC1674 /* ContactsViewController.swift */; };
 		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
-		2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */; };
-		2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D417BF11D21878E0045C80F /* avatarSelectionView.swift */; };
 		2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C872D1E6884B400FB3B7E /* notepadView.swift */; };
 		2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C872F1E6884C400FB3B7E /* notepadView.xib */; };
 		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
@@ -81,8 +79,6 @@
 		2D36370B1D47E23C0050812E /* islandView3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = islandView3.mp4; sourceTree = "<group>"; };
 		2D39542D1D42A40700AC1674 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
-		2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = avatarSelectionView.xib; sourceTree = "<group>"; };
-		2D417BF11D21878E0045C80F /* avatarSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = avatarSelectionView.swift; sourceTree = "<group>"; };
 		2D4C872D1E6884B400FB3B7E /* notepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notepadView.swift; sourceTree = "<group>"; };
 		2D4C872F1E6884C400FB3B7E /* notepadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = notepadView.xib; path = ../../../../../../notepadView.xib; sourceTree = "<group>"; };
 		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
@@ -214,15 +210,6 @@
 			name = validateTextField;
 			sourceTree = "<group>";
 		};
-		2D417BF01D2187770045C80F /* avatarSelection */ = {
-			isa = PBXGroup;
-			children = (
-				2D417BEE1D21876D0045C80F /* avatarSelectionView.xib */,
-				2D417BF11D21878E0045C80F /* avatarSelectionView.swift */,
-			);
-			name = avatarSelection;
-			sourceTree = "<group>";
-		};
 		2D4C872C1E68849C00FB3B7E /* notepadView */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				2D417BED1D2187540045C80F /* validateTextField */,
-				2D417BF01D2187770045C80F /* avatarSelection */,
 				2D90E2D11D2C953200F7AFEE /* loginButtons */,
 			);
 			name = View;
@@ -555,7 +541,6 @@
 				2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */,
 				2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */,
 				2DCC3C671D301208005D0EFD /* OpenSans-Regular.ttf in Resources */,
-				2D417BEF1D21876D0045C80F /* avatarSelectionView.xib in Resources */,
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */,
 				2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */,
@@ -676,7 +661,6 @@
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
-				2D417BF21D21878E0045C80F /* avatarSelectionView.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,

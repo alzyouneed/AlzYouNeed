@@ -5,6 +5,7 @@ use_frameworks!
 
 target 'AlzYouNeed' do
 
+# Firebase
 pod 'Firebase'
 pod ‘Firebase/Crash’
 pod ‘Firebase/Auth’
@@ -12,8 +13,13 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Messaging'
 pod 'Firebase/Core'
-pod 'PKHUD', '~> 4.0'
+
+# Fabric
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'SkyFloatingLabelTextField', '~> 3.0'
+
+# Misc
+pod 'PKHUD', '~> 4.0'
 
 end

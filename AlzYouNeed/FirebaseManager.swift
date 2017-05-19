@@ -232,7 +232,7 @@ class FirebaseManager: NSObject {
             deleteUserProfileImage({ (imageError) in
                 user.delete(completion: { (error) in
                     if error != nil {
-                        print("Error deleting account: \(error)")
+                        print("Error deleting account: \(String(describing: error))")
                         completionHandler(error as NSError?)
                     } else {
                         print("Account deleted")
