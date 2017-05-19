@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 
-class ContactDetailViewController: UIViewController, UITableViewDelegate, MessageTableViewCellDelegate {
+class ContactDetailViewController: UIViewController, UITableViewDelegate, MessageTableViewCellDelegate, UITableViewDataSource {
 
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var contactActionButtons: actionButtonsDashboardView!
@@ -300,7 +300,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         return messages.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let message = messages[(indexPath as NSIndexPath).row]
         

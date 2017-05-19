@@ -467,7 +467,6 @@
 				2D9834D21D0C4A91000977DC /* Resources */,
 				ED74013B301149C10C6F95A8 /* [CP] Embed Pods Frameworks */,
 				CBB2E52C0AB93CD184557D3D /* [CP] Copy Pods Resources */,
-				2DB3BE871DC3BC0700AD01B6 /* ShellScript */,
 				2D7E61DD1E3E78FF005EA135 /* ShellScript */,
 			);
 			buildRules = (
@@ -573,19 +572,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b0793cc665a2ee35244482db78b35cc5d32129e0 6ed5a63e3066dd07ad57ce61092f76186f5b3bfc0ef2f0ccb326865727163d3f";
-		};
-		2DB3BE871DC3BC0700AD01B6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:637933247383:ios:8a900da39dc609e7\n\n# Replace the /Path/To/ServiceAccount.json with the path to the key you just downloaded\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym \"/Users/Cwybro/Desktop/Xcode/Wybro/Alz You need/Extra Files/Alz You Need-c15e539ef453.json\"";
 		};
 		CBB2E52C0AB93CD184557D3D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

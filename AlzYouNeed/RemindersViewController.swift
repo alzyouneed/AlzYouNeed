@@ -12,7 +12,7 @@ import UserNotifications
 import MessageUI
 // import PKHUD
 
-class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTableViewCellDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource {
 
     @IBOutlet var remindersTableView: UITableView!
     @IBOutlet var reminderSegmentedControl: UISegmentedControl!
@@ -133,13 +133,6 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             if !titleTF.text!.isEmpty && !self.dateTF.text!.isEmpty {
                 // Store date as number (time interval)
                 let now = Date().timeIntervalSince1970
-//                let dateFormatter = DateFormatter()
-                // Handle repeating differently
-//                if self.repeatsTF.text != "Repeats None" {
-//                    dateFormatter.dateFormat = "h:mm a"
-//                } else {
-//                    dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
-//                }
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MMMM d, yyyy, h:mm a"
@@ -204,7 +197,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
 //        return AYNModel.sharedInstance.remindersArr.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell")! as! ReminderTableViewCell
 //        let cell:ReminderTableViewCell = tableView.dequeueReusableCell(withIdentifier: "reminderCell", for: indexPath) as! ReminderTableViewCell
         
@@ -256,7 +249,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Only allow editing if incomplete reminders
         if reminderSegmentedControl.selectedSegmentIndex == 0 {
             
