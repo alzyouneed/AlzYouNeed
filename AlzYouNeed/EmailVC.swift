@@ -78,10 +78,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         passwordTextField.textColor = UIColor.black
         passwordTextField.tintColor = UIColor(hex: "7d80da")
         passwordTextField.lineColor = UIColor.lightGray
-//        passwordTextField.iconFont = UIFont(name: "FontAwesome", size: 14)
-//        passwordTextField.iconText = String.fontAwesomeIcon(name: .key)
-//        passwordTextField.iconMarginBottom = -3
-//        passwordTextField.selectedIconColor = UIColor(hex: "7d80da")
         
         passwordTextField.selectedTitleColor = UIColor(hex: "7d80da")
         passwordTextField.selectedLineColor = UIColor(hex: "7d80da")
@@ -119,6 +115,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         UIView.performWithoutAnimation({
             self.emailTextField.layoutIfNeeded()
             self.passwordTextField.layoutIfNeeded()
+            self.confirmPasswordTextField.layoutIfNeeded()
         })
         
         if show {
@@ -188,5 +185,14 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         // Present next VC
         self.performSegue(withIdentifier: "emailToName", sender: self)
     }
+    
+    // MARK: -- Cancel signup
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        // TODO: Delete partial user profile
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
+    }
+    
 
 }

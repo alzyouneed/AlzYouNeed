@@ -96,7 +96,6 @@ class NameVC: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(show: false, notification: sender)
     }
     
-    
     // MARK: -- Onboarding progression
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         // Save name and present next VC
@@ -122,5 +121,13 @@ class NameVC: UIViewController, UITextFieldDelegate {
     // MARK: -- TextField changes
     func editedNameText() {
         validateField()
+    }
+    
+    // MARK: -- Cancel signup
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        // TODO: Delete partial user profile
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
     }
 }

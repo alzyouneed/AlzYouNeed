@@ -293,7 +293,13 @@
                             <constraint firstItem="PL5-gk-Y1X" firstAttribute="top" secondItem="RKC-cn-1Gi" secondAttribute="bottom" id="zEU-VA-uA2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="New Account" id="wve-uy-xQI"/>
+                    <navigationItem key="navigationItem" title="New Account" id="wve-uy-xQI">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="cPu-XO-k7K">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="6Ah-AB-Zjf" id="rgo-gC-tay"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="ffJ-Vn-e1u" id="CYC-07-zWB"/>
                         <outlet property="emailTextField" destination="FDq-hb-CNN" id="Muh-kK-adW"/>
@@ -364,6 +370,13 @@
                             <constraint firstItem="DMs-Lj-Z5k" firstAttribute="top" secondItem="o52-5E-ccT" secondAttribute="bottom" id="l1h-E0-uyB"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="a9h-j2-8ge">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="Wl1-cD-TT6">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="7lo-kW-X1T" id="VWD-oS-Afn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="nameTextField" destination="39g-Be-SKv" id="Saw-Bu-Hwy"/>
                         <outlet property="nextButton" destination="o52-5E-ccT" id="AWT-7I-q1Y"/>
@@ -466,7 +479,13 @@
                             <constraint firstItem="VHj-dQ-HNS" firstAttribute="top" secondItem="7DV-qS-121" secondAttribute="bottom" id="v4C-hy-HeF"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Family" id="XMx-7V-fyZ"/>
+                    <navigationItem key="navigationItem" title="Family" id="XMx-7V-fyZ">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="4q1-Hl-bhq">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="b1G-BN-3OI" id="xP0-6n-fuU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="actionButton" destination="7DV-qS-121" id="u6K-5k-G63"/>
                         <outlet property="actionButtonBottomConstraint" destination="v4C-hy-HeF" id="bKe-Lt-xBp"/>
@@ -525,7 +544,13 @@
                             <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerY" secondItem="obq-Ep-6ea" secondAttribute="centerY" id="mHc-pb-iy4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="hsk-gP-jS4"/>
+                    <navigationItem key="navigationItem" id="hsk-gP-jS4">
+                        <barButtonItem key="rightBarButtonItem" image="cancelIcon" id="438-na-e9o">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="o45-Lp-Z1V" id="PBQ-WZ-bbn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="emailButton" destination="hlQ-uv-wFT" id="Z7G-G8-91x"/>
                         <outlet property="googleButton" destination="F34-bt-ptP" id="DcB-sa-YuA"/>
@@ -1227,6 +1252,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d61-Gb-xHV"/>
-        <segue reference="egf-Pa-Fe9"/>
+        <segue reference="KEN-Zo-a7o"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -62,5 +62,14 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         // Present next VC
         self.performSegue(withIdentifier: "methodsToFamily", sender: self)
     }
+    
+    // MARK: -- Cancel signup
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        // TODO: Delete partial user profile
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
+    }
+    
 
 }

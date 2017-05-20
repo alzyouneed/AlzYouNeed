@@ -241,4 +241,12 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         actionButton.isEnabled = enable
         actionButton.alpha = enable ? 1 : 0.6
     }
+    
+    // MARK: -- Cancel signup
+    @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        // TODO: Delete partial user profile
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
+    }
 }
