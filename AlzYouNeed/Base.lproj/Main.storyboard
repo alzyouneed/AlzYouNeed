@@ -262,7 +262,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Uou-V6-5Gk"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="11"/>
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -308,26 +308,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKN-nX-T8q">
-                                <rect key="frame" x="16" y="331" width="343" height="60"/>
-                                <color key="backgroundColor" red="0.086274509803921567" green="0.81568627450980391" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="ubl-da-Xvi"/>
-                                </constraints>
-                                <state key="normal" title="Create family">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPs-Ja-r0s">
-                                <rect key="frame" x="16" y="406" width="343" height="60"/>
-                                <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="aEc-1c-7UN"/>
-                                </constraints>
-                                <state key="normal" title="Join family">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nww-aP-F6g">
                                 <rect key="frame" x="16" y="84" width="343" height="29"/>
                                 <segments>
@@ -339,71 +319,84 @@
                                     <action selector="familyOptionChanged:" destination="b1G-BN-3OI" eventType="valueChanged" id="FOB-bP-NgF"/>
                                 </connections>
                             </segmentedControl>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nB-Qk-jqu">
-                                <rect key="frame" x="16" y="120" width="343" height="123"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Szi-Nf-3ku" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="45"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="oNV-kr-KrT"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIN-9f-Yc4" customClass="SkyFloatingLabelTextFieldWithIcon" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="53" width="343" height="45"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="45" id="V3q-1k-Zy0"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New members will need this information to join your family" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vE-2v-nFe">
-                                        <rect key="frame" x="0.0" y="102" width="343" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="jiq-YU-cTG"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="11"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Szi-Nf-3ku" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="132" width="343" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="tIN-9f-Yc4" firstAttribute="leading" secondItem="8nB-Qk-jqu" secondAttribute="leading" id="2lY-tR-yXD"/>
-                                    <constraint firstAttribute="trailing" secondItem="Szi-Nf-3ku" secondAttribute="trailing" id="37n-xP-UNK"/>
-                                    <constraint firstAttribute="trailing" secondItem="7vE-2v-nFe" secondAttribute="trailing" id="CSY-hu-jQr"/>
-                                    <constraint firstItem="7vE-2v-nFe" firstAttribute="leading" secondItem="8nB-Qk-jqu" secondAttribute="leading" id="HVw-9N-Yuu"/>
-                                    <constraint firstItem="tIN-9f-Yc4" firstAttribute="top" secondItem="Szi-Nf-3ku" secondAttribute="bottom" constant="8" id="Mx7-ib-0p8"/>
-                                    <constraint firstItem="7vE-2v-nFe" firstAttribute="top" secondItem="tIN-9f-Yc4" secondAttribute="bottom" constant="4" id="Rtd-mx-xWq"/>
-                                    <constraint firstAttribute="bottom" secondItem="7vE-2v-nFe" secondAttribute="bottom" id="USU-kP-x2V"/>
-                                    <constraint firstItem="Szi-Nf-3ku" firstAttribute="top" secondItem="8nB-Qk-jqu" secondAttribute="top" id="dWv-6Y-kyW"/>
-                                    <constraint firstAttribute="trailing" secondItem="tIN-9f-Yc4" secondAttribute="trailing" id="huy-9c-s5f"/>
-                                    <constraint firstItem="Szi-Nf-3ku" firstAttribute="leading" secondItem="8nB-Qk-jqu" secondAttribute="leading" id="nvH-3G-j1g"/>
-                                    <constraint firstAttribute="height" constant="123" id="scz-w1-5M3"/>
+                                    <constraint firstAttribute="height" constant="45" id="sfA-CJ-fnU"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New members will need this information to join your family" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vE-2v-nFe">
+                                <rect key="frame" x="16" y="287" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="DVl-xw-cP3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Light" family="Open Sans" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIN-9f-Yc4" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="185" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="h3V-Ww-gGD"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGh-5x-NDe" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="238" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="Sig-01-aKn"/>
+                                    <constraint firstAttribute="height" constant="45" id="ocb-ON-MGv"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7DV-qS-121">
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <color key="backgroundColor" red="0.086274509803921567" green="0.81568627450980391" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="4VI-Pl-OyY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
+                                <state key="normal" title="Create">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="actionButtonPressed:" destination="b1G-BN-3OI" eventType="touchUpInside" id="R9h-fc-mak"/>
+                                    <action selector="signUpPressed:" destination="6Ah-AB-Zjf" eventType="touchUpInside" id="0jh-T0-dYj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sPs-Ja-r0s" firstAttribute="centerY" secondItem="s1b-l6-Rv9" secondAttribute="centerY" id="0EC-9j-wBT"/>
-                            <constraint firstItem="8nB-Qk-jqu" firstAttribute="top" secondItem="Nww-aP-F6g" secondAttribute="bottom" constant="8" id="4bE-il-dSZ"/>
+                            <constraint firstItem="7vE-2v-nFe" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="4t9-mF-11b"/>
                             <constraint firstItem="Nww-aP-F6g" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="7WS-pb-jq5"/>
-                            <constraint firstItem="iKN-nX-T8q" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="CG5-iD-q0s"/>
-                            <constraint firstItem="sPs-Ja-r0s" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="F6p-lP-T4n"/>
+                            <constraint firstItem="tIN-9f-Yc4" firstAttribute="top" secondItem="Szi-Nf-3ku" secondAttribute="bottom" constant="8" id="GmB-3V-UrI"/>
+                            <constraint firstItem="ZGh-5x-NDe" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="Kdk-xQ-vig"/>
+                            <constraint firstItem="Szi-Nf-3ku" firstAttribute="top" secondItem="Nww-aP-F6g" secondAttribute="bottom" constant="20" id="Qio-z0-zYa"/>
                             <constraint firstItem="Nww-aP-F6g" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="XoU-Cp-ZQa"/>
-                            <constraint firstItem="iKN-nX-T8q" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="YwZ-pZ-jAJ"/>
-                            <constraint firstItem="sPs-Ja-r0s" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="dqR-KM-0LB"/>
-                            <constraint firstItem="8nB-Qk-jqu" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="mQ3-vd-qUi"/>
+                            <constraint firstItem="ZGh-5x-NDe" firstAttribute="top" secondItem="tIN-9f-Yc4" secondAttribute="bottom" constant="8" id="Ylu-8y-JqO"/>
+                            <constraint firstItem="7vE-2v-nFe" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="Z07-Aq-Ipi"/>
+                            <constraint firstItem="Szi-Nf-3ku" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="ZZ5-mo-Qs4"/>
+                            <constraint firstItem="7DV-qS-121" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leading" id="d7n-E7-Q9v"/>
+                            <constraint firstItem="ZGh-5x-NDe" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="ho3-ym-SyF"/>
+                            <constraint firstAttribute="trailing" secondItem="7DV-qS-121" secondAttribute="trailing" id="jd0-DT-XSo"/>
                             <constraint firstItem="Nww-aP-F6g" firstAttribute="top" secondItem="Ohs-tU-C8d" secondAttribute="bottom" constant="20" id="mwv-pa-E5i"/>
-                            <constraint firstItem="8nB-Qk-jqu" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="nMQ-fp-o8a"/>
-                            <constraint firstItem="sPs-Ja-r0s" firstAttribute="top" secondItem="iKN-nX-T8q" secondAttribute="bottom" constant="15" id="ylX-Jx-HwP"/>
+                            <constraint firstItem="tIN-9f-Yc4" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="nz6-DM-ePZ"/>
+                            <constraint firstItem="tIN-9f-Yc4" firstAttribute="trailing" secondItem="s1b-l6-Rv9" secondAttribute="trailingMargin" id="oWo-fp-I2b"/>
+                            <constraint firstItem="Szi-Nf-3ku" firstAttribute="leading" secondItem="s1b-l6-Rv9" secondAttribute="leadingMargin" id="oed-HA-BxY"/>
+                            <constraint firstItem="7vE-2v-nFe" firstAttribute="top" secondItem="ZGh-5x-NDe" secondAttribute="bottom" constant="4" id="s0m-LU-zqa"/>
+                            <constraint firstItem="VHj-dQ-HNS" firstAttribute="top" secondItem="7DV-qS-121" secondAttribute="bottom" id="v4C-hy-HeF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Family" id="XMx-7V-fyZ"/>
                     <connections>
-                        <outlet property="createFamilyButton" destination="iKN-nX-T8q" id="8Ef-Gt-9pg"/>
+                        <outlet property="actionButton" destination="7DV-qS-121" id="u6K-5k-G63"/>
+                        <outlet property="actionButtonBottomConstraint" destination="v4C-hy-HeF" id="bKe-Lt-xBp"/>
+                        <outlet property="confirmPasswordTextField" destination="ZGh-5x-NDe" id="q65-ct-uNS"/>
                         <outlet property="familyControl" destination="Nww-aP-F6g" id="5Cn-FU-ZyI"/>
-                        <outlet property="fieldsView" destination="8nB-Qk-jqu" id="4oo-tX-h1M"/>
-                        <outlet property="joinFamilyButton" destination="sPs-Ja-r0s" id="32z-FZ-61Z"/>
+                        <outlet property="familyNameTextField" destination="Szi-Nf-3ku" id="HeY-Fi-2MM"/>
+                        <outlet property="infoLabel" destination="7vE-2v-nFe" id="70P-pd-70P"/>
+                        <outlet property="passwordTextField" destination="tIN-9f-Yc4" id="EsS-DV-VmL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gg6-1l-s8Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
