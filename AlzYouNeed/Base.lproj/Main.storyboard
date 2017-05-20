@@ -513,10 +513,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-uv-wFT">
-                                <rect key="frame" x="16" y="311" width="343" height="45"/>
+                                <rect key="frame" x="31.5" y="309.5" width="312" height="48"/>
                                 <color key="backgroundColor" red="0.49019607843137253" green="0.50196078431372548" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="0xI-O7-MWu"/>
+                                    <constraint firstAttribute="height" constant="48" id="0xI-O7-MWu"/>
+                                    <constraint firstAttribute="width" constant="312" id="6j0-Xc-5QV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
                                 <state key="normal" title="Email">
@@ -527,21 +528,21 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F34-bt-ptP" customClass="GIDSignInButton">
-                                <rect key="frame" x="16" y="251" width="343" height="45"/>
+                                <rect key="frame" x="31.5" y="246.5" width="312" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="cHV-IZ-flR"/>
+                                    <constraint firstAttribute="height" constant="48" id="cHV-IZ-flR"/>
+                                    <constraint firstAttribute="width" constant="312" id="lbE-WK-rT4"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="F34-bt-ptP" firstAttribute="trailing" secondItem="obq-Ep-6ea" secondAttribute="trailingMargin" id="DiH-OF-t7t"/>
-                            <constraint firstItem="F34-bt-ptP" firstAttribute="leading" secondItem="obq-Ep-6ea" secondAttribute="leadingMargin" id="HDu-xz-Gja"/>
-                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="leading" secondItem="obq-Ep-6ea" secondAttribute="leadingMargin" id="fJM-ZM-rXF"/>
                             <constraint firstItem="hlQ-uv-wFT" firstAttribute="top" secondItem="F34-bt-ptP" secondAttribute="bottom" constant="15" id="hB7-Qw-y8k"/>
-                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="trailing" secondItem="obq-Ep-6ea" secondAttribute="trailingMargin" id="i4B-2x-Vwx"/>
                             <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerY" secondItem="obq-Ep-6ea" secondAttribute="centerY" id="mHc-pb-iy4"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="oaV-Wi-2pe"/>
+                            <constraint firstItem="F34-bt-ptP" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="pre-nL-VdI"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="sld-jf-clX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hsk-gP-jS4">
@@ -1252,6 +1253,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d61-Gb-xHV"/>
-        <segue reference="KEN-Zo-a7o"/>
+        <segue reference="bEV-la-pGm"/>
     </inferredMetricsTieBreakers>
 </document>
