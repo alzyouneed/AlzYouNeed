@@ -44,8 +44,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         setupEmailTextField()
         setupPasswordTextField()
         setupConfirmPasswordTextField()
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
     }
     
     func setupEmailTextField() {

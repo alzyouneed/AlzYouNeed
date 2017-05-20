@@ -36,6 +36,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     func configureView() {

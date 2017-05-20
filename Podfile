@@ -19,6 +19,11 @@ pod 'GoogleSignIn'
 pod 'Fabric'
 pod 'Crashlytics'
 
+# Facebook pods
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
+
 # Misc
 pod 'PKHUD', '~> 4.0'
 pod 'SkyFloatingLabelTextField', '~> 3.0'

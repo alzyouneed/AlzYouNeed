@@ -8,6 +8,7 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import Firebase
 
 class FamilyVC: UIViewController, UITextFieldDelegate {
 
@@ -43,7 +44,6 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
         
         let attr = NSDictionary(object: UIFont(name: "OpenSans", size: 15)!, forKey: NSFontAttributeName as NSCopying)
         familyControl.setTitleTextAttributes(attr as? [AnyHashable : Any], for: .normal)
@@ -55,8 +55,8 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     
     func setupFamilyNameTextField() {
         familyNameTextField.font = UIFont(name: "OpenSans", size: 20)
-        familyNameTextField.placeholder = "Family name"
-        familyNameTextField.title = "Family name"
+        familyNameTextField.placeholder = "Group name"
+        familyNameTextField.title = "Group name"
         familyNameTextField.textColor = UIColor.black
         familyNameTextField.tintColor = UIColor(hex: "16D0C5")
         familyNameTextField.lineColor = UIColor.lightGray
@@ -183,6 +183,16 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
 
     @IBAction func actionButtonPressed(_ sender: UIButton) {
         // Try creating / joining family in Firebase
+        // If successful
+        NewProfile.sharedInstance.admin = (familyControl.selectedSegmentIndex == 0)
+        NewProfile.sharedInstance.groupName = familyNameTextField.text
+        
+        // If creating -- save group password in RTDB
+        
+        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
+        print("Resetting profile")
+        NewProfile.sharedInstance.resetModel()
+        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
     }
     
     // MARK: -- Adjusting keyboard
@@ -244,9 +254,32 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     
     // MARK: -- Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Delete partial user profile
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-        self.present(onboardingVC, animated: true, completion: nil)
+        // TODO: Sign out from auth & Delete partial user profile
+        
+        showWarning()
+    }
+    
+    func showWarning() {
+        let alert = UIAlertController(title: "Unsaved Changes", message: "Progress will not be saved", preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
+            // Sign out from auth
+            let firebaseAuth = FIRAuth.auth()
+            do {
+                try firebaseAuth?.signOut()
+            } catch let signOutError as NSError {
+                print ("Error signing out: %@", signOutError)
+            }
+            
+            // Delete partial user profile & present next VC when complete
+            
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+            self.present(onboardingVC, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

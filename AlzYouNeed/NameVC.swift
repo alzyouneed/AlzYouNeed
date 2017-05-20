@@ -39,7 +39,6 @@ class NameVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
         
         setupNameTextField()
     }
@@ -99,6 +98,8 @@ class NameVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Onboarding progression
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         // Save name and present next VC
+        NewProfile.sharedInstance.name = nameTextField.text
+        
         presentNextVC()
     }
     
@@ -126,8 +127,21 @@ class NameVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Delete partial user profile
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-        self.present(onboardingVC, animated: true, completion: nil)
+        
+        showWarning()
+    }
+    
+    func showWarning() {
+        let alert = UIAlertController(title: "Unsaved Changes", message: "Progress will not be saved", preferredStyle: .actionSheet)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+            self.present(onboardingVC, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

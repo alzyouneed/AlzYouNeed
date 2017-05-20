@@ -35,6 +35,7 @@
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
 		2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */; };
 		2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */; };
+		2D94E7F51ED0CC40001EF67E /* NewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94E7F41ED0CC40001EF67E /* NewProfile.swift */; };
 		2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9834D71D0C4A91000977DC /* AppDelegate.swift */; };
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
@@ -101,6 +102,7 @@
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Extra Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginButtonsView.xib; sourceTree = "<group>"; };
 		2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginButtonsView.swift; sourceTree = "<group>"; };
+		2D94E7F41ED0CC40001EF67E /* NewProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfile.swift; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9834D71D0C4A91000977DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D9834DC1D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				2D68D3081E26B0EC008A582B /* DataObjects.swift */,
 				2D1BCD381D1D6FFB0060B55C /* FirebaseManager.swift */,
 				2D3C49061D35AFF7003A1C81 /* AYNModel.swift */,
+				2D94E7F41ED0CC40001EF67E /* NewProfile.swift */,
 				2D2244F71D0FB6F9005D9DF5 /* UserDefaultsManager.swift */,
 			);
 			name = Models;
@@ -680,6 +683,7 @@
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */,
+				2D94E7F51ED0CC40001EF67E /* NewProfile.swift in Sources */,
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */,

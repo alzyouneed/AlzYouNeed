@@ -108,3 +108,17 @@ struct Reminder {
     }
 }
 
+// Keeps track of new accounts during onboarding
+struct Profile {
+    // Required
+    var name: String!
+    var groupName: String!
+    var admin: Bool!
+    
+    // Optional
+    var photoURL: String?
+    
+    // Extra
+    var authProvider: String!
+}
+

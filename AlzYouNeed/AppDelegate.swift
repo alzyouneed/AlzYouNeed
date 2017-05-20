@@ -13,6 +13,8 @@ import UserNotifications
 import Fabric
 import Crashlytics
 import GoogleSignIn
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -29,8 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Configure Google Sign-in
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        
+        // Configure Facebook Sign-in
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         // Configure Firebase
 //        FIRApp.configure()  -- caused crash on launch here
@@ -41,11 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clear], for: UIControlState.highlighted)
         
         // Customize navigation bar appearance
-        UINavigationBar.appearance().tintColor = UIColor.white
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
+//        UINavigationBar.appearance().tintColor = UIColor.white
+//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
         
         // Set status bar to light
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
         
         // Customize tab bar appearance
         UITabBar.appearance().tintColor = slateBlue
@@ -96,29 +102,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     }
     
     // MARK: - Google Sign-in
-    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
-        -> Bool {
-            return GIDSignIn.sharedInstance().handle(url,
-                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                                     annotation: [:])
-    }
+//    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
+//        -> Bool {
+//            
+//            let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+//            return handled
+//            
+//            return GIDSignIn.sharedInstance().handle(url,
+//                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+//                                                     annotation: [:])
+//    }
    
-    /*
-    -- Use for multiple sign-in methods
-    func application(_ app: UIApplication,
-                     open url: URL,
-                     options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    // MARK: - Sign-in Methods
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        if(url.scheme!.isEqual("fbXXXXXXXXXXX")) {
-            return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+        if(url.scheme!.isEqual("fb1684045731890215")) {
+            print("Open URL: Facebook")
+            let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+            return handled
             
         } else {
+            print("Open URL: Google")
             return GIDSignIn.sharedInstance().handle(url as URL!,
                                                      sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String!,
                                                      annotation: options[UIApplicationOpenURLOptionsKey.annotation])
         }
     }
-    */
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
         // ...
@@ -127,18 +136,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         }
         
-        print("Google user: userID= \(user.userID!) --name= \(user.profile.name!) --givenName= \(user.profile.givenName!) --familyName= \(user.profile.familyName!) --email= \(user.profile.email!)")
+//        print("Google user: userID= \(user.userID!) --name= \(user.profile.name!) --givenName= \(user.profile.givenName!) --familyName= \(user.profile.familyName!) --email= \(user.profile.email!)")
         
         guard let authentication = user.authentication else { return }
         let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
         
-        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+        FIRAuth.auth()?.signIn(with: credential, completion: { (firebaseUser, error) in
             if let error = error {
                 print("Error signing in with Google in FIRAuth: \(error.localizedDescription)")
                 return
             }
             print("Signed in with Google")
+            
+            // Save to NewProfile
+            NewProfile.sharedInstance.name = user.profile.givenName
+            NewProfile.sharedInstance.photoURL = user.profile.hasImage ? (firebaseUser?.photoURL!.absoluteString)! : ""
+            
             // Notify MethodsVC that sign-in was successful
             NotificationCenter.default.post(name: Notification.Name(rawValue: signInNotificationKey), object: self)
         })
