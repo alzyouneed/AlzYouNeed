@@ -13,10 +13,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var emailTextField: SkyFloatingLabelTextFieldWithIcon!
     @IBOutlet var passwordTextField: SkyFloatingLabelTextFieldWithIcon!
-    
-    
-//    @IBOutlet var emailTextField: SkyFloatingLabelTextField!
-//    @IBOutlet var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var signUpButtonBottomConstraint: NSLayoutConstraint!
     

@@ -28,7 +28,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(FamilyVC.keyboardWillShow(sender:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FamilyVC.keyboardWillHide(sender:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
+        validateFields()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,6 +43,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "495060")
         
         let attr = NSDictionary(object: UIFont(name: "OpenSans", size: 15)!, forKey: NSFontAttributeName as NSCopying)
         familyControl.setTitleTextAttributes(attr as? [AnyHashable : Any], for: .normal)
@@ -66,6 +67,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         familyNameTextField.delegate = self
         familyNameTextField.addTarget(self, action:#selector(FamilyVC.editedFamilyNameText), for:UIControlEvents.editingChanged)
         familyNameTextField.autocorrectionType = UITextAutocorrectionType.no
+        familyNameTextField.autocapitalizationType = UITextAutocapitalizationType.words
     }
     
     func setupPasswordTextField() {
@@ -102,15 +104,15 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     
     // MARK: -- TextField changes
     func editedFamilyNameText() {
-        
+        validateFields()
     }
     
     func editedPasswordText() {
-        
+        validateFields()
     }
     
     func editedConfirmPasswordText() {
-        
+        validateFields()
     }
     
     
@@ -129,6 +131,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
             
             // Hide confirm pass & infoLabel
         }
+        validateFields()
     }
     
     func changeMode(mode: String) {
@@ -217,5 +220,25 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     
     func keyboardWillHide(sender: NSNotification) {
         adjustingKeyboardHeight(show: false, notification: sender)
+    }
+    
+    // MARK: -- Validation
+    func validateFields() {
+        if familyControl.selectedSegmentIndex == 0 {
+            // Create mode
+            let fieldsFilled = !(familyNameTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)! && !(confirmPasswordTextField.text?.isEmpty)!
+            let passwordsMatch = passwordTextField.text == confirmPasswordTextField.text
+            enableActionButton(enable: fieldsFilled && passwordsMatch )
+
+        } else {
+            // Join mode
+            let fieldsFilled = !(familyNameTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)!
+            enableActionButton(enable: fieldsFilled)
+        }
+    }
+    
+    func enableActionButton(enable: Bool) {
+        actionButton.isEnabled = enable
+        actionButton.alpha = enable ? 1 : 0.6
     }
 }
