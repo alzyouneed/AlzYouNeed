@@ -20,6 +20,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var signupButton: UIButton!
     @IBOutlet var loginButton: UIButton!
     
+    @IBOutlet var facebookOptionButton: UIButton!
+    @IBOutlet var googleOptionButton: UIButton!
+    @IBOutlet var emailOptionButton: UIButton!
+    
     @IBOutlet var emailTextField: validateTextFieldView!
     @IBOutlet var passwordTextField: validateTextFieldView!
     
@@ -421,6 +425,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func setupViews() {
         setupSignupButton()
         setupLoginButton()
+        
+        setupFacebookOptionButton()
+        setupGoogleOptionButton()
+        setupEmailOptionButton()
     }
     
     func setupSignupButton() {
@@ -441,23 +449,65 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButton.layer.masksToBounds = false
     }
     
+    func setupFacebookOptionButton() {
+        facebookOptionButton.isHidden = true
+        facebookOptionButton.layer.cornerRadius = facebookOptionButton.frame.width/2
+    }
+    
+    func setupGoogleOptionButton() {
+        googleOptionButton.isHidden = true
+        googleOptionButton.layer.cornerRadius = googleOptionButton.frame.width/2
+    }
+    
+    func setupEmailOptionButton() {
+        emailOptionButton.isHidden = true
+        emailOptionButton.layer.cornerRadius = emailOptionButton.frame.width/2
+        
+        let emailIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .envelope))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        emailOptionButton.setAttributedTitle(emailIcon, for: .normal)
+        emailOptionButton.tintColor = UIColor(hex: "7189FF")
+        emailOptionButton.layer.cornerRadius = 5
+        emailOptionButton.layer.shadowColor = UIColor.black.cgColor
+        emailOptionButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        emailOptionButton.layer.shadowOpacity = 0.5
+        emailOptionButton.layer.shadowRadius = 1
+        emailOptionButton.layer.masksToBounds = false
+    }
+    
     // MARK: - Animations
     func showSignupButton(show: Bool) {
         if !isAnimating {
             if show {
                 self.isAnimating = true
+                
                 signupButton.isHidden = false
+
                 UIView.animate(withDuration: 0.2, animations: {
                     self.signupButton.alpha = 1
+                    self.facebookOptionButton.alpha = 0
+                    self.googleOptionButton.alpha = 0
+                    self.emailOptionButton.alpha = 0
                 }, completion: { (complete) in
+                    self.facebookOptionButton.isHidden = true
+                    self.googleOptionButton.isHidden = true
+                    self.emailOptionButton.isHidden = true
+                    
                     self.isAnimating = false
                 })
             } else {
                 self.isAnimating = true
+                
+                self.facebookOptionButton.isHidden = false
+                self.googleOptionButton.isHidden = false
+                self.emailOptionButton.isHidden = false
                 UIView.animate(withDuration: 0.2, animations: {
                     self.signupButton.alpha = 0
+                    self.facebookOptionButton.alpha = 1
+                    self.googleOptionButton.alpha = 1
+                    self.emailOptionButton.alpha = 1
                 }, completion: { (complete) in
                     self.signupButton.isHidden = true
+                    
                     self.isAnimating = false
                 })
             }
