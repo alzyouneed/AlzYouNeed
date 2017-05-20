@@ -56,9 +56,9 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     }
 
     func presentNextVC() {
-        print("Present next VC")
+        print("Present familyStepVC")
         // Present next VC
-        self.performSegue(withIdentifier: "familyStep", sender: self)
+        self.performSegue(withIdentifier: "methodsToFamily", sender: self)
     }
 
 }
