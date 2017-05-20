@@ -12,11 +12,11 @@ import GoogleSignIn
 import FontAwesome_swift
 import FBSDKLoginKit
 
-class MethodsVC: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
+class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
-    @IBOutlet var googleButton: GIDSignInButton!
     @IBOutlet var emailButton: UIButton!
-    @IBOutlet var facebookButton: FBSDKLoginButton!
+    @IBOutlet var facebookButton: UIButton!
+    @IBOutlet var googleButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +47,13 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate
     }
     
     func setupEmailButton() {
-        let buttonText = String.fontAwesomeIcon(name: .envelope) + "  Email"
-        emailButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 18)
-        emailButton.setTitle(buttonText, for: .normal)
+        let emailIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .envelope))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        let emailText = NSMutableAttributedString(string: "  Email", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
+        
+        emailIcon.append(emailText)
+        
+        emailButton.setAttributedTitle(emailIcon, for: .normal)
+        emailButton.tintColor = UIColor.white
         emailButton.layer.cornerRadius = 5
         emailButton.layer.shadowColor = UIColor.black.cgColor
         emailButton.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -59,11 +63,35 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate
     }
     
     func setupGoogleButton() {
-        googleButton.style = GIDSignInButtonStyle.standard
+        let googleIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .google))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        let googleText = NSMutableAttributedString(string: "  Google", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
+        
+        googleIcon.append(googleText)
+        
+        googleButton.setAttributedTitle(googleIcon, for: .normal)
+        googleButton.tintColor = UIColor.white
+        googleButton.layer.cornerRadius = 5
+        googleButton.layer.shadowColor = UIColor.black.cgColor
+        googleButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        googleButton.layer.shadowOpacity = 0.5
+        googleButton.layer.shadowRadius = 1
+        googleButton.layer.masksToBounds = false
     }
     
     func setupFacebookButton() {
-        facebookButton.delegate = self
+        let facebookIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .facebookSquare))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        let facebookText = NSMutableAttributedString(string: "  Facebook", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
+        
+        facebookIcon.append(facebookText)
+        
+        facebookButton.setAttributedTitle(facebookIcon, for: .normal)
+        facebookButton.tintColor = UIColor.white
+        facebookButton.layer.cornerRadius = 5
+        facebookButton.layer.shadowColor = UIColor.black.cgColor
+        facebookButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        facebookButton.layer.shadowOpacity = 0.5
+        facebookButton.layer.shadowRadius = 1
+        facebookButton.layer.masksToBounds = false
     }
     
     func setupNavBar() {
@@ -78,39 +106,53 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate
         self.performSegue(withIdentifier: "methodsToFamily", sender: self)
     }
     
-    // TODO: Move this to
-    // MARK: -- Facebook signup
-    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-        if let error = error {
-            print(error.localizedDescription)
-            return
-        }
-        
-        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-        
-        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
-            if let error = error {
-                print("Error signing in with Facebook: \(error.localizedDescription)")
-                return
+    // TODO: Move this to AppDelegate
+    // MARK: - Facebook signup
+    @IBAction func facebookButtonPressed(_ sender: Any) {
+        loginWithFacebook()
+    }
+    
+    func loginWithFacebook() {
+        FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { (result, error) in
+            if error != nil {
+                print("Error with custom Facebook login")
+            } else {
+                if let result = result, let resultToken = result.token, let resultTokenString = resultToken.tokenString {
+                    if let credential = FIRFacebookAuthProvider.credential(withAccessToken: resultTokenString) as FIRAuthCredential? {
+                        
+                        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+                            if let error = error {
+                                print("Error signing in with Facebook: \(error.localizedDescription)")
+                                return
+                            }
+                            let firstName = (user?.displayName?.components(separatedBy: " ").first)!
+                            let photoURL = (user?.photoURL?.absoluteString)!
+                            
+                            // Save to NewProfile
+                            NewProfile.sharedInstance.name = firstName
+                            NewProfile.sharedInstance.photoURL = photoURL
+                            
+                            self.presentNextVC()
+                        })
+                    }
+                } else {
+                    print("Unable to login with Facebook")
+                }
             }
-            let firstName = (user?.displayName?.components(separatedBy: " ").first)!
-            let photoURL = (user?.photoURL?.absoluteString)!
-//            print("Signing in with Facebook: name= \(firstName) --photoURL= \(photoURL) ")
-            
-            // Save to NewProfile
-            NewProfile.sharedInstance.name = firstName
-            NewProfile.sharedInstance.photoURL = photoURL
-            
-            self.presentNextVC()
-        })
-
+        }
     }
     
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
-        // ...
+    // MARK: - Google signup
+    @IBAction func googleButtonPressed(_ sender: Any) {
+        loginWithGoogle()
     }
     
-    // MARK: -- Cancel signup
+    func loginWithGoogle() {
+        GIDSignIn.sharedInstance().signIn()
+    }
+    
+    
+    // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Delete partial user profile
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

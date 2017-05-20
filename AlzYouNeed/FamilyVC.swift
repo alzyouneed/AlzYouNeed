@@ -41,7 +41,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: -- Setup view
+    // MARK: - Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
         
@@ -102,7 +102,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         confirmPasswordTextField.autocorrectionType = UITextAutocorrectionType.no
     }
     
-    // MARK: -- TextField changes
+    // MARK: - TextField changes
     func editedFamilyNameText() {
         validateFields()
     }
@@ -115,7 +115,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         validateFields()
     }
     
-    // MARK: -- Mode changes
+    // MARK: - Mode changes
     @IBAction func familyOptionChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             // Create family mode
@@ -195,7 +195,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         print("New User Profile: \(NewProfile.sharedInstance.asDict())")
     }
     
-    // MARK: -- Adjusting keyboard
+    // MARK: - Adjusting keyboard
     func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
         let userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
@@ -232,7 +232,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(show: false, notification: sender)
     }
     
-    // MARK: -- Validation
+    // MARK: - Validation
     func validateFields() {
         if familyControl.selectedSegmentIndex == 0 {
             // Create mode
@@ -252,7 +252,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         actionButton.alpha = enable ? 1 : 0.6
     }
     
-    // MARK: -- Cancel signup
+    // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Sign out from auth & Delete partial user profile
         

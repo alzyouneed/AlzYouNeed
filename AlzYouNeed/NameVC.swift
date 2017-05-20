@@ -36,7 +36,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: -- Setup view
+    // MARK: - Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
         
@@ -60,7 +60,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
         nameTextField.autocapitalizationType = UITextAutocapitalizationType.words
     }
     
-    // MARK: -- Adjusting keyboard
+    // MARK: - Adjusting keyboard
     func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
         let userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
@@ -95,7 +95,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(show: false, notification: sender)
     }
     
-    // MARK: -- Onboarding progression
+    // MARK: - Onboarding progression
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         // Save name and present next VC
         NewProfile.sharedInstance.name = nameTextField.text
@@ -109,7 +109,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
         self.performSegue(withIdentifier: "nameToFamily", sender: self)
     }
     
-    // MARK: -- Validation
+    // MARK: - Validation
     func validateField() {
         enableActionButton(enable: !(nameTextField.text?.isEmpty)!)
     }
@@ -119,12 +119,12 @@ class NameVC: UIViewController, UITextFieldDelegate {
         nextButton.alpha = enable ? 1 : 0.6
     }
     
-    // MARK: -- TextField changes
+    // MARK: - TextField changes
     func editedNameText() {
         validateField()
     }
     
-    // MARK: -- Cancel signup
+    // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Delete partial user profile
         

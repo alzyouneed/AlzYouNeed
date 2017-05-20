@@ -16,6 +16,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     var loginMode = false
     
+    @IBOutlet var signupButton: UIButton!
+    @IBOutlet var loginButton: UIButton!
+    
+    @IBOutlet var emailTextField: validateTextFieldView!
+    @IBOutlet var passwordTextField: validateTextFieldView!
+    
     @IBOutlet var emailVTFView: validateTextFieldView!
     @IBOutlet var passwordVTFView: validateTextFieldView!
     
@@ -38,6 +44,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        setupViews()
     }
     
     func configureView() {
@@ -73,7 +81,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // TODO: Background Video
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
-        self.navigationController?.setNavigationBarHidden(false, animated: animated);
+//        self.navigationController?.setNavigationBarHidden(false, animated: animated);
         super.viewWillDisappear(animated)
     }
     
@@ -339,10 +347,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Title View Animations
     func showTitleView() {
         self.logoImageTopConstraint.constant = 130
-        self.appNameLabelTopConstraint.constant = 16
+        self.appNameLabelTopConstraint.constant = 24
         self.view.layoutIfNeeded()
-        self.logoImageTopConstraint.constant = 110
-        self.appNameLabelTopConstraint.constant = 8
+        self.logoImageTopConstraint.constant = 75
+        self.appNameLabelTopConstraint.constant = 16
         
         UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.logoImageView.alpha = 0.9
@@ -357,15 +365,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - TODO: Background Video
     func configureBackgroundVideo() {
-//        let filePath = NSBundle.mainBundle().pathForResource("islandViewBW", ofType: "gif")
-//        let gif = NSData(contentsOfFile: filePath!)
-//        
-//        let webViewBG = UIWebView(frame: self.view.frame)
-//        webViewBG.loadData(gif!, MIMEType: "image/gif", textEncodingName: String(), baseURL: NSURL())
-//        webViewBG.userInteractionEnabled = false
-//        self.view.addSubview(webViewBG)
-        
-//        let movieFilePath = NSBundle.mainBundle().pathForResource("islandView3", ofType: "mp4")
         let movieFilePath = Bundle.main.path(forResource: "beach", ofType: "mp4")
         if let movieFilePath = movieFilePath {
             print("Configuring background video")
@@ -390,5 +389,52 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func playerItemDidReachEnd() {
         player!.seek(to: kCMTimeZero)
     }
+    
+    // MARK: - Signup & Login
+    @IBAction func signupButtonPressed(_ sender: Any) {
+        presentOnboardingVC()
+    }
+
+    @IBAction func loginButtonPressed(_ sender: Any) {
+        if loginMode {
+            loginMode = false
+            loginButton.backgroundColor = UIColor.white
+            loginButton.tintColor = UIColor(hex: "7189FF")
+            loginButton.setTitle("Log in", for: .normal)
+            
+        } else {
+            loginMode = true
+            loginButton.backgroundColor = UIColor(hex: "FF6978")
+            loginButton.tintColor = UIColor.black
+            loginButton.setTitle("Cancel", for: .normal)
+        }
+    }
+    
+    // MARK: - Setup views
+    func setupViews() {
+        setupSignupButton()
+        setupLoginButton()
+    }
+    
+    func setupSignupButton() {
+        signupButton.layer.cornerRadius = 5
+        signupButton.layer.shadowColor = UIColor.black.cgColor
+        signupButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        signupButton.layer.shadowOpacity = 0.5
+        signupButton.layer.shadowRadius = 1
+        signupButton.layer.masksToBounds = false
+    }
+    
+    func setupLoginButton() {
+        loginButton.layer.cornerRadius = 5
+        loginButton.layer.shadowColor = UIColor.black.cgColor
+        loginButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        loginButton.layer.shadowOpacity = 0.5
+        loginButton.layer.shadowRadius = 1
+        loginButton.layer.masksToBounds = false
+    }
+    
+    
+    
 
 }

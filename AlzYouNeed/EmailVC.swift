@@ -100,7 +100,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         confirmPasswordTextField.autocorrectionType = UITextAutocorrectionType.no
     }
     
-    // MARK: -- Adjusting keyboard
+    // MARK: - Adjusting keyboard
     func adjustingKeyboardHeight(show: Bool, notification: NSNotification) {
         let userInfo = notification.userInfo!
         let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
@@ -137,7 +137,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         adjustingKeyboardHeight(show: false, notification: sender)
     }
     
-    // MARK: -- TextField changes
+    // MARK: - TextField changes
     func editedEmailText() {
         if let text = emailTextField.text {
             if ((text.characters.count < 3  && text.characters.count > 0) || (!text.contains("@") && text.characters.count > 0)) {
@@ -157,7 +157,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         validateFields()
     }
     
-    // MARK: -- Validation
+    // MARK: - Validation
     func validateFields() {
         let passwordsMatch = passwordTextField.text == confirmPasswordTextField.text
         if !emailTextField.hasErrorMessage && (passwordTextField.text?.characters.count)! >= 6 && passwordsMatch {
@@ -172,7 +172,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         signUpButton.alpha = enable ? 1 : 0.6
     }
     
-    // MARK: -- Sign up
+    // MARK: - Sign up
     @IBAction func signUpPressed(_ sender: UIButton) {
         // If Firebase sign-up succeeds then present next VC
         presentNextVC()
@@ -184,7 +184,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         self.performSegue(withIdentifier: "emailToName", sender: self)
     }
     
-    // MARK: -- Cancel signup
+    // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Delete partial user profile
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
