@@ -15,6 +15,7 @@ import Crashlytics
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     var loginMode = false
+    var isAnimating = false
     
     @IBOutlet var signupButton: UIButton!
     @IBOutlet var loginButton: UIButton!
@@ -396,17 +397,23 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
-        if loginMode {
-            loginMode = false
-            loginButton.backgroundColor = UIColor.white
-            loginButton.tintColor = UIColor(hex: "7189FF")
-            loginButton.setTitle("Log in", for: .normal)
-            
-        } else {
-            loginMode = true
-            loginButton.backgroundColor = UIColor(hex: "FF6978")
-            loginButton.tintColor = UIColor.black
-            loginButton.setTitle("Cancel", for: .normal)
+        if !isAnimating {
+            if loginMode {
+                // Exit login mode
+                loginMode = false
+                loginButton.backgroundColor = UIColor.white
+                loginButton.setTitle("Log in", for: .normal)
+                loginButton.setTitleColor(UIColor(hex: "7189FF"), for: .normal)
+                showSignupButton(show: true)
+                
+            } else {
+                // Enter login mode
+                loginMode = true
+                loginButton.backgroundColor = UIColor(hex: "FF6978")
+                loginButton.setTitle("Cancel", for: .normal)
+                loginButton.setTitleColor(UIColor.white, for: .normal)
+                showSignupButton(show: false)
+            }
         }
     }
     
@@ -434,7 +441,28 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButton.layer.masksToBounds = false
     }
     
-    
+    // MARK: - Animations
+    func showSignupButton(show: Bool) {
+        if !isAnimating {
+            if show {
+                self.isAnimating = true
+                signupButton.isHidden = false
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.signupButton.alpha = 1
+                }, completion: { (complete) in
+                    self.isAnimating = false
+                })
+            } else {
+                self.isAnimating = true
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.signupButton.alpha = 0
+                }, completion: { (complete) in
+                    self.signupButton.isHidden = true
+                    self.isAnimating = false
+                })
+            }
+        }
+    }
     
 
 }
