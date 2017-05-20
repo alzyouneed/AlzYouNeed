@@ -26,6 +26,7 @@
 		2D6C9CD61ECFA2F100FC8457 /* MethodsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */; };
 		2D6C9CD81ECFC3D400FC8457 /* FamilyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */; };
 		2D6C9CDA1ECFC92200FC8457 /* EmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */; };
+		2D6C9CDC1ECFF38700FC8457 /* NameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */; };
 		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
 		2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */; };
 		2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3831D1C88F90048333C /* CreateUserViewController.swift */; };
@@ -91,6 +92,7 @@
 		2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodsVC.swift; sourceTree = "<group>"; };
 		2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyVC.swift; sourceTree = "<group>"; };
 		2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailVC.swift; sourceTree = "<group>"; };
+		2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameVC.swift; sourceTree = "<group>"; };
 		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		2D70C3831D1C88F90048333C /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 			children = (
 				2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */,
 				2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */,
+				2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */,
 				2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */,
 			);
 			name = New;
@@ -671,6 +674,7 @@
 				2D2244F81D0FB6F9005D9DF5 /* UserDefaultsManager.swift in Sources */,
 				2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */,
 				2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */,
+				2D6C9CDC1ECFF38700FC8457 /* NameVC.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
 				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,

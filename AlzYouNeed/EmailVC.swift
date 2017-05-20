@@ -12,7 +12,9 @@ import SkyFloatingLabelTextField
 class EmailVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var emailTextField: SkyFloatingLabelTextFieldWithIcon!
-    @IBOutlet var passwordTextField: SkyFloatingLabelTextFieldWithIcon!
+    @IBOutlet var passwordTextField: SkyFloatingLabelTextField!
+    @IBOutlet var confirmPasswordTextField: SkyFloatingLabelTextField!
+    
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var signUpButtonBottomConstraint: NSLayoutConstraint!
     
@@ -41,8 +43,9 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     func setupView() {
         setupEmailTextField()
         setupPasswordTextField()
+        setupConfirmPasswordTextField()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "495060")
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
     }
     
     func setupEmailTextField() {
@@ -75,10 +78,10 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         passwordTextField.textColor = UIColor.black
         passwordTextField.tintColor = UIColor(hex: "7d80da")
         passwordTextField.lineColor = UIColor.lightGray
-        passwordTextField.iconFont = UIFont(name: "FontAwesome", size: 14)
-        passwordTextField.iconText = String.fontAwesomeIcon(name: .key)
-        passwordTextField.iconMarginBottom = -3
-        passwordTextField.selectedIconColor = UIColor(hex: "7d80da")
+//        passwordTextField.iconFont = UIFont(name: "FontAwesome", size: 14)
+//        passwordTextField.iconText = String.fontAwesomeIcon(name: .key)
+//        passwordTextField.iconMarginBottom = -3
+//        passwordTextField.selectedIconColor = UIColor(hex: "7d80da")
         
         passwordTextField.selectedTitleColor = UIColor(hex: "7d80da")
         passwordTextField.selectedLineColor = UIColor(hex: "7d80da")
@@ -86,6 +89,21 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action:#selector(EmailVC.editedPasswordText), for:UIControlEvents.editingChanged)
         passwordTextField.autocorrectionType = UITextAutocorrectionType.no
+    }
+    
+    func setupConfirmPasswordTextField() {
+        confirmPasswordTextField.font = UIFont(name: "OpenSans", size: 20)
+        confirmPasswordTextField.placeholder = "Confirm password"
+        confirmPasswordTextField.title = "Confirm password"
+        confirmPasswordTextField.textColor = UIColor.black
+        confirmPasswordTextField.tintColor = UIColor(hex: "7d80da")
+        confirmPasswordTextField.lineColor = UIColor.lightGray
+        confirmPasswordTextField.selectedTitleColor = UIColor(hex: "7d80da")
+        confirmPasswordTextField.selectedLineColor = UIColor(hex: "7d80da")
+        
+        confirmPasswordTextField.delegate = self
+        confirmPasswordTextField.addTarget(self, action:#selector(EmailVC.editedConfirmPasswordText), for:UIControlEvents.editingChanged)
+        confirmPasswordTextField.autocorrectionType = UITextAutocorrectionType.no
     }
     
     // MARK: -- Adjusting keyboard
@@ -140,10 +158,14 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         validateFields()
     }
     
+    func editedConfirmPasswordText() {
+        validateFields()
+    }
+    
     // MARK: -- Validation
     func validateFields() {
-        if !emailTextField.hasErrorMessage && (passwordTextField.text?.characters.count)! >= 6 {
-//            print("Ready to signup")
+        let passwordsMatch = passwordTextField.text == confirmPasswordTextField.text
+        if !emailTextField.hasErrorMessage && (passwordTextField.text?.characters.count)! >= 6 && passwordsMatch {
             enableSignup(enable: true)
         } else {
             enableSignup(enable: false)
@@ -162,9 +184,9 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     }
     
     func presentNextVC() {
-        print("Present familyStepVC")
+        print("Present NameVC")
         // Present next VC
-        self.performSegue(withIdentifier: "emailToFamily", sender: self)
+        self.performSegue(withIdentifier: "emailToName", sender: self)
     }
 
 }

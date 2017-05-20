@@ -36,6 +36,8 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         setupEmailButton()
         setupGoogleButton()
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
+        
         NotificationCenter.default.addObserver(self, selector: #selector(MethodsVC.presentNextVC), name: NSNotification.Name(rawValue: signInNotificationKey), object: nil)
     }
     

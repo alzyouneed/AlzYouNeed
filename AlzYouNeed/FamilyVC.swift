@@ -43,7 +43,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     // MARK: -- Setup view
     func setupView() {
         self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "495060")
+        self.navigationController?.navigationBar.barTintColor = UIColor(hex: "4392F1")
         
         let attr = NSDictionary(object: UIFont(name: "OpenSans", size: 15)!, forKey: NSFontAttributeName as NSCopying)
         familyControl.setTitleTextAttributes(attr as? [AnyHashable : Any], for: .normal)
@@ -115,7 +115,6 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         validateFields()
     }
     
-    
     // MARK: -- Mode changes
     @IBAction func familyOptionChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
@@ -167,12 +166,12 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         if show {
             confirmPasswordTextField.isHidden = false
             infoLabel.isHidden = false
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.confirmPasswordTextField.alpha = 1
                 self.infoLabel.alpha = 1
             })
         } else {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.confirmPasswordTextField.alpha = 0
                 self.infoLabel.alpha = 0
             }, completion: { (complete) in
@@ -183,6 +182,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func actionButtonPressed(_ sender: UIButton) {
+        // Try creating / joining family in Firebase
     }
     
     // MARK: -- Adjusting keyboard
