@@ -214,6 +214,141 @@
             </objects>
             <point key="canvasLocation" x="1711.2" y="-996.25187406296857"/>
         </scene>
+        <!--EmailVC-->
+        <scene sceneID="zjM-DZ-FnT">
+            <objects>
+                <viewController id="6Ah-AB-Zjf" customClass="EmailVC" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jjv-gi-sKo"/>
+                        <viewControllerLayoutGuide type="bottom" id="PL5-gk-Y1X"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2JS-pb-xCH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FDq-hb-CNN" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="84" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="DXB-Qa-DDY"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0zY-z7-9Gn" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="137" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="lgg-cN-eTP"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKC-cn-1Gi">
+                                <rect key="frame" x="0.0" y="607" width="375" height="60"/>
+                                <color key="backgroundColor" red="0.49019607843137253" green="0.50196078431372548" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="NOq-gn-LRB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="17"/>
+                                <state key="normal" title="Next">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0zY-z7-9Gn" firstAttribute="top" secondItem="FDq-hb-CNN" secondAttribute="bottom" constant="8" id="1Fj-cg-obT"/>
+                            <constraint firstItem="FDq-hb-CNN" firstAttribute="leading" secondItem="2JS-pb-xCH" secondAttribute="leadingMargin" id="66c-rX-f7c"/>
+                            <constraint firstItem="RKC-cn-1Gi" firstAttribute="leading" secondItem="2JS-pb-xCH" secondAttribute="leading" id="HZ0-WL-bSG"/>
+                            <constraint firstItem="FDq-hb-CNN" firstAttribute="trailing" secondItem="2JS-pb-xCH" secondAttribute="trailingMargin" id="LDT-ot-pE0"/>
+                            <constraint firstAttribute="trailing" secondItem="RKC-cn-1Gi" secondAttribute="trailing" id="RrS-i8-6fl"/>
+                            <constraint firstItem="FDq-hb-CNN" firstAttribute="top" secondItem="Jjv-gi-sKo" secondAttribute="bottom" constant="20" id="Sla-jA-Npe"/>
+                            <constraint firstItem="0zY-z7-9Gn" firstAttribute="leading" secondItem="2JS-pb-xCH" secondAttribute="leadingMargin" id="TaS-yG-DvW"/>
+                            <constraint firstItem="0zY-z7-9Gn" firstAttribute="trailing" secondItem="2JS-pb-xCH" secondAttribute="trailingMargin" id="h7T-fZ-mHe"/>
+                            <constraint firstItem="PL5-gk-Y1X" firstAttribute="top" secondItem="RKC-cn-1Gi" secondAttribute="bottom" id="zEU-VA-uA2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="wve-uy-xQI"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="FDq-hb-CNN" id="QKn-Is-SoB"/>
+                        <outlet property="nextButtonBottomConstraint" destination="zEU-VA-uA2" id="4xQ-Mf-PFI"/>
+                        <outlet property="passwordTextField" destination="0zY-z7-9Gn" id="t4g-qm-crs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ky9-pm-hjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="903" y="-1670"/>
+        </scene>
+        <!--FamilyVC-->
+        <scene sceneID="V4G-68-RsT">
+            <objects>
+                <viewController id="b1G-BN-3OI" customClass="FamilyVC" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ohs-tU-C8d"/>
+                        <viewControllerLayoutGuide type="bottom" id="VHj-dQ-HNS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s1b-l6-Rv9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gg6-1l-s8Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1711" y="-1670"/>
+        </scene>
+        <!--MethodsVC-->
+        <scene sceneID="m7p-TB-3jA">
+            <objects>
+                <viewController id="o45-Lp-Z1V" customClass="MethodsVC" customModule="AlzYouNeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ilX-Qn-ECa"/>
+                        <viewControllerLayoutGuide type="bottom" id="uAC-Kr-VDb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="obq-Ep-6ea">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-uv-wFT">
+                                <rect key="frame" x="16" y="311" width="343" height="45"/>
+                                <color key="backgroundColor" red="0.49019607843137253" green="0.50196078431372548" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="0xI-O7-MWu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
+                                <state key="normal" title="Email">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="6Ah-AB-Zjf" kind="show" id="qap-t5-zIU"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F34-bt-ptP" customClass="GIDSignInButton">
+                                <rect key="frame" x="16" y="251" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="cHV-IZ-flR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="F34-bt-ptP" firstAttribute="trailing" secondItem="obq-Ep-6ea" secondAttribute="trailingMargin" id="DiH-OF-t7t"/>
+                            <constraint firstItem="F34-bt-ptP" firstAttribute="leading" secondItem="obq-Ep-6ea" secondAttribute="leadingMargin" id="HDu-xz-Gja"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="leading" secondItem="obq-Ep-6ea" secondAttribute="leadingMargin" id="fJM-ZM-rXF"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="top" secondItem="F34-bt-ptP" secondAttribute="bottom" constant="15" id="hB7-Qw-y8k"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="trailing" secondItem="obq-Ep-6ea" secondAttribute="trailingMargin" id="i4B-2x-Vwx"/>
+                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerY" secondItem="obq-Ep-6ea" secondAttribute="centerY" id="mHc-pb-iy4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="hsk-gP-jS4"/>
+                    <connections>
+                        <outlet property="emailButton" destination="hlQ-uv-wFT" id="Z7G-G8-91x"/>
+                        <outlet property="googleButton" destination="F34-bt-ptP" id="DcB-sa-YuA"/>
+                        <segue destination="b1G-BN-3OI" kind="show" identifier="familyStep" id="bEV-la-pGm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SrN-LY-Pfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="153" y="-1669"/>
+        </scene>
         <!--New User-->
         <scene sceneID="346-aL-I3p">
             <objects>
@@ -528,7 +663,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable to improve the AlzYouNeed experience" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yp4-f5-Grl">
-                                        <rect key="frame" x="8" y="176" width="359" height="20"/>
+                                        <rect key="frame" x="8" y="176" width="359" height="46.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="421" id="BPJ-Zd-wjX"/>
                                             <constraint firstAttribute="height" constant="40" id="OCO-kg-xRx"/>
@@ -802,7 +937,7 @@
             <objects>
                 <navigationController storyboardIdentifier="loginNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -864,9 +999,9 @@
         <!--Navigation Controller-->
         <scene sceneID="CgY-Ll-yam">
             <objects>
-                <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlw-5s-TrC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="onboardingNavOld" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlw-5s-TrC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chV-hS-NTa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="chV-hS-NTa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -878,6 +1013,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQo-r9-vho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-786.39999999999998" y="-996.25187406296857"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Uo7-CN-35j">
+            <objects>
+                <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RkW-wU-gBz" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="leV-lP-Z5q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="o45-Lp-Z1V" kind="relationship" relationship="rootViewController" id="xiu-bf-KsD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hUX-Zn-utQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-786" y="-1670"/>
         </scene>
     </scenes>
     <resources>

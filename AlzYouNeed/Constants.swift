@@ -48,3 +48,6 @@ enum Tutorials: String {
     case contactList
     case reminders
 }
+
+// MARK: -- NSNotification Keys
+let signInNotificationKey = "com.alzyouneed.signInNotificationKey"

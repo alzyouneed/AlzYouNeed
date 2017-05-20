@@ -12,9 +12,10 @@ import FirebaseMessaging
 import UserNotifications
 import Fabric
 import Crashlytics
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
     var ref: FIRDatabaseReference!
@@ -27,6 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
         
         // Configure Firebase
 //        FIRApp.configure()  -- caused crash on launch here
@@ -89,6 +93,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let names = UIFont.fontNames(forFamilyName: familyName)
             print("Font Names = [\(names)]")
         }
+    }
+    
+    // MARK: - Google Sign-in
+    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
+        -> Bool {
+            return GIDSignIn.sharedInstance().handle(url,
+                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: [:])
+    }
+   
+    /*
+    -- Use for multiple sign-in methods
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        
+        if(url.scheme!.isEqual("fbXXXXXXXXXXX")) {
+            return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+            
+        } else {
+            return GIDSignIn.sharedInstance().handle(url as URL!,
+                                                     sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String!,
+                                                     annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+        }
+    }
+    */
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+        // ...
+        if let error = error {
+            print("Error signing in with Google: \(error.localizedDescription)")
+            return
+        }
+        
+        print("Google user: userID= \(user.userID!) --name= \(user.profile.name!) --givenName= \(user.profile.givenName!) --familyName= \(user.profile.familyName!) --email= \(user.profile.email!)")
+        
+        guard let authentication = user.authentication else { return }
+        let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        
+        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+            if let error = error {
+                print("Error signing in with Google in FIRAuth: \(error.localizedDescription)")
+                return
+            }
+            print("Signed in with Google")
+            // Notify MethodsVC that sign-in was successful
+            NotificationCenter.default.post(name: Notification.Name(rawValue: signInNotificationKey), object: self)
+        })
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
     }
     
     // MARK: - Push Notifications

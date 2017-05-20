@@ -13,13 +13,15 @@ pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Messaging'
 pod 'Firebase/Core'
+pod 'GoogleSignIn'
 
 # Fabric
 pod 'Fabric'
 pod 'Crashlytics'
-pod 'SkyFloatingLabelTextField', '~> 3.0'
 
 # Misc
 pod 'PKHUD', '~> 4.0'
+pod 'SkyFloatingLabelTextField', '~> 3.0'
+pod 'FontAwesome.swift'
 
 end
