@@ -453,11 +453,31 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func setupFacebookOptionButton() {
         facebookOptionButton.isHidden = true
         facebookOptionButton.layer.cornerRadius = facebookOptionButton.frame.width/2
+        
+        let facebookIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .facebook))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        facebookOptionButton.setAttributedTitle(facebookIcon, for: .normal)
+        facebookOptionButton.tintColor = UIColor(hex: "7189FF")
+        facebookOptionButton.layer.cornerRadius = 5
+        facebookOptionButton.layer.shadowColor = UIColor.black.cgColor
+        facebookOptionButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        facebookOptionButton.layer.shadowOpacity = 0.5
+        facebookOptionButton.layer.shadowRadius = 1
+        facebookOptionButton.layer.masksToBounds = false
     }
     
     func setupGoogleOptionButton() {
         googleOptionButton.isHidden = true
         googleOptionButton.layer.cornerRadius = googleOptionButton.frame.width/2
+        
+        let googleIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .google))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
+        googleOptionButton.setAttributedTitle(googleIcon, for: .normal)
+        googleOptionButton.tintColor = UIColor(hex: "7189FF")
+        googleOptionButton.layer.cornerRadius = 5
+        googleOptionButton.layer.shadowColor = UIColor.black.cgColor
+        googleOptionButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        googleOptionButton.layer.shadowOpacity = 0.5
+        googleOptionButton.layer.shadowRadius = 1
+        googleOptionButton.layer.masksToBounds = false
     }
     
     func setupEmailOptionButton() {
@@ -476,6 +496,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Animations
+    // TODO: Make options animations in separate func
     func showSignupButton(show: Bool) {
         if !isAnimating {
             if show {
@@ -527,6 +548,23 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         googleOptionButton.alpha = alpha
         emailOptionButton.alpha = alpha
     }
+    
+    // MARK: - Login Options
+    @IBAction func facebookOptionButtonPressed(_ sender: UIButton) {
+        print("Facebook")
+        // TODO: Login with Facebook
+    }
+    
+    @IBAction func googleOptionButtonPressed(_ sender: UIButton) {
+        print("Google")
+        // TODO: Login with Google
+    }
+    
+    @IBAction func emailOptionButtonPressed(_ sender: UIButton) {
+        print("Email")
+        // TODO: Login with Email
+    }
+    
     
 
 }

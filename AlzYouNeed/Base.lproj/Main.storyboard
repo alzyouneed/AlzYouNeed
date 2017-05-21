@@ -1151,13 +1151,13 @@
                                     <action selector="loginButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="07X-zI-zDB"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Aq-gph" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Aq-gph" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="16" y="304" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cfF-my-74M"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMt-60-oRd" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMt-60-oRd" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
                                 <rect key="frame" x="16" y="358" width="343" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="FcT-Qu-kzo"/>
@@ -1170,6 +1170,9 @@
                                     <constraint firstAttribute="height" constant="50" id="0CT-ZJ-6Dh"/>
                                     <constraint firstAttribute="width" constant="50" id="f4w-k9-3Oq"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="googleOptionButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="gh7-Mu-yei"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2H-KM-9fq">
                                 <rect key="frame" x="242" y="479" width="50" height="50"/>
@@ -1178,6 +1181,9 @@
                                     <constraint firstAttribute="width" constant="50" id="0sH-D2-pY9"/>
                                     <constraint firstAttribute="height" constant="50" id="G5x-iy-rAO"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="emailOptionButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="TSk-j8-nBM"/>
+                                </connections>
                             </button>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbg-YB-Mjy">
                                 <rect key="frame" x="82" y="479" width="50" height="50"/>
@@ -1186,6 +1192,9 @@
                                     <constraint firstAttribute="width" constant="50" id="7x5-gH-FFJ"/>
                                     <constraint firstAttribute="height" constant="50" id="Ftt-QT-l6U"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="facebookOptionButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="DYg-VW-Ozs"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
