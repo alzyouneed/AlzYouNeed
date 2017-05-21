@@ -23,6 +23,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var facebookOptionButton: UIButton!
     @IBOutlet var googleOptionButton: UIButton!
     @IBOutlet var emailOptionButton: UIButton!
+    @IBOutlet var loginOptionsBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var emailTextField: validateTextFieldView!
     @IBOutlet var passwordTextField: validateTextFieldView!
@@ -478,40 +479,53 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func showSignupButton(show: Bool) {
         if !isAnimating {
             if show {
+                // Exit login mode
                 self.isAnimating = true
-                
                 signupButton.isHidden = false
-
+                
+                self.loginOptionsBottomConstraint.constant = 40
+                self.view.layoutIfNeeded()
+                self.loginOptionsBottomConstraint.constant = 20
+                
                 UIView.animate(withDuration: 0.2, animations: {
                     self.signupButton.alpha = 1
-                    self.facebookOptionButton.alpha = 0
-                    self.googleOptionButton.alpha = 0
-                    self.emailOptionButton.alpha = 0
+                    self.changeOptionButtonsAlpha(alpha: 0)
+                    self.view.layoutIfNeeded()
                 }, completion: { (complete) in
-                    self.facebookOptionButton.isHidden = true
-                    self.googleOptionButton.isHidden = true
-                    self.emailOptionButton.isHidden = true
-                    
+                    self.showSignupButton(show: false)
                     self.isAnimating = false
                 })
             } else {
+                // Enter login mode
                 self.isAnimating = true
+                showOptionButtons(show: true)
                 
-                self.facebookOptionButton.isHidden = false
-                self.googleOptionButton.isHidden = false
-                self.emailOptionButton.isHidden = false
+                self.loginOptionsBottomConstraint.constant = 20
+                self.view.layoutIfNeeded()
+                self.loginOptionsBottomConstraint.constant = 40
+
                 UIView.animate(withDuration: 0.2, animations: {
                     self.signupButton.alpha = 0
-                    self.facebookOptionButton.alpha = 1
-                    self.googleOptionButton.alpha = 1
-                    self.emailOptionButton.alpha = 1
+                    self.changeOptionButtonsAlpha(alpha: 1)
+                    self.view.layoutIfNeeded()
                 }, completion: { (complete) in
                     self.signupButton.isHidden = true
-                    
                     self.isAnimating = false
                 })
             }
         }
+    }
+    
+    func showOptionButtons(show: Bool) {
+        facebookOptionButton.isHidden = !show
+        googleOptionButton.isHidden = !show
+        emailOptionButton.isHidden = !show
+    }
+    
+    func changeOptionButtonsAlpha(alpha: CGFloat) {
+        facebookOptionButton.alpha = alpha
+        googleOptionButton.alpha = alpha
+        emailOptionButton.alpha = alpha
     }
     
 

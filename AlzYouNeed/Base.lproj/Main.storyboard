@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1163,7 +1164,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvP-Aq-ZXY">
-                                <rect key="frame" x="162" y="447" width="50" height="50"/>
+                                <rect key="frame" x="162" y="479" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="0CT-ZJ-6Dh"/>
@@ -1171,7 +1172,7 @@
                                 </constraints>
                             </button>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2H-KM-9fq">
-                                <rect key="frame" x="242" y="447" width="50" height="50"/>
+                                <rect key="frame" x="242" y="479" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="0sH-D2-pY9"/>
@@ -1179,7 +1180,7 @@
                                 </constraints>
                             </button>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qbg-YB-Mjy">
-                                <rect key="frame" x="82" y="447" width="50" height="50"/>
+                                <rect key="frame" x="82" y="479" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="7x5-gH-FFJ"/>
@@ -1193,6 +1194,7 @@
                             <constraint firstItem="TdT-tl-JdH" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="3fT-Gm-egR"/>
                             <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="M7G-Xk-n5I" secondAttribute="bottom" identifier="loginBottom" id="4nv-4a-DrL"/>
                             <constraint firstItem="TdT-tl-JdH" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="4rZ-pE-Cn8"/>
+                            <constraint firstItem="TdT-tl-JdH" firstAttribute="top" secondItem="RvP-Aq-ZXY" secondAttribute="bottom" constant="40" id="5yt-8s-Xga"/>
                             <constraint firstAttribute="trailing" secondItem="78x-OC-pb2" secondAttribute="trailing" id="64K-ew-Sgi"/>
                             <constraint firstItem="pTn-uj-d6L" firstAttribute="top" secondItem="8Hh-bb-hIh" secondAttribute="bottom" constant="100" id="JJd-wv-IAR"/>
                             <constraint firstItem="nQv-JJ-nf8" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leadingMargin" id="JSe-kW-Wzw"/>
@@ -1215,7 +1217,6 @@
                             <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="TdT-tl-JdH" secondAttribute="bottom" constant="50" id="lEn-Ws-U5f"/>
                             <constraint firstItem="78x-OC-pb2" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="nEk-jC-xRh"/>
                             <constraint firstItem="Qbg-YB-Mjy" firstAttribute="bottom" secondItem="RvP-Aq-ZXY" secondAttribute="bottom" id="oR6-bB-xrO"/>
-                            <constraint firstItem="yxC-pp-WNY" firstAttribute="top" secondItem="RvP-Aq-ZXY" secondAttribute="bottom" constant="16" id="pag-4g-APp"/>
                             <constraint firstItem="yxC-pp-WNY" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="r8Q-Ku-lnU"/>
                             <constraint firstAttribute="trailing" secondItem="M7G-Xk-n5I" secondAttribute="trailing" identifier="loginTrailing" id="rv6-hc-UkT"/>
                             <constraint firstItem="TdT-tl-JdH" firstAttribute="top" secondItem="yxC-pp-WNY" secondAttribute="bottom" constant="8" id="sDf-pg-8f9"/>
@@ -1247,6 +1248,7 @@
                         <outlet property="loginButton" destination="TdT-tl-JdH" id="wmy-3C-ZD7"/>
                         <outlet property="loginButtons" destination="M7G-Xk-n5I" id="btz-jg-EMV"/>
                         <outlet property="loginButtonsBottomConstraint" destination="4nv-4a-DrL" id="UU3-ld-vfi"/>
+                        <outlet property="loginOptionsBottomConstraint" destination="5yt-8s-Xga" id="4Iu-Nd-wdH"/>
                         <outlet property="logoImageTopConstraint" destination="Owv-tm-nJ8" id="9yE-bS-wmP"/>
                         <outlet property="logoImageView" destination="pTn-uj-d6L" id="l82-TO-67u"/>
                         <outlet property="passwordTextField" destination="gMt-60-oRd" id="Reh-G2-ygU"/>
