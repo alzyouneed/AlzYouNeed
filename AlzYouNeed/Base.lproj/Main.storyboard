@@ -1151,18 +1151,6 @@
                                     <action selector="loginButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="07X-zI-zDB"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Aq-gph" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="16" y="304" width="343" height="46"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="cfF-my-74M"/>
-                                </constraints>
-                            </view>
-                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMt-60-oRd" customClass="validateTextFieldView" customModule="AlzYouNeed" customModuleProvider="target">
-                                <rect key="frame" x="16" y="358" width="343" height="46"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="FcT-Qu-kzo"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RvP-Aq-ZXY">
                                 <rect key="frame" x="162" y="479" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1196,6 +1184,18 @@
                                     <action selector="facebookOptionButtonPressed:" destination="dEd-h1-zPp" eventType="touchUpInside" id="DYg-VW-Ozs"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y34-Aq-gph" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="397" width="343" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="cfF-my-74M"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMt-60-oRd" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                <rect key="frame" x="16" y="451" width="343" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="FcT-Qu-kzo"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1224,6 +1224,7 @@
                             <constraint firstItem="1Bw-dF-VSA" firstAttribute="trailing" secondItem="aSa-gE-Fff" secondAttribute="trailingMargin" id="k0e-2Y-37o"/>
                             <constraint firstItem="1Bw-dF-VSA" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leadingMargin" id="lB5-wA-4RQ"/>
                             <constraint firstItem="aSs-ck-fte" firstAttribute="top" secondItem="TdT-tl-JdH" secondAttribute="bottom" constant="50" id="lEn-Ws-U5f"/>
+                            <constraint firstItem="yxC-pp-WNY" firstAttribute="top" secondItem="gMt-60-oRd" secondAttribute="bottom" constant="16" id="lsO-0B-3HP"/>
                             <constraint firstItem="78x-OC-pb2" firstAttribute="leading" secondItem="aSa-gE-Fff" secondAttribute="leading" id="nEk-jC-xRh"/>
                             <constraint firstItem="Qbg-YB-Mjy" firstAttribute="bottom" secondItem="RvP-Aq-ZXY" secondAttribute="bottom" id="oR6-bB-xrO"/>
                             <constraint firstItem="yxC-pp-WNY" firstAttribute="centerX" secondItem="aSa-gE-Fff" secondAttribute="centerX" id="r8Q-Ku-lnU"/>
@@ -1250,17 +1251,18 @@
                         <outlet property="appNameLabel" destination="78x-OC-pb2" id="x6S-IE-Qfr"/>
                         <outlet property="appNameLabelTopConstraint" destination="M5N-vP-F7z" id="eX1-f6-gWc"/>
                         <outlet property="emailOptionButton" destination="P2H-KM-9fq" id="Qza-cU-0d9"/>
-                        <outlet property="emailTextField" destination="y34-Aq-gph" id="tUj-Z6-Ed3"/>
+                        <outlet property="emailTextField" destination="y34-Aq-gph" id="K4O-K4-Eyy"/>
                         <outlet property="emailVTFView" destination="nQv-JJ-nf8" id="ioD-Ac-YEG"/>
                         <outlet property="facebookOptionButton" destination="Qbg-YB-Mjy" id="5hp-57-M4q"/>
                         <outlet property="googleOptionButton" destination="RvP-Aq-ZXY" id="Ivr-mt-OE1"/>
                         <outlet property="loginButton" destination="TdT-tl-JdH" id="wmy-3C-ZD7"/>
+                        <outlet property="loginButtonBottomConstraint" destination="lEn-Ws-U5f" id="ukf-eD-dFR"/>
                         <outlet property="loginButtons" destination="M7G-Xk-n5I" id="btz-jg-EMV"/>
                         <outlet property="loginButtonsBottomConstraint" destination="4nv-4a-DrL" id="UU3-ld-vfi"/>
                         <outlet property="loginOptionsBottomConstraint" destination="5yt-8s-Xga" id="4Iu-Nd-wdH"/>
                         <outlet property="logoImageTopConstraint" destination="Owv-tm-nJ8" id="9yE-bS-wmP"/>
                         <outlet property="logoImageView" destination="pTn-uj-d6L" id="l82-TO-67u"/>
-                        <outlet property="passwordTextField" destination="gMt-60-oRd" id="Reh-G2-ygU"/>
+                        <outlet property="passwordTextField" destination="gMt-60-oRd" id="yzM-Cf-lgT"/>
                         <outlet property="passwordVTFView" destination="1Bw-dF-VSA" id="1tX-Uq-XYk"/>
                         <outlet property="signupButton" destination="yxC-pp-WNY" id="5zm-cC-3Qi"/>
                     </connections>
