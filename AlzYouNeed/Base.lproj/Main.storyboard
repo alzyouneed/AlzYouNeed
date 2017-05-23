@@ -1252,18 +1252,14 @@
                         <outlet property="appNameLabelTopConstraint" destination="M5N-vP-F7z" id="eX1-f6-gWc"/>
                         <outlet property="emailOptionButton" destination="P2H-KM-9fq" id="Qza-cU-0d9"/>
                         <outlet property="emailTextField" destination="y34-Aq-gph" id="K4O-K4-Eyy"/>
-                        <outlet property="emailVTFView" destination="nQv-JJ-nf8" id="ioD-Ac-YEG"/>
                         <outlet property="facebookOptionButton" destination="Qbg-YB-Mjy" id="5hp-57-M4q"/>
                         <outlet property="googleOptionButton" destination="RvP-Aq-ZXY" id="Ivr-mt-OE1"/>
                         <outlet property="loginButton" destination="TdT-tl-JdH" id="wmy-3C-ZD7"/>
                         <outlet property="loginButtonBottomConstraint" destination="lEn-Ws-U5f" id="ukf-eD-dFR"/>
-                        <outlet property="loginButtons" destination="M7G-Xk-n5I" id="btz-jg-EMV"/>
-                        <outlet property="loginButtonsBottomConstraint" destination="4nv-4a-DrL" id="UU3-ld-vfi"/>
                         <outlet property="loginOptionsBottomConstraint" destination="5yt-8s-Xga" id="4Iu-Nd-wdH"/>
                         <outlet property="logoImageTopConstraint" destination="Owv-tm-nJ8" id="9yE-bS-wmP"/>
                         <outlet property="logoImageView" destination="pTn-uj-d6L" id="l82-TO-67u"/>
                         <outlet property="passwordTextField" destination="gMt-60-oRd" id="yzM-Cf-lgT"/>
-                        <outlet property="passwordVTFView" destination="1Bw-dF-VSA" id="1tX-Uq-XYk"/>
                         <outlet property="signupButton" destination="yxC-pp-WNY" id="5zm-cC-3Qi"/>
                     </connections>
                 </viewController>
@@ -1295,7 +1291,7 @@
             <objects>
                 <navigationController storyboardIdentifier="loginNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1359,7 +1355,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNavOld" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlw-5s-TrC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="chV-hS-NTa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chV-hS-NTa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1377,7 +1373,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RkW-wU-gBz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="leV-lP-Z5q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="leV-lP-Z5q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

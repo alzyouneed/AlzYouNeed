@@ -28,17 +28,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var loginOptionsBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var emailTextField: SkyFloatingLabelTextField!
-    
     @IBOutlet var passwordTextField: SkyFloatingLabelTextField!
-    
     @IBOutlet var loginButtonBottomConstraint: NSLayoutConstraint!
-    
-    
-    @IBOutlet var emailVTFView: validateTextFieldView!
-    @IBOutlet var passwordVTFView: validateTextFieldView!
-    
-    @IBOutlet var loginButtons: loginButtonsView!
-    @IBOutlet var loginButtonsBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var logoImageView: UIImageView!
     @IBOutlet var appNameLabel: UILabel!
@@ -60,30 +51,30 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         setupViews()
     }
     
-    func configureView() {
-        self.emailVTFView.emailMode()
-        self.passwordVTFView.passwordMode(false)
-        
-        // Configure text color for dark background
-        self.emailVTFView.textField.textColor = UIColor.white
-        self.emailVTFView.textField.tintColor = UIColor.white
-        self.passwordVTFView.textField.textColor = UIColor.white
-        self.passwordVTFView.textField.tintColor = UIColor.white
-        
-        self.emailVTFView.textField.delegate = self
-        self.passwordVTFView.textField.delegate = self
-
-        loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), for: UIControlEvents.touchUpInside)
-        loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), for: UIControlEvents.touchUpInside)
-
-        configureBackgroundVideo()
-//        emailVTFView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-        self.view.bringSubview(toFront: emailVTFView)
-        self.view.bringSubview(toFront: passwordVTFView)
-        self.view.bringSubview(toFront: loginButtons)
-        self.view.bringSubview(toFront: logoImageView)
-        self.view.bringSubview(toFront: appNameLabel)
-    }
+//    func configureView() {
+//        self.emailVTFView.emailMode()
+//        self.passwordVTFView.passwordMode(false)
+//        
+//        // Configure text color for dark background
+//        self.emailVTFView.textField.textColor = UIColor.white
+//        self.emailVTFView.textField.tintColor = UIColor.white
+//        self.passwordVTFView.textField.textColor = UIColor.white
+//        self.passwordVTFView.textField.tintColor = UIColor.white
+//        
+//        self.emailVTFView.textField.delegate = self
+//        self.passwordVTFView.textField.delegate = self
+//
+//        loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), for: UIControlEvents.touchUpInside)
+//        loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), for: UIControlEvents.touchUpInside)
+//
+//        configureBackgroundVideo()
+////        emailVTFView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        self.view.bringSubview(toFront: emailVTFView)
+//        self.view.bringSubview(toFront: passwordVTFView)
+//        self.view.bringSubview(toFront: loginButtons)
+//        self.view.bringSubview(toFront: logoImageView)
+//        self.view.bringSubview(toFront: appNameLabel)
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         // Remove observers
@@ -104,18 +95,14 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // Add observers
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        // TODO: Background Video
-        configureView()
+
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player!.currentItem)
         logoImageView.alpha = 0
         appNameLabel.alpha = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        loginButtons.resetState()
         showTitleView(show: true)
-//        showTitleView()
     }
     
     override var prefersStatusBarHidden : Bool {
@@ -136,6 +123,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         self.present(onboardingVC, animated: true, completion: nil)
     }
     
+    /*
     func loginUser() {
         if !loginModeStatus {
             showLoginView()
@@ -171,40 +159,41 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+     */
     
-    func leftButtonAction(_ sender: UIButton) {
-        switch sender.currentTitle! {
-        case "Sign up":
-            signUp()
-        case "Cancel":
-            hideLoginView()
-            self.view.endEditing(true)
-        default:
-            break
-        }
-    }
-    
-    func rightButtonAction(_ sender: UIButton) {
-        switch sender.currentTitle! {
-        case "Login":
-            loginUser()
-        default:
-            break
-        }
-    }
+//    func leftButtonAction(_ sender: UIButton) {
+//        switch sender.currentTitle! {
+//        case "Sign up":
+//            signUp()
+//        case "Cancel":
+//            hideLoginView()
+//            self.view.endEditing(true)
+//        default:
+//            break
+//        }
+//    }
+//    
+//    func rightButtonAction(_ sender: UIButton) {
+//        switch sender.currentTitle! {
+//        case "Login":
+//            loginUser()
+//        default:
+//            break
+//        }
+//    }
     
     // MARK: - Validation
-    func validateLogin() -> Bool {
-        if emailVTFView.textField.text!.isEmpty {
-            print("Missing email")
-            return false
-        }
-        if passwordVTFView.textField.text!.isEmpty {
-            print("Missing password")
-            return false
-        }
-        return true
-    }
+//    func validateLogin() -> Bool {
+//        if emailVTFView.textField.text!.isEmpty {
+//            print("Missing email")
+//            return false
+//        }
+//        if passwordVTFView.textField.text!.isEmpty {
+//            print("Missing password")
+//            return false
+//        }
+//        return true
+//    }
     
     func editedEmailText() {
         
@@ -215,73 +204,73 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Login View
-    func showLoginView() {
-        if !loginModeStatus {
-            loginModeStatus = true
-
-            self.emailVTFView.isHidden = false
-            self.passwordVTFView.isHidden = false
-
-            self.emailVTFView.alpha = 0
-            self.passwordVTFView.alpha = 0
-            
-            UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
-                self.emailVTFView.alpha = 1
-                self.passwordVTFView.alpha = 1
-                
-                self.logoImageView.alpha = 0
-                self.appNameLabel.alpha = 0
-                
-            }) { (completed) in
-                // Present keyboard
-                self.emailVTFView.textField.becomeFirstResponder()
-            }
-        }
-        else {
-            hideLoginView()
-        }
-    }
+//    func showLoginView() {
+//        if !loginModeStatus {
+//            loginModeStatus = true
+//
+//            self.emailVTFView.isHidden = false
+//            self.passwordVTFView.isHidden = false
+//
+//            self.emailVTFView.alpha = 0
+//            self.passwordVTFView.alpha = 0
+//            
+//            UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
+//                self.emailVTFView.alpha = 1
+//                self.passwordVTFView.alpha = 1
+//                
+//                self.logoImageView.alpha = 0
+//                self.appNameLabel.alpha = 0
+//                
+//            }) { (completed) in
+//                // Present keyboard
+//                self.emailVTFView.textField.becomeFirstResponder()
+//            }
+//        }
+//        else {
+//            hideLoginView()
+//        }
+//    }
     
-    func hideLoginView() {
-        if loginModeStatus {
-
-            self.resignFirstResponder()
-            
-            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
-                self.emailVTFView.alpha = 0
-                self.passwordVTFView.alpha = 0
-                
-                self.logoImageView.alpha = 0.9
-                self.appNameLabel.alpha = 1
-                
-            }) { (completed) in
-                self.emailVTFView.textField.text = ""
-                self.passwordVTFView.textField.text = ""
-                
-                self.emailVTFView.isHidden = true
-                self.passwordVTFView.isHidden = true
-
-                self.loginModeStatus = false
-            }
-        }
-    }
+//    func hideLoginView() {
+//        if loginModeStatus {
+//
+//            self.resignFirstResponder()
+//            
+//            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
+//                self.emailVTFView.alpha = 0
+//                self.passwordVTFView.alpha = 0
+//                
+//                self.logoImageView.alpha = 0.9
+//                self.appNameLabel.alpha = 1
+//                
+//            }) { (completed) in
+//                self.emailVTFView.textField.text = ""
+//                self.passwordVTFView.textField.text = ""
+//                
+//                self.emailVTFView.isHidden = true
+//                self.passwordVTFView.isHidden = true
+//
+//                self.loginModeStatus = false
+//            }
+//        }
+//    }
     
     // MARK: - UITextFieldDelegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // Switch between textFields by using return key
-        let tag = textField.superview!.superview!.tag
-        switch tag {
-        case 0:
-            if !emailVTFView.textField.text!.isEmpty {
-                self.passwordVTFView.textField.becomeFirstResponder()
-            }
-        case 1:
-            loginUser()
-        default:
-            break
-        }
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        // Switch between textFields by using return key
+//        let tag = textField.superview!.superview!.tag
+//        switch tag {
+//        case 0:
+//            if !emailVTFView.textField.text!.isEmpty {
+//                self.passwordVTFView.textField.becomeFirstResponder()
+//            }
+//        case 1:
+//            loginUser()
+//        default:
+//            break
+//        }
+//        return true
+//    }
     
     // MARK: - Keyboard
     func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
@@ -361,7 +350,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.shadowView.removeFromSuperview()
                 
                 // Show keyboard again
-                self.passwordVTFView.textField.becomeFirstResponder()
+//                self.passwordVTFView.textField.becomeFirstResponder()
         })
     }
     
@@ -409,6 +398,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Setup views
     func setupViews() {
+        configureBackgroundVideo()
+        self.view.bringSubview(toFront: logoImageView)
+        self.view.bringSubview(toFront: appNameLabel)
+        
         setupSignupButton()
         setupLoginButton()
         
@@ -427,6 +420,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         signupButton.layer.shadowOpacity = 0.5
         signupButton.layer.shadowRadius = 1
         signupButton.layer.masksToBounds = false
+        self.view.bringSubview(toFront: signupButton)
     }
     
     func setupLoginButton() {
@@ -436,6 +430,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         loginButton.layer.shadowOpacity = 0.5
         loginButton.layer.shadowRadius = 1
         loginButton.layer.masksToBounds = false
+        self.view.bringSubview(toFront: loginButton)
     }
     
     func setupFacebookOptionButton() {
@@ -451,6 +446,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         facebookOptionButton.layer.shadowOpacity = 0.5
         facebookOptionButton.layer.shadowRadius = 1
         facebookOptionButton.layer.masksToBounds = false
+        self.view.bringSubview(toFront: facebookOptionButton)
     }
     
     func setupGoogleOptionButton() {
@@ -466,6 +462,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         googleOptionButton.layer.shadowOpacity = 0.5
         googleOptionButton.layer.shadowRadius = 1
         googleOptionButton.layer.masksToBounds = false
+        self.view.bringSubview(toFront: googleOptionButton)
     }
     
     func setupEmailOptionButton() {
@@ -481,6 +478,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         emailOptionButton.layer.shadowOpacity = 0.5
         emailOptionButton.layer.shadowRadius = 1
         emailOptionButton.layer.masksToBounds = false
+        self.view.bringSubview(toFront: emailOptionButton)
     }
     
     func setupEmailTextField() {
@@ -500,6 +498,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         
         emailTextField.keyboardType = UIKeyboardType.emailAddress
         emailTextField.autocorrectionType = UITextAutocorrectionType.no
+        self.view.bringSubview(toFront: emailTextField)
     }
     
     func setupPasswordTextField() {
@@ -516,6 +515,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action:#selector(OnboardingViewController.editedPasswordText), for:UIControlEvents.editingChanged)
         passwordTextField.autocorrectionType = UITextAutocorrectionType.no
+        self.view.bringSubview(toFront: passwordTextField)
     }
     
     // MARK: - Animations

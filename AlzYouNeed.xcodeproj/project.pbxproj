@@ -242,6 +242,7 @@
 		2D6C9CD41ECF9F3F00FC8457 /* New */ = {
 			isa = PBXGroup;
 			children = (
+				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
 				2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */,
 				2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */,
 				2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */,
@@ -253,7 +254,6 @@
 		2D6D2FBB1D186B7F0050589C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
 				2D70C3831D1C88F90048333C /* CreateUserViewController.swift */,
 				2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */,
 				2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */,
