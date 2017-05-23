@@ -15,9 +15,9 @@ import SkyFloatingLabelTextField
 
 class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
-    var loginMode = false
+    var loginModeStatus = false
     var isAnimating = false
-    var emailMode = false
+    var emailModeStatus = false
     
     @IBOutlet var signupButton: UIButton!
     @IBOutlet var loginButton: UIButton!
@@ -137,7 +137,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func loginUser() {
-        if !loginMode {
+        if !loginModeStatus {
             showLoginView()
         }
         else {
@@ -216,8 +216,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Login View
     func showLoginView() {
-        if !loginMode {
-            loginMode = true
+        if !loginModeStatus {
+            loginModeStatus = true
 
             self.emailVTFView.isHidden = false
             self.passwordVTFView.isHidden = false
@@ -243,7 +243,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func hideLoginView() {
-        if loginMode {
+        if loginModeStatus {
 
             self.resignFirstResponder()
             
@@ -261,7 +261,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.emailVTFView.isHidden = true
                 self.passwordVTFView.isHidden = true
 
-                self.loginMode = false
+                self.loginModeStatus = false
             }
         }
     }
@@ -365,41 +365,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    // MARK: - Title View Animations
-    func showTitleView(show: Bool) {
-        if show {
-            self.logoImageTopConstraint.constant = 50
-            self.appNameLabelTopConstraint.constant = 8
-            self.view.layoutIfNeeded()
-            self.logoImageTopConstraint.constant = 75
-            self.appNameLabelTopConstraint.constant = 16
-            
-            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.logoImageView.alpha = 0.9
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-            }
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.appNameLabel.alpha = 1
-            }) { (completed) in
-            }
-        } else {
-            self.logoImageTopConstraint.constant = 50
-            self.appNameLabelTopConstraint.constant = 8
-            
-            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.logoImageView.alpha = 0
-                self.view.layoutIfNeeded()
-            }) { (completed) in
-            }
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.appNameLabel.alpha = 0
-            }) { (completed) in
-            }
-        }
-    }
-    
-    // MARK: - TODO: Background Video
+    // MARK: - Background Video
     func configureBackgroundVideo() {
         let movieFilePath = Bundle.main.path(forResource: "beach", ofType: "mp4")
         if let movieFilePath = movieFilePath {
@@ -432,29 +398,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
-        if !isAnimating {
-            if loginMode {
-                // Exit login mode
-                loginMode = false
-                loginButton.backgroundColor = UIColor.white
-                loginButton.setTitle("Log in", for: .normal)
-                loginButton.setTitleColor(UIColor(hex: "7189FF"), for: .normal)
-                showSignupButton(show: true)
-                
-                showEmailFields(show: false)
-                
-                if emailMode {
-                    showTitleView(show: true)
-                }
-                
-            } else {
-                // Enter login mode
-                loginMode = true
-                loginButton.backgroundColor = UIColor(hex: "FF6978")
-                loginButton.setTitle("Cancel", for: .normal)
-                loginButton.setTitleColor(UIColor.white, for: .normal)
-                showSignupButton(show: false)
-            }
+        print("login button pressed")
+        
+        if emailModeStatus {
+            emailMode()
+        } else {
+            loginMode()
         }
     }
     
@@ -570,45 +519,90 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Animations
-    // TODO: Make options animations in separate func
-    func showSignupButton(show: Bool) {
+    func loginMode() {
         if !isAnimating {
-            if show {
-                // Exit login mode
-                self.isAnimating = true
-                signupButton.isHidden = false
+            self.isAnimating = true
+            
+            if !loginModeStatus {
+                loginModeStatus = true
                 
-                signupButton.setTitle("Sign up", for: .normal)
+                // Show options
+                showLoginOptions(show: true)
                 
-                self.loginOptionsBottomConstraint.constant = 40
-                self.view.layoutIfNeeded()
-                self.loginOptionsBottomConstraint.constant = 20
-                
-                UIView.animate(withDuration: 0.2, animations: {
-                    self.signupButton.alpha = 1
-                    self.changeOptionButtonsAlpha(alpha: 0)
-                    self.view.layoutIfNeeded()
-                }, completion: { (complete) in
-                    self.isAnimating = false
-                })
-            } else {
-                // Enter login mode
-                self.isAnimating = true
-                showOptionButtons(show: true)
-                signupButton.setTitle("Login", for: .normal)
-                
-                self.loginOptionsBottomConstraint.constant = 20
-                self.view.layoutIfNeeded()
-                self.loginOptionsBottomConstraint.constant = 40
+                // Change log in button to cancel
+                changeLoginButton(mode: "Cancel")
 
+                // Hide sign up button
                 UIView.animate(withDuration: 0.2, animations: {
                     self.signupButton.alpha = 0
-                    self.changeOptionButtonsAlpha(alpha: 1)
-                    self.view.layoutIfNeeded()
                 }, completion: { (complete) in
                     self.signupButton.isHidden = true
                     self.isAnimating = false
                 })
+            } else {
+                loginModeStatus = false
+                
+                // Hide options
+                showLoginOptions(show: false)
+                
+                // Change log in button to log in
+                changeLoginButton(mode: "Log in")
+                
+                // Show sign up button
+                signupButton.isHidden = false
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.signupButton.alpha = 1
+                }, completion: { (complete) in
+                    self.isAnimating = false
+                })
+            }
+        }
+    }
+    
+    func emailMode() {
+        if !isAnimating {
+            
+            if !emailModeStatus {
+                self.isAnimating = true
+                emailModeStatus = true
+                
+                // Hide logo and title
+                showTitleView(show: false)
+                
+                // Hide option buttons
+                showOptionButtons(show: false)
+                
+                // Change sign up button
+                changeSignupButton(mode: "Login")
+                
+                // Show email fields
+                showEmailFields(show: true)
+                
+                // Show sign up button
+                signupButton.isHidden = false
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.signupButton.alpha = 0.7
+                }, completion: { (complete) in
+                    self.isAnimating = false
+                    self.signupButton.isEnabled = false
+                })
+            } else {
+                emailModeStatus = false
+                loginModeStatus = false
+                
+                // Show logo and title
+                showTitleView(show: true)
+                
+                // Change sign up button
+                changeSignupButton(mode: "Sign up")
+                self.signupButton.isEnabled = true
+                self.signupButton.alpha = 1
+                
+                // Hide email fields
+                showEmailFields(show: false)
+                
+                // Change login button
+                changeLoginButton(mode: "Log in")
             }
         }
     }
@@ -620,6 +614,31 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         emailOptionButton.isHidden = !show
     }
     
+    func showLoginOptions(show: Bool) {
+        if show {
+            showOptionButtons(show: true)
+            
+            self.loginOptionsBottomConstraint.constant = 20
+            self.view.layoutIfNeeded()
+            self.loginOptionsBottomConstraint.constant = 40
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.changeOptionButtonsAlpha(alpha: 1)
+                self.view.layoutIfNeeded()
+            }, completion: { (complete) in
+            })
+        } else {
+            self.loginOptionsBottomConstraint.constant = 20
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.changeOptionButtonsAlpha(alpha: 0)
+                self.view.layoutIfNeeded()
+            }, completion: { (complete) in
+                self.showOptionButtons(show: false)
+            })
+        }
+    }
+    
     func changeOptionButtonsAlpha(alpha: CGFloat) {
         facebookOptionButton.alpha = alpha
         googleOptionButton.alpha = alpha
@@ -628,8 +647,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     func showEmailFields(show: Bool) {
         if show {
-            showTitleView(show: false)
-            
             self.emailTextField.isHidden = false
             self.emailTextField.alpha = 0
             self.passwordTextField.isHidden = false
@@ -640,7 +657,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.passwordTextField.alpha = 1
                 
             }, completion: { (complete) in
-                self.emailMode = true
+                self.emailModeStatus = true
             })
             
         } else {
@@ -657,8 +674,63 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
                 self.emailTextField.text = ""
                 self.passwordTextField.text = ""
                 
-                self.emailMode = false
+                self.emailModeStatus = false
             })
+        }
+    }
+    
+    func showTitleView(show: Bool) {
+        if show {
+            self.logoImageTopConstraint.constant = 50
+            self.appNameLabelTopConstraint.constant = 8
+            self.view.layoutIfNeeded()
+            self.logoImageTopConstraint.constant = 75
+            self.appNameLabelTopConstraint.constant = 16
+            
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.logoImageView.alpha = 0.9
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+            }
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.appNameLabel.alpha = 1
+            }) { (completed) in
+            }
+        } else {
+            self.logoImageTopConstraint.constant = 50
+            self.appNameLabelTopConstraint.constant = 8
+            
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.logoImageView.alpha = 0
+                self.view.layoutIfNeeded()
+            }) { (completed) in
+            }
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
+                self.appNameLabel.alpha = 0
+            }) { (completed) in
+            }
+        }
+    }
+    
+    func changeLoginButton(mode: String) {
+        let title = (mode == "Log in") ? "Log in" : "Cancel"
+        let titleColor = (mode == "Log in") ? UIColor(hex: "7189FF") : UIColor.white
+        let backgroundColor = (mode == "Log in") ? UIColor.white : UIColor(hex: "FF6978")
+        
+        UIView.performWithoutAnimation {
+            self.loginButton.setTitle(title, for: .normal)
+            self.loginButton.layoutIfNeeded()
+        }
+        loginButton.setTitleColor(titleColor, for: .normal)
+        loginButton.backgroundColor = backgroundColor
+    }
+    
+    func changeSignupButton(mode: String) {
+        let title = (mode == "Sign up") ? "Sign up" : "Login"
+        
+        UIView.performWithoutAnimation {
+            self.signupButton.setTitle(title, for: .normal)
+            self.signupButton.layoutIfNeeded()
         }
     }
     
@@ -674,15 +746,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func emailOptionButtonPressed(_ sender: UIButton) {
-        print("Email")
-        // TODO: Login with Email
-        showEmailFields(show: true)
-        showOptionButtons(show: false)
-        
-//        signupButton.setTitle("Login", for: .normal)
-        signupButton.isHidden = false
-        signupButton.alpha = 0.7
-        signupButton.isEnabled = false
+        emailMode()
     }
     
     
