@@ -29,9 +29,29 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-            if user != nil {
+            if let user = user {
                 print("MethodsVC: User signed in")
-                self.presentNextVC()
+                
+                print("Signed in with Facebook")
+                let firstName = (user.displayName?.components(separatedBy: " ").first)!
+                let photoURL = (user.photoURL?.absoluteString)!
+                
+                // Save to NewProfile
+                NewProfile.sharedInstance.userId = user.uid
+                NewProfile.sharedInstance.name = firstName
+                NewProfile.sharedInstance.photoURL = photoURL
+                
+                // Save user
+                FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
+                    if let error = error {
+                        print("Error updating user: ", error.localizedDescription)
+                    } else {
+                        print("Updated user")
+                        self.presentNextVC()
+                    }
+                })
+            
+//                self.presentNextVC()
             } else {
                 print("MethodsVC: No user signed in")
             }
@@ -141,13 +161,13 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                                 return
                             }
                             print("Signed in with Facebook")
-                            let firstName = (user?.displayName?.components(separatedBy: " ").first)!
-                            let photoURL = (user?.photoURL?.absoluteString)!
-                            
-                            // Save to NewProfile
-                            NewProfile.sharedInstance.userId = user?.uid
-                            NewProfile.sharedInstance.name = firstName
-                            NewProfile.sharedInstance.photoURL = photoURL
+//                            let firstName = (user?.displayName?.components(separatedBy: " ").first)!
+//                            let photoURL = (user?.photoURL?.absoluteString)!
+//                            
+//                            // Save to NewProfile
+//                            NewProfile.sharedInstance.userId = user?.uid
+//                            NewProfile.sharedInstance.name = firstName
+//                            NewProfile.sharedInstance.photoURL = photoURL
                         })
                     }
                 } else {
@@ -166,7 +186,6 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
     }
     
-    
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Delete partial user profile
@@ -174,6 +193,5 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         
         self.dismiss(animated: true, completion: nil)
     }
-    
 
 }

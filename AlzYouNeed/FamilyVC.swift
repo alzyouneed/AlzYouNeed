@@ -183,23 +183,52 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
 
     @IBAction func actionButtonPressed(_ sender: UIButton) {
         // Try creating / joining family in Firebase
+        let groupName = familyNameTextField.text!
+        let password = passwordTextField.text!
+        
         if familyControl.selectedSegmentIndex == 0 {
-            //
+            createGroup(groupId: groupName, password: password)
             
         } else {
-            
+            joinGroup(groupId: groupName, password: password)
         }
         
         // If successful
-        NewProfile.sharedInstance.admin = (familyControl.selectedSegmentIndex == 0)
-        NewProfile.sharedInstance.groupName = familyNameTextField.text
+//        NewProfile.sharedInstance.admin = (familyControl.selectedSegmentIndex == 0)
+//        NewProfile.sharedInstance.groupName = familyNameTextField.text
         
         // If creating -- save group password in RTDB
         
-        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
-        print("Resetting profile")
-        NewProfile.sharedInstance.resetModel()
-        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
+//        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
+//        print("Resetting profile")
+//        NewProfile.sharedInstance.resetModel()
+//        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
+    }
+    
+    func createGroup(groupId: String, password: String) {
+        FirebaseManager.createNewFamilyGroup(groupId, password: password) { (error, ref) in
+            if let error = error {
+                print("Error creating group: ", error.localizedDescription)
+                self.showErrorMessage(error: error)
+            } else {
+                print("Created new group")
+                NewProfile.sharedInstance.resetModel()
+                self.showMainView()
+            }
+        }
+    }
+    
+    func joinGroup(groupId: String, password: String) {
+        FirebaseManager.joinFamilyGroup(groupId, password: password) { (error, ref) in
+            if let error = error {
+                print("Error joining group: ", error.localizedDescription)
+                self.showErrorMessage(error: error)
+            } else {
+                print("Joined group")
+                NewProfile.sharedInstance.resetModel()
+                self.showMainView()
+            }
+        }
     }
     
     // MARK: - Adjusting keyboard
@@ -285,10 +314,44 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
                 if let error = error {
                     print("Error while deleting account: \(error.localizedDescription)")
                 } else {
-                    print("Account deleted")
+                    print("FamilyVC: Account deleted")
                     self.dismiss(animated: true, completion: nil)
                 }
             })
+        }
+    }
+    
+    // MARK: - Handle errors
+    func showErrorMessage(error: Error) {
+        var errorMessage = ""
+        
+        switch error._code {
+        case 00001:
+            errorMessage = "Group name already in use"
+        case 00003:
+            errorMessage = "Incorrect password"
+        case 00004:
+            errorMessage = "Group does not exist"
+        default:
+            break
+        }
+        
+        if !errorMessage.isEmpty {
+            let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Transitions
+    func showMainView() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
+        tabBarController.selectedIndex = 1
+        
+        DispatchQueue.main.async {
+            self.present(tabBarController, animated: true, completion: nil)
         }
     }
 }

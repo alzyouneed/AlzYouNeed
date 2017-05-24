@@ -84,6 +84,24 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func updateUserNew(updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ){
+        if let user = FIRAuth.auth()?.currentUser {
+            let userId = user.uid
+            let databaseRef = FIRDatabase.database().reference()
+            let updatesDict = updates as! [AnyHashable: Any]
+            
+            databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, ref) in
+                if let error = error {
+                    print("Error updating user: ", error.localizedDescription)
+                    completionHandler(error as NSError)
+                } else {
+                    print("Updated user")
+                    completionHandler(nil)
+                }
+            })
+        }
+    }
+    
     // Update user in real-time database with dictionary of changes
     class func updateUser(_ updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ) {
         if let user = FIRAuth.auth()?.currentUser {
@@ -294,10 +312,14 @@ class FirebaseManager: NSObject {
                                         let familyToSave = ["password": password, GroupMembersPath:[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
                                         
                                         // Update current user and new family, and signup Status
-                                        let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                            "/users/\(user.uid)/completedSignup": "true",
-                                                            "/users/\(user.uid)/admin": "true",
-                                                            "/families/\(familyId)": familyToSave] as [String : Any]
+                                        let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
+                                                            "/\(UserPath)/\(user.uid)/admin": "true",
+                                                            "/\(GroupPath)/\(familyId)": familyToSave] as [String : Any]
+                                        
+//                                        let childUpdates = ["/\(UserPath)/\(user.uid)/familyId": familyId,
+//                                                            "/\(UserPath)/\(user.uid)/completedSignup": "true",
+//                                                            "/\(UserPath)/\(user.uid)/admin": "true",
+//                                                            "/\(GroupPath)/\(familyId)": familyToSave] as [String : Any]
                                         
                                         databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                             if error != nil {
@@ -344,9 +366,11 @@ class FirebaseManager: NSObject {
                                                     if let userDict = userDict {
                                                         let databaseRef = FIRDatabase.database().reference()
                                                         // Update current user and new family, and signUp status
-                                                        let childUpdates = ["/users/\(user.uid)/familyId": familyId,
-                                                                            "/users/\(user.uid)/completedSignup": "true",
-                                                                            "/users/\(user.uid)/admin": "false"]
+                                                        let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
+                                                                            "/\(UserPath)/\(user.uid)/admin": "false"]
+//                                                        let childUpdates = ["/\(UserPath)/\(user.uid)/familyId": familyId,
+//                                                                            "/\(UserPath)/\(user.uid)/completedSignup": "true",
+//                                                                            "/\(UserPath)/\(user.uid)/admin": "false"]
                                                         
                                                         databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                                             if error != nil {

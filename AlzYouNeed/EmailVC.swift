@@ -184,11 +184,11 @@ class EmailVC: UIViewController, UITextFieldDelegate {
             FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {
                     print("Error creating user: ", error.localizedDescription)
-                    let errorCode = FIRAuthErrorCode(rawValue: error._code)
-                    self.showErrorMessage(error: errorCode!)
+                    self.showErrorMessage(error: error)
                 } else {
-                    if let user = user {
-                        print("Created new user with email")
+                    if user != nil {
+                        print("Created user with email")
+                        
                         self.presentNextVC()
                     }
                 }
@@ -213,9 +213,11 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     }
     
     // MARK: - Handle errors
-    func showErrorMessage(error: FIRAuthErrorCode) {
+    func showErrorMessage(error: Error) {
+        let errorCode = FIRAuthErrorCode(rawValue: error._code)!
         var errorMessage = ""
-        switch error {
+        
+        switch errorCode {
         case .errorCodeInvalidEmail:
             errorMessage = "Email address is invalid"
         case .errorCodeNetworkError:

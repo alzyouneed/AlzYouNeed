@@ -20,16 +20,18 @@ class NewProfile {
     // Required
     var userId: String!
     var name: String!
-    var groupName: String!
-    var admin: Bool!
+//    var groupName: String!
+//    var admin: Bool!
     
     // Optional
     var photoURL: String?
     
     func asDict() -> Dictionary<String, String> {
+//        let newProfileDict: Dictionary<String, String> = ["name": name,
+//                                                          "groupName": groupName,
+//                                                          "admin": admin.description,
+//                                                          "photoURL": photoURL ?? ""]
         let newProfileDict: Dictionary<String, String> = ["name": name,
-                                                          "groupName": groupName,
-                                                          "admin": admin.description,
                                                           "photoURL": photoURL ?? ""]
         return newProfileDict
     }
@@ -37,8 +39,8 @@ class NewProfile {
     func resetModel() {
         print("Reset new profile")
         name = ""
-        groupName = ""
-        admin = false
+//        groupName = ""
+//        admin = false
         photoURL = ""
     }
     

@@ -101,7 +101,17 @@ class NameVC: UIViewController, UITextFieldDelegate {
         // Save name and present next VC
         NewProfile.sharedInstance.name = nameTextField.text
         
-        presentNextVC()
+        // Save user
+        FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
+            if let error = error {
+                print("Error updating user: ", error.localizedDescription)
+            } else {
+                print("Updated user")
+                self.presentNextVC()
+            }
+        })
+        
+//        presentNextVC()
     }
     
     func presentNextVC() {
@@ -151,7 +161,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
                 if let error = error {
                     print("Error while deleting account: \(error.localizedDescription)")
                 } else {
-                    print("Account deleted")
+                    print("NameVC: Account deleted")
                     self.dismiss(animated: true, completion: nil)
                 }
             })

@@ -248,9 +248,11 @@ class DashboardViewController: UIViewController {
     // MARK: - Configuration
     func configureView() {
         if !AYNModel.sharedInstance.wasReset {
-            configureViewWithUserDefaults()
+            // TODO: Fix this
+//            configureViewWithUserDefaults()
         } else {
-            configureViewWithFirebase()
+            // TODO: Fix this
+//            configureViewWithFirebase()
         }
         configureActionButtons()
         
