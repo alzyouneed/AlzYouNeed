@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import SkyFloatingLabelTextField
 
 class NameVC: UIViewController, UITextFieldDelegate {
@@ -132,17 +133,28 @@ class NameVC: UIViewController, UITextFieldDelegate {
     func showWarning() {
         let alert = UIAlertController(title: "Unsaved Changes", message: "Progress will not be saved", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            // TODO: Delete partial user profile
-            self.dismiss(animated: true, completion: nil)
-            
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-//            self.present(onboardingVC, animated: true, completion: nil)
+            self.cancelSignup()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func cancelSignup() {
+        // Delete partial user profile
+        NewProfile.sharedInstance.resetModel()
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            user.delete(completion: { (error) in
+                if let error = error {
+                    print("Error while deleting account: \(error.localizedDescription)")
+                } else {
+                    print("Account deleted")
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+        }
     }
 }

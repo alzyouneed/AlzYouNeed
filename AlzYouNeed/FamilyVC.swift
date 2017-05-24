@@ -254,34 +254,34 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Sign out from auth & Delete partial user profile
-        
         showWarning()
     }
     
     func showWarning() {
         let alert = UIAlertController(title: "Unsaved Changes", message: "Progress will not be saved", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            // Sign out from auth
-            let firebaseAuth = FIRAuth.auth()
-            do {
-                try firebaseAuth?.signOut()
-            } catch let signOutError as NSError {
-                print ("Error signing out: %@", signOutError)
-            }
-            
-            // Delete partial user profile & present next VC when complete
-            // TODO: Delete partial user profile
-            self.dismiss(animated: true, completion: nil)
-            
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-//            self.present(onboardingVC, animated: true, completion: nil)
+            self.cancelSignup()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(confirmAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func cancelSignup() {
+        // Delete partial user profile
+        NewProfile.sharedInstance.resetModel()
+        
+        if let user = FIRAuth.auth()?.currentUser {
+            user.delete(completion: { (error) in
+                if let error = error {
+                    print("Error while deleting account: \(error.localizedDescription)")
+                } else {
+                    print("Account deleted")
+                    self.dismiss(animated: true, completion: nil)
+                }
+            })
+        }
     }
 }

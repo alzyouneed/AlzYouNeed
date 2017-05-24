@@ -186,12 +186,10 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Delete partial user profile
-        self.dismiss(animated: true, completion: nil)
+        // Delete partial user profile
+        NewProfile.sharedInstance.resetModel()
         
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-//        self.present(onboardingVC, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
 

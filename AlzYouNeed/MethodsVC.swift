@@ -18,11 +18,30 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     @IBOutlet var googleButton: UIButton!
     @IBOutlet var emailButton: UIButton!
     
+    var authListener: FIRAuthStateDidChangeListenerHandle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         GIDSignIn.sharedInstance().uiDelegate = self
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if let user = user {
+                print("MethodsVC: User signed in")
+                self.presentNextVC()
+            } else {
+                print("MethodsVC: No user signed in")
+            }
+        })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if let authListener = authListener {
+            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -97,7 +116,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     func presentNextVC() {
         print("Present familyStepVC")
         // Present next VC
-        self.performSegue(withIdentifier: "methodsToFamily", sender: self)
+        
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "methodsToFamily", sender: self)
+        }
+//        self.performSegue(withIdentifier: "methodsToFamily", sender: self)
     }
     
     // TODO: Move this to AppDelegate
@@ -119,14 +142,16 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                                 print("Error signing in with Facebook: \(error.localizedDescription)")
                                 return
                             }
+                            print("Signed in with Facebook")
                             let firstName = (user?.displayName?.components(separatedBy: " ").first)!
                             let photoURL = (user?.photoURL?.absoluteString)!
                             
                             // Save to NewProfile
+                            NewProfile.sharedInstance.userId = user?.uid
                             NewProfile.sharedInstance.name = firstName
                             NewProfile.sharedInstance.photoURL = photoURL
                             
-                            self.presentNextVC()
+//                            self.presentNextVC()
                         })
                     }
                 } else {
@@ -148,12 +173,10 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Delete partial user profile
-        self.dismiss(animated: true, completion: nil)
+        // Delete partial user profile
+        NewProfile.sharedInstance.resetModel()
         
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-//        self.present(onboardingVC, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
 

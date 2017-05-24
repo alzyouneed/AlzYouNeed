@@ -347,8 +347,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
-        print("login button pressed")
-        
         if emailModeStatus {
             emailMode()
         } else {
@@ -662,12 +660,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             self.appNameLabelTopConstraint.constant = 8
             
             UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.logoImageView.alpha = 0
-                self.view.layoutIfNeeded()
+                self.appNameLabel.alpha = 0
             }) { (completed) in
             }
             UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.appNameLabel.alpha = 0
+                self.logoImageView.alpha = 0
+                self.view.layoutIfNeeded()
             }) { (completed) in
             }
         }

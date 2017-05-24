@@ -124,8 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         }
         
-//        print("Google user: userID= \(user.userID!) --name= \(user.profile.name!) --givenName= \(user.profile.givenName!) --familyName= \(user.profile.familyName!) --email= \(user.profile.email!)")
-        
         guard let authentication = user.authentication else { return }
         let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
@@ -138,6 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("Signed in with Google")
             
             // Save to NewProfile
+            NewProfile.sharedInstance.userId = firebaseUser?.uid
             NewProfile.sharedInstance.name = user.profile.givenName
             NewProfile.sharedInstance.photoURL = user.profile.hasImage ? (firebaseUser?.photoURL!.absoluteString)! : ""
             
@@ -251,7 +250,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        print("Will resign active") // Log start of call here
+//        print("Will resign active") // Log start of call here
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -267,7 +266,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        print("Did become active") // Log end of call here 
+//        print("Did become active") // Log end of call here 
         connectToFcm()
     }
 

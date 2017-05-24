@@ -34,10 +34,13 @@ class DashboardViewController: UIViewController {
     @IBOutlet var notepadTopUserViewConstraint: NSLayoutConstraint!
     @IBOutlet var notepadBottomConstraint: NSLayoutConstraint!
     
+    var authListener: FIRAuthStateDidChangeListenerHandle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkUserSignedIn()
+        // TODO: Fix this
+//        checkUserSignedIn()
 
         dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         
@@ -53,6 +56,16 @@ class DashboardViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if let user = user {
+                print("DashboardVC: User signed in: ", user)
+            } else {
+                print("DashboardVC: No user signed in -- showing onboarding")
+                self.presentOnboardingVC()
+            }
+        })
+        
         // If new user signed in -- force reload view
         if AYNModel.sharedInstance.wasReset {
             print("Model was reset -- reseting UI")
@@ -77,6 +90,12 @@ class DashboardViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        if let authListener = authListener {
+            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+        }
     }
 
     override func didReceiveMemoryWarning() {

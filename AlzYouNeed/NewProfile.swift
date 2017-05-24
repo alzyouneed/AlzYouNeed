@@ -35,6 +35,7 @@ class NewProfile {
     }
     
     func resetModel() {
+        print("Reset new profile")
         name = ""
         groupName = ""
         admin = false
