@@ -100,18 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("Font Names = [\(names)]")
         }
     }
-    
-    // MARK: - Google Sign-in
-//    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
-//        -> Bool {
-//            
-//            let handled = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as! String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
-//            return handled
-//            
-//            return GIDSignIn.sharedInstance().handle(url,
-//                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-//                                                     annotation: [:])
-//    }
    
     // MARK: - Sign-in Methods
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {

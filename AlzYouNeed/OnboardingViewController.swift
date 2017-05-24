@@ -46,7 +46,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UIApplication.shared.statusBarStyle = .lightContent
+//        UIApplication.shared.statusBarStyle = .lightContent
         
         // Configure video once
         configureBackgroundVideo()
@@ -358,6 +358,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Setup views
     func setupViews() {
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         self.view.bringSubview(toFront: logoImageView)
         self.view.bringSubview(toFront: appNameLabel)
         
