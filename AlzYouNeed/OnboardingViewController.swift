@@ -48,33 +48,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         
         UIApplication.shared.statusBarStyle = .lightContent
         
-        setupViews()
+        // Configure video once
+        configureBackgroundVideo()
     }
-    
-//    func configureView() {
-//        self.emailVTFView.emailMode()
-//        self.passwordVTFView.passwordMode(false)
-//        
-//        // Configure text color for dark background
-//        self.emailVTFView.textField.textColor = UIColor.white
-//        self.emailVTFView.textField.tintColor = UIColor.white
-//        self.passwordVTFView.textField.textColor = UIColor.white
-//        self.passwordVTFView.textField.tintColor = UIColor.white
-//        
-//        self.emailVTFView.textField.delegate = self
-//        self.passwordVTFView.textField.delegate = self
-//
-//        loginButtons.leftButton.addTarget(self, action: #selector(OnboardingViewController.leftButtonAction(_:)), for: UIControlEvents.touchUpInside)
-//        loginButtons.rightButton.addTarget(self, action: #selector(OnboardingViewController.rightButtonAction(_:)), for: UIControlEvents.touchUpInside)
-//
-//        configureBackgroundVideo()
-////        emailVTFView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-//        self.view.bringSubview(toFront: emailVTFView)
-//        self.view.bringSubview(toFront: passwordVTFView)
-//        self.view.bringSubview(toFront: loginButtons)
-//        self.view.bringSubview(toFront: logoImageView)
-//        self.view.bringSubview(toFront: appNameLabel)
-//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         // Remove observers
@@ -84,13 +60,25 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         // TODO: Background Video
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
-//        self.navigationController?.setNavigationBarHidden(false, animated: animated);
+        // Pause video as VC changes
+        if player != nil {
+            player?.pause()
+        }
+
         super.viewWillDisappear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        // Try to play video as VC appears
+        if player != nil {
+            player?.play()
+        }
+        
+        setupViews()
+        
         
         // Add observers
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -202,34 +190,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     func editedPasswordText() {
         
     }
-    
-    // MARK: - Login View
-//    func showLoginView() {
-//        if !loginModeStatus {
-//            loginModeStatus = true
-//
-//            self.emailVTFView.isHidden = false
-//            self.passwordVTFView.isHidden = false
-//
-//            self.emailVTFView.alpha = 0
-//            self.passwordVTFView.alpha = 0
-//            
-//            UIView.animate(withDuration: 0.4, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
-//                self.emailVTFView.alpha = 1
-//                self.passwordVTFView.alpha = 1
-//                
-//                self.logoImageView.alpha = 0
-//                self.appNameLabel.alpha = 0
-//                
-//            }) { (completed) in
-//                // Present keyboard
-//                self.emailVTFView.textField.becomeFirstResponder()
-//            }
-//        }
-//        else {
-//            hideLoginView()
-//        }
-//    }
     
 //    func hideLoginView() {
 //        if loginModeStatus {
@@ -398,7 +358,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Setup views
     func setupViews() {
-        configureBackgroundVideo()
         self.view.bringSubview(toFront: logoImageView)
         self.view.bringSubview(toFront: appNameLabel)
         

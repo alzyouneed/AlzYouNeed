@@ -43,7 +43,7 @@ class FirebaseManager: NSObject {
             let userId = user.uid
             let databaseRef = FIRDatabase.database().reference()
             
-            databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+            databaseRef.child(UserPath).child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dict = snapshot.value! as? NSDictionary {
                     // Used by UserDefaults to check auth of saved user before loading
                     dict.setValue(snapshot.key, forKey: "userId")
@@ -67,7 +67,7 @@ class FirebaseManager: NSObject {
     
     class func getUserById(_ userId: String, completionHandler: @escaping (_ userDict: NSDictionary?, _ error: NSError?) -> Void) {
         let databaseRef = FIRDatabase.database().reference()
-        databaseRef.child("users").child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.child(UserPath).child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
             if let dict = snapshot.value! as? NSDictionary {
                  print("User retrieved by ID")
                 completionHandler(dict, nil)
@@ -127,7 +127,7 @@ class FirebaseManager: NSObject {
                                 // Update new dict for RTDB save
                                 updatesDict["photoUrl"] = fileUrl
                                 
-                                databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                                databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                                     if error != nil {
                                         print("Error updating user")
                                         completionHandler(error as NSError?)
@@ -160,7 +160,7 @@ class FirebaseManager: NSObject {
                 })
             }
             else {
-                databaseRef.child("users").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                     if error != nil {
                         print("Error updating user")
                         completionHandler(error as NSError?)
@@ -199,7 +199,7 @@ class FirebaseManager: NSObject {
                     let databaseRef = FIRDatabase.database().reference()
                     let updatesDict = updates as! [AnyHashable: Any]
                     
-                    databaseRef.child("families").child(familyId).child("members").child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                    databaseRef.child(FamilyPath).child(familyId).child(GroupMembersPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                         if error != nil {
                             print("Error updating user in family")
                             completionHandler(error as NSError?)
@@ -291,7 +291,7 @@ class FirebaseManager: NSObject {
                                         let databaseRef = FIRDatabase.database().reference()
                                         let modifiedDict = userDict.mutableCopy() as! NSMutableDictionary
                                         modifiedDict["admin"] = "true"
-                                        let familyToSave = ["password": password, "members":[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
+                                        let familyToSave = ["password": password, GroupMembersPath:[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
                                         
                                         // Update current user and new family, and signup Status
                                         let childUpdates = ["/users/\(user.uid)/familyId": familyId,
@@ -355,7 +355,7 @@ class FirebaseManager: NSObject {
                                                             }
                                                             else {
                                                                 print("User family group values updated")
-                                                                databaseRef.child("families").child(familyId).child("members").child(user.uid).setValue(userDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                                                databaseRef.child(FamilyPath).child(familyId).child(GroupMembersPath).child(user.uid).setValue(userDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
                                                                     if error != nil {
                                                                         print("Error occurred while adding user to family")
                                                                         completionHandler(secondError as NSError?, secondDatabaseRef)
@@ -397,7 +397,7 @@ class FirebaseManager: NSObject {
     class func lookUpFamilyGroup(_ familyId: String, completionHandler: @escaping (_ error: NSError?, _ familyExists: Bool?) -> Void) {
         let databaseRef = FIRDatabase.database().reference()
         
-        databaseRef.child("families").observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.child(FamilyPath).observeSingleEvent(of: .value, with: { (snapshot) in
             if let groupExists = snapshot.hasChild(familyId) as Bool? {
                 print("Family group exists: \(groupExists)")
                 completionHandler(nil, groupExists)
@@ -411,7 +411,7 @@ class FirebaseManager: NSObject {
     class func getFamilyPassword(_ familyId: String, completionHandler: @escaping (_ password: String?, _ error: NSError?) -> Void) {
         let databaseRef = FIRDatabase.database().reference()
         
-        databaseRef.child("families").child(familyId).observeSingleEvent(of: .value, with: { (snapshot) in
+        databaseRef.child(FamilyPath).child(familyId).observeSingleEvent(of: .value, with: { (snapshot) in
             if let dict = snapshot.value as? NSDictionary, let familyPassword = dict["password"] as? String {
             // if let familyPassword = snapshot.value!["password"] as? String {  SWIFT 3 CHANGE
                 print("Family password retrieved")
@@ -433,7 +433,7 @@ class FirebaseManager: NSObject {
                     let databaseRef = FIRDatabase.database().reference()
                     var membersArr = [Contact]()
                     
-                    databaseRef.child("families").child(userFamilyId).child("members").observeSingleEvent(of: .value, with: { (snapshot) in
+                    databaseRef.child(FamilyPath).child(userFamilyId).child(GroupMembersPath).observeSingleEvent(of: .value, with: { (snapshot) in
                         if let dict = snapshot.value! as? NSDictionary {
                             for (key, value) in dict {
                                 if let uId = key as? String {
@@ -469,7 +469,7 @@ class FirebaseManager: NSObject {
                     
                     let updatesDict = updates as! [AnyHashable: Any]
                     
-                    databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
+                    databaseRef.child(FamilyPath).child(userFamilyId).child(GroupMembersPath).child(userId).child("communicationInfo").child(contactUserId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
                         if error != nil {
                             // Error
                             print("Error updating family member userInfo")
@@ -493,7 +493,7 @@ class FirebaseManager: NSObject {
                     let userId = user.uid
                     let databaseRef = FIRDatabase.database().reference()
                     
-                    databaseRef.child("families").child(userFamilyId).child("members").child(userId).child("communicationInfo").child(contactUserId).observeSingleEvent(of: .value, with: { (snapshot) in
+                    databaseRef.child(FamilyPath).child(userFamilyId).child(GroupMembersPath).child(userId).child("communicationInfo").child(contactUserId).observeSingleEvent(of: .value, with: { (snapshot) in
                         if let dict = snapshot.value! as? NSDictionary {
                             print("Retrieved family member userInfo")
                             completionHandler(nil, dict)
@@ -514,7 +514,7 @@ class FirebaseManager: NSObject {
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 let databaseRef = FIRDatabase.database().reference()
                 
-                databaseRef.child("families").child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
+                databaseRef.child(FamilyPath).child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
                     if error != nil {
                         // Error
                         print("Error creating reminder")
@@ -536,7 +536,7 @@ class FirebaseManager: NSObject {
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 let databaseRef = FIRDatabase.database().reference()
                 
-                databaseRef.child("families").child(userFamilyId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
+                databaseRef.child(FamilyPath).child(userFamilyId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
                     if error != nil {
                         print("Error deleting reminder")
                         completionHandler(error as NSError?, nil)
@@ -588,7 +588,7 @@ class FirebaseManager: NSObject {
                 let databaseRef = FIRDatabase.database().reference()
                 var remindersArr = [Reminder]()
                 
-                databaseRef.child("families").child(userFamilyId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
+                databaseRef.child(FamilyPath).child(userFamilyId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
                     if let dict = snapshot.value! as? NSDictionary {
                         for (key, value) in dict {
                             if let reminderId = key as? String {
@@ -616,7 +616,7 @@ class FirebaseManager: NSObject {
             if AYNModel.sharedInstance.currentUser != nil {
                 if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                     let databaseRef = FIRDatabase.database().reference()
-                    let messageKey = databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).childByAutoId().key
+                    let messageKey = databaseRef.child(FamilyPath).child(userFamilyId).child("conversations").child(conversationId).childByAutoId().key
                     
                     // Add current user ID to message object
                     let modifiedMessage = message.mutableCopy() as! NSMutableDictionary
@@ -625,7 +625,7 @@ class FirebaseManager: NSObject {
                     let favoritedDict = [user.uid : "false", receiverId : "false"]
                     modifiedMessage.setObject(favoritedDict, forKey: "favorited" as NSCopying)
                     
-                    databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
+                    databaseRef.child(FamilyPath).child(userFamilyId).child("conversations").child(conversationId).child(messageKey).setValue(modifiedMessage, withCompletionBlock: { (error, newDatabaseRef) in
                         if error != nil {
                             // Error
                             print("Error sending message")
@@ -649,7 +649,7 @@ class FirebaseManager: NSObject {
                     let databaseRef = FIRDatabase.database().reference()
                     
                     let childUpdates = [user.uid : favorited]
-                    databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
+                    databaseRef.child(FamilyPath).child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
                         if let error = error {
                             // Error
                             print("Error updating favorite value for message")
@@ -751,7 +751,7 @@ class FirebaseManager: NSObject {
     fileprivate class func createNewConversation(_ receiverId: String, familyId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let databaseRef = FIRDatabase.database().reference()
-            let newConversationId = databaseRef.child("families").child(familyId).child("conversations").childByAutoId().key
+            let newConversationId = databaseRef.child(FamilyPath).child(familyId).child("conversations").childByAutoId().key
             
             let childUpdates = ["/users/\(user.uid)/conversations/\(newConversationId)": "true",
                                 "/users/\(receiverId)/conversations/\(newConversationId)": "true"] as [AnyHashable: Any]
@@ -777,12 +777,12 @@ extension FirebaseManager {
 //    class func getFamilyNote(completionHandler: @escaping (_ error: NSError?, _ familyNote: String?) -> Void) {
         if AYNModel.sharedInstance.currentUser != nil {
             
-//            databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": _changes, "notepadLastChanged":["user":FIRAuth.auth()?.currentUser?.uid, "name": AYNModel.sharedInstance.currentUser?["name"]!]]
+//            databaseRef.child(FamilyPath).child(userFamilyId).updateChildValues(["notepad": _changes, "notepadLastChanged":["user":FIRAuth.auth()?.currentUser?.uid, "name": AYNModel.sharedInstance.currentUser?["name"]!]]
             
             if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                 let databaseRef = FIRDatabase.database().reference()
 
-                databaseRef.child("families").child(userFamilyId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
+                databaseRef.child(FamilyPath).child(userFamilyId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
                     if let familyNote = snapshot.value as? [String:String] {
 //                    if let familyNote = snapshot.value as? String {
                         print("Retrieved family note")
@@ -794,8 +794,8 @@ extension FirebaseManager {
                         let firstNoteData = ["notepad": ["note": firstNote, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]]
                             
 //                            ["notepad": ["note": firstNote, "notepadLastChanged":["user":FIRAuth.auth()?.currentUser?.uid, "name": AYNModel.sharedInstance.currentUser?["name"]!]]]
-                        databaseRef.child("families").child(userFamilyId).updateChildValues(firstNoteData, withCompletionBlock: { (error, newRef) in
-//                        databaseRef.child("families").child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
+                        databaseRef.child(FamilyPath).child(userFamilyId).updateChildValues(firstNoteData, withCompletionBlock: { (error, newRef) in
+//                        databaseRef.child(FamilyPath).child(userFamilyId).child("notepad").updateChildValues(familyNote, withCompletionBlock: { (error, newRef) in
                             if error != nil {
                                 // Error
                                 print("Error saving first note")
@@ -824,7 +824,7 @@ extension FirebaseManager {
                 
                 let firstName = (AYNModel.sharedInstance.currentUser?["name"] as! String).components(separatedBy: " ").first
                 
-                databaseRef.child("families").child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]], withCompletionBlock: { (error, newRef) in
+                databaseRef.child(FamilyPath).child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]], withCompletionBlock: { (error, newRef) in
                     if error != nil {
                         // Error
                         print("Error saving note")

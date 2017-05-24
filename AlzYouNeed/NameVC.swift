@@ -126,17 +126,18 @@ class NameVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        // TODO: Delete partial user profile
-        
         showWarning()
     }
     
     func showWarning() {
         let alert = UIAlertController(title: "Unsaved Changes", message: "Progress will not be saved", preferredStyle: .actionSheet)
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-            self.present(onboardingVC, animated: true, completion: nil)
+            // TODO: Delete partial user profile
+            self.dismiss(animated: true, completion: nil)
+            
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+//            self.present(onboardingVC, animated: true, completion: nil)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         

@@ -513,72 +513,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-uv-wFT">
-                                <rect key="frame" x="31" y="345" width="312" height="48"/>
-                                <color key="backgroundColor" red="0.39215686274509803" green="0.83921568627450982" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="0xI-O7-MWu"/>
-                                    <constraint firstAttribute="width" constant="312" id="6j0-Xc-5QV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
-                                <state key="normal" title="Email">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="6Ah-AB-Zjf" kind="show" id="qap-t5-zIU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tHk-P9-1GQ">
-                                <rect key="frame" x="31" y="219" width="312" height="48"/>
-                                <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="t3g-Gq-K73"/>
-                                    <constraint firstAttribute="width" constant="312" id="vAV-F3-XRZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
-                                <state key="normal" title="Facebook">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="facebookButtonPressed:" destination="o45-Lp-Z1V" eventType="touchUpInside" id="EU5-b0-Vi6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qk9-Dj-31O">
-                                <rect key="frame" x="31" y="282" width="312" height="48"/>
-                                <color key="backgroundColor" red="1" green="0.41176470588235292" blue="0.47058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="312" id="Zmv-tw-9f8"/>
-                                    <constraint firstAttribute="height" constant="48" id="keY-FH-Qgl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="17"/>
-                                <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Google">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="googleButtonPressed:" destination="o45-Lp-Z1V" eventType="touchUpInside" id="FC8-7F-ssZ"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Sign-in Method" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTg-Cm-2yd">
-                                <rect key="frame" x="35" y="84" width="305" height="105"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTg-Cm-2yd">
+                                <rect key="frame" x="35" y="124" width="305" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="305" id="RJw-m5-efX"/>
-                                    <constraint firstAttribute="height" constant="105" id="eau-ci-GWX"/>
+                                    <constraint firstAttribute="height" constant="50" id="eau-ci-GWX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="OpenSans-Bold" family="Open Sans" pointSize="34"/>
                                 <color key="textColor" red="0.4431372549" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uiI-z1-wU5">
+                                <rect key="frame" x="127" y="204" width="120" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Xb2-X5-Ehf"/>
+                                    <constraint firstAttribute="height" constant="21" id="skb-CM-3qg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsa-ci-MNw">
+                                <rect key="frame" x="55" y="240" width="75" height="75"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="qJX-G8-07y"/>
+                                    <constraint firstAttribute="height" constant="75" id="rWa-2i-asK"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="facebookButtonPressed:" destination="o45-Lp-Z1V" eventType="touchUpInside" id="tLW-xt-f92"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJJ-LB-LPL">
+                                <rect key="frame" x="150" y="240" width="75" height="75"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="3E8-kE-rEw"/>
+                                    <constraint firstAttribute="height" constant="75" id="sQq-xk-NbA"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="googleButtonPressed:" destination="o45-Lp-Z1V" eventType="touchUpInside" id="4QZ-f6-G2r"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dnf-fK-Juo">
+                                <rect key="frame" x="245" y="240" width="75" height="75"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="ZHR-lS-vUi"/>
+                                    <constraint firstAttribute="width" constant="75" id="kF6-Hm-iSF"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="6Ah-AB-Zjf" kind="show" id="CFx-vv-Tyq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jTg-Cm-2yd" firstAttribute="top" secondItem="ilX-Qn-ECa" secondAttribute="bottom" constant="20" id="1u9-Tm-gzd"/>
-                            <constraint firstItem="qk9-Dj-31O" firstAttribute="top" secondItem="tHk-P9-1GQ" secondAttribute="bottom" constant="15" id="4nj-Gz-6d5"/>
-                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="top" secondItem="qk9-Dj-31O" secondAttribute="bottom" constant="15" id="HqL-nh-Aeq"/>
-                            <constraint firstItem="qk9-Dj-31O" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="Xcp-KS-6Fr"/>
-                            <constraint firstItem="tHk-P9-1GQ" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="e5T-6G-6CD"/>
-                            <constraint firstItem="tHk-P9-1GQ" firstAttribute="top" secondItem="jTg-Cm-2yd" secondAttribute="bottom" constant="30" id="mye-rZ-ayS"/>
-                            <constraint firstItem="hlQ-uv-wFT" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="sld-jf-clX"/>
+                            <constraint firstItem="jTg-Cm-2yd" firstAttribute="top" secondItem="ilX-Qn-ECa" secondAttribute="bottom" constant="60" id="1u9-Tm-gzd"/>
+                            <constraint firstItem="jJJ-LB-LPL" firstAttribute="top" secondItem="uiI-z1-wU5" secondAttribute="bottom" constant="15" id="9IJ-cm-Jts"/>
+                            <constraint firstItem="uiI-z1-wU5" firstAttribute="top" secondItem="jTg-Cm-2yd" secondAttribute="bottom" constant="30" id="Fc0-z2-CUP"/>
+                            <constraint firstItem="dnf-fK-Juo" firstAttribute="centerY" secondItem="jJJ-LB-LPL" secondAttribute="centerY" id="Iv6-jx-0tZ"/>
+                            <constraint firstItem="jJJ-LB-LPL" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="bar-cb-3J9"/>
+                            <constraint firstItem="jJJ-LB-LPL" firstAttribute="leading" secondItem="hsa-ci-MNw" secondAttribute="trailing" constant="20" id="dsI-KD-uKf"/>
+                            <constraint firstItem="uiI-z1-wU5" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="e0m-ni-95b"/>
+                            <constraint firstItem="hsa-ci-MNw" firstAttribute="centerY" secondItem="jJJ-LB-LPL" secondAttribute="centerY" id="ldZ-gV-5EC"/>
+                            <constraint firstItem="dnf-fK-Juo" firstAttribute="leading" secondItem="jJJ-LB-LPL" secondAttribute="trailing" constant="20" id="o9H-Pc-pBF"/>
                             <constraint firstItem="jTg-Cm-2yd" firstAttribute="centerX" secondItem="obq-Ep-6ea" secondAttribute="centerX" id="wqj-Hx-Z3z"/>
                         </constraints>
                     </view>
@@ -590,9 +589,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emailButton" destination="hlQ-uv-wFT" id="Z7G-G8-91x"/>
-                        <outlet property="facebookButton" destination="tHk-P9-1GQ" id="3hI-2i-jxa"/>
-                        <outlet property="googleButton" destination="qk9-Dj-31O" id="y4x-vF-lPB"/>
+                        <outlet property="emailButton" destination="dnf-fK-Juo" id="vUP-Vl-CVi"/>
+                        <outlet property="facebookButton" destination="hsa-ci-MNw" id="XBd-V3-wrn"/>
+                        <outlet property="googleButton" destination="jJJ-LB-LPL" id="oAk-Xe-Pk2"/>
                         <segue destination="b1G-BN-3OI" kind="show" identifier="methodsToFamily" id="bEV-la-pGm"/>
                     </connections>
                 </viewController>
@@ -1265,7 +1264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0jN-Ya-MSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36" y="-287"/>
+            <point key="canvasLocation" x="153" y="-287"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KVa-5m-7Jk">
@@ -1291,7 +1290,7 @@
             <objects>
                 <navigationController storyboardIdentifier="loginNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1355,7 +1354,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNavOld" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tlw-5s-TrC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="chV-hS-NTa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="chV-hS-NTa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1373,7 +1372,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RkW-wU-gBz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="leV-lP-Z5q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="leV-lP-Z5q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1393,7 +1392,7 @@
         <image name="defaultImage" width="100" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="bEV-la-pGm"/>
         <segue reference="d61-Gb-xHV"/>
-        <segue reference="KEN-Zo-a7o"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -271,10 +271,12 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
             }
             
             // Delete partial user profile & present next VC when complete
+            // TODO: Delete partial user profile
+            self.dismiss(animated: true, completion: nil)
             
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-            self.present(onboardingVC, animated: true, completion: nil)
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+//            self.present(onboardingVC, animated: true, completion: nil)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         

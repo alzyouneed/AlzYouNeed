@@ -14,10 +14,10 @@ import FBSDKLoginKit
 
 class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
-    @IBOutlet var emailButton: UIButton!
     @IBOutlet var facebookButton: UIButton!
     @IBOutlet var googleButton: UIButton!
-
+    @IBOutlet var emailButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -47,13 +47,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     }
     
     func setupEmailButton() {
-        let emailIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .envelope))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
-        let emailText = NSMutableAttributedString(string: "  Email", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
-        
-        emailIcon.append(emailText)
-        
+        let emailIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .envelope))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 22)])
+
         emailButton.setAttributedTitle(emailIcon, for: .normal)
         emailButton.tintColor = UIColor.white
+        emailButton.backgroundColor = UIColor(hex: "7189FF")
         emailButton.layer.cornerRadius = 5
         emailButton.layer.shadowColor = UIColor.black.cgColor
         emailButton.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -63,13 +61,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     }
     
     func setupGoogleButton() {
-        let googleIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .google))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
-        let googleText = NSMutableAttributedString(string: "  Google", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
-        
-        googleIcon.append(googleText)
+        let googleIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .google))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 22)])
         
         googleButton.setAttributedTitle(googleIcon, for: .normal)
         googleButton.tintColor = UIColor.white
+        googleButton.backgroundColor = UIColor(hex: "7189FF")
         googleButton.layer.cornerRadius = 5
         googleButton.layer.shadowColor = UIColor.black.cgColor
         googleButton.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -79,13 +75,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     }
     
     func setupFacebookButton() {
-        let facebookIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .facebookSquare))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 18)])
-        let facebookText = NSMutableAttributedString(string: "  Facebook", attributes: [NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!])
-        
-        facebookIcon.append(facebookText)
-        
+        let facebookIcon = NSMutableAttributedString(string: "\(String.fontAwesomeIcon(name: .facebook))", attributes: [NSFontAttributeName: UIFont.fontAwesome(ofSize: 22)])
+
         facebookButton.setAttributedTitle(facebookIcon, for: .normal)
         facebookButton.tintColor = UIColor.white
+        facebookButton.backgroundColor = UIColor(hex: "7189FF")
         facebookButton.layer.cornerRadius = 5
         facebookButton.layer.shadowColor = UIColor.black.cgColor
         facebookButton.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -155,9 +149,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     // MARK: - Cancel signup
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // TODO: Delete partial user profile
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-        self.present(onboardingVC, animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
+        
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+//        self.present(onboardingVC, animated: true, completion: nil)
     }
     
 
