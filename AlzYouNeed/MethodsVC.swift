@@ -29,7 +29,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-            if let user = user {
+            if user != nil {
                 print("MethodsVC: User signed in")
                 self.presentNextVC()
             } else {
@@ -62,7 +62,8 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         
         UIApplication.shared.statusBarStyle = .default
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MethodsVC.presentNextVC), name: NSNotification.Name(rawValue: signInNotificationKey), object: nil)
+        // Notified from AppDelegate -- authListener can do this
+//        NotificationCenter.default.addObserver(self, selector: #selector(MethodsVC.presentNextVC), name: NSNotification.Name(rawValue: signInNotificationKey), object: nil)
     }
     
     func setupEmailButton() {
@@ -116,14 +117,11 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     func presentNextVC() {
         print("Present familyStepVC")
         // Present next VC
-        
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "methodsToFamily", sender: self)
         }
-//        self.performSegue(withIdentifier: "methodsToFamily", sender: self)
     }
-    
-    // TODO: Move this to AppDelegate
+
     // MARK: - Facebook signup
     @IBAction func facebookButtonPressed(_ sender: Any) {
         loginWithFacebook()
@@ -150,8 +148,6 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                             NewProfile.sharedInstance.userId = user?.uid
                             NewProfile.sharedInstance.name = firstName
                             NewProfile.sharedInstance.photoURL = photoURL
-                            
-//                            self.presentNextVC()
                         })
                     }
                 } else {

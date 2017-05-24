@@ -8,6 +8,7 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import Firebase
 
 class EmailVC: UIViewController, UITextFieldDelegate {
 
@@ -174,14 +175,33 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Sign up
     @IBAction func signUpPressed(_ sender: UIButton) {
-        // If Firebase sign-up succeeds then present next VC
-        presentNextVC()
+        createNewUser()
+    }
+    
+    func createNewUser() {
+        if let email = emailTextField.text, let password = passwordTextField.text {
+            
+            FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
+                if let error = error {
+                    print("Error creating user: ", error.localizedDescription)
+                    let errorCode = FIRAuthErrorCode(rawValue: error._code)
+                    self.showErrorMessage(error: errorCode!)
+                } else {
+                    if let user = user {
+                        print("Created new user with email")
+                        self.presentNextVC()
+                    }
+                }
+            })
+        }
     }
     
     func presentNextVC() {
         print("Present NameVC")
         // Present next VC
-        self.performSegue(withIdentifier: "emailToName", sender: self)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "emailToName", sender: self)
+        }
     }
     
     // MARK: - Cancel signup
@@ -190,6 +210,28 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         NewProfile.sharedInstance.resetModel()
         
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Handle errors
+    func showErrorMessage(error: FIRAuthErrorCode) {
+        var errorMessage = ""
+        switch error {
+        case .errorCodeInvalidEmail:
+            errorMessage = "Email address is invalid"
+        case .errorCodeNetworkError:
+            errorMessage = "Network error. Please try again."
+        case .errorCodeEmailAlreadyInUse:
+            errorMessage = "Email address is already in use"
+        default:
+            break
+        }
+        
+        if !errorMessage.isEmpty {
+            let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
 

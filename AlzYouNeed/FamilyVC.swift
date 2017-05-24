@@ -183,6 +183,13 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
 
     @IBAction func actionButtonPressed(_ sender: UIButton) {
         // Try creating / joining family in Firebase
+        if familyControl.selectedSegmentIndex == 0 {
+            //
+            
+        } else {
+            
+        }
+        
         // If successful
         NewProfile.sharedInstance.admin = (familyControl.selectedSegmentIndex == 0)
         NewProfile.sharedInstance.groupName = familyNameTextField.text
