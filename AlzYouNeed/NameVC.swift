@@ -98,18 +98,29 @@ class NameVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Onboarding progression
     @IBAction func nextButtonPressed(_ sender: UIButton) {
-        // Save name and present next VC
-        NewProfile.sharedInstance.name = nameTextField.text
-        
-        // Save user
-        FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
+        // Update name and present next VC
+        let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+        changeRequest?.displayName = nameTextField.text
+        changeRequest?.commitChanges(completion: { (error) in
             if let error = error {
-                print("Error updating user: ", error.localizedDescription)
+                print("Error updating user name: ", error.localizedDescription)
             } else {
-                print("Updated user")
+                print("Updated user name")
                 self.presentNextVC()
             }
         })
+        
+//        NewProfile.sharedInstance.name = nameTextField.text
+//        
+//        // Save user
+//        FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
+//            if let error = error {
+//                print("Error updating user: ", error.localizedDescription)
+//            } else {
+//                print("Updated user")
+//                self.presentNextVC()
+//            }
+//        })
         
 //        presentNextVC()
     }

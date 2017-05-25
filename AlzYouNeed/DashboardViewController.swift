@@ -150,111 +150,20 @@ class DashboardViewController: UIViewController {
         saveNote(_dismissAfter: true)
     }
     
-    func showDeleteAccountWarning() {
-        let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .actionSheet)
-        
-        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            FirebaseManager.deleteCurrentUser({ (error) in
-                if error == nil {
-                    // Success
-                }
-                else {
-                    // Error
-                    // Check for relevant error before showing alert
-                    if error?.code != 2 && error?.code != 17011 {
-                        print("Error deleting user: \(String(describing: error))")
-                        self.showLoginAlert()
-                    }
-                }
-            })
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            // Cancel button pressed
-        }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showLoginAlert() {
-        let alert = UIAlertController(title: "Sign-in Required", message: "Please sign in to complete this action", preferredStyle: UIAlertControllerStyle.alert)
-        
-        var emailTF: UITextField!
-        var passwordTF: UITextField!
-        alert.addTextField { (emailTextField) in
-            emailTextField.placeholder = "Email"
-            emailTextField.autocapitalizationType = UITextAutocapitalizationType.none
-            emailTextField.autocorrectionType = UITextAutocorrectionType.no
-            emailTextField.spellCheckingType = UITextSpellCheckingType.no
-            emailTextField.keyboardType = UIKeyboardType.emailAddress
-            emailTF = emailTextField
-        }
-        alert.addTextField { (passwordTextField) in
-            passwordTextField.placeholder = "Password"
-            passwordTextField.autocapitalizationType = UITextAutocapitalizationType.none
-            passwordTextField.autocorrectionType = UITextAutocorrectionType.no
-            passwordTextField.spellCheckingType = UITextSpellCheckingType.no
-            passwordTextField.keyboardType = UIKeyboardType.asciiCapable
-            passwordTextField.isSecureTextEntry = true
-            passwordTF = passwordTextField
-        }
-        
-        let confirmAction = UIAlertAction(title: "Login", style: .default) { (action) in
-            FIRAuth.auth()?.signIn(withEmail: emailTF.text!, password: passwordTF.text!, completion: { (user, error) in
-                if error == nil {
-                    print("Login successful - showing delete account warning")
-                    self.showDeleteAccountWarning()
-                }
-                else {
-                    print("Error logging in: \(String(describing: error))")
-                    self.showLoginAlert()
-                }
-            })
-        }
-        
-        alert.addAction(confirmAction)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    // MARK: - Present different VC's
-    func presentOnboardingVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-        self.present(onboardingVC, animated: true, completion: nil)
-    }
-    
-    func presentUpdateProfileVC() {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
-        
-        // Hide tab bar in updateProfileVC
-        updateProfileVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(updateProfileVC, animated: true)
-    }
-    
-    func updateTabBadge() {
-        let tabArray = tabBarController!.tabBar.items as NSArray!
-        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
-        tabItem.badgeValue = nil
-    }
-    
-    func resetView() {
-        self.navigationItem.title = ""
-        self.userView.userImageView.image = nil
-    }
-    
     // MARK: - Configuration
+    func setupView() {
+        
+    }
+    
     func configureView() {
         if !AYNModel.sharedInstance.wasReset {
             // TODO: Fix this
-//            configureViewWithUserDefaults()
+            //            configureViewWithUserDefaults()
         } else {
             // TODO: Fix this
-//            configureViewWithFirebase()
+            //            configureViewWithFirebase()
         }
-        configureActionButtons()
+        //        configureActionButtons()
         
         // Configure save button
         saveButton.isEnabled = false
@@ -411,17 +320,46 @@ class DashboardViewController: UIViewController {
         // Round the bounds
         notepadView.layer.cornerRadius = 10
         notepadView.layer.masksToBounds = true
-//        notepadView.clipsToBounds = true
-//        notepadView.layer.shadowColor = UIColor.black.cgColor
-//        notepadView.layer.shadowOffset = CGSize(width: 0, height: -1)
-//        notepadView.layer.shadowOpacity = 0.9
-//        notepadView.layer.shadowRadius = 5
+        //        notepadView.clipsToBounds = true
+        //        notepadView.layer.shadowColor = UIColor.black.cgColor
+        //        notepadView.layer.shadowOffset = CGSize(width: 0, height: -1)
+        //        notepadView.layer.shadowOpacity = 0.9
+        //        notepadView.layer.shadowRadius = 5
+    }
+    
+    // MARK: - Present different VC's
+    func presentOnboardingVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
+        self.present(onboardingVC, animated: true, completion: nil)
+    }
+    
+    func presentUpdateProfileVC() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
+        
+        // Hide tab bar in updateProfileVC
+        updateProfileVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+    }
+    
+    func updateTabBadge() {
+        let tabArray = tabBarController!.tabBar.items as NSArray!
+        let tabItem = tabArray?.object(at: 2) as! UITabBarItem
+        tabItem.badgeValue = nil
+    }
+    
+    func resetView() {
+        self.navigationItem.title = ""
+        self.userView.userImageView.image = nil
     }
     
     func notepadButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "notepad", sender: self)
     }
     
+    
+    // TODO: Probably get rid of
     func checkUserSignedIn() {
         // Check for current user
         FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
@@ -474,22 +412,6 @@ class DashboardViewController: UIViewController {
                 // Present onboarding VC
                 print("No user is signed in -- moving to onboarding flow")
                 self.presentOnboardingVC()
-            }
-        })
-    }
-    
-    func deleteAccount() {
-        FirebaseManager.deleteCurrentUser({ (error) in
-            if error == nil {
-                // Success
-            }
-            else {
-                // Error
-                // Check for relevant error before showing alert
-                if error?.code != 2 && error?.code != 17011 {
-                    print("Error deleting user: \(String(describing: error))")
-                    self.showLoginAlert()
-                }
             }
         })
     }

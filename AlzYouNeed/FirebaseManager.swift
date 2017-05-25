@@ -301,38 +301,24 @@ class FirebaseManager: NSObject {
                             completionHandler(error, nil)
                         } else {
                             // Family name is free
-                            getCurrentUser({ (userDict, error) in
+                            let databaseRef = FIRDatabase.database().reference()
+                            let userDict = ["admin" : true]
+                            let familyToSave = ["password": password, GroupMembersPath:[user.uid: userDict], "notepad" : "Store your notes here!"] as [String : Any]
+                            
+                            // Update current user and new family, and signup Status
+                            let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
+                                                "/\(UserPath)/\(user.uid)/admin": "true",
+                                                "/\(GroupPath)/\(familyId)": familyToSave] as [String : Any]
+
+                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                 if error != nil {
-                                    completionHandler(error, nil)
-                                } else {
-                                    if let userDict = userDict {
-                                        let databaseRef = FIRDatabase.database().reference()
-                                        let modifiedDict = userDict.mutableCopy() as! NSMutableDictionary
-                                        modifiedDict["admin"] = "true"
-                                        let familyToSave = ["password": password, GroupMembersPath:[user.uid: modifiedDict], "notepad" : "Store your notes here!"] as [String : Any]
-                                        
-                                        // Update current user and new family, and signup Status
-                                        let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
-                                                            "/\(UserPath)/\(user.uid)/admin": "true",
-                                                            "/\(GroupPath)/\(familyId)": familyToSave] as [String : Any]
-                                        
-//                                        let childUpdates = ["/\(UserPath)/\(user.uid)/familyId": familyId,
-//                                                            "/\(UserPath)/\(user.uid)/completedSignup": "true",
-//                                                            "/\(UserPath)/\(user.uid)/admin": "true",
-//                                                            "/\(GroupPath)/\(familyId)": familyToSave] as [String : Any]
-                                        
-                                        databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                            if error != nil {
-                                                print("Error creating new family group")
-                                                completionHandler(error as NSError?, databaseRef)
-                                            }
-                                            else {
-                                                print("New family group created -- joined Family: \(familyId)")
-                                                AYNModel.sharedInstance.currentUser = modifiedDict
-                                                completionHandler(error as NSError?, databaseRef)
-                                            }
-                                        })
-                                    }
+                                    print("Error creating new family group")
+                                    completionHandler(error as NSError?, databaseRef)
+                                }
+                                else {
+                                    print("New family group created -- joined Family: \(familyId)")
+//                                    AYNModel.sharedInstance.currentUser = modifiedDict
+                                    completionHandler(error as NSError?, databaseRef)
                                 }
                             })
                         }
@@ -359,43 +345,32 @@ class FirebaseManager: NSObject {
                                         // Compare password to user input
                                         if password == familyPassword {
                                             // Password correct
-                                            getCurrentUser({ (userDict, error) in
+                                            let databaseRef = FIRDatabase.database().reference()
+                                            let userDict = ["admin" : false]
+                                            // Update current user and new family, and signUp status
+                                            let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
+                                                                "/\(UserPath)/\(user.uid)/admin": "false"]
+
+                                            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
                                                 if error != nil {
-                                                    completionHandler(error, nil)
-                                                } else {
-                                                    if let userDict = userDict {
-                                                        let databaseRef = FIRDatabase.database().reference()
-                                                        // Update current user and new family, and signUp status
-                                                        let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
-                                                                            "/\(UserPath)/\(user.uid)/admin": "false"]
-//                                                        let childUpdates = ["/\(UserPath)/\(user.uid)/familyId": familyId,
-//                                                                            "/\(UserPath)/\(user.uid)/completedSignup": "true",
-//                                                                            "/\(UserPath)/\(user.uid)/admin": "false"]
-                                                        
-                                                        databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                                                            if error != nil {
-                                                                print("Error occurred while updating user with new family group values")
-                                                                completionHandler(error as NSError?, nil)
-                                                            }
-                                                            else {
-                                                                print("User family group values updated")
-                                                                databaseRef.child(GroupPath).child(familyId).child(GroupMembersPath).child(user.uid).setValue(userDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
-                                                                    if error != nil {
-                                                                        print("Error occurred while adding user to family")
-                                                                        completionHandler(secondError as NSError?, secondDatabaseRef)
-                                                                    }
-                                                                    else {
-                                                                        print("User added to family")
-                                                                        AYNModel.sharedInstance.currentUser = userDict
-                                                                        completionHandler(nil, secondDatabaseRef)
-                                                                    }
-                                                                })
-                                                            }
-                                                        })
-                                                    }
+                                                    print("Error occurred while updating user with new family group values")
+                                                    completionHandler(error as NSError?, nil)
+                                                }
+                                                else {
+                                                    print("User family group values updated")
+                                                    databaseRef.child(GroupPath).child(familyId).child(GroupMembersPath).child(user.uid).setValue(userDict, withCompletionBlock: { (secondError, secondDatabaseRef) in
+                                                        if error != nil {
+                                                            print("Error occurred while adding user to family")
+                                                            completionHandler(secondError as NSError?, secondDatabaseRef)
+                                                        }
+                                                        else {
+                                                            print("User added to family")
+//                                                            AYNModel.sharedInstance.currentUser = userDict
+                                                            completionHandler(nil, secondDatabaseRef)
+                                                        }
+                                                    })
                                                 }
                                             })
-                                            
                                         } else {
                                             // Password incorrect
                                             print("Incorrect password to join family: \(familyId)")
@@ -414,7 +389,6 @@ class FirebaseManager: NSObject {
                     }
                 }
             })
-            
         }
     }
 
