@@ -66,16 +66,18 @@ class DashboardViewController: UIViewController {
             }
         })
         
+        setupView()
+        
         // If new user signed in -- force reload view
-        if AYNModel.sharedInstance.wasReset {
-            print("Model was reset -- reseting UI")
-            configureView()
-        }
-        else if AYNModel.sharedInstance.profileWasUpdated {
-            print("Profile was updated -- resetting UI")
-            AYNModel.sharedInstance.profileWasUpdated = false
-            configureView()
-        }
+//        if AYNModel.sharedInstance.wasReset {
+//            print("Model was reset -- reseting UI")
+//            configureView()
+//        }
+//        else if AYNModel.sharedInstance.profileWasUpdated {
+//            print("Profile was updated -- resetting UI")
+//            AYNModel.sharedInstance.profileWasUpdated = false
+//            configureView()
+//        }
         
         // Configure for keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillShow(sender:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -152,7 +154,18 @@ class DashboardViewController: UIViewController {
     
     // MARK: - Configuration
     func setupView() {
-        
+        if let user = FIRAuth.auth()?.currentUser {
+            if let imageURL = user.photoURL, let data = try? Data(contentsOf: imageURL) {
+                if let image = UIImage(data: data) as UIImage? {
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.userView.setImage(image)
+                    })
+                }
+            }
+            
+            self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
+        }
     }
     
     func configureView() {
