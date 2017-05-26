@@ -131,6 +131,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FIRAuth.auth()?.signIn(with: credential, completion: { (firebaseUser, error) in
             if let error = error {
                 print("Error signing in with Google in FIRAuth: \(error.localizedDescription)")
+                // Notify OnboardingVC that sign-in failed
+                NotificationCenter.default.post(name: Notification.Name(rawValue: googleSignInFailedKey), object: self)
+                
                 return
             }
             print("Signed in with Google")
@@ -165,38 +168,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     // Remote
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
-//        var tokenString = ""
-//        
-//        for i in 0..<deviceToken.count {
-//            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
-//        }
-////        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
-//        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.prod)
         
-        // Convert token to string
-        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        let registeredForNotifications = UIApplication.shared.isRegisteredForRemoteNotifications
         
-        // Print it to console
-        print("APNs device token: \(deviceTokenString)")
-        
-        // Persist it in your backend in case it's new
-        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
-            if ref != nil {
-                
-                // See if device token updated
-                if let savedDeviceToken = UserDefaultsManager.getDeviceToken() {
+        if registeredForNotifications {
+            // Convert token to string
+            let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+            // Print it to console
+            print("APNs device token: \(deviceTokenString)")
+            // Persist it in your backend in case it's new
+            if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
+                if ref != nil {
                     
-                    if deviceTokenString != savedDeviceToken {
-                        print("New device token")
-                        UserDefaultsManager.saveDeviceToken(token: deviceTokenString)
+                    // See if device token updated
+                    if let savedDeviceToken = UserDefaultsManager.getDeviceToken() {
                         
-                        // New device token
-                        self.ref.child("users").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
-                        
-                        if let familyName = AYNModel.sharedInstance.currentUser?["familyId"] as? String {
-                            // Update token in Firebase
-                            self.ref.child("families").child(familyName).child("members").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                        if deviceTokenString != savedDeviceToken {
+                            print("New device token")
+                            UserDefaultsManager.saveDeviceToken(token: deviceTokenString)
+                            
+                            // New device token
+                            self.ref.child("users").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                            
+                            if let familyName = AYNModel.sharedInstance.currentUser?["familyId"] as? String {
+                                // Update token in Firebase
+                                self.ref.child("families").child(familyName).child("members").child(currentUserId).updateChildValues(["deviceToken":deviceTokenString])
+                            }
                         }
                     }
                 }

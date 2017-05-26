@@ -106,7 +106,18 @@ class NameVC: UIViewController, UITextFieldDelegate {
                 print("Error updating user name: ", error.localizedDescription)
             } else {
                 print("Updated user name")
-                self.presentNextVC()
+                
+                // Save user
+                FirebaseManager.updateUser(updates: ["name" : self.nameTextField.text!] as NSDictionary, completionHandler: { (error) in
+                    if let error = error {
+                        print("Error updating user: ", error.localizedDescription)
+                    } else {
+                        print("Updated user")
+                        self.presentNextVC()
+                    }
+                })
+                
+//                self.presentNextVC()
             }
         })
         

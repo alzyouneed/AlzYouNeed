@@ -94,7 +94,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
-                     HUD.hide()
+                    HUD.hide()
                     print("Loaded \(members.count) contacts from Firebase")
                     AYNModel.sharedInstance.contactsArr = members
                     
@@ -128,7 +128,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
                     
 //                    queue.async {
                         for member in members {
-                            print("TEST - Starting async lookup of user in family: \(member.fullName)")
+                            print("TEST - Starting async lookup of user in family: \(member.name)")
                             FirebaseManager.getUserById(member.userId, completionHandler: { (userDict, error) in
                                 if error == nil {
                                     if let userDict = userDict {
@@ -317,7 +317,7 @@ extension ContactsViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredContacts = AYNModel.sharedInstance.contactsArr.filter { $0.fullName.contains(searchText) }
+        filteredContacts = AYNModel.sharedInstance.contactsArr.filter { $0.name.contains(searchText) }
         if filteredContacts.count == 0 {
             searchActive = false
         } else {

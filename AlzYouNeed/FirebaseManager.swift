@@ -22,8 +22,10 @@ class FirebaseManager: NSObject {
                 if let dict = snapshot.value! as? NSDictionary {
                     // Used by UserDefaults to check auth of saved user before loading
                     dict.setValue(snapshot.key, forKey: "userId")
-                    UserDefaultsManager.saveCurrentUser(_user: dict)
-                    AYNModel.sharedInstance.currentUser = dict
+                    
+                    // TODO: Fix / remove this
+//                    UserDefaultsManager.saveCurrentUser(_user: dict)
+//                    AYNModel.sharedInstance.currentUser = dict
                     
                     completionHandler(dict, nil)
                 }
@@ -217,14 +219,15 @@ class FirebaseManager: NSObject {
     class func getFamilyMembers(_ completionHandler: @escaping (_ members: [Contact]?, _ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser{
             
-            if AYNModel.sharedInstance.currentUser != nil {
+//            if AYNModel.sharedInstance.currentUser != nil {
                 let userId = user.uid
                 // Search for members using current user's familyId
-                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+                if let groupId = AYNModel.sharedInstance.groupId {
+//                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                     let databaseRef = FIRDatabase.database().reference()
                     var membersArr = [Contact]()
                     
-                    databaseRef.child(GroupPath).child(userFamilyId).child(GroupMembersPath).observeSingleEvent(of: .value, with: { (snapshot) in
+                    databaseRef.child(GroupPath).child(groupId).child(GroupMembersPath).observeSingleEvent(of: .value, with: { (snapshot) in
                         if let dict = snapshot.value! as? NSDictionary {
                             for (key, value) in dict {
                                 if let uId = key as? String {
@@ -246,7 +249,7 @@ class FirebaseManager: NSObject {
                         
                     }
                 }
-            }
+//            }
         }
     }
     
@@ -609,26 +612,46 @@ extension FirebaseManager {
     }
     
     class func saveFamilyNote(_changes: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                let databaseRef = FIRDatabase.database().reference()
-                
-                let firstName = (AYNModel.sharedInstance.currentUser?["name"] as! String).components(separatedBy: " ").first
-                
-                databaseRef.child(GroupPath).child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]], withCompletionBlock: { (error, newRef) in
-                    if error != nil {
-                        // Error
-                        print("Error saving note")
-                        completionHandler(error as NSError?)
-                    }
-                    else {
-                        // Success
-                        print("Saved note")
-                        completionHandler(nil)
-                    }
-                })
-            }
+        if let user = FIRAuth.auth()?.currentUser {
+            let groupId = AYNModel.sharedInstance.groupId!
+            let databaseRef = FIRDatabase.database().reference()
+            let name = user.displayName?.components(separatedBy: " ").first
+            
+            databaseRef.child(GroupPath).child(groupId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":user.uid, "lastChangedName": name]], withCompletionBlock: { (error, newRef) in
+                if error != nil {
+                    // Error
+                    print("Error saving note")
+                    completionHandler(error as NSError?)
+                }
+                else {
+                    // Success
+                    print("Saved note")
+                    completionHandler(nil)
+                }
+            })
         }
+        
+//        
+//        if AYNModel.sharedInstance.currentUser != nil {
+//            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+//                let databaseRef = FIRDatabase.database().reference()
+//                
+//                let firstName = (AYNModel.sharedInstance.currentUser?["name"] as! String).components(separatedBy: " ").first
+//                
+//                databaseRef.child(GroupPath).child(userFamilyId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":FIRAuth.auth()?.currentUser?.uid, "lastChangedName": firstName]], withCompletionBlock: { (error, newRef) in
+//                    if error != nil {
+//                        // Error
+//                        print("Error saving note")
+//                        completionHandler(error as NSError?)
+//                    }
+//                    else {
+//                        // Success
+//                        print("Saved note")
+//                        completionHandler(nil)
+//                    }
+//                })
+//            }
+//        }
     }
 }
 

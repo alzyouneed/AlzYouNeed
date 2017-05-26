@@ -15,7 +15,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     @IBOutlet var contactView: ContactView!
     
     func configureCell(_ contact: Contact, row: Int) {
-        contactView.nameLabel.text = contact.fullName
+        contactView.nameLabel.text = contact.name
         
         // Saves row in tag for contact-specific actions
         contactView.leftButton.tag = row
@@ -25,19 +25,19 @@ class ContactCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         
         // Check user type
-        if let userIsAdmin = contact.admin as String? {
-            if userIsAdmin == "true" {
-                contactView.specialUser("admin")
-            } else {
-                if let userIsPatient = contact.patient as String? {
-                    if userIsPatient == "true" {
-                        contactView.specialUser("patient")
-                    } else {
-                        contactView.specialUser("none")
-                    }
-                }
-            }
-        }
+//        if let userIsAdmin = contact.admin as String? {
+//            if userIsAdmin == "true" {
+//                contactView.specialUser("admin")
+//            } else {
+//                if let userIsPatient = contact.patient as String? {
+//                    if userIsPatient == "true" {
+//                        contactView.specialUser("patient")
+//                    } else {
+//                        contactView.specialUser("none")
+//                    }
+//                }
+//            }
+//        }
         
         // Load images on background thread to avoid choppiness
         DispatchQueue.global().async {

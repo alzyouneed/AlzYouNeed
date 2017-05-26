@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import AVFoundation
-// import PKHUD
+ import PKHUD
 import Crashlytics
 import SkyFloatingLabelTextField
 import FBSDKLoginKit
@@ -114,6 +114,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         super.didReceiveMemoryWarning()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func signUp() {
         presentOnboardingVC()
     }
@@ -134,65 +138,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
             self.present(tabBarController, animated: true, completion: nil)
         }
     }
-    
-    /*
-    func loginUser() {
-        if !loginModeStatus {
-            showLoginView()
-        }
-        else {
-            if validateLogin() {
-                
-                // Show progress view
-                // HUD.show(.Progress)
-                
-                FIRAuth.auth()?.signIn(withEmail: emailVTFView.textField.text!, password: passwordVTFView.textField.text!, completion: { (user, error) in
-                    if error == nil {
-                        print("Login successful")
-                        // HUD.flash(.Success, delay: 0, completion: { (success) in
-                        Answers.logLogin(withMethod: "Email",
-                                                   success: true,
-                                                   customAttributes: [:])
-                            self.view.endEditing(true)
-                            AYNModel.sharedInstance.resetModel()
-                            self.dismiss(animated: true, completion: nil)
-                        // })
-                    }
-                    else {
-                        print(error!)
-                        // HUD.hide({ (success) in
-                        Answers.logLogin(withMethod: "Email",
-                                                   success: false,
-                                                   customAttributes: [:])
-                            self.showPopoverView(error! as NSError)
-                        // })
-                    }
-                })
-            }
-        }
-    }
-     */
-    
-//    func leftButtonAction(_ sender: UIButton) {
-//        switch sender.currentTitle! {
-//        case "Sign up":
-//            signUp()
-//        case "Cancel":
-//            hideLoginView()
-//            self.view.endEditing(true)
-//        default:
-//            break
-//        }
-//    }
-//    
-//    func rightButtonAction(_ sender: UIButton) {
-//        switch sender.currentTitle! {
-//        case "Login":
-//            loginUser()
-//        default:
-//            break
-//        }
-//    }
     
     // MARK: - Validation
     func validateFields() {
@@ -224,30 +169,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
             signupButton.alpha = enable ? 1 : 0.6
         }
     }
-    
-//    func hideLoginView() {
-//        if loginModeStatus {
-//
-//            self.resignFirstResponder()
-//            
-//            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveLinear, animations: {
-//                self.emailVTFView.alpha = 0
-//                self.passwordVTFView.alpha = 0
-//                
-//                self.logoImageView.alpha = 0.9
-//                self.appNameLabel.alpha = 1
-//                
-//            }) { (completed) in
-//                self.emailVTFView.textField.text = ""
-//                self.passwordVTFView.textField.text = ""
-//                
-//                self.emailVTFView.isHidden = true
-//                self.passwordVTFView.isHidden = true
-//
-//                self.loginModeStatus = false
-//            }
-//        }
-//    }
     
     // MARK: - UITextFieldDelegate
 //    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -397,6 +318,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     func setupViews() {
         UIApplication.shared.statusBarStyle = .lightContent
         
+        NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.googleSignInFailed), name: NSNotification.Name(rawValue: googleSignInFailedKey), object: nil)
+        
         self.view.bringSubview(toFront: logoImageView)
         self.view.bringSubview(toFront: appNameLabel)
         
@@ -520,8 +443,11 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if user != nil {
                 print("OnboardingVC: User signed in")
-                // Present next VC
-                self.showMainView()
+                    
+                HUD.flash(.success, delay: 0, completion: { (success) in
+                    // Present next VC
+                    self.showMainView()
+                })
             } else {
                 print("OnboardingVC: No user signed in")
             }
@@ -746,9 +672,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     
     // MARK: - Login Options
     @IBAction func facebookOptionButtonPressed(_ sender: UIButton) {
+        HUD.show(.progress)
+        
         let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
             if let error = error {
+                HUD.hide()
                 print("Error signing in with Facebook: ", error.localizedDescription)
             } else {
                 print("Signed in with Facebook")
@@ -757,6 +686,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     }
     
     @IBAction func googleOptionButtonPressed(_ sender: UIButton) {
+        HUD.show(.progress)
         GIDSignIn.sharedInstance().signIn()
     }
     
@@ -765,11 +695,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     }
     
     func loginWithEmail() {
+        HUD.show(.progress)
+        
         if let email = emailTextField.text, let password = passwordTextField.text {
             FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {
                     print("Error signing in with Email: ", error.localizedDescription)
+                    HUD.hide()
                     self.showErrorMessage(error: error)
+
                 } else {
                     print("Signed in with Email")
                 }
@@ -801,5 +735,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
             alert.addAction(okayAction)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func googleSignInFailed() {
+        HUD.hide()
     }
 }

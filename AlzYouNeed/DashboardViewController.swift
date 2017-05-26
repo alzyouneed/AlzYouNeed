@@ -33,6 +33,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var notepadBottomConstraint: NSLayoutConstraint!
     
     var authListener: FIRAuthStateDidChangeListenerHandle?
+    var viewSetup = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,23 +48,34 @@ class DashboardViewController: UIViewController {
 //        configureView()
 //        setupEmergencyButton()
         self.navigationController?.presentTransparentNavBar()
+        UIApplication.shared.statusBarStyle = .lightContent
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
         self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setupAuthListener()
         
-        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-            if let user = user {
-                print("DashboardVC: User signed in: ", user)
-            } else {
-                print("DashboardVC: No user signed in -- showing onboarding")
-                self.presentOnboardingVC()
-            }
-        })
+//        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+//            if user != nil {
+//                print("DashboardVC: User signed in")
+//                
+//                // Start loading profile here
+//                AYNModel.sharedInstance.loadFromFirebase(completionHandler: { (success) in
+//                    if success {
+//                        self.setupView()
+//                    }
+//                })
+////                AYNModel.sharedInstance.loadFromFirebase()
+////                self.setupView()
+//            } else {
+//                print("DashboardVC: No user signed in -- showing onboarding")
+//                self.presentOnboardingVC()
+//            }
+//        })
         
-        setupView()
+//        setupView()
         
         // If new user signed in -- force reload view
 //        if AYNModel.sharedInstance.wasReset {
@@ -145,12 +157,14 @@ class DashboardViewController: UIViewController {
     }
     
     @IBAction func saveNotepad(_ sender: UIBarButtonItem) {
-        print("saved notepad")
+//        print("saved notepad")
         saveNote(_dismissAfter: true)
     }
     
     // MARK: - Configuration
     func setupView() {
+//        UIApplication.shared.statusBarStyle = .lightContent
+        
         setupUserView()
         setupNotepad()
         setupEmergencyButton()
@@ -160,6 +174,7 @@ class DashboardViewController: UIViewController {
         if let user = FIRAuth.auth()?.currentUser {
             if let imageURL = user.photoURL, let data = try? Data(contentsOf: imageURL) {
                 if let image = UIImage(data: data) as UIImage? {
+                    AYNModel.sharedInstance.userImage = image
                     
                     DispatchQueue.main.async(execute: {
                         self.userView.setImage(image)
@@ -168,6 +183,13 @@ class DashboardViewController: UIViewController {
             }
             
             self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
+            
+            if let groupId = AYNModel.sharedInstance.groupId {
+                DispatchQueue.main.async {
+                    self.userView.familyGroupLabel.text = groupId
+                }
+//                self.userView.familyGroupLabel.text = groupId
+            }
         }
     }
     
@@ -232,50 +254,50 @@ class DashboardViewController: UIViewController {
         }
     }
     
-    func configureViewWithUserDefaults() {
-        print("Configuring view with UserDefaults")
-        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
-            if let savedUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUserId) as NSDictionary? {
-                
-                guard let userName = savedUserDict.object(forKey: "name") as? String,
-                    let familyId = savedUserDict.object(forKey: "familyId") as? String,
-                    let patient = savedUserDict.object(forKey: "patient") as? String else {
-                        print("Incomplete profile -- deleting user")
-                        // Delete here
-//                        FirebaseManager.deleteCurrentUser({ (error) in
-//                            if error != nil {
-//                                print("Error:", error!)
-//                            } else {
-//                                try! FIRAuth.auth()?.signOut()
-//                            }
-//                        })
-                        return
-                }
-                
-                self.userView.userNameLabel.text = userName
-                self.userView.familyGroupLabel.text = familyId
-                
-                if let admin = savedUserDict.object(forKey: "admin") as? String {
-                    if admin == "true" {
-                        self.userView.specialUser("admin")
-                    }
-                }
-                
-                if let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
-                    self.configureDashboardView(photoUrl)
-                }
-                
-                if patient == "true" {
-                    self.userView.specialUser("patient")
-                } else {
-                    self.userView.specialUser("none")
-                }
-                
-                // Save device token here: TODO
-                
-            }
-        }
-    }
+//    func configureViewWithUserDefaults() {
+//        print("Configuring view with UserDefaults")
+//        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
+//            if let savedUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUserId) as NSDictionary? {
+//                
+//                guard let userName = savedUserDict.object(forKey: "name") as? String,
+//                    let familyId = savedUserDict.object(forKey: "familyId") as? String,
+//                    let patient = savedUserDict.object(forKey: "patient") as? String else {
+//                        print("Incomplete profile -- deleting user")
+//                        // Delete here
+////                        FirebaseManager.deleteCurrentUser({ (error) in
+////                            if error != nil {
+////                                print("Error:", error!)
+////                            } else {
+////                                try! FIRAuth.auth()?.signOut()
+////                            }
+////                        })
+//                        return
+//                }
+//                
+//                self.userView.userNameLabel.text = userName
+//                self.userView.familyGroupLabel.text = familyId
+//                
+//                if let admin = savedUserDict.object(forKey: "admin") as? String {
+//                    if admin == "true" {
+//                        self.userView.specialUser("admin")
+//                    }
+//                }
+//                
+//                if let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
+//                    self.configureDashboardView(photoUrl)
+//                }
+//                
+//                if patient == "true" {
+//                    self.userView.specialUser("patient")
+//                } else {
+//                    self.userView.specialUser("none")
+//                }
+//                
+//                // Save device token here: TODO
+//                
+//            }
+//        }
+//    }
     
     func configureViewWithFirebase() {
         print("Configuring view with Firebase -- NEW")
@@ -322,6 +344,39 @@ class DashboardViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func setupAuthListener() {
+        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if user != nil {
+                print("DashboardVC: User signed in")
+                
+                if !self.viewSetup {
+                    
+                    self.viewSetup = true
+                    
+                    // Load from defaults first to reduce visible delay
+                    AYNModel.sharedInstance.loadFromDefaults(completionHandler: { (success) in
+                        if success {
+                            self.setupView()
+                        }
+                    })
+                    
+                    // Load from Firebase to get newest user data
+                    AYNModel.sharedInstance.loadFromFirebase(completionHandler: { (success) in
+                        if success {
+                            self.setupView()
+                            self.saveFamilyMemberContacts()
+                            self.loadNote()
+                            self.registerNotifications()
+                        }
+                    })
+                }
+            } else {
+                print("DashboardVC: No user signed in -- showing onboarding")
+                self.presentOnboardingVC()
+            }
+        })
     }
     
     // MARK: - Present different VC's
@@ -447,15 +502,17 @@ class DashboardViewController: UIViewController {
         FirebaseManager.getFamilyMembers({ (contacts, error) in
             if let contacts = contacts {
                 for contact in contacts {
-                    AYNModel.sharedInstance.familyMemberNumbers.append(contact.phoneNumber)
+                    if let phoneNumber = contact.phoneNumber {
+                        AYNModel.sharedInstance.familyMemberNumbers.append(phoneNumber)
+                    }
                 }
                 print("Saved contacts to AYNModel for emergency")
+                if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
+                    self.emergencyButton.isHidden = false
+                    self.emergencyButton.isEnabled = true
+                }
             }
         })
-    }
-    
-    func emergencyAction(sender: UIButton) {
-        print("Emergency button pressed")
     }
     
     // MARK: - Push Notifications
@@ -467,12 +524,13 @@ class DashboardViewController: UIViewController {
             } else {
                 if granted {
                     print("Push notification auth granted")
+                    UIApplication.shared.registerForRemoteNotifications()
                 } else {
                     print("Push notification auth denied")
                 }
             }
         }
-        UIApplication.shared.registerForRemoteNotifications()
+//        UIApplication.shared.registerForRemoteNotifications()
     }
 }
 
@@ -495,7 +553,6 @@ extension DashboardViewController: MFMessageComposeViewControllerDelegate {
 // MARK: - Emergency button
 extension DashboardViewController {
     func setupEmergencyButton() {
-        print("Configuring emergency button")
         emergencyButton.backgroundColor = sunsetOrange
         emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
         emergencyButton.layer.shadowRadius = 1

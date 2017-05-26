@@ -18,15 +18,27 @@ class AYNModel {
         return Static.instance
     }
     
+    // MARK: - New
+    var groupId: String? = nil
+    var userImage: UIImage? = nil
+    
     var contactsArr: [Contact] = []
     var remindersArr: [Reminder] = []
     var completedRemindersArr: [Reminder] = []
+    
+    var familyMemberNumbers: [String] = []
+    
+    
+    // MARK: - Old
+//    var contactsArr: [Contact] = []
+//    var remindersArr: [Reminder] = []
+//    var completedRemindersArr: [Reminder] = []
     
     var currentUserProfileImage: UIImage? = UIImage()
 //    var currentUserFamilyId: String? = String()
     
     var currentUser: NSDictionary? = nil
-    var familyMemberNumbers: [String] = []
+//    var familyMemberNumbers: [String] = []
     
     var wasReset = false
     var contactsArrWasReset = false
@@ -36,6 +48,42 @@ class AYNModel {
     
     var onboarding = false
     
+    func loadFromFirebase(completionHandler: @escaping (_ complete: Bool) -> Void) {
+        FirebaseManager.getCurrentUser { (userDict, error) in
+            if let error = error {
+                print("Could not load user from Firebase: ", error.localizedDescription)
+                completionHandler(false)
+            } else {
+                if let userDict = userDict {
+                    print("Loaded user from Firebase")
+                    guard let groupId = userDict.value(forKey: "groupId") as? String else {
+                        completionHandler(false)
+                        return
+                    }
+                    self.groupId = groupId
+                    
+                    UserDefaultsManager.saveCurrentUser(_user: userDict)
+                    completionHandler(true)
+                }
+            }
+        }
+    }
+    
+    func loadFromDefaults(completionHandler: @escaping (_ complete: Bool) -> Void) {
+        if let userDict = UserDefaultsManager.loadCurrentUser() {
+            print("Loaded user from Defaults")
+            guard let groupId = userDict.value(forKey: "groupId") as? String else {
+                completionHandler(false)
+                return
+            }
+            self.groupId = groupId
+            completionHandler(true)
+        } else {
+            print("Could not load user from Defaults")
+            completionHandler(false)
+        }
+    }
+
     func resetModel() {
         print("Resetting model")
         contactsArr.removeAll()

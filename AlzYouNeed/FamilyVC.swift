@@ -9,6 +9,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import Firebase
+import PKHUD
 
 class FamilyVC: UIViewController, UITextFieldDelegate {
 
@@ -182,6 +183,8 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func actionButtonPressed(_ sender: UIButton) {
+        HUD.show(.progress)
+        
         // Try creating / joining family in Firebase
         let groupName = familyNameTextField.text!
         let password = passwordTextField.text!
@@ -208,12 +211,19 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     func createGroup(groupId: String, password: String) {
         FirebaseManager.createNewFamilyGroup(groupId, password: password) { (error, ref) in
             if let error = error {
+                HUD.hide()
                 print("Error creating group: ", error.localizedDescription)
                 self.showErrorMessage(error: error)
             } else {
                 print("Created new group")
                 NewProfile.sharedInstance.resetModel()
-                self.showMainView()
+                
+                // Get groupId for model
+                AYNModel.sharedInstance.groupId = groupId
+                
+                HUD.flash(.success, delay: 0, completion: { (success) in
+                    self.showMainView()
+                })
             }
         }
     }
@@ -221,12 +231,19 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     func joinGroup(groupId: String, password: String) {
         FirebaseManager.joinFamilyGroup(groupId, password: password) { (error, ref) in
             if let error = error {
+                HUD.hide()
                 print("Error joining group: ", error.localizedDescription)
                 self.showErrorMessage(error: error)
             } else {
                 print("Joined group")
                 NewProfile.sharedInstance.resetModel()
-                self.showMainView()
+                
+                // Get groupId for model
+                AYNModel.sharedInstance.groupId = groupId
+                
+                HUD.flash(.success, delay: 0, completion: { (success) in
+                    self.showMainView()
+                })
             }
         }
     }

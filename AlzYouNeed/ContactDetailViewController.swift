@@ -42,7 +42,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func configureView() {
         messagesTableView.delegate = self
         
-        userView.userNameLabel.text = "\(contact.fullName!)"
+        userView.userNameLabel.text = "\(contact.name!)"
         userView.setImage(profileImage)
 
         userView.view.backgroundColor = caribbeanGreen
@@ -51,32 +51,32 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         lastCalledLabel.isHidden = true
         
         // Check user type
-        if let userIsAdmin = contact.admin as String? {
-            if userIsAdmin == "true" {
-                userView.specialUser("admin")
-            } else {
-                if let userIsPatient = contact.patient as String? {
-                    if userIsPatient == "true" {
-                        userView.specialUser("patient")
-                    } else {
-                        userView.specialUser("none")
-                    }
-                }
-            }
-        }
+//        if let userIsAdmin = contact.admin as String? {
+//            if userIsAdmin == "true" {
+//                userView.specialUser("admin")
+//            } else {
+//                if let userIsPatient = contact.patient as String? {
+//                    if userIsPatient == "true" {
+//                        userView.specialUser("patient")
+//                    } else {
+//                        userView.specialUser("none")
+//                    }
+//                }
+//            }
+//        }
         
         // If current user is patient -- show relations
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let patientStatus = AYNModel.sharedInstance.currentUser!["patient"] as? String {
-                if patientStatus == "true" {
-                    if let relation = contact.relation as String? {
-                        showRelation(show: true, relation: relation)
-                    }
-                } else {
-                    showRelation(show: false, relation: "")
-                }
-            }
-        }
+//        if AYNModel.sharedInstance.currentUser != nil {
+//            if let patientStatus = AYNModel.sharedInstance.currentUser!["patient"] as? String {
+//                if patientStatus == "true" {
+//                    if let relation = contact.relation as String? {
+//                        showRelation(show: true, relation: relation)
+//                    }
+//                } else {
+//                    showRelation(show: false, relation: "")
+//                }
+//            }
+//        }
     }
     
     func configureActionButtons() {

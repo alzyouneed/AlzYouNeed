@@ -93,7 +93,7 @@ class MessageTableViewCell: UITableViewCell {
                 self.userType("sender")
             } else {
                 // Get only first name
-                let fullName = contact.fullName
+                let fullName = contact.name
                 if let firstName = fullName?.components(separatedBy: " ")[0] as String? {
                     self.nameLabel.text = firstName
                 } else {

@@ -48,8 +48,6 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                         self.presentNextVC()
                     }
                 })
-            
-//                self.presentNextVC()
             } else {
                 print("MethodsVC: No user signed in")
             }
@@ -159,13 +157,6 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                                 return
                             }
                             print("Signed in with Facebook")
-//                            let firstName = (user?.displayName?.components(separatedBy: " ").first)!
-//                            let photoURL = (user?.photoURL?.absoluteString)!
-//                            
-//                            // Save to NewProfile
-//                            NewProfile.sharedInstance.userId = user?.uid
-//                            NewProfile.sharedInstance.name = firstName
-//                            NewProfile.sharedInstance.photoURL = photoURL
                         })
                     }
                 } else {

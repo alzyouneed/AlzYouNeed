@@ -15,28 +15,37 @@ class UserDefaultsManager: NSObject {
         
         defaults.set(_user, forKey: "currentUser")
         defaults.synchronize()
-        print("Saved current user in UserDefaults")
+//        print("Saved current user in UserDefaults")
     }
     
-    class func loadCurrentUser(_userId: String) -> NSDictionary? {
+    class func loadCurrentUser() -> NSDictionary? {
         let defaults = UserDefaults.standard
+        
         if let savedUserDict = defaults.object(forKey: "currentUser") as? NSDictionary {
-            if let savedUserId = savedUserDict.value(forKey: "userId") as? String {
-                if savedUserId == _userId {
-                    print("Loading user from UserDefaults")
-//                    print("Loading user from UserDefaults:", savedUserDict)
-                    return savedUserDict
-                } else {
-                    // Not the same user -- return nil
-                    print("Different user in UserDefaults - skipping")
-                    return nil
-                }
-            }
-            print("Could not find userId in UserDefaults")
+//            print("Found user in UserDefaults")
+            return savedUserDict
+        } else {
+            print("Could not find user in UserDefaults")
             return nil
         }
-        print("Could not find user in UserDefaults")
-        return nil
+        
+//        if let savedUserDict = defaults.object(forKey: "currentUser") as? NSDictionary {
+//            if let savedUserId = savedUserDict.value(forKey: "userId") as? String {
+//                if savedUserId == _userId {
+//                    print("Loading user from UserDefaults")
+////                    print("Loading user from UserDefaults:", savedUserDict)
+//                    return savedUserDict
+//                } else {
+//                    // Not the same user -- return nil
+//                    print("Different user in UserDefaults - skipping")
+//                    return nil
+//                }
+//            }
+//            print("Could not find userId in UserDefaults")
+//            return nil
+//        }
+//        print("Could not find user in UserDefaults")
+//        return nil
     }
     
     class func saveCurrentUserNotepad(_note: String) {

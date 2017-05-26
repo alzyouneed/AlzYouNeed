@@ -9,6 +9,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import Firebase
+import PKHUD
 
 class EmailVC: UIViewController, UITextFieldDelegate {
 
@@ -182,17 +183,21 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     }
     
     func createNewUser() {
+        HUD.show(.progress)
+        
         if let email = emailTextField.text, let password = passwordTextField.text {
             
             FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {
+                    HUD.hide()
                     print("Error creating user: ", error.localizedDescription)
                     self.showErrorMessage(error: error)
                 } else {
                     if user != nil {
                         print("Created user with email")
-                        
-                        self.presentNextVC()
+                        HUD.flash(.success, delay: 0, completion: { (success) in
+                            self.presentNextVC()
+                        })
                     }
                 }
             })

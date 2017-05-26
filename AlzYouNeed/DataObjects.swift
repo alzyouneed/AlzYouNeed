@@ -12,36 +12,24 @@ import UIKit
 // A collection of all data objects
 struct Contact {
     var userId: String!
-    var fullName: String!
-    var email: String!
+    var name: String!
     var phoneNumber: String!
     var photoUrl: String!
-    var patient: String!
-    var admin: String!
-    var relation: String?
-    var deviceToken: String?
+    var deviceToken: String!
     
-    var photo: UIImage?
+    var photo: UIImage!
     
     init?(userId: String, userDict: NSDictionary) {
         self.userId = userId
         
-        guard let fullName = userDict.value(forKey: "name") as? String else {return nil}
-        self.fullName = fullName
+        guard let name = userDict.value(forKey: "name") as? String else {return nil}
+        self.name = name
         
-        guard let email = userDict.value(forKey: "email") as? String else {return nil}
-        self.email = email
+        self.photoUrl = userDict.value(forKey: "photoURL") as? String ?? nil
         
-        guard let phoneNumber = userDict.value(forKey: "phoneNumber") as? String else {return nil}
-        self.phoneNumber = phoneNumber
-        
-        guard let patient = userDict.value(forKey: "patient") as? String else {return nil}
-        self.patient = patient
-        
-        self.admin = userDict.value(forKey: "admin") as? String ?? "false"
-        self.photoUrl = userDict.value(forKey: "photoUrl") as? String ?? ""
-        self.relation = userDict.value(forKey: "relation") as? String ?? nil
         self.deviceToken = userDict.value(forKey: "deviceToken") as? String ?? nil
+        
+        self.phoneNumber = userDict.value(forKey: "phoneNumber") as? String ?? nil
     }
 }
 
