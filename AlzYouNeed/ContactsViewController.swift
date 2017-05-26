@@ -45,8 +45,18 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        DispatchQueue.main.async {
+            self.contactsCollectionView.reloadData()
+            self.checkCollectionViewEmpty()
+//        }
+        
+         print("ContactsArr: \(AYNModel.sharedInstance.contactsArr)")
+        
+//        self.contactsCollectionView.reloadData()
+//        self.checkCollectionViewEmpty()
+        
         configureRefreshControl()
-        loadContacts(false)
+//        loadContacts(false)
         contactsCollectionView.delegate = self
         contactsCollectionView.dataSource = self
         searchBar.delegate = self
@@ -332,7 +342,7 @@ extension ContactsViewController: UISearchBarDelegate {
             if contactListTutorialCompleted == "false" {
                 showTutorial()
             } else {
-                print("ContactList tutorial completed")
+//                print("ContactList tutorial completed")
             }
         }
     }
@@ -368,7 +378,6 @@ extension ContactsViewController: MFMessageComposeViewControllerDelegate {
 // MARK: - Emergency button
 extension ContactsViewController {
     func configureEmergencyButton() {
-        print("Configuring group chat button")
         emergencyButton.backgroundColor = caribbeanGreen
         emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
         emergencyButton.layer.shadowRadius = 1
@@ -377,6 +386,11 @@ extension ContactsViewController {
         emergencyButton.layer.shadowOpacity = 0.5
         
         emergencyButton.addTarget(self, action: #selector(ContactsViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+        
+        if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
+            self.emergencyButton.isHidden = false
+            self.emergencyButton.isEnabled = true
+        }
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {

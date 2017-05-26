@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import FontAwesome_swift
 
 class ContactCollectionViewCell: UICollectionViewCell {
     
@@ -38,6 +39,11 @@ class ContactCollectionViewCell: UICollectionViewCell {
 //                }
 //            }
 //        }
+        
+        if contact.phoneNumber == nil {
+            contactView.leftButton.isEnabled = false
+            contactView.leftButton.alpha = 0.7
+        }
         
         // Load images on background thread to avoid choppiness
         DispatchQueue.global().async {
@@ -93,6 +99,13 @@ class ContactCollectionViewCell: UICollectionViewCell {
                             self.isUserInteractionEnabled = true
                         })
                     }
+                }  else {
+                    // No image found
+                    self.isUserInteractionEnabled = true
+                    DispatchQueue.main.async {
+                        self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 100, height: 100))
+                    }
+//                    self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 100, height: 100))
                 }
             }
         }

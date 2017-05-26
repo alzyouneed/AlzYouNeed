@@ -459,12 +459,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             } else {
                 if granted {
                     print("Push notification auth granted")
+                    UIApplication.shared.registerForRemoteNotifications()
                 } else {
                     print("Push notification auth denied")
                 }
             }
         }
-        UIApplication.shared.registerForRemoteNotifications()
+//        UIApplication.shared.registerForRemoteNotifications()
     }
     
     func scheduleLocalNotification(_ reminderId: String, reminder: NSDictionary) {
@@ -730,6 +731,12 @@ extension RemindersViewController {
         emergencyButton.layer.shadowOpacity = 0.5
         
         emergencyButton.addTarget(self, action: #selector(RemindersViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+        
+        if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
+            print("Saved contacts to AYNModel for emergency")
+            self.emergencyButton.isHidden = false
+            self.emergencyButton.isEnabled = true
+        }
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {

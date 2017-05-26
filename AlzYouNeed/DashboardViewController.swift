@@ -180,6 +180,12 @@ class DashboardViewController: UIViewController {
                         self.userView.setImage(image)
                     })
                 }
+            } else {
+                let defaultImage = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 80, height: 80))
+                AYNModel.sharedInstance.userImage = defaultImage
+                DispatchQueue.main.async(execute: {
+                    self.userView.setImage(defaultImage)
+                })
             }
             
             self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
@@ -349,7 +355,7 @@ class DashboardViewController: UIViewController {
     func setupAuthListener() {
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if user != nil {
-                print("DashboardVC: User signed in")
+//                print("DashboardVC: User signed in")
                 
                 if !self.viewSetup {
                     
@@ -433,7 +439,7 @@ class DashboardViewController: UIViewController {
                                 if let completedSignup = userDict.object(forKey: "completedSignup") as? String {
                                     if completedSignup == "true" {
                                         print("User has completed signup")
-                                        self.saveCurrentUserToModel()
+//                                        self.saveCurrentUserToModel()
                                         self.configureViewWithFirebase()
                                     } else {
                                         print("User has not completed signup")
@@ -468,19 +474,6 @@ class DashboardViewController: UIViewController {
         })
     }
     
-    func saveCurrentUserToModel() {
-        FirebaseManager.getCurrentUser({ (userDict, error) in
-            if let userDict = userDict {
-                print("Saved current user to model")
-                AYNModel.sharedInstance.currentUser = userDict
-//                self.checkNotepadForChanges()
-                self.saveFamilyMemberContacts()
-                self.loadNote()
-                self.registerNotifications()
-            }
-        })
-    }
-    
     func checkNotepadForChanges() {
         // Retrieve last saved version from UserDefaults
         FirebaseManager.getFamilyNote { (error, note) in
@@ -501,13 +494,16 @@ class DashboardViewController: UIViewController {
     func saveFamilyMemberContacts() {
         FirebaseManager.getFamilyMembers({ (contacts, error) in
             if let contacts = contacts {
+                // Save contacts 
+                AYNModel.sharedInstance.contactsArr = contacts
+                
                 for contact in contacts {
                     if let phoneNumber = contact.phoneNumber {
                         AYNModel.sharedInstance.familyMemberNumbers.append(phoneNumber)
                     }
                 }
-                print("Saved contacts to AYNModel for emergency")
                 if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
+                    print("Saved contacts to AYNModel for emergency")
                     self.emergencyButton.isHidden = false
                     self.emergencyButton.isEnabled = true
                 }
