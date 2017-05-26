@@ -134,12 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 return
             }
             print("Signed in with Google")
-            
-//            // Save to NewProfile
-//            NewProfile.sharedInstance.userId = firebaseUser?.uid
-//            NewProfile.sharedInstance.name = user.profile.givenName
-//            NewProfile.sharedInstance.photoURL = user.profile.hasImage ? (firebaseUser?.photoURL!.absoluteString)! : ""
-            
+
             // Notify MethodsVC that sign-in was successful
             NotificationCenter.default.post(name: Notification.Name(rawValue: signInNotificationKey), object: self)
         })

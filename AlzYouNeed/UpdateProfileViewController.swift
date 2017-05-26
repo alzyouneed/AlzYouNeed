@@ -16,8 +16,8 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
     // MARK: - UI Elements
     @IBOutlet var profileImageView: UIImageView!
     let imagePicker = UIImagePickerController()
-    @IBOutlet var nameVTFView: validateTextFieldView!
-    @IBOutlet var phoneNumberVTFView: validateTextFieldView!
+//    @IBOutlet var nameVTFView: validateTextFieldView!
+//    @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var updateButton: UIButton!
     
     var userName: String!
@@ -64,19 +64,19 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
     }
     
     func configureView() {
-        self.nameVTFView.nameMode()
-        self.phoneNumberVTFView.phoneNumberMode()
+//        self.nameVTFView.nameMode()
+//        self.phoneNumberVTFView.phoneNumberMode()
         
         DispatchQueue.main.async { 
-            self.nameVTFView.textField.placeholder = self.userName
-            self.phoneNumberVTFView.textField.placeholder = self.userPhoneNumber
+//            self.nameVTFView.textField.placeholder = self.userName
+//            self.phoneNumberVTFView.textField.placeholder = self.userPhoneNumber
         }
         
-        self.nameVTFView.textField.delegate = self
-        self.phoneNumberVTFView.textField.delegate = self
+//        self.nameVTFView.textField.delegate = self
+//        self.phoneNumberVTFView.textField.delegate = self
         
-        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
-        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+//        self.nameVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+//        self.phoneNumberVTFView.textField.addTarget(self, action: #selector(UpdateProfileViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         
         configureImagePicker()
         configureProfileImage(userPhotoUrl)
@@ -111,9 +111,9 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
         
         self.imagePicker.delegate = self
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
-        tap.numberOfTapsRequired = 1
-        profileImageView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateUserViewController.selectPhoto(_:)))
+//        tap.numberOfTapsRequired = 1
+//        profileImageView.addGestureRecognizer(tap)
         print("configured image picker")
     }
     
@@ -126,10 +126,10 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
             
             // Remove if no updates
             if nameUpdate() {
-                updates["name"] = nameVTFView.textField.text! as NSObject?
+//                updates["name"] = nameVTFView.textField.text! as NSObject?
             }
             if phoneNumberUpdate() {
-                updates["phoneNumber"] = phoneNumberVTFView.textField.text! as NSObject?
+//                updates["phoneNumber"] = phoneNumberVTFView.textField.text! as NSObject?
             }
             if profileImageUpdated {
                 var imageData = Data()
@@ -142,7 +142,7 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
             // Show progress view
             // HUD.show(.Progress)
 
-            FirebaseManager.updateUser(updates as NSDictionary, completionHandler: { (error) in
+            FirebaseManager.updateUser(updates: updates as NSDictionary, completionHandler: { (error) in
                 if error == nil {
                     // Updated user -- Return to previous VC
                     //HUD.flash(.Success, delay: 0, completion: { (success) in
@@ -177,45 +177,45 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
     
     // Check for change in name
     func nameUpdate() -> Bool {
-        if nameVTFView.textField.text != userName && validateName() {
-            return true
-        }
+//        if nameVTFView.textField.text != userName && validateName() {
+//            return true
+//        }
         return false
     }
     
     // Check for change in phone number
     func phoneNumberUpdate() -> Bool {
-        if phoneNumberVTFView.textField.text != userPhoneNumber && validatePhoneNumber() {
-            return true
-        }
+//        if phoneNumberVTFView.textField.text != userPhoneNumber && validatePhoneNumber() {
+//            return true
+//        }
         return false
     }
     
     // MARK: - Validation
     func validateName() -> Bool {
-        let valid = !nameVTFView.textField.text!.isEmpty
-        if valid {
-            nameVTFView.isValid(true)
-            return true
-        }
-        else {
-            nameVTFView.isValid(false)
+//        let valid = !nameVTFView.textField.text!.isEmpty
+//        if valid {
+//            nameVTFView.isValid(true)
+//            return true
+//        }
+//        else {
+//            nameVTFView.isValid(false)
             return false
-        }
+//        }
     }
     
     func validatePhoneNumber() -> Bool {
         let PHONE_REGEX = "^\\d{3}\\d{3}\\d{4}$"
         let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
-        let valid = phoneTest.evaluate(with: phoneNumberVTFView.textField.text!)
-        if valid {
-            phoneNumberVTFView.isValid(true)
-            return true
-        }
-        else {
-            phoneNumberVTFView.isValid(false)
+//        let valid = phoneTest.evaluate(with: phoneNumberVTFView.textField.text!)
+//        if valid {
+//            phoneNumberVTFView.isValid(true)
+//            return true
+//        }
+//        else {
+//            phoneNumberVTFView.isValid(false)
             return false
-        }
+//        }
     }
     
     func enableUpdateButton(_ enable: Bool) {
@@ -258,8 +258,8 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
         let changeInHeight = (keyboardFrame.height) //* (show ? 1 : -1)
         
         UIView.performWithoutAnimation({
-            self.nameVTFView.layoutIfNeeded()
-            self.phoneNumberVTFView.layoutIfNeeded()
+//            self.nameVTFView.layoutIfNeeded()
+//            self.phoneNumberVTFView.layoutIfNeeded()
         })
         
         if show {
@@ -298,19 +298,19 @@ class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavi
         let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .actionSheet)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            FirebaseManager.deleteCurrentUser({ (error) in
-                if error == nil {
-                    // Success
-                }
-                else {
-                    // Error
-                    // Check for relevant error before showing alert
-                    if error?.code != 2 && error?.code != 17011 {
-                        print("Error deleting user: \(String(describing: error))")
-                        self.showLoginAlert()
-                    }
-                }
-            })
+//            FirebaseManager.deleteCurrentUser({ (error) in
+//                if error == nil {
+//                    // Success
+//                }
+//                else {
+//                    // Error
+//                    // Check for relevant error before showing alert
+//                    if error?.code != 2 && error?.code != 17011 {
+//                        print("Error deleting user: \(String(describing: error))")
+//                        self.showLoginAlert()
+//                    }
+//                }
+//            })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed

@@ -32,17 +32,15 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
             if let user = user {
                 print("MethodsVC: User signed in")
                 
-                print("Signed in with Facebook")
                 let firstName = (user.displayName?.components(separatedBy: " ").first)!
                 let photoURL = (user.photoURL?.absoluteString)!
                 
                 // Save to NewProfile
-                NewProfile.sharedInstance.userId = user.uid
                 NewProfile.sharedInstance.name = firstName
                 NewProfile.sharedInstance.photoURL = photoURL
                 
                 // Save user
-                FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
+                FirebaseManager.updateUser(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
                     if let error = error {
                         print("Error updating user: ", error.localizedDescription)
                     } else {

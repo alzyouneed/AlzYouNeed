@@ -20,21 +20,14 @@
 		2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C872D1E6884B400FB3B7E /* notepadView.swift */; };
 		2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C872F1E6884C400FB3B7E /* notepadView.xib */; };
 		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
-		2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */; };
-		2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */; };
 		2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68D3081E26B0EC008A582B /* DataObjects.swift */; };
 		2D6C9CD61ECFA2F100FC8457 /* MethodsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */; };
 		2D6C9CD81ECFC3D400FC8457 /* FamilyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */; };
 		2D6C9CDA1ECFC92200FC8457 /* EmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */; };
 		2D6C9CDC1ECFF38700FC8457 /* NameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */; };
-		2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */; };
 		2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */; };
-		2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3831D1C88F90048333C /* CreateUserViewController.swift */; };
-		2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */; };
 		2D7948471D1248F000FF1E51 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D7948461D1248F000FF1E51 /* .gitignore */; };
 		2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */; };
-		2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */; };
-		2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */; };
 		2D94E7F51ED0CC40001EF67E /* NewProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D94E7F41ED0CC40001EF67E /* NewProfile.swift */; };
 		2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9834D71D0C4A91000977DC /* AppDelegate.swift */; };
 		2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DB1D0C4A91000977DC /* Main.storyboard */; };
@@ -50,7 +43,6 @@
 		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */; };
 		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
-		2DC2AD3B1DB2C5C300859F88 /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */; };
 		2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */; };
 		2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */; };
 		2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */; };
@@ -68,7 +60,6 @@
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
-		2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */; };
 		97A0BC6B500CB2ED1E90B7A2 /* Pods_AlzYouNeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF0F16580C6164DC0539060 /* Pods_AlzYouNeed.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,21 +78,14 @@
 		2D4C872D1E6884B400FB3B7E /* notepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notepadView.swift; sourceTree = "<group>"; };
 		2D4C872F1E6884C400FB3B7E /* notepadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = notepadView.xib; path = ../../../../../../notepadView.xib; sourceTree = "<group>"; };
 		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
-		2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilySignupViewController.swift; sourceTree = "<group>"; };
-		2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewExistingFamilyViewController.swift; sourceTree = "<group>"; };
 		2D68D3081E26B0EC008A582B /* DataObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataObjects.swift; sourceTree = "<group>"; };
 		2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodsVC.swift; sourceTree = "<group>"; };
 		2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyVC.swift; sourceTree = "<group>"; };
 		2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailVC.swift; sourceTree = "<group>"; };
 		2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameVC.swift; sourceTree = "<group>"; };
-		2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = validateTextFieldView.xib; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
-		2D70C3831D1C88F90048333C /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
-		2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserViewController.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Extra Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = loginButtonsView.xib; sourceTree = "<group>"; };
-		2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginButtonsView.swift; sourceTree = "<group>"; };
 		2D94E7F41ED0CC40001EF67E /* NewProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfile.swift; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9834D71D0C4A91000977DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +103,6 @@
 		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsViewController.swift; sourceTree = "<group>"; };
 		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
-		2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
 		2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		2DC8D5BD1D12DDCA00952483 /* UserDashboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDashboardView.xib; sourceTree = "<group>"; };
@@ -137,7 +120,6 @@
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = validateTextFieldView.swift; sourceTree = "<group>"; };
 		82AE2149FD6CEC60ECB80D36 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
 		BEF0F16580C6164DC0539060 /* Pods_AlzYouNeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlzYouNeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB8E62D01B94A07C42A424EA /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,15 +194,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		2D417BED1D2187540045C80F /* validateTextField */ = {
-			isa = PBXGroup;
-			children = (
-				2D6D2FBC1D186BC30050589C /* validateTextFieldView.xib */,
-				2DEDB7111D186C3C00DCDCD9 /* validateTextFieldView.swift */,
-			);
-			name = validateTextField;
-			sourceTree = "<group>";
-		};
 		2D4C872C1E68849C00FB3B7E /* notepadView */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				2D6C9CD41ECF9F3F00FC8457 /* New */,
-				2DC8D5C91D12EAAF00952483 /* Old */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";
@@ -247,30 +219,9 @@
 				2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */,
 				2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */,
 				2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */,
+				2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */,
 			);
 			name = New;
-			sourceTree = "<group>";
-		};
-		2D6D2FBB1D186B7F0050589C /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				2D70C3831D1C88F90048333C /* CreateUserViewController.swift */,
-				2D70C3861D1C891B0048333C /* UpdateUserViewController.swift */,
-				2DC2AD3A1DB2C5C300859F88 /* RelationViewController.swift */,
-				2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */,
-				2D57C5ED1D1C433700004B8E /* NewExistingFamilyViewController.swift */,
-				2D57C5EB1D1C396A00004B8E /* FamilySignupViewController.swift */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		2D6D2FBE1D186BCB0050589C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2D417BED1D2187540045C80F /* validateTextField */,
-				2D90E2D11D2C953200F7AFEE /* loginButtons */,
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 		2D6EBACC1D0F0FC8004AD135 /* Controller */ = {
@@ -282,15 +233,6 @@
 				2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */,
 			);
 			name = Controller;
-			sourceTree = "<group>";
-		};
-		2D90E2D11D2C953200F7AFEE /* loginButtons */ = {
-			isa = PBXGroup;
-			children = (
-				2D90E2CD1D2C943D00F7AFEE /* loginButtonsView.xib */,
-				2D90E2CF1D2C952E00F7AFEE /* loginButtonsView.swift */,
-			);
-			name = loginButtons;
 			sourceTree = "<group>";
 		};
 		2D9834CB1D0C4A91000977DC = {
@@ -435,15 +377,6 @@
 			name = DateDashboardView;
 			sourceTree = "<group>";
 		};
-		2DC8D5C91D12EAAF00952483 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				2D6D2FBE1D186BCB0050589C /* View */,
-				2D6D2FBB1D186B7F0050589C /* Controller */,
-			);
-			name = Old;
-			sourceTree = "<group>";
-		};
 		2DCC3C5C1D300EE5005D0EFD /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -562,7 +495,6 @@
 			files = (
 				2DB0AEF81DB80E5A00F6CE5D /* Reminders.storyboard in Resources */,
 				2D7948471D1248F000FF1E51 /* .gitignore in Resources */,
-				2D90E2CE1D2C943D00F7AFEE /* loginButtonsView.xib in Resources */,
 				2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */,
 				2D7BD74A1D138A7800CE90E9 /* GoogleService-Info.plist in Resources */,
 				2DCC3C661D301208005D0EFD /* OpenSans-Light.ttf in Resources */,
@@ -574,7 +506,6 @@
 				2D9834DD1D0C4A91000977DC /* Main.storyboard in Resources */,
 				2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */,
 				2D1F93D81D3D7E4D0050794F /* actionButtonsDashboardView.xib in Resources */,
-				2D6D2FBD1D186BC30050589C /* validateTextFieldView.xib in Resources */,
 				2DCC3C6C1D303F3C005D0EFD /* popoverView.xib in Resources */,
 				2DCC3C651D301208005D0EFD /* OpenSans-ExtraBold.ttf in Resources */,
 				2DC8D5BE1D12DDCA00952483 /* UserDashboardView.xib in Resources */,
@@ -656,17 +587,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DC2AD3B1DB2C5C300859F88 /* RelationViewController.swift in Sources */,
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
 				2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
 				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */,
-				2DEDB7121D186C3C00DCDCD9 /* validateTextFieldView.swift in Sources */,
 				2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */,
-				2D57C5EC1D1C396A00004B8E /* FamilySignupViewController.swift in Sources */,
-				2D70C3841D1C88F90048333C /* CreateUserViewController.swift in Sources */,
-				2D70C3871D1C891B0048333C /* UpdateUserViewController.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,
 				2D6C9CD81ECFC3D400FC8457 /* FamilyVC.swift in Sources */,
 				2D2244F61D0FB11D005D9DF5 /* ContactView.swift in Sources */,
@@ -679,7 +605,6 @@
 				2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */,
 				2D6C9CDC1ECFF38700FC8457 /* NameVC.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
-				2D57C5EE1D1C433700004B8E /* NewExistingFamilyViewController.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */,
@@ -687,7 +612,6 @@
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */,
-				2D90E2D01D2C952E00F7AFEE /* loginButtonsView.swift in Sources */,
 				2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */,
 				2D6C9CDA1ECFC92200FC8457 /* EmailVC.swift in Sources */,
 				2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */,

@@ -13,31 +13,6 @@ import FirebaseStorage
 class FirebaseManager: NSObject {
     
     // MARK: - User Management
-    class func createNewUserWithEmail(_ email: String, password: String, completionHandler: @escaping (_ user:FIRUser?, _ error: NSError?) -> Void) {
-        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil {
-                print("There was an error creating user")
-                completionHandler(user, error as NSError?)
-            }
-            else {
-                print("New user created")
-                completionHandler(user, error as NSError?)
-            }
-        })
-    }
-    
-    class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let signupStatus = AYNModel.sharedInstance.currentUser?.value(forKey: "completedSignup") as? String {
-                print("User signup status retrieved")
-                completionHandler(signupStatus)
-            } else {
-                print("User signup field does not exist")
-                completionHandler(nil)
-            }
-        }
-    }
-
     class func getCurrentUser(_ completionHandler: @escaping (_ userDict: NSDictionary?, _ error: NSError?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {
             let userId = user.uid
@@ -84,7 +59,7 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func updateUserNew(updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ){
+    class func updateUser(updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ){
         if let user = FIRAuth.auth()?.currentUser {
             let userId = user.uid
             let databaseRef = FIRDatabase.database().reference()
@@ -96,189 +71,6 @@ class FirebaseManager: NSObject {
                     completionHandler(error as NSError)
                 } else {
                     print("Updated user")
-                    completionHandler(nil)
-                }
-            })
-        }
-    }
-    
-    // Update user in real-time database with dictionary of changes
-    class func updateUser(_ updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let userId = user.uid
-            let databaseRef = FIRDatabase.database().reference()
-            
-            var updatesDict = updates as! [AnyHashable: Any]
-            
-            // Save image first
-            if let imageData = updatesDict["profileImage"] as! Data? {
-                // Remove from dict before it saves illegal type
-                updatesDict.removeValue(forKey: "profileImage")
-                
-                let filePath = "profileImage/\(user.uid)"
-                let metadata = FIRStorageMetadata()
-                metadata.contentType = "image/jpeg"
-                
-                let storageRef = FIRStorage.storage().reference()
-                
-                // Storage image
-                storageRef.child(filePath).put(imageData, metadata: metadata, completion: { (metadata, error) in
-                    if let error = error {
-                        // Error
-                        print("Error saving profile image: \(error.localizedDescription)")
-                        completionHandler(error as NSError?)
-                    } else {
-                        // Success - save photoURL
-                        print("Saved user profile image -- attempting to update photo url")
-                        
-                        let fileUrl: String = (metadata?.downloadURLs![0].absoluteString)!
-                        let changeRequestPhoto = user.profileChangeRequest()
-                        changeRequestPhoto.photoURL = URL(string: fileUrl)
-                        changeRequestPhoto.commitChanges(completion: { (error) in
-                            if let error = error {
-                                // Error
-                                print("Error completing profile photo URL change request: \(error.localizedDescription)")
-                                completionHandler(error as NSError?)
-                            } else {
-                                // Success
-                                print("Saved user profile photo url")
-                                // Update new dict for RTDB save
-                                updatesDict["photoUrl"] = fileUrl
-                                
-                                databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                                    if error != nil {
-                                        print("Error updating user")
-                                        completionHandler(error as NSError?)
-                                    }
-                                    else {
-                                        print("Updated user in RTDB -- Updating in family 1")
-                                        updateUserInFamily(updatesDict as NSDictionary, completionHandler: { (error) in
-                                            if error != nil {
-                                                // Key does not exist -- proceed normally
-                                                if error?.code == 0 {
-                                                    completionHandler(nil)
-                                                }
-                                                else {
-                                                    // Error
-                                                    completionHandler(error)
-                                                }
-                                            }
-                                            else {
-                                                // Success
-                                                completionHandler(nil)
-                                            }
-                                        })
-                                    }
-                                })
-                                
-                                
-                            }
-                        })
-                    }
-                })
-            }
-            else {
-                databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                    if error != nil {
-                        print("Error updating user")
-                        completionHandler(error as NSError?)
-                    }
-                    else {
-                        print("Updated user in RTDB -- Updating in family 2")
-                        updateUserInFamily(updatesDict as NSDictionary, completionHandler: { (error) in
-                            if error != nil {
-                                // Key does not exist -- proceed normally
-                                if error?.code == 0 {
-                                    completionHandler(nil)
-                                }
-                                else {
-                                    // Error
-                                    completionHandler(error)
-                                }
-                            }
-                            else {
-                                // Success
-                                completionHandler(nil)
-                            }
-                        })
-                    }
-                })
-            }
-        }
-    }
-    
-    // Helper func for updateUser
-    fileprivate class func updateUserInFamily(_ updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            if AYNModel.sharedInstance.currentUser != nil {
-                // Check if key exists yet
-                if let familyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                    let userId = user.uid
-                    let databaseRef = FIRDatabase.database().reference()
-                    let updatesDict = updates as! [AnyHashable: Any]
-                    
-                    databaseRef.child(GroupPath).child(familyId).child(GroupMembersPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, newRef) in
-                        if error != nil {
-                            print("Error updating user in family")
-                            completionHandler(error as NSError?)
-                        }
-                        else {
-                            print("Updated user in family")
-                            completionHandler(nil)
-                        }
-                    })
-                }
-                    // Key does not exist -- do not update
-                else {
-                    print("User does not belong to family -- skipping family update")
-                    let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
-                    completionHandler(error)
-                }
-            } else {
-                print("Onboarding -- User does not belong to family -- skipping family update")
-                let error = NSError(domain: "familyIdError", code: 0, userInfo: nil)
-                completionHandler(error)
-            }
-        }
-    }
-
-    // Delete current auth user, and entry in real time database and in family group
-    class func deleteCurrentUser(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
-        print("FirebaseManager: Deleting current user")
-        if let user = FIRAuth.auth()?.currentUser {
-            // Delete profile image
-            deleteUserProfileImage({ (imageError) in
-                user.delete(completion: { (error) in
-                    if error != nil {
-                        print("Error deleting account: \(String(describing: error))")
-                        completionHandler(error as NSError?)
-                    } else {
-                        print("Account deleted")
-                        completionHandler(nil)
-                    }
-                })
-            })
-        }
-    }
-
-    fileprivate class func deleteUserProfileImage(_ completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let storageRef = FIRStorage.storage().reference()
-            
-            storageRef.child("profileImage").child(user.uid).delete(completion: { (error) in
-                if let error = error {
-                    // Error
-                    if error._code == -13010 {
-                        // Object does not exist -- proceed as if no error
-                        print("User profile image does not exist -- proceed normally")
-                        completionHandler(nil)
-                    } else {
-                        print("Error deleting user profile image -- code: \(error._code) , description: \(error.localizedDescription)")
-                        completionHandler(error as NSError?)
-                    }
-                } else {
-                    // Success
-                    print("Deleted user profile image")
                     completionHandler(nil)
                 }
             })
@@ -392,6 +184,7 @@ class FirebaseManager: NSObject {
         }
     }
 
+    // Helper functions
     class func lookUpFamilyGroup(_ familyId: String, completionHandler: @escaping (_ error: NSError?, _ familyExists: Bool?) -> Void) {
         let databaseRef = FIRDatabase.database().reference()
         

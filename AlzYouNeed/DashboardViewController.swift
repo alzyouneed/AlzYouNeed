@@ -17,8 +17,6 @@ class DashboardViewController: UIViewController {
     
     @IBOutlet var userView: UserDashboardView!
     @IBOutlet var dateView: DateDashboardView!
-    @IBOutlet var dashboardActionButtons: actionButtonsDashboardView!
-    @IBOutlet var reminderActionButtonView: actionButtonsDashboardView!
 
     @IBOutlet var settingsButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
@@ -42,13 +40,12 @@ class DashboardViewController: UIViewController {
         // TODO: Fix this
 //        checkUserSignedIn()
 
-        dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
+//        dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         
 //        reminderActionButtonView.leftButton.addTarget(self, action: #selector(DashboardViewController.reminderButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
         
-        configureView()
-        configureEmergencyButton()
-        configureNotepadView()
+//        configureView()
+//        setupEmergencyButton()
         self.navigationController?.presentTransparentNavBar()
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
@@ -154,6 +151,12 @@ class DashboardViewController: UIViewController {
     
     // MARK: - Configuration
     func setupView() {
+        setupUserView()
+        setupNotepad()
+        setupEmergencyButton()
+    }
+    
+    func setupUserView() {
         if let user = FIRAuth.auth()?.currentUser {
             if let imageURL = user.photoURL, let data = try? Data(contentsOf: imageURL) {
                 if let image = UIImage(data: data) as UIImage? {
@@ -166,6 +169,20 @@ class DashboardViewController: UIViewController {
             
             self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
         }
+    }
+    
+    func setupNotepad() {
+        saveButton.isEnabled = false
+        saveButton.tintColor = UIColor.clear
+        
+        notepadView.notesTextView.isUserInteractionEnabled = false
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotepad))
+        notepadView.addGestureRecognizer(tap)
+        let notesTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotes))
+        notepadView.notesTextView.addGestureRecognizer(notesTap)
+        // Round the bounds
+        notepadView.layer.cornerRadius = 10
+        notepadView.layer.masksToBounds = true
     }
     
     func configureView() {
@@ -225,13 +242,13 @@ class DashboardViewController: UIViewController {
                     let patient = savedUserDict.object(forKey: "patient") as? String else {
                         print("Incomplete profile -- deleting user")
                         // Delete here
-                        FirebaseManager.deleteCurrentUser({ (error) in
-                            if error != nil {
-                                print("Error:", error!)
-                            } else {
-                                try! FIRAuth.auth()?.signOut()
-                            }
-                        })
+//                        FirebaseManager.deleteCurrentUser({ (error) in
+//                            if error != nil {
+//                                print("Error:", error!)
+//                            } else {
+//                                try! FIRAuth.auth()?.signOut()
+//                            }
+//                        })
                         return
                 }
                 
@@ -276,11 +293,11 @@ class DashboardViewController: UIViewController {
                         let patient = userDict.object(forKey: "patient") as? String else {
                             print("Incomplete profile -- deleting user")
                             // Delete here
-                            FirebaseManager.deleteCurrentUser({ (error) in
-                                if error == nil {
-                                    try! FIRAuth.auth()?.signOut()
-                                }
-                            })
+//                            FirebaseManager.deleteCurrentUser({ (error) in
+//                                if error == nil {
+//                                    try! FIRAuth.auth()?.signOut()
+//                                }
+//                            })
                             return
                     }
                     
@@ -305,39 +322,6 @@ class DashboardViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    func configureActionButtons() {
-        dashboardActionButtons.singleButton("left")
-        dashboardActionButtons.leftButton.backgroundColor = crayolaYellow
-        dashboardActionButtons.leftButton.setImage(UIImage(named: "notepadIcon"), for: .normal)
-        dashboardActionButtons.leftButton.tintColor = UIColor.white
-        
-        reminderActionButtonView.singleButton("left")
-        reminderActionButtonView.leftButton.setTitle("Add Reminder", for: .normal)
-        reminderActionButtonView.leftButton.backgroundColor = caribbeanGreen
-        reminderActionButtonView.leftButton.setImage(UIImage(named: "addButton"), for: .normal)
-        reminderActionButtonView.leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -25, 0, 0)
-        reminderActionButtonView.leftButton.tintColor = UIColor.white
-    }
-    
-    func configureNotepadView() {
-        notepadView.notesTextView.isUserInteractionEnabled = false
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotepad))
-        notepadView.addGestureRecognizer(tap)
-        
-        let notesTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DashboardViewController.tappedNotes))
-        notepadView.notesTextView.addGestureRecognizer(notesTap)
-        
-        // Round the bounds
-        notepadView.layer.cornerRadius = 10
-        notepadView.layer.masksToBounds = true
-        //        notepadView.clipsToBounds = true
-        //        notepadView.layer.shadowColor = UIColor.black.cgColor
-        //        notepadView.layer.shadowOffset = CGSize(width: 0, height: -1)
-        //        notepadView.layer.shadowOpacity = 0.9
-        //        notepadView.layer.shadowRadius = 5
     }
     
     // MARK: - Present different VC's
@@ -399,21 +383,21 @@ class DashboardViewController: UIViewController {
                                     } else {
                                         print("User has not completed signup")
                                         // Delete account and force sign up
-                                        FirebaseManager.deleteCurrentUser({ (error) in
-                                            if error != nil {
-                                                // Error deleting user -- sign out
-                                                try! FIRAuth.auth()!.signOut()
-                                            }
-                                        })
+//                                        FirebaseManager.deleteCurrentUser({ (error) in
+//                                            if error != nil {
+//                                                // Error deleting user -- sign out
+//                                                try! FIRAuth.auth()!.signOut()
+//                                            }
+//                                        })
                                     }
                                 } else {
                                     // Key doesn't exist -- delete account & force sign up
-                                    FirebaseManager.deleteCurrentUser({ (error) in
-                                        if error != nil {
-                                            // Error deleting user -- sign out
-                                            try! FIRAuth.auth()!.signOut()
-                                        }
-                                    })
+//                                    FirebaseManager.deleteCurrentUser({ (error) in
+//                                        if error != nil {
+//                                            // Error deleting user -- sign out
+//                                            try! FIRAuth.auth()!.signOut()
+//                                        }
+//                                    })
                                 }
                             }
                         } else {
@@ -510,7 +494,7 @@ extension DashboardViewController: MFMessageComposeViewControllerDelegate {
 
 // MARK: - Emergency button
 extension DashboardViewController {
-    func configureEmergencyButton() {
+    func setupEmergencyButton() {
         print("Configuring emergency button")
         emergencyButton.backgroundColor = sunsetOrange
         emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
