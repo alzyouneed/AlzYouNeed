@@ -279,65 +279,62 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Firebase Observers
     func addRemindersObservers() {
         print("Adding Firebase observers")
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-               addReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
-                    if let reminderDict = snapshot.value! as? NSDictionary {
-                        if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
-                            print("New reminder in RTDB")
-                            
-                            AYNModel.sharedInstance.remindersArr.append(newReminder)
-                            
-                            // Schedule local notifications
-                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
-                                let now = Date()
-                                let calendar = Calendar.current
-                                // Check that date has not passed
-                                if calendar.compare(dueDate, to: now, toGranularity: .second) == .orderedDescending || newReminder.repeats != "None" {
-                                    self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
-                                }
-                                else {
-                                    print("Reminder due date has passed -- skipping")
-                                }
-                            }
+        
+        if let groupId = AYNModel.sharedInstance.groupId {
+            addReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
+                if let reminderDict = snapshot.value! as? NSDictionary {
+                    if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
+                        print("New reminder in RTDB")
                         
-                            self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
-//                            self.updateTabBadge()
+                        AYNModel.sharedInstance.remindersArr.append(newReminder)
+                        
+                        // Schedule local notifications
+                        if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+                            let now = Date()
+                            let calendar = Calendar.current
+                            // Check that date has not passed
+                            if calendar.compare(dueDate, to: now, toGranularity: .second) == .orderedDescending || newReminder.repeats != "None" {
+                                self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+                            }
+                            else {
+                                print("Reminder due date has passed -- skipping")
+                            }
                         }
+                        
+                        self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+                        //                            self.updateTabBadge()
                     }
-                })
-                removeReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
-                    if let reminderId = snapshot.key as String? {
-                        if let index = self.getIndex(reminderId) {
-                            print("Removing reminder in RTDB")
-                            
-                            AYNModel.sharedInstance.remindersArr.remove(at: index)
-                            
-                            // Cancel any local notifications
-                            self.cancelLocalNotification(reminderId)
-                            
-                            self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
-                            self.updateTabBadge()
-                        }
+                }
+            })
+            removeReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
+                if let reminderId = snapshot.key as String? {
+                    if let index = self.getIndex(reminderId) {
+                        print("Removing reminder in RTDB")
+                        
+                        AYNModel.sharedInstance.remindersArr.remove(at: index)
+                        
+                        // Cancel any local notifications
+                        self.cancelLocalNotification(reminderId)
+                        
+                        self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
+                        self.updateTabBadge()
                     }
-                })
-            }
+                }
+            })
         }
     }
     
     func removeRemindersObservers() {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                if addReminderHandle != nil {
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: addReminderHandle!)
-                    addReminderHandle = nil
-                    print("Removed addedReminderHandle")
-                }
-                if removeReminderHandle != nil {
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: removeReminderHandle!)
-                    removeReminderHandle = nil
-                    print("Removed removeReminderHandle")
-                }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            if addReminderHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("reminders").removeObserver(withHandle: addReminderHandle!)
+                addReminderHandle = nil
+                print("Removed addedReminderHandle")
+            }
+            if removeReminderHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("reminders").removeObserver(withHandle: removeReminderHandle!)
+                removeReminderHandle = nil
+                print("Removed removeReminderHandle")
             }
         }
     }

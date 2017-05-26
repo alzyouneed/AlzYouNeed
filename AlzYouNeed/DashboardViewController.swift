@@ -260,98 +260,6 @@ class DashboardViewController: UIViewController {
         }
     }
     
-//    func configureViewWithUserDefaults() {
-//        print("Configuring view with UserDefaults")
-//        if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
-//            if let savedUserDict = UserDefaultsManager.loadCurrentUser(_userId: currentUserId) as NSDictionary? {
-//                
-//                guard let userName = savedUserDict.object(forKey: "name") as? String,
-//                    let familyId = savedUserDict.object(forKey: "familyId") as? String,
-//                    let patient = savedUserDict.object(forKey: "patient") as? String else {
-//                        print("Incomplete profile -- deleting user")
-//                        // Delete here
-////                        FirebaseManager.deleteCurrentUser({ (error) in
-////                            if error != nil {
-////                                print("Error:", error!)
-////                            } else {
-////                                try! FIRAuth.auth()?.signOut()
-////                            }
-////                        })
-//                        return
-//                }
-//                
-//                self.userView.userNameLabel.text = userName
-//                self.userView.familyGroupLabel.text = familyId
-//                
-//                if let admin = savedUserDict.object(forKey: "admin") as? String {
-//                    if admin == "true" {
-//                        self.userView.specialUser("admin")
-//                    }
-//                }
-//                
-//                if let photoUrl = savedUserDict.object(forKey: "photoUrl") as? String {
-//                    self.configureDashboardView(photoUrl)
-//                }
-//                
-//                if patient == "true" {
-//                    self.userView.specialUser("patient")
-//                } else {
-//                    self.userView.specialUser("none")
-//                }
-//                
-//                // Save device token here: TODO
-//                
-//            }
-//        }
-//    }
-    
-    func configureViewWithFirebase() {
-        print("Configuring view with Firebase -- NEW")
-        FirebaseManager.getCurrentUser { (userDict, error) in
-            if error != nil {
-                // Error getting user
-                if error?.code == FIRStorageErrorCode.objectNotFound.rawValue {
-                    print("Error getting user:", FIRStorageErrorCode.objectNotFound)
-                }
-            } else {
-                if let userDict = userDict {
-                    // Necessary values of completed profile
-                    guard let userName = userDict.object(forKey: "name") as? String,
-                        let familyId = userDict.object(forKey: "familyId") as? String,
-                        let patient = userDict.object(forKey: "patient") as? String else {
-                            print("Incomplete profile -- deleting user")
-                            // Delete here
-//                            FirebaseManager.deleteCurrentUser({ (error) in
-//                                if error == nil {
-//                                    try! FIRAuth.auth()?.signOut()
-//                                }
-//                            })
-                            return
-                    }
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.userView.userNameLabel.text = userName
-                        self.userView.familyGroupLabel.text = familyId
-                        if patient == "true" {
-                            self.userView.specialUser("patient")
-                        } else {
-                            self.userView.specialUser("none")
-                        }
-                        if let admin = userDict.object(forKey: "admin") as? String {
-                            if admin == "true" {
-                                self.userView.specialUser("admin")
-                            }
-                        }
-                    })
-                    
-                    if let photoUrl = userDict.object(forKey: "photoUrl") as? String {
-                        self.configureDashboardView(photoUrl)
-                    }
-                }
-            }
-        }
-    }
-    
     func setupAuthListener() {
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if user != nil {
@@ -440,7 +348,7 @@ class DashboardViewController: UIViewController {
                                     if completedSignup == "true" {
                                         print("User has completed signup")
 //                                        self.saveCurrentUserToModel()
-                                        self.configureViewWithFirebase()
+//                                        self.configureViewWithFirebase()
                                     } else {
                                         print("User has not completed signup")
                                         // Delete account and force sign up
@@ -664,7 +572,7 @@ extension DashboardViewController {
                     }
                     
                     // Saved to UserDefaults to notify user to changes
-                    UserDefaultsManager.saveCurrentUserNotepad(_note: note)
+                    UserDefaultsManager.saveCurrentUserNotepad(note: note)
                 }
 
                 if let lastChangedName = familyNote["lastChangedName"] as String? {

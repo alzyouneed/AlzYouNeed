@@ -303,103 +303,93 @@ class FirebaseManager: NSObject {
     
     // MARK: - Reminders
     class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            // Get user family id to save reminder
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                let databaseRef = FIRDatabase.database().reference()
-                
-                databaseRef.child(GroupPath).child(userFamilyId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
-                    if error != nil {
-                        // Error
-                        print("Error creating reminder")
-                        completionHandler(error as NSError?, nil)
-                    }
-                    else {
-                        // Success
-                        print("Created new family reminder")
-                        completionHandler(nil, newDatabaseRef)
-                    }
-                })
-            }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child(GroupPath).child(groupId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
+                if error != nil {
+                    // Error
+                    print("Error creating reminder")
+                    completionHandler(error as NSError?, nil)
+                }
+                else {
+                    // Success
+                    print("Created new family reminder")
+                    completionHandler(nil, newDatabaseRef)
+                }
+            })
         }
     }
     
     class func deleteFamilyReminder(_ reminderId: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            // Get user family id to save reminder
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                let databaseRef = FIRDatabase.database().reference()
-                
-                databaseRef.child(GroupPath).child(userFamilyId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
-                    if error != nil {
-                        print("Error deleting reminder")
-                        completionHandler(error as NSError?, nil)
-                    }
-                    else {
-                        print("Reminder deleted")
-                        completionHandler(nil, oldRef)
-                    }
-                })
-            }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            databaseRef.child(GroupPath).child(groupId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
+                if error != nil {
+                    print("Error deleting reminder")
+                    completionHandler(error as NSError?, nil)
+                }
+                else {
+                    print("Reminder deleted")
+                    completionHandler(nil, oldRef)
+                }
+            })
         }
     }
     
     class func completeFamilyReminder(_ reminder: Reminder, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                let databaseRef = FIRDatabase.database().reference()
-                
-                var modifiedReminderDict = reminder.asDict()
-                
-                modifiedReminderDict["completedDate"] = Date().timeIntervalSince1970.description
-                
-                let childUpdates = ["/families/\(userFamilyId)/completedReminders/\(reminder.id!)": modifiedReminderDict]
-                
-                databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
-                    if error != nil {
-                        print("Error occurred while marking reminder as complete")
-                        completionHandler(error as NSError?, nil)
-                    }
-                    else {
-                        print("Reminder completed -- deleting from old location")
-                        deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
-                            if error != nil {
-                                completionHandler(error, nil)
-                            }
-                            else {
-                                completionHandler(nil, newDatabaseRef)
-                            }
-                        })
-                    }
-                })
-            }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            let databaseRef = FIRDatabase.database().reference()
+            
+            var modifiedReminderDict = reminder.asDict()
+            
+            modifiedReminderDict["completedDate"] = Date().timeIntervalSince1970.description
+            
+            let childUpdates = ["/groups/\(groupId)/completedReminders/\(reminder.id!)": modifiedReminderDict]
+            
+            databaseRef.updateChildValues(childUpdates, withCompletionBlock: { (error, databaseRef) in
+                if error != nil {
+                    print("Error occurred while marking reminder as complete")
+                    completionHandler(error as NSError?, nil)
+                }
+                else {
+                    print("Reminder completed -- deleting from old location")
+                    deleteFamilyReminder(reminder.id, completionHandler: { (error, newDatabaseRef) in
+                        if error != nil {
+                            completionHandler(error, nil)
+                        }
+                        else {
+                            completionHandler(nil, newDatabaseRef)
+                        }
+                    })
+                }
+            })
         }
     }
     
     class func getCompletedFamilyReminders(_ completionHandler: @escaping (_ completedReminders: [Reminder]?, _ error: NSError?) -> Void) {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                let databaseRef = FIRDatabase.database().reference()
-                var remindersArr = [Reminder]()
-                
-                databaseRef.child(GroupPath).child(userFamilyId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
-                    if let dict = snapshot.value! as? NSDictionary {
-                        for (key, value) in dict {
-                            if let reminderId = key as? String {
-                                if let reminderDict = value as? NSDictionary {
-                                    if let completedReminder = Reminder(reminderId: reminderId, reminderDict: reminderDict) {
-                                        remindersArr.append(completedReminder)
-                                    }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            let databaseRef = FIRDatabase.database().reference()
+            var remindersArr = [Reminder]()
+            
+            databaseRef.child(GroupPath).child(groupId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dict = snapshot.value! as? NSDictionary {
+                    for (key, value) in dict {
+                        if let reminderId = key as? String {
+                            if let reminderDict = value as? NSDictionary {
+                                if let completedReminder = Reminder(reminderId: reminderId, reminderDict: reminderDict) {
+                                    remindersArr.append(completedReminder)
                                 }
                             }
                         }
-                        print("Completed reminders retrieved")
-                        completionHandler(remindersArr, nil)
                     }
-                }) { (error) in
-                    print("Error occurred while retrieving completed reminders")
-                    
+                    print("Completed reminders retrieved")
+                    completionHandler(remindersArr, nil)
                 }
+            }) { (error) in
+                print("Error occurred while retrieving completed reminders")
+                
             }
         }
     }
