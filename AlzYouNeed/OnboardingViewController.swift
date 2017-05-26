@@ -12,8 +12,10 @@ import AVFoundation
 // import PKHUD
 import Crashlytics
 import SkyFloatingLabelTextField
+import FBSDKLoginKit
+import GoogleSignIn
 
-class OnboardingViewController: UIViewController, UITextFieldDelegate {
+class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     
     var loginModeStatus = false
     var isAnimating = false
@@ -43,10 +45,14 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     // MARK - Background Video Properties
     var player: AVPlayer?
     
+    var authListener: FIRAuthStateDidChangeListenerHandle?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        UIApplication.shared.statusBarStyle = .lightContent
+        
+        GIDSignIn.sharedInstance().uiDelegate = self
         
         // Configure video once
         configureBackgroundVideo()
@@ -72,6 +78,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
+        setupAuthListener()
+        
         // Try to play video as VC appears
         if player != nil {
             player?.play()
@@ -92,6 +100,11 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         showTitleView(show: true)
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        if let authListener = authListener {
+            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+        }
+    }
     
     override var prefersStatusBarHidden : Bool {
         return false
@@ -109,6 +122,17 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "onboardingNav") as! UINavigationController
         self.present(onboardingVC, animated: true, completion: nil)
+    }
+    
+    // MARK: - Transitions
+    func showMainView() {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let tabBarController: UITabBarController = storyboard.instantiateViewController(withIdentifier: "tabBarController") as! UITabBarController
+        tabBarController.selectedIndex = 1
+        
+        DispatchQueue.main.async {
+            self.present(tabBarController, animated: true, completion: nil)
+        }
     }
     
     /*
@@ -171,24 +195,34 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
 //    }
     
     // MARK: - Validation
-//    func validateLogin() -> Bool {
-//        if emailVTFView.textField.text!.isEmpty {
-//            print("Missing email")
-//            return false
+    func validateFields() {
+        if !(emailTextField.text?.isEmpty)! && !(passwordTextField.text?.isEmpty)! {
+            enableSignup(enable: true)
+        } else {
+            enableSignup(enable: false)
+        }
+        
+//        let passwordsMatch = passwordTextField.text == confirmPasswordTextField.text
+//        if !emailTextField.hasErrorMessage && (passwordTextField.text?.characters.count)! >= 6 && passwordsMatch {
+//            enableSignup(enable: true)
+//        } else {
+//            enableSignup(enable: false)
 //        }
-//        if passwordVTFView.textField.text!.isEmpty {
-//            print("Missing password")
-//            return false
-//        }
-//        return true
-//    }
+    }
     
     func editedEmailText() {
-        
+        validateFields()
     }
     
     func editedPasswordText() {
-        
+        validateFields()
+    }
+    
+    func enableSignup(enable: Bool) {
+        if emailModeStatus {
+            signupButton.isEnabled = enable
+            signupButton.alpha = enable ? 1 : 0.6
+        }
     }
     
 //    func hideLoginView() {
@@ -343,7 +377,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Signup & Login
     @IBAction func signupButtonPressed(_ sender: Any) {
-        presentOnboardingVC()
+        if emailModeStatus {
+            // Try to login user via email
+            loginWithEmail()
+        } else {
+            presentOnboardingVC()
+        }
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
@@ -475,6 +514,18 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.addTarget(self, action:#selector(OnboardingViewController.editedPasswordText), for:UIControlEvents.editingChanged)
         passwordTextField.autocorrectionType = UITextAutocorrectionType.no
         self.view.bringSubview(toFront: passwordTextField)
+    }
+    
+    func setupAuthListener() {
+        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+            if user != nil {
+                print("OnboardingVC: User signed in")
+                // Present next VC
+                self.showMainView()
+            } else {
+                print("OnboardingVC: No user signed in")
+            }
+        })
     }
     
     // MARK: - Animations
@@ -695,19 +746,60 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Login Options
     @IBAction func facebookOptionButtonPressed(_ sender: UIButton) {
-        print("Facebook")
-        // TODO: Login with Facebook
+        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+            if let error = error {
+                print("Error signing in with Facebook: ", error.localizedDescription)
+            } else {
+                print("Signed in with Facebook")
+            }
+        })
     }
     
     @IBAction func googleOptionButtonPressed(_ sender: UIButton) {
-        print("Google")
-        // TODO: Login with Google
+        GIDSignIn.sharedInstance().signIn()
     }
     
     @IBAction func emailOptionButtonPressed(_ sender: UIButton) {
         emailMode()
     }
     
+    func loginWithEmail() {
+        if let email = emailTextField.text, let password = passwordTextField.text {
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+                if let error = error {
+                    print("Error signing in with Email: ", error.localizedDescription)
+                    self.showErrorMessage(error: error)
+                } else {
+                    print("Signed in with Email")
+                }
+            })
+        }
+    }
     
-
+    // MARK: - Handle errors
+    func showErrorMessage(error: Error) {
+        let errorCode = FIRAuthErrorCode(rawValue: error._code)!
+        var errorMessage = ""
+        
+        switch errorCode {
+        case .errorCodeInvalidEmail:
+            errorMessage = "Email address is invalid"
+        case .errorCodeNetworkError:
+            errorMessage = "Network error. Please try again."
+        case .errorCodeUserNotFound:
+            errorMessage = "No account found"
+        case .errorCodeWrongPassword:
+            errorMessage = "Incorrect password"
+        default:
+            break
+        }
+        
+        if !errorMessage.isEmpty {
+            let alert = UIAlertController(title: "Something went wrong", message: errorMessage, preferredStyle: .alert)
+            let okayAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+            alert.addAction(okayAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
