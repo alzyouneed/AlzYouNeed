@@ -34,6 +34,7 @@
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D5901D38A5C600DD666C /* islandViewBW.gif */; };
 		2DAAB21F1ED9FDF600EA51B9 /* UpdateProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */; };
+		2DAAB2211EDA1D4600EA51B9 /* UpdateActionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAAB2201EDA1D4600EA51B9 /* UpdateActionVC.swift */; };
 		2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */; };
 		2DB0AEF51DB80CA100F6CE5D /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */; };
 		2DB0AEF81DB80E5A00F6CE5D /* Reminders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */; };
@@ -94,6 +95,7 @@
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA8D5901D38A5C600DD666C /* islandViewBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = islandViewBW.gif; sourceTree = "<group>"; };
 		2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileTVC.swift; sourceTree = "<group>"; };
+		2DAAB2201EDA1D4600EA51B9 /* UpdateActionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateActionVC.swift; sourceTree = "<group>"; };
 		2DB0AEF11DB80BF400F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContactList.storyboard; sourceTree = "<group>"; };
 		2DB0AEF41DB80CA100F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Dashboard.storyboard; sourceTree = "<group>"; };
 		2DB0AEF71DB80E5A00F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Reminders.storyboard; sourceTree = "<group>"; };
@@ -316,7 +318,6 @@
 			isa = PBXGroup;
 			children = (
 				2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */,
-				2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */,
 				2DC8D5BC1D12DC0B00952483 /* View */,
 				2DC8D5B91D12DBF600952483 /* Controller */,
 			);
@@ -328,6 +329,8 @@
 			children = (
 				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
 				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
+				2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */,
+				2DAAB2201EDA1D4600EA51B9 /* UpdateActionVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -589,6 +592,7 @@
 				2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */,
 				2D6C9CDC1ECFF38700FC8457 /* NameVC.swift in Sources */,
 				2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */,
+				2DAAB2211EDA1D4600EA51B9 /* UpdateActionVC.swift in Sources */,
 				2D9834D81D0C4A91000977DC /* AppDelegate.swift in Sources */,
 				2DC8D5B71D12DBD000952483 /* DashboardViewController.swift in Sources */,
 				2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */,

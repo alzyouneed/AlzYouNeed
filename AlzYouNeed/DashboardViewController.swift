@@ -51,6 +51,11 @@ class DashboardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         setupAuthListener()
  
+        setupUserNameLabel()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         // Configure for keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillShow(sender:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillHide(sender:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -158,6 +163,11 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    func setupUserNameLabel() {
+        if let user = FIRAuth.auth()?.currentUser {
+            self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
+        }
+    }
     
     func setupNotepad() {
         saveButton.isEnabled = false

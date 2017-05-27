@@ -621,7 +621,7 @@
             <objects>
                 <navigationController storyboardIdentifier="loginNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ps2-PZ-45a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Adf-tF-nEn">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Adf-tF-nEn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -677,7 +677,7 @@
             <objects>
                 <navigationController storyboardIdentifier="onboardingNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RkW-wU-gBz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="leV-lP-Z5q">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="leV-lP-Z5q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -696,6 +696,6 @@
         <image name="cancelIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KEN-Zo-a7o"/>
+        <segue reference="egf-Pa-Fe9"/>
     </inferredMetricsTieBreakers>
 </document>
