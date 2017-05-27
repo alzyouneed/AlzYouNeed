@@ -77,6 +77,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         setupNavBar()
         
         UIApplication.shared.statusBarStyle = .default
+        self.navigationController?.presentTransparentNavBar()
         
         // Notified from AppDelegate -- authListener can do this
 //        NotificationCenter.default.addObserver(self, selector: #selector(MethodsVC.presentNextVC), name: NSNotification.Name(rawValue: signInNotificationKey), object: nil)

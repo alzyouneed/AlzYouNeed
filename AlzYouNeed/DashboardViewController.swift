@@ -50,44 +50,16 @@ class DashboardViewController: UIViewController {
         self.navigationController?.presentTransparentNavBar()
         UIApplication.shared.statusBarStyle = .lightContent
         
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 18)!]
+        
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
         self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupAuthListener()
-        
-//        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-//            if user != nil {
-//                print("DashboardVC: User signed in")
-//                
-//                // Start loading profile here
-//                AYNModel.sharedInstance.loadFromFirebase(completionHandler: { (success) in
-//                    if success {
-//                        self.setupView()
-//                    }
-//                })
-////                AYNModel.sharedInstance.loadFromFirebase()
-////                self.setupView()
-//            } else {
-//                print("DashboardVC: No user signed in -- showing onboarding")
-//                self.presentOnboardingVC()
-//            }
-//        })
-        
-//        setupView()
-        
-        // If new user signed in -- force reload view
-//        if AYNModel.sharedInstance.wasReset {
-//            print("Model was reset -- reseting UI")
-//            configureView()
-//        }
-//        else if AYNModel.sharedInstance.profileWasUpdated {
-//            print("Profile was updated -- resetting UI")
-//            AYNModel.sharedInstance.profileWasUpdated = false
-//            configureView()
-//        }
-        
+ 
         // Configure for keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillShow(sender:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(DashboardViewController.keyboardWillHide(sender:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -181,7 +153,7 @@ class DashboardViewController: UIViewController {
                     })
                 }
             } else {
-                let defaultImage = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 80, height: 80))
+                let defaultImage = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor(hex: "7189FF"), size: CGSize(width: 80, height: 80))
                 AYNModel.sharedInstance.userImage = defaultImage
                 DispatchQueue.main.async(execute: {
                     self.userView.setImage(defaultImage)
@@ -198,6 +170,7 @@ class DashboardViewController: UIViewController {
             }
         }
     }
+    
     
     func setupNotepad() {
         saveButton.isEnabled = false

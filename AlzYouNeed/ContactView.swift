@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesome_swift
 
 @IBDesignable class ContactView: UIView {
 
@@ -51,12 +52,16 @@ import UIKit
         contactImageView.layer.borderColor = UIColor.white.cgColor
 //        contactImageView.layer.borderColor = stormCloud.CGColor
         
+        leftButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 25)
+        leftButton.setTitle(String.fontAwesomeIcon(name: .phone), for: .normal)
         leftButton.layer.cornerRadius = leftButton.frame.size.width / 2
         leftButton.layer.masksToBounds = false
         leftButton.clipsToBounds = true
         leftButton.layer.borderWidth = 2
         leftButton.layer.borderColor = UIColor.white.cgColor
         
+        rightButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 25)
+        rightButton.setTitle(String.fontAwesomeIcon(name: .comment), for: .normal)
         rightButton.layer.cornerRadius = rightButton.frame.size.width / 2
         rightButton.layer.masksToBounds = false
         rightButton.clipsToBounds = true

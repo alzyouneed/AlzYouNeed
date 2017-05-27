@@ -306,17 +306,9 @@
 			isa = PBXGroup;
 			children = (
 				2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */,
-				2DC0B2C01D3180910090C89A /* View */,
 				2DC0B2C11D3180980090C89A /* Controller */,
 			);
 			name = Reminders;
-			sourceTree = "<group>";
-		};
-		2DC0B2C01D3180910090C89A /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
 			sourceTree = "<group>";
 		};
 		2DC0B2C11D3180980090C89A /* Controller */ = {

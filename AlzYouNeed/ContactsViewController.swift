@@ -50,7 +50,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
             self.checkCollectionViewEmpty()
 //        }
         
-         print("ContactsArr: \(AYNModel.sharedInstance.contactsArr)")
+//         print("ContactsArr: \(AYNModel.sharedInstance.contactsArr)")
         
 //        self.contactsCollectionView.reloadData()
 //        self.checkCollectionViewEmpty()

@@ -62,7 +62,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
                 }
             }
             if !foundCache {
-                print("No cached user photo -- downloading")
+//                print("No cached user photo -- downloading")
                 
                 // Disable user interaction with cell for now to prevent unwrapping errors
                 self.isUserInteractionEnabled = false
@@ -103,9 +103,8 @@ class ContactCollectionViewCell: UICollectionViewCell {
                     // No image found
                     self.isUserInteractionEnabled = true
                     DispatchQueue.main.async {
-                        self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 100, height: 100))
+                        self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor(hex: "7189FF"), size: CGSize(width: 100, height: 100))
                     }
-//                    self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor.white, size: CGSize(width: 100, height: 100))
                 }
             }
         }

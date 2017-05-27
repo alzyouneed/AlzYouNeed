@@ -33,6 +33,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W8J-Tf-kk7">
                     <rect key="frame" x="88" y="29" width="80" height="80"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="Lep-mo-g9V"/>
                         <constraint firstAttribute="height" constant="80" id="Qpj-E1-a2g"/>
@@ -71,7 +72,7 @@
                     </constraints>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="W8J-Tf-kk7" secondAttribute="bottom" priority="999" constant="8" id="05t-0e-TDZ"/>
                 <constraint firstItem="YT4-Eq-e3j" firstAttribute="leading" secondItem="W8J-Tf-kk7" secondAttribute="leading" constant="-4" id="2Tx-TK-2ct"/>

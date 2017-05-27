@@ -38,7 +38,7 @@
                                     <rect key="frame" x="0.0" y="203.5" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
-                                    <color key="tintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <state key="normal" title="Add Reminder"/>
                                     <connections>
                                         <action selector="addReminder:" destination="bGj-vw-7yG" eventType="touchUpInside" id="tq4-eq-z9R"/>
@@ -103,7 +103,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="tRl-JE-fif" firstAttribute="bottom" secondItem="vFo-hS-r4c" secondAttribute="bottomMargin" id="2ET-Oa-taY"/>
                                                 <constraint firstItem="YgS-6r-X0I" firstAttribute="trailing" secondItem="vFo-hS-r4c" secondAttribute="trailingMargin" id="5gY-Og-m7x"/>
@@ -136,7 +136,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="completedButton" destination="LhX-7Y-RQS" id="5EZ-bz-YgV"/>
                                             <outlet property="dateLabel" destination="oBZ-Wg-Ure" id="EGb-N0-gw3"/>
@@ -162,7 +162,7 @@
                                     <segment title="To Do"/>
                                     <segment title="Completed"/>
                                 </segments>
-                                <color key="tintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="segmentedControlValueChanged:" destination="bGj-vw-7yG" eventType="valueChanged" id="J9B-DZ-hbV"/>
                                 </connections>
@@ -177,7 +177,7 @@
                                 <state key="normal" image="emergencyIcon"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="COk-1b-AU7" firstAttribute="top" secondItem="wV5-JN-i28" secondAttribute="bottom" id="8XQ-Wb-edS"/>
                             <constraint firstItem="ZSv-lg-fnn" firstAttribute="top" secondItem="GYq-y8-9xx" secondAttribute="bottom" id="Gl3-YM-WYs"/>
@@ -224,7 +224,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="3nu-jH-bXc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="3nu-jH-bXc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

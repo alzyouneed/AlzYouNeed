@@ -86,7 +86,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JUi-qn-GDA">
                                 <rect key="frame" x="0.0" y="543" width="375" height="60"/>
-                                <color key="backgroundColor" red="0.63137254901960782" green="0.25490196078431371" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="irI-U3-QYb"/>
                                 </constraints>
@@ -252,7 +252,7 @@
                                 <state key="normal" image="emergencyIcon"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="8Tr-ho-3Vv" secondAttribute="trailing" id="0S3-MG-cLl"/>
                             <constraint firstItem="ZlT-Ga-xyb" firstAttribute="top" secondItem="8Tr-ho-3Vv" secondAttribute="bottom" constant="15" id="5dl-8O-8qu"/>
@@ -317,7 +317,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -335,7 +335,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2gG-ex-1CO" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dmo-BZ-nYY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="dmo-BZ-nYY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

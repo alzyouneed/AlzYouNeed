@@ -56,6 +56,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         
         // Configure video once
         configureBackgroundVideo()
+        
+//         self.navigationController?.presentTransparentNavBar()
+        
+//        setupNavBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -318,6 +322,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     func setupViews() {
         UIApplication.shared.statusBarStyle = .lightContent
         
+//        setupNavBar()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.googleSignInFailed), name: NSNotification.Name(rawValue: googleSignInFailedKey), object: nil)
         
         self.view.bringSubview(toFront: logoImageView)
@@ -452,6 +458,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
                 print("OnboardingVC: No user signed in")
             }
         })
+    }
+    
+    func setupNavBar() {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
     }
     
     // MARK: - Animations

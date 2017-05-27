@@ -91,7 +91,7 @@
                                 <state key="normal" image="groupChatIcon"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PqP-9E-X1L" firstAttribute="top" secondItem="MWK-Af-Q5E" secondAttribute="bottom" constant="15" id="DHA-Aj-ipJ"/>
                             <constraint firstAttribute="trailing" secondItem="xbH-80-chY" secondAttribute="trailing" id="DkF-ig-AkC"/>

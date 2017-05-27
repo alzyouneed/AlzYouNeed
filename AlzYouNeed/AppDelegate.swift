@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 //        UIApplication.shared.statusBarStyle = .lightContent
         
         // Customize tab bar appearance
-        UITabBar.appearance().tintColor = slateBlue
+        UITabBar.appearance().tintColor = UIColor(hex: "7189FF")
         UITabBar.appearance().barTintColor = UIColor.white
         
         // Set initial tab bar
