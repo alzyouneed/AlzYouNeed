@@ -37,16 +37,7 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: Fix this
-//        checkUserSignedIn()
 
-//        dashboardActionButtons.leftButton.addTarget(self, action: #selector(DashboardViewController.notepadButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
-        
-//        reminderActionButtonView.leftButton.addTarget(self, action: #selector(DashboardViewController.reminderButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
-        
-//        configureView()
-//        setupEmergencyButton()
         self.navigationController?.presentTransparentNavBar()
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -129,14 +120,11 @@ class DashboardViewController: UIViewController {
     }
     
     @IBAction func saveNotepad(_ sender: UIBarButtonItem) {
-//        print("saved notepad")
         saveNote(_dismissAfter: true)
     }
     
     // MARK: - Configuration
     func setupView() {
-//        UIApplication.shared.statusBarStyle = .lightContent
-        
         setupUserView()
         setupNotepad()
         setupEmergencyButton()
@@ -166,7 +154,6 @@ class DashboardViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.userView.familyGroupLabel.text = groupId
                 }
-//                self.userView.familyGroupLabel.text = groupId
             }
         }
     }
@@ -184,21 +171,6 @@ class DashboardViewController: UIViewController {
         // Round the bounds
         notepadView.layer.cornerRadius = 10
         notepadView.layer.masksToBounds = true
-    }
-    
-    func configureView() {
-        if !AYNModel.sharedInstance.wasReset {
-            // TODO: Fix this
-            //            configureViewWithUserDefaults()
-        } else {
-            // TODO: Fix this
-            //            configureViewWithFirebase()
-        }
-        //        configureActionButtons()
-        
-        // Configure save button
-        saveButton.isEnabled = false
-        saveButton.tintColor = UIColor.clear
     }
     
     func configureDashboardView(_ imageUrl: String) {
@@ -236,8 +208,6 @@ class DashboardViewController: UIViewController {
     func setupAuthListener() {
         authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if user != nil {
-//                print("DashboardVC: User signed in")
-                
                 if !self.viewSetup {
                     
                     self.viewSetup = true
@@ -275,11 +245,13 @@ class DashboardViewController: UIViewController {
     
     func presentUpdateProfileVC() {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
+        let updateProfileTVC: UpdateProfileTVC = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileTVC
+        
+//        let updateProfileVC: UpdateProfileViewController = storyboard.instantiateViewController(withIdentifier: "updateProfile") as! UpdateProfileViewController
         
         // Hide tab bar in updateProfileVC
-        updateProfileVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(updateProfileVC, animated: true)
+        updateProfileTVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(updateProfileTVC, animated: true)
     }
     
     func updateTabBadge() {
@@ -407,7 +379,6 @@ class DashboardViewController: UIViewController {
                 }
             }
         }
-//        UIApplication.shared.registerForRemoteNotifications()
     }
 }
 
@@ -454,7 +425,6 @@ extension DashboardViewController {
 // MARK: - Notepad View
 extension DashboardViewController {
     func tappedNotepad() {
-//        print("tapped notepad")
         if !notepadActive {
             expandNotepad()
         } else {

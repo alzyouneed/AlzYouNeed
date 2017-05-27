@@ -142,8 +142,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     // MARK: - TextField changes
     func editedEmailText() {
         // TODO: Implement following
-//        let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-//        let valid = NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: userEmailAddress)
         if let text = emailTextField.text {
             if ((text.characters.count < 3  && text.characters.count > 0) || (!text.contains("@") && text.characters.count > 0)) {
                 self.emailTextField.errorMessage = "Invalid email"

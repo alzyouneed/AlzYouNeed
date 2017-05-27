@@ -116,24 +116,8 @@ class NameVC: UIViewController, UITextFieldDelegate {
                         self.presentNextVC()
                     }
                 })
-                
-//                self.presentNextVC()
             }
         })
-        
-//        NewProfile.sharedInstance.name = nameTextField.text
-//        
-//        // Save user
-//        FirebaseManager.updateUserNew(updates: NewProfile.sharedInstance.asDict() as NSDictionary, completionHandler: { (error) in
-//            if let error = error {
-//                print("Error updating user: ", error.localizedDescription)
-//            } else {
-//                print("Updated user")
-//                self.presentNextVC()
-//            }
-//        })
-        
-//        presentNextVC()
     }
     
     func presentNextVC() {

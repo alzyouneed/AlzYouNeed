@@ -195,17 +195,6 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         } else {
             joinGroup(groupId: groupName, password: password)
         }
-        
-        // If successful
-//        NewProfile.sharedInstance.admin = (familyControl.selectedSegmentIndex == 0)
-//        NewProfile.sharedInstance.groupName = familyNameTextField.text
-        
-        // If creating -- save group password in RTDB
-        
-//        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
-//        print("Resetting profile")
-//        NewProfile.sharedInstance.resetModel()
-//        print("New User Profile: \(NewProfile.sharedInstance.asDict())")
     }
     
     func createGroup(groupId: String, password: String) {

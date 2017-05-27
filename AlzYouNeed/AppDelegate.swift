@@ -46,13 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clear], for: UIControlState())
         UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.clear], for: UIControlState.highlighted)
         
-        // Customize navigation bar appearance
-//        UINavigationBar.appearance().tintColor = UIColor.white
-//        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName: UIFont(name: "OpenSans-Semibold", size: 20)!]
-        
-        // Set status bar to light
-//        UIApplication.shared.statusBarStyle = .lightContent
-        
         // Customize tab bar appearance
         UITabBar.appearance().tintColor = UIColor(hex: "7189FF")
         UITabBar.appearance().barTintColor = UIColor.white

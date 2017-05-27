@@ -19,7 +19,6 @@
 		2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3C49061D35AFF7003A1C81 /* AYNModel.swift */; };
 		2D4C872E1E6884B400FB3B7E /* notepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C872D1E6884B400FB3B7E /* notepadView.swift */; };
 		2D4C87301E6884C400FB3B7E /* notepadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C872F1E6884C400FB3B7E /* notepadView.xib */; };
-		2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5125241DA32B5100006E65 /* NotepadViewController.swift */; };
 		2D68D3091E26B0EC008A582B /* DataObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D68D3081E26B0EC008A582B /* DataObjects.swift */; };
 		2D6C9CD61ECFA2F100FC8457 /* MethodsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */; };
 		2D6C9CD81ECFC3D400FC8457 /* FamilyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */; };
@@ -34,6 +33,7 @@
 		2D9834DF1D0C4A91000977DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834DE1D0C4A91000977DC /* Assets.xcassets */; };
 		2D9834E21D0C4A91000977DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9834E01D0C4A91000977DC /* LaunchScreen.storyboard */; };
 		2DA8D5911D38A5C600DD666C /* islandViewBW.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2DA8D5901D38A5C600DD666C /* islandViewBW.gif */; };
+		2DAAB21F1ED9FDF600EA51B9 /* UpdateProfileTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */; };
 		2DB0AEF21DB80BF400F6CE5D /* ContactList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF01DB80BF400F6CE5D /* ContactList.storyboard */; };
 		2DB0AEF51DB80CA100F6CE5D /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */; };
 		2DB0AEF81DB80E5A00F6CE5D /* Reminders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2DB0AEF61DB80E5A00F6CE5D /* Reminders.storyboard */; };
@@ -77,7 +77,6 @@
 		2D3C49061D35AFF7003A1C81 /* AYNModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYNModel.swift; sourceTree = "<group>"; };
 		2D4C872D1E6884B400FB3B7E /* notepadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = notepadView.swift; sourceTree = "<group>"; };
 		2D4C872F1E6884C400FB3B7E /* notepadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = notepadView.xib; path = ../../../../../../notepadView.xib; sourceTree = "<group>"; };
-		2D5125241DA32B5100006E65 /* NotepadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotepadViewController.swift; sourceTree = "<group>"; };
 		2D68D3081E26B0EC008A582B /* DataObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataObjects.swift; sourceTree = "<group>"; };
 		2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodsVC.swift; sourceTree = "<group>"; };
 		2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyVC.swift; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		2D9834E11D0C4A91000977DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D9834E31D0C4A91000977DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2DA8D5901D38A5C600DD666C /* islandViewBW.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = islandViewBW.gif; sourceTree = "<group>"; };
+		2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileTVC.swift; sourceTree = "<group>"; };
 		2DB0AEF11DB80BF400F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ContactList.storyboard; sourceTree = "<group>"; };
 		2DB0AEF41DB80CA100F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Dashboard.storyboard; sourceTree = "<group>"; };
 		2DB0AEF71DB80E5A00F6CE5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Reminders.storyboard; sourceTree = "<group>"; };
@@ -206,14 +206,6 @@
 		2D6C9CD31ECF9F2600FC8457 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				2D6C9CD41ECF9F3F00FC8457 /* New */,
-			);
-			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		2D6C9CD41ECF9F3F00FC8457 /* New */ = {
-			isa = PBXGroup;
-			children = (
 				2DC8D5C71D12EAAB00952483 /* OnboardingViewController.swift */,
 				2D6C9CD51ECFA2F100FC8457 /* MethodsVC.swift */,
 				2D6C9CD91ECFC92200FC8457 /* EmailVC.swift */,
@@ -221,7 +213,7 @@
 				2D6C9CD71ECFC3D400FC8457 /* FamilyVC.swift */,
 				2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */,
 			);
-			name = New;
+			name = Onboarding;
 			sourceTree = "<group>";
 		};
 		2D6EBACC1D0F0FC8004AD135 /* Controller */ = {
@@ -324,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				2DB0AEF31DB80CA100F6CE5D /* Dashboard.storyboard */,
+				2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */,
 				2DC8D5BC1D12DC0B00952483 /* View */,
 				2DC8D5B91D12DBF600952483 /* Controller */,
 			);
@@ -334,7 +327,6 @@
 			isa = PBXGroup;
 			children = (
 				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
-				2D5125241DA32B5100006E65 /* NotepadViewController.swift */,
 				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
 			);
 			name = Controller;
@@ -569,7 +561,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -604,7 +596,7 @@
 				2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */,
 				2D6EBACE1D0F1652004AD135 /* ContactDetailViewController.swift in Sources */,
 				2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */,
-				2D5125251DA32B5100006E65 /* NotepadViewController.swift in Sources */,
+				2DAAB21F1ED9FDF600EA51B9 /* UpdateProfileTVC.swift in Sources */,
 				2D6C9CDA1ECFC92200FC8457 /* EmailVC.swift in Sources */,
 				2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */,
 				2DC8D5C51D12E13D00952483 /* DateDashboardView.swift in Sources */,

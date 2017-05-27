@@ -50,16 +50,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        UIApplication.shared.statusBarStyle = .lightContent
-        
         GIDSignIn.sharedInstance().uiDelegate = self
         
         // Configure video once
         configureBackgroundVideo()
-        
-//         self.navigationController?.presentTransparentNavBar()
-        
-//        setupNavBar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,6 +98,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     override func viewDidAppear(_ animated: Bool) {
         showTitleView(show: true)
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         if let authListener = authListener {
             FIRAuth.auth()?.removeStateDidChangeListener(authListener)
@@ -150,13 +145,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         } else {
             enableSignup(enable: false)
         }
-        
-//        let passwordsMatch = passwordTextField.text == confirmPasswordTextField.text
-//        if !emailTextField.hasErrorMessage && (passwordTextField.text?.characters.count)! >= 6 && passwordsMatch {
-//            enableSignup(enable: true)
-//        } else {
-//            enableSignup(enable: false)
-//        }
     }
     
     func editedEmailText() {
@@ -173,23 +161,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
             signupButton.alpha = enable ? 1 : 0.6
         }
     }
-    
-    // MARK: - UITextFieldDelegate
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        // Switch between textFields by using return key
-//        let tag = textField.superview!.superview!.tag
-//        switch tag {
-//        case 0:
-//            if !emailVTFView.textField.text!.isEmpty {
-//                self.passwordVTFView.textField.becomeFirstResponder()
-//            }
-//        case 1:
-//            loginUser()
-//        default:
-//            break
-//        }
-//        return true
-//    }
     
     // MARK: - Keyboard
     func adjustingKeyboardHeight(_ show: Bool, notification: Notification) {
@@ -322,8 +293,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     func setupViews() {
         UIApplication.shared.statusBarStyle = .lightContent
         
-//        setupNavBar()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(OnboardingViewController.googleSignInFailed), name: NSNotification.Name(rawValue: googleSignInFailedKey), object: nil)
         
         self.view.bringSubview(toFront: logoImageView)
@@ -423,6 +392,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         emailTextField.delegate = self
         emailTextField.addTarget(self, action:#selector(OnboardingViewController.editedEmailText), for:UIControlEvents.editingChanged)
         
+        emailTextField.returnKeyType = UIReturnKeyType.next
         emailTextField.keyboardType = UIKeyboardType.emailAddress
         emailTextField.autocorrectionType = UITextAutocorrectionType.no
         self.view.bringSubview(toFront: emailTextField)
@@ -441,6 +411,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action:#selector(OnboardingViewController.editedPasswordText), for:UIControlEvents.editingChanged)
+        
+        passwordTextField.returnKeyType = UIReturnKeyType.done
         passwordTextField.autocorrectionType = UITextAutocorrectionType.no
         self.view.bringSubview(toFront: passwordTextField)
     }
@@ -464,6 +436,26 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    //MARK: - UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Switch between textFields by using return key
+        let tag = textField.tag
+        switch tag {
+        case 0:
+            if !emailTextField.text!.isEmpty {
+                self.passwordTextField.becomeFirstResponder()
+            }
+        case 1:
+            // Try to login user via email
+            if signupButton.isEnabled {
+              loginWithEmail()
+            }
+        default:
+            break
+        }
+        return true
     }
     
     // MARK: - Animations
@@ -708,7 +700,6 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     
     func loginWithEmail() {
         HUD.show(.progress)
-        
         if let email = emailTextField.text, let password = passwordTextField.text {
             FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {

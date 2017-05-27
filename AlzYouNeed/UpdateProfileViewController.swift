@@ -9,13 +9,18 @@
 import UIKit
 import Firebase
 import FirebaseStorage
-// import PKHUD
+import PKHUD
+import SkyFloatingLabelTextField
 
 class UpdateProfileViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
     
     // MARK: - UI Elements
     @IBOutlet var profileImageView: UIImageView!
     let imagePicker = UIImagePickerController()
+    
+    @IBOutlet var nameTextField: SkyFloatingLabelTextField!
+    
+    
 //    @IBOutlet var nameVTFView: validateTextFieldView!
 //    @IBOutlet var phoneNumberVTFView: validateTextFieldView!
     @IBOutlet var updateButton: UIButton!
