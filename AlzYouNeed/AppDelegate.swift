@@ -15,6 +15,7 @@ import Crashlytics
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
+import PKHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -37,6 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         // Configure Facebook Sign-in
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = false
         
         // Configure Firebase
 //        FIRApp.configure()  -- caused crash on launch here

@@ -10,6 +10,8 @@ import UIKit
 import SkyFloatingLabelTextField
 import PKHUD
 import Firebase
+import FBSDKLoginKit
+import GoogleSignIn
 
 class UpdateActionVC: UIViewController {
     
@@ -21,6 +23,10 @@ class UpdateActionVC: UIViewController {
     
     @IBOutlet var updateButton: UIButton!
     @IBOutlet var updateButtonBottomConstraint: NSLayoutConstraint!
+    
+    // For user reauth
+    var emailTextField: UITextField!
+    var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,30 +180,130 @@ class UpdateActionVC: UIViewController {
     }
     
     func changeName() {
+        HUD.show(.progress)
+        
         let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
         changeRequest?.displayName = topTextField.text
         changeRequest?.commitChanges { (error) in
-            // Save to RTDB
-            FirebaseManager.updateUser(updates: ["name" : self.topTextField.text!] as NSDictionary, completionHandler: { (error) in
-                if let error = error {
-                    print("Error updating user: ", error.localizedDescription)
-                } else {
-                    print("Updated name")
-                    self.navigationController?.popViewController(animated: true)
-                }
-            })
+            if let requestError = error {
+                print("Error with name Change Request: ", requestError.localizedDescription)
+                HUD.flash(.error)
+            } else {
+                // Save to RTDB
+                FirebaseManager.updateUser(updates: ["name" : self.topTextField.text!] as NSDictionary, completionHandler: { (error) in
+                    if let error = error {
+                        HUD.hide()
+                        print("Error updating user: ", error.localizedDescription)
+                    } else {
+                        print("Updated name")
+                        HUD.flash(.success, delay: 0, completion: { (complete) in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }
+                })
+            }
         }
     }
     
     func changePassword() {
+        HUD.show(.progress)
+        
         FIRAuth.auth()?.currentUser?.updatePassword(bottomTextField.text!, completion: { (error) in
             if let error = error {
+                HUD.hide()
                 print("Error updating password: ", error.localizedDescription)
+                let errorCode = FIRAuthErrorCode(rawValue: error._code)!
+                if errorCode == FIRAuthErrorCode.errorCodeInvalidUserToken || errorCode == FIRAuthErrorCode.errorCodeRequiresRecentLogin {
+                    self.showReAuthOptions()
+                }
             } else {
                 print("Updated password")
-                self.navigationController?.popViewController(animated: true)
+                HUD.flash(.success, delay: 0, completion: { (complete) in
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         })
+    }
+    
+    func showReAuthOptions() {
+        let authOptions = UIAlertController(title: "Sign in to Continue", message: "Select your sign-in method to complete this action", preferredStyle: .actionSheet)
+        
+        let facebookOption = UIAlertAction(title: "Facebook", style: .default) { (action) in
+            self.reAuthUser(provider: "Facebook", email: nil, password: nil)
+        }
+        let googleOption = UIAlertAction(title: "Google", style: .default) { (action) in
+            self.reAuthUser(provider: "Google", email: nil, password: nil)
+        }
+        let emailOption = UIAlertAction(title: "Email", style: .default) { (action) in
+            self.showEmailLogin()
+        }
+        let cancelOption = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        authOptions.addAction(facebookOption)
+        authOptions.addAction(googleOption)
+        authOptions.addAction(emailOption)
+        authOptions.addAction(cancelOption)
+        
+        self.present(authOptions, animated: true, completion: nil)
+    }
+    
+    func showEmailLogin() {
+        let emailAlert = UIAlertController(title: "Email Sign-in", message: "Login using your Email and Password to continue", preferredStyle: .alert)
+        
+        emailAlert.addTextField { (textField) in
+            textField.placeholder = "Email address"
+            textField.keyboardType = UIKeyboardType.emailAddress
+            self.emailTextField = textField
+        }
+        emailAlert.addTextField { (textField) in
+            textField.placeholder = "Password"
+            self.passwordTextField = textField
+        }
+        
+        let loginAction = UIAlertAction(title: "Sign in", style: .default) { (action) in
+            if let email = self.emailTextField.text, let password = self.passwordTextField.text {
+                self.reAuthUser(provider: "Email", email: email, password: password)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        emailAlert.addAction(loginAction)
+        emailAlert.addAction(cancelAction)
+        
+        self.present(emailAlert, animated: true, completion: nil)
+    }
+    
+    func reAuthUser(provider: String, email: String?, password: String?) {
+        let user = FIRAuth.auth()?.currentUser
+        var credential: FIRAuthCredential? = nil
+        
+        if provider == "Facebook" {
+            credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        } else if provider == "Google" {
+            if let authentication = GIDSignIn.sharedInstance().currentUser.authentication {
+                credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+            }
+        } else if provider == "Email" {
+            if let email = email, let password = password {
+                credential = FIREmailPasswordAuthProvider.credential(withEmail: email, password: password)
+            }
+        }
+        
+        if credential != nil {
+            // Prompt the user to re-provide their sign-in credentials
+            user?.reauthenticate(with: credential!) { error in
+                if let error = error {
+                    print("Error reauthenticating user: ", error.localizedDescription)
+                    HUD.flash(.error)
+                } else {
+                    print("Reauthenticated user")
+                    HUD.flash(.label("Signed in"), delay: 0, completion: { (complete) in
+                        // User re-authenticated.
+                        self.changePassword()
+                    })
+                }
+            }
+        }
     }
     
 }
