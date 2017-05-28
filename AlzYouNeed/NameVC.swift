@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SkyFloatingLabelTextField
+import Crashlytics
 
 class NameVC: UIViewController, UITextFieldDelegate {
 
@@ -161,6 +162,8 @@ class NameVC: UIViewController, UITextFieldDelegate {
     func cancelSignup() {
         // Delete partial user profile
         NewProfile.sharedInstance.resetModel()
+        
+        Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "NameVC"])
         
         if let user = FIRAuth.auth()?.currentUser {
             user.delete(completion: { (error) in

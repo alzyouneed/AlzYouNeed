@@ -117,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // ...
         if let error = error {
             print("Error signing in with Google: \(error.localizedDescription)")
+            Answers.logLogin(withMethod: "Google", success: false, customAttributes: nil)
             return
         }
         
@@ -127,12 +128,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FIRAuth.auth()?.signIn(with: credential, completion: { (firebaseUser, error) in
             if let error = error {
                 print("Error signing in with Google in FIRAuth: \(error.localizedDescription)")
+                Answers.logLogin(withMethod: "Google", success: false, customAttributes: nil)
+                
                 // Notify OnboardingVC that sign-in failed
                 NotificationCenter.default.post(name: Notification.Name(rawValue: googleSignInFailedKey), object: self)
                 
                 return
             }
             print("Signed in with Google")
+            Answers.logLogin(withMethod: "Google", success: true, customAttributes: nil)
 
             // Notify MethodsVC that sign-in was successful
             NotificationCenter.default.post(name: Notification.Name(rawValue: signInNotificationKey), object: self)

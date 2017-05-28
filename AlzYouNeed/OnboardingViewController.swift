@@ -683,8 +683,10 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
             if let error = error {
                 HUD.hide()
                 print("Error signing in with Facebook: ", error.localizedDescription)
+                Answers.logLogin(withMethod: "Facebook", success: false, customAttributes: nil)
             } else {
                 print("Signed in with Facebook")
+                Answers.logLogin(withMethod: "Facebook", success: true, customAttributes: nil)
             }
         })
     }
@@ -705,10 +707,13 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
                 if let error = error {
                     print("Error signing in with Email: ", error.localizedDescription)
                     HUD.hide()
+                    Answers.logLogin(withMethod: "Email", success: false, customAttributes: nil)
+                    
                     self.showErrorMessage(error: error)
 
                 } else {
                     print("Signed in with Email")
+                    Answers.logLogin(withMethod: "Email", success: true, customAttributes: nil)
                 }
             })
         }

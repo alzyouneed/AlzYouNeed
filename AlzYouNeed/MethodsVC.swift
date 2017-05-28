@@ -11,6 +11,7 @@ import Firebase
 import GoogleSignIn
 import FontAwesome_swift
 import FBSDKLoginKit
+import Crashlytics
 
 class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
@@ -141,6 +142,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
 
     // MARK: - Facebook signup
     @IBAction func facebookButtonPressed(_ sender: Any) {
+        Answers.logCustomEvent(withName: "Start sign up", customAttributes: nil)
         loginWithFacebook()
     }
     
@@ -148,6 +150,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
         FBSDKLoginManager().logIn(withReadPermissions: ["email", "public_profile"], from: self) { (result, error) in
             if error != nil {
                 print("Error with custom Facebook login")
+                Answers.logSignUp(withMethod: "Facebook", success: false, customAttributes: nil)
             } else {
                 if let result = result, let resultToken = result.token, let resultTokenString = resultToken.tokenString {
                     if let credential = FIRFacebookAuthProvider.credential(withAccessToken: resultTokenString) as FIRAuthCredential? {
@@ -155,13 +158,16 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
                             if let error = error {
                                 print("Error signing in with Facebook: \(error.localizedDescription)")
+                                Answers.logSignUp(withMethod: "Facebook", success: false, customAttributes: nil)
                                 return
                             }
                             print("Signed in with Facebook")
+                            Answers.logSignUp(withMethod: "Facebook", success: true, customAttributes: nil)
                         })
                     }
                 } else {
                     print("Unable to login with Facebook")
+                    Answers.logSignUp(withMethod: "Facebook", success: false, customAttributes: nil)
                 }
             }
         }
@@ -169,6 +175,8 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
     // MARK: - Google signup
     @IBAction func googleButtonPressed(_ sender: Any) {
+        Answers.logCustomEvent(withName: "Start sign up", customAttributes: nil)
+        Answers.logSignUp(withMethod: "Google", success: true, customAttributes: nil)
         loginWithGoogle()
     }
     
@@ -180,6 +188,8 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Delete partial user profile
         NewProfile.sharedInstance.resetModel()
+
+        Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "MethodsVC"])
         
         self.dismiss(animated: true, completion: nil)
     }

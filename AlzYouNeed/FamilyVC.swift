@@ -10,6 +10,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import Firebase
 import PKHUD
+import Crashlytics
 
 class FamilyVC: UIViewController, UITextFieldDelegate {
 
@@ -314,6 +315,8 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
     func cancelSignup() {
         // Delete partial user profile
         NewProfile.sharedInstance.resetModel()
+        
+        Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "FamilyVC"])
         
         if let user = FIRAuth.auth()?.currentUser {
             user.delete(completion: { (error) in

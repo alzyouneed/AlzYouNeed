@@ -10,6 +10,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import Firebase
 import PKHUD
+import Crashlytics
 
 class EmailVC: UIViewController, UITextFieldDelegate {
 
@@ -177,6 +178,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     
     // MARK: - Sign up
     @IBAction func signUpPressed(_ sender: UIButton) {
+        Answers.logCustomEvent(withName: "Start sign up", customAttributes: nil)
         createNewUser()
     }
     
@@ -189,10 +191,14 @@ class EmailVC: UIViewController, UITextFieldDelegate {
                 if let error = error {
                     HUD.hide()
                     print("Error creating user: ", error.localizedDescription)
+                    Answers.logSignUp(withMethod: "Email", success: false, customAttributes: nil)
+                    
                     self.showErrorMessage(error: error)
                 } else {
                     if user != nil {
                         print("Created user with email")
+                        Answers.logSignUp(withMethod: "Email", success: true, customAttributes: nil)
+                        
                         HUD.flash(.success, delay: 0, completion: { (success) in
                             self.presentNextVC()
                         })
@@ -214,6 +220,7 @@ class EmailVC: UIViewController, UITextFieldDelegate {
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         // Delete partial user profile
         NewProfile.sharedInstance.resetModel()
+        Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "EmailVC"])
         
         self.dismiss(animated: true, completion: nil)
     }
