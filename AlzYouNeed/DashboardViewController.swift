@@ -250,7 +250,7 @@ class DashboardViewController: UIViewController {
                             self.setupView()
                             self.saveFamilyMemberContacts()
                             self.loadNote()
-                            self.registerNotifications()
+//                            self.registerNotifications()
                         }
                     })
                 }
