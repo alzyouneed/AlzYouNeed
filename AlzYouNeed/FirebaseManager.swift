@@ -79,6 +79,52 @@ class FirebaseManager: NSObject {
         }
     }
     
+    class func updateUserImage(image: UIImage, completionHandler: @escaping (_ error: NSError?) -> Void) {
+        if let user = FIRAuth.auth()?.currentUser {
+            let storageRef = FIRStorage.storage().reference()
+            let imagePath = "profileImage/" + user.uid
+            let metaData = FIRStorageMetadata()
+            metaData.contentType = "image/jpg"
+            
+            var imageData = Data()
+            imageData = UIImageJPEGRepresentation(image, 0)!
+            
+            storageRef.child(imagePath).put(imageData, metadata: metaData, completion: { (firMetaData, error) in
+                if let error = error {
+                    print("Error uploading image: ", error.localizedDescription)
+                    completionHandler(error as NSError)
+                } else {
+                    if let firMetaData = firMetaData {
+                        if let photoURL = firMetaData.downloadURL() {
+                            // Store in User Profile
+                            let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+                            changeRequest?.photoURL = photoURL
+                            changeRequest?.commitChanges(completion: { (error) in
+                                if let error = error {
+                                    print("Error updating photoURL: ", error.localizedDescription)
+                                    completionHandler(error as NSError)
+                                } else {
+                                    print("Updated photoURL")
+                                    
+                                    // Store in RTDB
+                                    FirebaseManager.updateUser(updates: ["photoURL" : photoURL.absoluteString] as NSDictionary, completionHandler: { (error) in
+                                        if let error = error {
+                                            print("Error updating photoURL in RTDB: ", error.localizedDescription)
+                                            completionHandler(error)
+                                        } else {
+                                            print("Updated photoURL in RTDB")
+                                            completionHandler(nil)
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+        }
+    }
+    
     // MARK: - Family Group Management
     class func createNewFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
         if let user = FIRAuth.auth()?.currentUser {

@@ -28,15 +28,6 @@ class AYNModel {
     
     var familyMemberNumbers: [String] = []
     
-    
-    // MARK: - Old
-//    var contactsArr: [Contact] = []
-//    var remindersArr: [Reminder] = []
-//    var completedRemindersArr: [Reminder] = []
-    
-    var currentUserProfileImage: UIImage? = UIImage()
-//    var currentUserFamilyId: String? = String()
-    
     var currentUser: NSDictionary? = nil
 //    var familyMemberNumbers: [String] = []
     
@@ -89,8 +80,8 @@ class AYNModel {
         contactsArr.removeAll()
         remindersArr.removeAll()
         completedRemindersArr.removeAll()
-        
-        currentUserProfileImage = nil
+        userImage = nil
+//        currentUserProfileImage = nil
 //        currentUserFamilyId = nil
         currentUser = nil
         familyMemberNumbers.removeAll()

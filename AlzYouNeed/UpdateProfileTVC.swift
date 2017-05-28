@@ -13,7 +13,7 @@ import Firebase
 import FBSDKLoginKit
 import GoogleSignIn
 
-class UpdateProfileTVC: UITableViewController {
+class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
@@ -25,6 +25,8 @@ class UpdateProfileTVC: UITableViewController {
     var passwordTextField: UITextField!
     
     var authListener: FIRAuthStateDidChangeListenerHandle?
+    
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,7 @@ class UpdateProfileTVC: UITableViewController {
     func setupView() {
         setupUserImageView()
         setupNameLabel()
+        imagePicker.delegate = self
 //        setupNotificationSwitch()
     }
     
@@ -84,11 +87,7 @@ class UpdateProfileTVC: UITableViewController {
     }
 
     @IBAction func changePicturePressed(_ sender: UIButton) {
-        
-    }
-    
-    func changeNameAction() {
-        print("Change name action")
+        showPhotoOptions()
     }
     
     @IBAction func deleteAccountButtonPressed(_ sender: UIButton) {
@@ -123,6 +122,7 @@ class UpdateProfileTVC: UITableViewController {
                 }
             } else {
                 print("Account deleted")
+                AYNModel.sharedInstance.resetModel()
             }
         }
     }
@@ -243,4 +243,58 @@ class UpdateProfileTVC: UITableViewController {
         // Pass the selected object to the new view controller.
     }
 
+}
+
+// MARK: - UIImagePickerController Delegate
+extension UpdateProfileTVC: UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            HUD.show(.progress)
+            print("Selected image -- uploading")
+            FirebaseManager.updateUserImage(image: pickedImage, completionHandler: { (error) in
+                if let error = error {
+                    HUD.flash(.error)
+                    print("Error uploading image: ", error.localizedDescription)
+                } else {
+                    HUD.flash(.success)
+                    print("Updated user image")
+                    self.userImageView.image = pickedImage
+                    AYNModel.sharedInstance.userImage = pickedImage
+                }
+            })
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func showPhotoOptions() {
+        let photoSheet = UIAlertController(title: nil, message: "Select a source", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Take photo", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                print("Selecting from Camera")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let libraryAction = UIAlertAction(title: "Browse photo library", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                print("Selecting from Photo Library")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        photoSheet.addAction(cameraAction)
+        photoSheet.addAction(libraryAction)
+        photoSheet.addAction(cancelAction)
+        
+        present(photoSheet, animated: true, completion: nil)
+    }
 }

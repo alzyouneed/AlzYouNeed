@@ -46,12 +46,17 @@ class DashboardViewController: UIViewController {
         
         self.tabBarController?.tabBar.layer.borderWidth = 0.5
         self.tabBarController?.tabBar.layer.borderColor = UIColor.lightGray.cgColor
+        
+        setupNotepad()
+        setupEmergencyButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupAuthListener()
  
         setupUserNameLabel()
+        
+        checkUserImageChanged()
         
         self.navigationController?.navigationBar.tintColor = UIColor.white
         UIApplication.shared.statusBarStyle = .lightContent
@@ -131,13 +136,18 @@ class DashboardViewController: UIViewController {
     // MARK: - Configuration
     func setupView() {
         setupUserView()
-        setupNotepad()
-        setupEmergencyButton()
+//        setupNotepad()
+//        setupEmergencyButton()
     }
     
     func setupUserView() {
         if let user = FIRAuth.auth()?.currentUser {
-            if let imageURL = user.photoURL, let data = try? Data(contentsOf: imageURL) {
+            // Check if AYNModel has image
+            if let image = AYNModel.sharedInstance.userImage {
+                DispatchQueue.main.async(execute: {
+                    self.userView.setImage(image)
+                })
+            } else if let imageURL = user.photoURL, let data = try? Data(contentsOf: imageURL) {
                 if let image = UIImage(data: data) as UIImage? {
                     AYNModel.sharedInstance.userImage = image
                     
@@ -159,6 +169,17 @@ class DashboardViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.userView.familyGroupLabel.text = groupId
                 }
+            }
+        }
+    }
+    
+    func checkUserImageChanged() {
+        if FIRAuth.auth()?.currentUser != nil {
+            // Check if AYNModel has image
+            if let image = AYNModel.sharedInstance.userImage {
+                DispatchQueue.main.async(execute: {
+                    self.userView.setImage(image)
+                })
             }
         }
     }
@@ -197,7 +218,7 @@ class DashboardViewController: UIViewController {
                     DispatchQueue.main.async(execute: {
                         self.userView.setImage(image)
                     })
-                    AYNModel.sharedInstance.currentUserProfileImage = image
+                    AYNModel.sharedInstance.userImage = image
                     // Reset variable only after configuration is complete
                     AYNModel.sharedInstance.wasReset = false
                 }
@@ -208,7 +229,7 @@ class DashboardViewController: UIViewController {
                 DispatchQueue.main.async(execute: {
                     self.userView.setImage(image)
                 })
-                AYNModel.sharedInstance.currentUserProfileImage = image
+                AYNModel.sharedInstance.userImage = image
                 // Reset variable only after configuration is complete
                 AYNModel.sharedInstance.wasReset = false
             }
