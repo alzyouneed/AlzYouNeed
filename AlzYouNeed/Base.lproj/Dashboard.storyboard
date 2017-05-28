@@ -254,32 +254,58 @@
                             </tableViewSection>
                             <tableViewSection headerTitle=" " id="Jpq-Sh-jYt">
                                 <cells>
-                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="vfe-c2-H0c">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="vfe-c2-H0c">
                                         <rect key="frame" x="0.0" y="400.5" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vfe-c2-H0c" id="j4o-QA-PdB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HAc-H7-rNx">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x1Y-oP-dUq">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                                    <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>
+                                                    <state key="normal" title="Delete Account">
+                                                        <color key="titleColor" red="0.93725490196078431" green="0.18823529411764706" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteAccountButtonPressed:" destination="7Hu-QP-JcH" eventType="touchUpInside" id="i1N-0z-7lv"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="x1Y-oP-dUq" secondAttribute="bottom" id="BXX-1d-Ff0"/>
+                                                <constraint firstItem="x1Y-oP-dUq" firstAttribute="top" secondItem="j4o-QA-PdB" secondAttribute="top" id="Xyo-oh-vm4"/>
+                                                <constraint firstAttribute="trailing" secondItem="x1Y-oP-dUq" secondAttribute="trailing" id="bH9-Ta-ybw"/>
+                                                <constraint firstItem="x1Y-oP-dUq" firstAttribute="leading" secondItem="j4o-QA-PdB" secondAttribute="leading" id="xJ7-tq-zNx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="K1I-Rn-iDZ">
+                                        <rect key="frame" x="0.0" y="460.5" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K1I-Rn-iDZ" id="sns-Ed-tmO">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pb5-hh-xCe">
                                                     <rect key="frame" x="16" y="8" width="125" height="44"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="125" id="UkD-Xr-tyk"/>
+                                                        <constraint firstAttribute="width" constant="125" id="Sza-SX-VD8"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeR-ok-s7k">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bmu-Cr-0oO">
                                                     <rect key="frame" x="310" y="14" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="HAc-H7-rNx" secondAttribute="bottom" constant="7.5" id="0yV-41-hXO"/>
-                                                <constraint firstItem="UeR-ok-s7k" firstAttribute="centerY" secondItem="HAc-H7-rNx" secondAttribute="centerY" id="1oZ-bF-Dej"/>
-                                                <constraint firstItem="HAc-H7-rNx" firstAttribute="top" secondItem="j4o-QA-PdB" secondAttribute="top" constant="8" id="CT7-kj-juT"/>
-                                                <constraint firstItem="UeR-ok-s7k" firstAttribute="trailing" secondItem="j4o-QA-PdB" secondAttribute="trailingMargin" constant="-8" id="jxr-aj-wb3"/>
-                                                <constraint firstItem="HAc-H7-rNx" firstAttribute="leading" secondItem="j4o-QA-PdB" secondAttribute="leading" constant="16" id="sX1-PY-Lq9"/>
+                                                <constraint firstItem="Bmu-Cr-0oO" firstAttribute="centerY" secondItem="Pb5-hh-xCe" secondAttribute="centerY" id="6q5-xh-04V"/>
+                                                <constraint firstAttribute="bottom" secondItem="Pb5-hh-xCe" secondAttribute="bottom" constant="7.5" id="V4O-wr-WOw"/>
+                                                <constraint firstItem="Bmu-Cr-0oO" firstAttribute="trailing" secondItem="sns-Ed-tmO" secondAttribute="trailingMargin" constant="-8" id="Ykr-cr-0yz"/>
+                                                <constraint firstItem="Pb5-hh-xCe" firstAttribute="top" secondItem="sns-Ed-tmO" secondAttribute="top" constant="8" id="aNX-5f-L65"/>
+                                                <constraint firstItem="Pb5-hh-xCe" firstAttribute="leading" secondItem="sns-Ed-tmO" secondAttribute="leading" constant="16" id="xav-61-9GO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -293,7 +319,6 @@
                     </tableView>
                     <connections>
                         <outlet property="nameLabel" destination="BcJ-yl-uGl" id="ahn-5m-PbT"/>
-                        <outlet property="notificationSwitch" destination="UeR-ok-s7k" id="rb9-ag-aVi"/>
                         <outlet property="userImageView" destination="hGH-dZ-HYZ" id="dHb-5N-1d1"/>
                     </connections>
                 </tableViewController>
