@@ -41,7 +41,6 @@
 		2DB325A01D4BFCD400DBBCFA /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */; };
 		2DB325A31D4BFD2A00DBBCFA /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */; };
 		2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */; };
-		2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */; };
 		2DC06FAE1D53B68600816F04 /* PushNotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */; };
 		2DC0B2C51D3182810090C89A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC0B2C41D3182810090C89A /* RemindersViewController.swift */; };
 		2DC53C381D3340D70007E856 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */; };
@@ -102,7 +101,6 @@
 		2DB3259F1D4BFCD400DBBCFA /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		2DB325A21D4BFD2A00DBBCFA /* MessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		2DB325A41D4BFD5B00DBBCFA /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
-		2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		2DC06FAD1D53B68600816F04 /* PushNotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationsViewController.swift; sourceTree = "<group>"; };
 		2DC0B2C41D3182810090C89A /* RemindersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		2DC53C371D3340D70007E856 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
@@ -328,7 +326,6 @@
 			isa = PBXGroup;
 			children = (
 				2DC8D5B61D12DBD000952483 /* DashboardViewController.swift */,
-				2DB75CB51D24467C00472C18 /* UpdateProfileViewController.swift */,
 				2DAAB21E1ED9FDF600EA51B9 /* UpdateProfileTVC.swift */,
 				2DAAB2201EDA1D4600EA51B9 /* UpdateActionVC.swift */,
 			);
@@ -577,7 +574,6 @@
 				2DC8D5C81D12EAAB00952483 /* OnboardingViewController.swift in Sources */,
 				2D1F93DA1D3D7E650050794F /* actionButtonsDashboardView.swift in Sources */,
 				2DE890B41D11B998001DC19F /* Extensions.swift in Sources */,
-				2DB75CB61D24467C00472C18 /* UpdateProfileViewController.swift in Sources */,
 				2DB325A51D4BFD5B00DBBCFA /* MessageView.swift in Sources */,
 				2D3C49071D35AFF7003A1C81 /* AYNModel.swift in Sources */,
 				2DC8D5C01D12DDE000952483 /* UserDashboardView.swift in Sources */,

@@ -17,8 +17,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var userImageView: UIImageView!
-
-    @IBOutlet var notificationSwitch: UISwitch!
+    @IBOutlet var notificationCell: UITableViewCell!
     
     // For user reauth
     var emailTextField: UITextField!
@@ -56,7 +55,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
         setupUserImageView()
         setupNameLabel()
         imagePicker.delegate = self
-//        setupNotificationSwitch()
+        setupNotificationCell()
     }
     
     func setupUserImageView() {
@@ -78,12 +77,9 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
         }
     }
     
-    func setupNotificationSwitch() {
-        if UIApplication.shared.isRegisteredForRemoteNotifications {
-            notificationSwitch.isOn = true
-        } else {
-            notificationSwitch.isOn = false
-        }
+    func setupNotificationCell() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UpdateProfileTVC.notificationCellTapped))
+        notificationCell.addGestureRecognizer(tap)
     }
 
     @IBAction func changePicturePressed(_ sender: UIButton) {
@@ -94,6 +90,12 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
         showDeleteAccountWarning()
     }
     
+    func notificationCellTapped() {
+        print("tapped")
+        if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+        }
+    }
     
     func showDeleteAccountWarning() {
         let alertController = UIAlertController(title: "Delete Account", message: "This cannot be undone", preferredStyle: .actionSheet)
@@ -123,6 +125,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
             } else {
                 print("Account deleted")
                 AYNModel.sharedInstance.resetModel()
+                UserDefaultsManager.reset()
             }
         }
     }

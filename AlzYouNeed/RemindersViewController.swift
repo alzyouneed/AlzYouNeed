@@ -600,17 +600,20 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 })
             })
         } else {
-            // Notifications disabled
-            let alertController = UIAlertController(title: "Tip", message: "Enable notifications to be reminded of items on your to-do list", preferredStyle: .alert)
-            let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
-                if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                }
-            })
-            let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
-            alertController.addAction(enableAction)
-            alertController.addAction(cancelAction)
-            present(alertController, animated: true, completion: nil)
+            // Notifications disabled -- check if showed warning
+            if !UserDefaultsManager.getReminderWarningStatus() {
+                UserDefaultsManager.setReminderWarningStatus(status: true)
+                let alertController = UIAlertController(title: "Tip", message: "Enable notifications to be reminded of items on your to-do list", preferredStyle: .alert)
+                let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
+                    if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                        UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                    }
+                })
+                let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
+                alertController.addAction(enableAction)
+                alertController.addAction(cancelAction)
+                present(alertController, animated: true, completion: nil)
+            }
         }
     }
     

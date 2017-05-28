@@ -90,18 +90,13 @@ class DashboardViewController: UIViewController {
     @IBAction func showSettings(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Settings", message: nil, preferredStyle: .actionSheet)
         
-        let updateAction = UIAlertAction(title: "Update Profile", style: .default) { (action) in
+        let updateAction = UIAlertAction(title: "Profile", style: .default) { (action) in
             self.presentUpdateProfileVC()
-        }
-        let pushNotificationsAction = UIAlertAction(title: "Notifications", style: .default) { (action) in
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
         }
         let logoutAction = UIAlertAction(title: "Logout", style: .default) { (action) in
             // Log analytics event
 //            FIRAnalytics.logEvent(withName: "logout", parameters: nil)
-            Answers.logCustomEvent(withName: "logout",
+            Answers.logCustomEvent(withName: "Logout",
                                            customAttributes: [:])
             
             // Clean up current session
@@ -122,7 +117,6 @@ class DashboardViewController: UIViewController {
         }
         
         alertController.addAction(updateAction)
-        alertController.addAction(pushNotificationsAction)
         alertController.addAction(logoutAction)
         alertController.addAction(cancelAction)
         
@@ -298,64 +292,6 @@ class DashboardViewController: UIViewController {
     
     func notepadButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "notepad", sender: self)
-    }
-    
-    
-    // TODO: Probably get rid of
-    func checkUserSignedIn() {
-        // Check for current user
-        FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
-            if user != nil {
-                // Try to get userDict from Firebase
-                FirebaseManager.getCurrentUser({ (userDict, error) in
-                    if error != nil {
-                        // userDict not retrieved -- check why
-                        print("Error getting userDict:", error!)
-                        // if userDict does not exist -- delete account & force sign up
-                        // otherwise logout user
-                        try! FIRAuth.auth()!.signOut()
-                    } else {
-                        // Make sure we don't check during onboarding
-                        if !AYNModel.sharedInstance.onboarding {
-                            print("User is not onboarding")
-                            // userDict retrieved -- check if completed signup
-                            if let userDict = userDict {
-                                if let completedSignup = userDict.object(forKey: "completedSignup") as? String {
-                                    if completedSignup == "true" {
-                                        print("User has completed signup")
-//                                        self.saveCurrentUserToModel()
-//                                        self.configureViewWithFirebase()
-                                    } else {
-                                        print("User has not completed signup")
-                                        // Delete account and force sign up
-//                                        FirebaseManager.deleteCurrentUser({ (error) in
-//                                            if error != nil {
-//                                                // Error deleting user -- sign out
-//                                                try! FIRAuth.auth()!.signOut()
-//                                            }
-//                                        })
-                                    }
-                                } else {
-                                    // Key doesn't exist -- delete account & force sign up
-//                                    FirebaseManager.deleteCurrentUser({ (error) in
-//                                        if error != nil {
-//                                            // Error deleting user -- sign out
-//                                            try! FIRAuth.auth()!.signOut()
-//                                        }
-//                                    })
-                                }
-                            }
-                        } else {
-                            print("User is onboarding -- don't delete account")
-                        }
-                    }
-                })
-            } else {
-                // Present onboarding VC
-                print("No user is signed in -- moving to onboarding flow")
-                self.presentOnboardingVC()
-            }
-        })
     }
     
     func checkNotepadForChanges() {
