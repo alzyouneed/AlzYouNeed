@@ -100,7 +100,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
     // MARK: - Onboarding progression
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         // Update name and present next VC
-        let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = nameTextField.text
         changeRequest?.commitChanges(completion: { (error) in
             if let error = error {
@@ -165,7 +165,7 @@ class NameVC: UIViewController, UITextFieldDelegate {
         
         Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "NameVC"])
         
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             user.delete(completion: { (error) in
                 if let error = error {
                     print("Error while deleting account: \(error.localizedDescription)")

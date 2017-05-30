@@ -208,7 +208,7 @@ class UpdateActionVC: UIViewController {
     func changeName() {
         HUD.show(.progress)
         
-        let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = topTextField.text
         changeRequest?.commitChanges { (error) in
             if let requestError = error {
@@ -234,12 +234,12 @@ class UpdateActionVC: UIViewController {
     func changePassword() {
         HUD.show(.progress)
         
-        FIRAuth.auth()?.currentUser?.updatePassword(bottomTextField.text!, completion: { (error) in
+        Auth.auth().currentUser?.updatePassword(to: bottomTextField.text!, completion: { (error) in
             if let error = error {
                 HUD.hide()
                 print("Error updating password: ", error.localizedDescription)
-                let errorCode = FIRAuthErrorCode(rawValue: error._code)!
-                if errorCode == FIRAuthErrorCode.errorCodeInvalidUserToken || errorCode == FIRAuthErrorCode.errorCodeRequiresRecentLogin {
+                let errorCode = AuthErrorCode(rawValue: error._code)!
+                if errorCode == AuthErrorCode.invalidUserToken || errorCode == AuthErrorCode.requiresRecentLogin {
                     self.showReAuthOptions()
                 }
             } else {
@@ -316,18 +316,18 @@ class UpdateActionVC: UIViewController {
     }
     
     func reAuthUser(provider: String, email: String?, password: String?) {
-        let user = FIRAuth.auth()?.currentUser
-        var credential: FIRAuthCredential? = nil
+        let user = Auth.auth().currentUser
+        var credential: AuthCredential? = nil
         
         if provider == "Facebook" {
-            credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+            credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
         } else if provider == "Google" {
             if let authentication = GIDSignIn.sharedInstance().currentUser.authentication {
-                credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+                credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
             }
         } else if provider == "Email" {
             if let email = email, let password = password {
-                credential = FIREmailPasswordAuthProvider.credential(withEmail: email, password: password)
+                credential = EmailAuthProvider.credential(withEmail: email, password: password)
             }
         }
         

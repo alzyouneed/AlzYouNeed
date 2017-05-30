@@ -21,7 +21,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     @IBOutlet var messageTextField: UITextField!
     
-    let databaseRef = FIRDatabase.database().reference()
+    let databaseRef = Database.database().reference()
     var conversationId: String!
 //    var familyId: String!
     
@@ -260,11 +260,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     func sendNotification(message: String) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         
         if let userName = AYNModel.sharedInstance.currentUser?["name"] as? String {
             if contact.deviceToken != nil {
-                let notification = ["fromId": FIRAuth.auth()?.currentUser!.uid,
+                let notification = ["fromId": Auth.auth().currentUser!.uid,
                                     "toId": contact.userId,
                                     "message" : "\(userName): \(message)",
                                     "deviceToken": contact.deviceToken!]
@@ -327,7 +327,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         
         let message = messages[(indexPath as NSIndexPath).row]
         
-        if message.senderId == FIRAuth.auth()?.currentUser?.uid {
+        if message.senderId == Auth.auth().currentUser?.uid {
             let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "messageCellMe")! as! MessageTableViewCell
             cell.configureCell(message, contact: contact)
 //            cell.configureCell(message, contact: contact, profileImage: profileImage)

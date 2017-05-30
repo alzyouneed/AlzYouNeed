@@ -23,7 +23,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     var emailTextField: UITextField!
     var passwordTextField: UITextField!
     
-    var authListener: FIRAuthStateDidChangeListenerHandle?
+    var authListener: AuthStateDidChangeListenerHandle?
     
     let imagePicker = UIImagePickerController()
     
@@ -42,7 +42,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         if let authListener = authListener {
-            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+            Auth.auth().removeStateDidChangeListener(authListener)
         }
     }
 
@@ -72,7 +72,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     }
     
     func setupNameLabel() {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             self.nameLabel.text = user.displayName?.components(separatedBy: " ").first
         }
     }
@@ -113,13 +113,13 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     }
     
     func deleteAccount() {
-        let user = FIRAuth.auth()?.currentUser
+        let user = Auth.auth().currentUser
         
         user?.delete { error in
             if let error = error {
                 print("Error deleting user: ", error.localizedDescription)
-                let errorCode = FIRAuthErrorCode(rawValue: error._code)!
-                if errorCode == FIRAuthErrorCode.errorCodeInvalidUserToken || errorCode == FIRAuthErrorCode.errorCodeRequiresRecentLogin {
+                let errorCode = AuthErrorCode(rawValue: error._code)!
+                if errorCode == AuthErrorCode.invalidUserToken || errorCode == AuthErrorCode.requiresRecentLogin {
                     self.showReAuthOptions()
                 }
             } else {
@@ -180,18 +180,18 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     }
     
     func reAuthUser(provider: String, email: String?, password: String?) {
-        let user = FIRAuth.auth()?.currentUser
-        var credential: FIRAuthCredential? = nil
+        let user = Auth.auth().currentUser
+        var credential: AuthCredential? = nil
         
         if provider == "Facebook" {
-            credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+            credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
         } else if provider == "Google" {
             if let authentication = GIDSignIn.sharedInstance().currentUser.authentication {
-                credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+                credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
             }
         } else if provider == "Email" {
             if let email = email, let password = password {
-                credential = FIREmailPasswordAuthProvider.credential(withEmail: email, password: password)
+                credential = EmailAuthProvider.credential(withEmail: email, password: password)
             }
         }
         
@@ -213,7 +213,7 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
     }
     
     func setupAuthListener() {
-        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
             if user != nil {
                 // User still signed in
             } else {

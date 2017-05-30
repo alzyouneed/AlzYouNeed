@@ -87,7 +87,7 @@ class MessageTableViewCell: UITableViewCell {
             self.dateLabel.text = "\(dateFormatter.string(from: date))"
         }
         
-        if let currentUser = FIRAuth.auth()?.currentUser {
+        if let currentUser = Auth.auth().currentUser {
             if message.senderId == currentUser.uid {
                 self.nameLabel.text = "Me"
                 // Use current user's profile image

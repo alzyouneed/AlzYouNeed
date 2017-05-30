@@ -21,19 +21,19 @@ import PKHUD
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
-    var ref: FIRDatabaseReference!
+    var ref: DatabaseReference!
 
     override init() {
         super.init()
         // Firebase init
-        FIRApp.configure()
-        ref = FIRDatabase.database().reference()
+        FirebaseApp.configure()
+        ref = Database.database().reference()
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Configure Google Sign-in
-        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
         
         // Configure Facebook Sign-in
@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         
         // Add observer for InstanceID token refresh callback.
-        NotificationCenter.default.addObserver(self, selector: #selector(self.tokenRefreshNotification), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.tokenRefreshNotification), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
         
         setupNotifications()
         Fabric.with([Crashlytics.self])
@@ -122,10 +122,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
         
         guard let authentication = user.authentication else { return }
-        let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                        accessToken: authentication.accessToken)
         
-        FIRAuth.auth()?.signIn(with: credential, completion: { (firebaseUser, error) in
+        Auth.auth().signIn(with: credential, completion: { (firebaseUser, error) in
             if let error = error {
                 print("Error signing in with Google in FIRAuth: \(error.localizedDescription)")
                 Answers.logLogin(withMethod: "Google", success: false, customAttributes: nil)
@@ -177,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             // Print it to console
             print("APNs device token: \(deviceTokenString)")
             // Persist it in your backend in case it's new
-            if let currentUserId = FIRAuth.auth()?.currentUser?.uid {
+            if let currentUserId = Auth.auth().currentUser?.uid {
                 if ref != nil {
                     
                     // See if device token updated
@@ -221,22 +221,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func tokenRefreshNotification(_ notification: Notification) {
         
         // Prevent crashing from unwrapping possible nil value
-        guard let refreshedToken = FIRInstanceID.instanceID().token() else { return }
+        guard let refreshedToken = InstanceID.instanceID().token() else { return }
         print("InstanceID token: \(refreshedToken)")
         
         // Connect to FCM since connection may have failed when attempted before having a token.
-        connectToFcm()
+//        connectToFcm()
     }
     
-    func connectToFcm() {
-        FIRMessaging.messaging().connect { (error) in
-            if (error != nil) {
-                print("Unable to connect with FCM. \(String(describing: error))")
-            } else {
-                print("Connected to FCM.")
-            }
-        }
-    }
+//    func connectToFcm() {
+//        Messaging.messaging().connect { (error) in
+//            if (error != nil) {
+//                print("Unable to connect with FCM. \(String(describing: error))")
+//            } else {
+//                print("Connected to FCM.")
+//            }
+//        }
+//    }
     
     // MARK: - Extra
     func applicationWillResignActive(_ application: UIApplication) {
@@ -248,8 +248,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        FIRMessaging.messaging().disconnect()
-        print("Disconnected from FCM.")
+//        Messaging.messaging().disconnect()
+//        print("Disconnected from FCM.")
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -259,7 +259,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 //        print("Did become active") // Log end of call here 
-        connectToFcm()
+//        connectToFcm()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

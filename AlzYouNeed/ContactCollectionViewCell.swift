@@ -71,7 +71,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
                 if let imageUrl = contact.photoUrl {
 
                     if imageUrl.hasPrefix("gs://") {
-                        FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+                        Storage.storage().reference(forURL: imageUrl).getData(maxSize: INT64_MAX, completion: { (data, error) in
                             if let error = error {
                                 // Error
                                 print("Error downloading user profile image: \(error.localizedDescription)")

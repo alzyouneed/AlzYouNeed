@@ -32,7 +32,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var notepadTopUserViewConstraint: NSLayoutConstraint!
     @IBOutlet var notepadBottomConstraint: NSLayoutConstraint!
     
-    var authListener: FIRAuthStateDidChangeListenerHandle?
+    var authListener: AuthStateDidChangeListenerHandle?
     var viewSetup = false
     
     override func viewDidLoad() {
@@ -80,7 +80,7 @@ class DashboardViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         if let authListener = authListener {
-            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+            Auth.auth().removeStateDidChangeListener(authListener)
         }
     }
 
@@ -112,7 +112,7 @@ class DashboardViewController: UIViewController {
                 print("Removed pending notifications")
             }
             print("User logged out")
-            try! FIRAuth.auth()?.signOut()
+            try! Auth.auth().signOut()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             // Cancel button pressed
@@ -137,7 +137,7 @@ class DashboardViewController: UIViewController {
     }
     
     func setupUserView() {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             // Check if AYNModel has image
             if let image = AYNModel.sharedInstance.userImage {
                 DispatchQueue.main.async(execute: {
@@ -170,7 +170,7 @@ class DashboardViewController: UIViewController {
     }
     
     func checkUserImageChanged() {
-        if FIRAuth.auth()?.currentUser != nil {
+        if Auth.auth().currentUser != nil {
             // Check if AYNModel has image
             if let image = AYNModel.sharedInstance.userImage {
                 DispatchQueue.main.async(execute: {
@@ -181,7 +181,7 @@ class DashboardViewController: UIViewController {
     }
     
     func setupUserNameLabel() {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             self.userView.userNameLabel.text = user.displayName?.components(separatedBy: " ").first
         }
     }
@@ -202,7 +202,7 @@ class DashboardViewController: UIViewController {
     
     func configureDashboardView(_ imageUrl: String) {
         if imageUrl.hasPrefix("gs://") {
-            FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+            Storage.storage().reference(forURL: imageUrl).getData(maxSize: INT64_MAX, completion: { (data, error) in
                 if let error = error {
                     // Error
                     print("Error downloading user profile image: \(error.localizedDescription)")
@@ -233,7 +233,7 @@ class DashboardViewController: UIViewController {
     }
     
     func setupAuthListener() {
-        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
             if user != nil {
                 if !self.viewSetup {
                     
@@ -500,7 +500,7 @@ extension DashboardViewController {
                 }
                 
                 if let lastChangedUser = familyNote["lastChangedUser"] as String? {
-                    if lastChangedUser == FIRAuth.auth()?.currentUser?.uid {
+                    if lastChangedUser == Auth.auth().currentUser?.uid {
                         self.notepadView.changesLabel.text = "Last change: You"
                     }
                 }

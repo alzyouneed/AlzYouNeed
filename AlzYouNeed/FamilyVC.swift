@@ -318,7 +318,7 @@ class FamilyVC: UIViewController, UITextFieldDelegate {
         
         Answers.logCustomEvent(withName: "Cancel sign up", customAttributes: ["step": "FamilyVC"])
         
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             user.delete(completion: { (error) in
                 if let error = error {
                     print("Error while deleting account: \(error.localizedDescription)")

@@ -54,10 +54,10 @@
                                         <action selector="changePicturePressed:" destination="7Hu-QP-JcH" eventType="touchUpInside" id="BDn-mm-B2i"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcJ-yl-uGl">
-                                    <rect key="frame" x="122" y="27" width="130" height="20"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="BcJ-yl-uGl">
+                                    <rect key="frame" x="122" y="25" width="130" height="22"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="RHA-HO-Ggw"/>
+                                        <constraint firstAttribute="height" constant="22" id="RHA-HO-Ggw"/>
                                         <constraint firstAttribute="width" constant="130" id="e2J-Wm-NaL"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="18"/>

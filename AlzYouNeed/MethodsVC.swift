@@ -19,7 +19,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     @IBOutlet var googleButton: UIButton!
     @IBOutlet var emailButton: UIButton!
     
-    var authListener: FIRAuthStateDidChangeListenerHandle?
+    var authListener: AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
             if let user = user {
                 print("MethodsVC: User signed in")
                 
@@ -57,7 +57,7 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         if let authListener = authListener {
-            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+            Auth.auth().removeStateDidChangeListener(authListener)
         }
     }
 
@@ -153,9 +153,9 @@ class MethodsVC: UIViewController, GIDSignInUIDelegate {
                 Answers.logSignUp(withMethod: "Facebook", success: false, customAttributes: nil)
             } else {
                 if let result = result, let resultToken = result.token, let resultTokenString = resultToken.tokenString {
-                    if let credential = FIRFacebookAuthProvider.credential(withAccessToken: resultTokenString) as FIRAuthCredential? {
+                    if let credential = FacebookAuthProvider.credential(withAccessToken: resultTokenString) as AuthCredential? {
                         
-                        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+                        Auth.auth().signIn(with: credential, completion: { (user, error) in
                             if let error = error {
                                 print("Error signing in with Facebook: \(error.localizedDescription)")
                                 Answers.logSignUp(withMethod: "Facebook", success: false, customAttributes: nil)

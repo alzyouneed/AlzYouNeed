@@ -18,7 +18,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     @IBOutlet var addReminderTableButton: UIButton!
     
-    let databaseRef = FIRDatabase.database().reference()
+    let databaseRef = Database.database().reference()
     var addReminderHandle: UInt?
     var removeReminderHandle: UInt?
     
@@ -283,7 +283,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         print("Adding Firebase observers")
         
         if let groupId = AYNModel.sharedInstance.groupId {
-            addReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
+            addReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").queryOrdered(byChild: "dueDate").observe(DataEventType.childAdded, with: { (snapshot) in
                 if let reminderDict = snapshot.value! as? NSDictionary {
                     if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
                         print("New reminder in RTDB")
@@ -308,7 +308,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                     }
                 }
             })
-            removeReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
+            removeReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").observe(DataEventType.childRemoved, with: { (snapshot) in
                 if let reminderId = snapshot.key as String? {
                     if let index = self.getIndex(reminderId) {
                         print("Removing reminder in RTDB")

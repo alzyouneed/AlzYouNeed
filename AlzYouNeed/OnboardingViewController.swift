@@ -45,7 +45,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     // MARK - Background Video Properties
     var player: AVPlayer?
     
-    var authListener: FIRAuthStateDidChangeListenerHandle?
+    var authListener: AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +101,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     
     override func viewDidDisappear(_ animated: Bool) {
         if let authListener = authListener {
-            FIRAuth.auth()?.removeStateDidChangeListener(authListener)
+            Auth.auth().removeStateDidChangeListener(authListener)
         }
     }
     
@@ -418,7 +418,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     }
     
     func setupAuthListener() {
-        authListener = FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
+        authListener = Auth.auth().addStateDidChangeListener({ (auth, user) in
             if user != nil {
                 print("OnboardingVC: User signed in")
                     
@@ -678,8 +678,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     @IBAction func facebookOptionButtonPressed(_ sender: UIButton) {
         HUD.show(.progress)
         
-        let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
-        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+        let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+        Auth.auth().signIn(with: credential, completion: { (user, error) in
             if let error = error {
                 HUD.hide()
                 print("Error signing in with Facebook: ", error.localizedDescription)
@@ -703,7 +703,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     func loginWithEmail() {
         HUD.show(.progress)
         if let email = emailTextField.text, let password = passwordTextField.text {
-            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
+            Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {
                     print("Error signing in with Email: ", error.localizedDescription)
                     HUD.hide()
@@ -721,17 +721,17 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate, GIDSignIn
     
     // MARK: - Handle errors
     func showErrorMessage(error: Error) {
-        let errorCode = FIRAuthErrorCode(rawValue: error._code)!
+        let errorCode = AuthErrorCode(rawValue: error._code)!
         var errorMessage = ""
         
         switch errorCode {
-        case .errorCodeInvalidEmail:
+        case .invalidEmail:
             errorMessage = "Email address is invalid"
-        case .errorCodeNetworkError:
+        case .networkError:
             errorMessage = "Network error. Please try again."
-        case .errorCodeUserNotFound:
+        case .userNotFound:
             errorMessage = "No account found"
-        case .errorCodeWrongPassword:
+        case .wrongPassword:
             errorMessage = "Incorrect password"
         default:
             break

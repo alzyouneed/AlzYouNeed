@@ -14,9 +14,9 @@ class FirebaseManager: NSObject {
     
     // MARK: - User Management
     class func getCurrentUser(_ completionHandler: @escaping (_ userDict: NSDictionary?, _ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             let userId = user.uid
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             
             databaseRef.child(UserPath).child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let dict = snapshot.value! as? NSDictionary {
@@ -43,7 +43,7 @@ class FirebaseManager: NSObject {
     }
     
     class func getUserById(_ userId: String, completionHandler: @escaping (_ userDict: NSDictionary?, _ error: NSError?) -> Void) {
-        let databaseRef = FIRDatabase.database().reference()
+        let databaseRef = Database.database().reference()
         databaseRef.child(UserPath).child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
             if let dict = snapshot.value! as? NSDictionary {
                  print("User retrieved by ID")
@@ -62,9 +62,9 @@ class FirebaseManager: NSObject {
     }
     
     class func updateUser(updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void ){
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             let userId = user.uid
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             let updatesDict = updates as! [AnyHashable: Any]
             
             databaseRef.child(UserPath).child(userId).updateChildValues(updatesDict, withCompletionBlock: { (error, ref) in
@@ -80,16 +80,16 @@ class FirebaseManager: NSObject {
     }
     
     class func updateUserImage(image: UIImage, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let storageRef = FIRStorage.storage().reference()
+        if let user = Auth.auth().currentUser {
+            let storageRef = Storage.storage().reference()
             let imagePath = "profileImage/" + user.uid
-            let metaData = FIRStorageMetadata()
+            let metaData = StorageMetadata()
             metaData.contentType = "image/jpg"
             
             var imageData = Data()
             imageData = UIImageJPEGRepresentation(image, 0)!
             
-            storageRef.child(imagePath).put(imageData, metadata: metaData, completion: { (firMetaData, error) in
+            storageRef.child(imagePath).putData(imageData, metadata: metaData, completion: { (firMetaData, error) in
                 if let error = error {
                     print("Error uploading image: ", error.localizedDescription)
                     completionHandler(error as NSError)
@@ -97,7 +97,7 @@ class FirebaseManager: NSObject {
                     if let firMetaData = firMetaData {
                         if let photoURL = firMetaData.downloadURL() {
                             // Store in User Profile
-                            let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+                            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
                             changeRequest?.photoURL = photoURL
                             changeRequest?.commitChanges(completion: { (error) in
                                 if let error = error {
@@ -126,8 +126,8 @@ class FirebaseManager: NSObject {
     }
     
     // MARK: - Family Group Management
-    class func createNewFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+    class func createNewFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: DatabaseReference?) -> Void) {
+        if let user = Auth.auth().currentUser {
             // Check if family group already exists
             lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
                 if error != nil {
@@ -141,7 +141,7 @@ class FirebaseManager: NSObject {
                             completionHandler(error, nil)
                         } else {
                             // Family name is free
-                            let databaseRef = FIRDatabase.database().reference()
+                            let databaseRef = Database.database().reference()
                             let userDict = ["admin" : true]
                             let familyToSave = ["password": password, GroupMembersPath:[user.uid: userDict], "notepad" : "Store your notes here!"] as [String : Any]
                             
@@ -168,8 +168,8 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func joinFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+    class func joinFamilyGroup(_ familyId: String, password: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: DatabaseReference?) -> Void) {
+        if let user = Auth.auth().currentUser {
             lookUpFamilyGroup(familyId, completionHandler: { (error, familyExists) in
                 if error != nil {
                     completionHandler(error, nil)
@@ -185,7 +185,7 @@ class FirebaseManager: NSObject {
                                         // Compare password to user input
                                         if password == familyPassword {
                                             // Password correct
-                                            let databaseRef = FIRDatabase.database().reference()
+                                            let databaseRef = Database.database().reference()
                                             let userDict = ["admin" : false]
                                             // Update current user and new family, and signUp status
                                             let childUpdates = ["/\(UserPath)/\(user.uid)/groupId": familyId,
@@ -234,7 +234,7 @@ class FirebaseManager: NSObject {
 
     // Helper functions
     class func lookUpFamilyGroup(_ familyId: String, completionHandler: @escaping (_ error: NSError?, _ familyExists: Bool?) -> Void) {
-        let databaseRef = FIRDatabase.database().reference()
+        let databaseRef = Database.database().reference()
         
         databaseRef.child(GroupPath).observeSingleEvent(of: .value, with: { (snapshot) in
             if let groupExists = snapshot.hasChild(familyId) as Bool? {
@@ -248,7 +248,7 @@ class FirebaseManager: NSObject {
     }
     
     class func getFamilyPassword(_ familyId: String, completionHandler: @escaping (_ password: String?, _ error: NSError?) -> Void) {
-        let databaseRef = FIRDatabase.database().reference()
+        let databaseRef = Database.database().reference()
         
         databaseRef.child(GroupPath).child(familyId).observeSingleEvent(of: .value, with: { (snapshot) in
             if let dict = snapshot.value as? NSDictionary, let familyPassword = dict["password"] as? String {
@@ -263,14 +263,14 @@ class FirebaseManager: NSObject {
     }
 
     class func getFamilyMembers(_ completionHandler: @escaping (_ members: [Contact]?, _ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser{
+        if let user = Auth.auth().currentUser{
             
 //            if AYNModel.sharedInstance.currentUser != nil {
                 let userId = user.uid
                 // Search for members using current user's familyId
                 if let groupId = AYNModel.sharedInstance.groupId {
 //                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
+                    let databaseRef = Database.database().reference()
                     var membersArr = [Contact]()
                     
                     databaseRef.child(GroupPath).child(groupId).child(GroupMembersPath).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -301,11 +301,11 @@ class FirebaseManager: NSObject {
     
     // Custom UserInfo unique to each familyMember's instance of their relationship to others
     class func updateFamilyMemberUserInfo(_ contactUserId: String, updates: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             if AYNModel.sharedInstance.currentUser != nil {
                 if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                     let userId = user.uid
-                    let databaseRef = FIRDatabase.database().reference()
+                    let databaseRef = Database.database().reference()
                     
                     let updatesDict = updates as! [AnyHashable: Any]
                     
@@ -327,11 +327,11 @@ class FirebaseManager: NSObject {
     }
     
     class func getFamilyMemberUserInfo(_ contactUserId: String, completionHandler: @escaping (_ error: NSError?, _ userInfo: NSDictionary?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             if AYNModel.sharedInstance.currentUser != nil {
                 if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
                     let userId = user.uid
-                    let databaseRef = FIRDatabase.database().reference()
+                    let databaseRef = Database.database().reference()
                     
                     databaseRef.child(GroupPath).child(userFamilyId).child(GroupMembersPath).child(userId).child("communicationInfo").child(contactUserId).observeSingleEvent(of: .value, with: { (snapshot) in
                         if let dict = snapshot.value! as? NSDictionary {
@@ -348,9 +348,9 @@ class FirebaseManager: NSObject {
     }
     
     // MARK: - Reminders
-    class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func createFamilyReminder(_ reminder: NSDictionary, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: DatabaseReference?) -> Void) {
         if let groupId = AYNModel.sharedInstance.groupId {
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             
             databaseRef.child(GroupPath).child(groupId).child("reminders").childByAutoId().setValue(reminder, withCompletionBlock: { (error, newDatabaseRef) in
                 if error != nil {
@@ -367,9 +367,9 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func deleteFamilyReminder(_ reminderId: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func deleteFamilyReminder(_ reminderId: String, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: DatabaseReference?) -> Void) {
         if let groupId = AYNModel.sharedInstance.groupId {
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             
             databaseRef.child(GroupPath).child(groupId).child("reminders").child(reminderId).removeValue(completionBlock: { (error, oldRef) in
                 if error != nil {
@@ -384,9 +384,9 @@ class FirebaseManager: NSObject {
         }
     }
     
-    class func completeFamilyReminder(_ reminder: Reminder, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: FIRDatabaseReference?) -> Void) {
+    class func completeFamilyReminder(_ reminder: Reminder, completionHandler: @escaping (_ error: NSError?, _ newDatabaseRef: DatabaseReference?) -> Void) {
         if let groupId = AYNModel.sharedInstance.groupId {
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             
             var modifiedReminderDict = reminder.asDict()
             
@@ -416,7 +416,7 @@ class FirebaseManager: NSObject {
     
     class func getCompletedFamilyReminders(_ completionHandler: @escaping (_ completedReminders: [Reminder]?, _ error: NSError?) -> Void) {
         if let groupId = AYNModel.sharedInstance.groupId {
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             var remindersArr = [Reminder]()
             
             databaseRef.child(GroupPath).child(groupId).child("completedReminders").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -442,10 +442,10 @@ class FirebaseManager: NSObject {
     
     // MARK: - Messages
     class func sendNewMessage(_ receiverId: String, conversationId: String, message: NSDictionary, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             if let groupId = AYNModel.sharedInstance.groupId {
 //                if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
+                    let databaseRef = Database.database().reference()
                     let messageKey = databaseRef.child(GroupPath).child(groupId).child("conversations").child(conversationId).childByAutoId().key
                     
                     // Add current user ID to message object
@@ -473,10 +473,10 @@ class FirebaseManager: NSObject {
     }
     
     class func favoriteMessage(_ conversationId: String, messageId: String, favorited: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             if AYNModel.sharedInstance.currentUser != nil {
                 if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                    let databaseRef = FIRDatabase.database().reference()
+                    let databaseRef = Database.database().reference()
                     
                     let childUpdates = [user.uid : favorited]
                     databaseRef.child(GroupPath).child(userFamilyId).child("conversations").child(conversationId).child(messageId).updateChildValues(childUpdates, withCompletionBlock: { (error, newDatabaseRef) in
@@ -496,7 +496,7 @@ class FirebaseManager: NSObject {
     }
     
     class func getConversationId(_ familyId: String, receiverId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
-        if (FIRAuth.auth()?.currentUser) != nil {
+        if (Auth.auth().currentUser) != nil {
 //            if AYNModel.sharedInstance.currentUser != nil {
                 // Get list of current user's conversations (by ID)
                 // Must use getCurrentUser to ensure most up-to-date information (newly created conversations)
@@ -578,8 +578,8 @@ class FirebaseManager: NSObject {
     }
     
     fileprivate class func createNewConversation(_ receiverId: String, familyId: String, completionHandler: @escaping (_ error: NSError?, _ conversationId: String?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
-            let databaseRef = FIRDatabase.database().reference()
+        if let user = Auth.auth().currentUser {
+            let databaseRef = Database.database().reference()
             let newConversationId = databaseRef.child(GroupPath).child(familyId).child("conversations").childByAutoId().key
             
             let childUpdates = ["/users/\(user.uid)/conversations/\(newConversationId)": "true",
@@ -603,8 +603,8 @@ class FirebaseManager: NSObject {
 extension FirebaseManager {
     
     class func getFamilyNote(completionHandler: @escaping (_ error: NSError?, _ familyNoteData: [String:String]?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser, let groupId = AYNModel.sharedInstance.groupId {
-            let databaseRef = FIRDatabase.database().reference()
+        if let user = Auth.auth().currentUser, let groupId = AYNModel.sharedInstance.groupId {
+            let databaseRef = Database.database().reference()
             
             databaseRef.child(GroupPath).child(groupId).child("notepad").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let familyNote = snapshot.value as? [String:String] {
@@ -639,9 +639,9 @@ extension FirebaseManager {
     }
     
     class func saveFamilyNote(_changes: String, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        if let user = FIRAuth.auth()?.currentUser {
+        if let user = Auth.auth().currentUser {
             let groupId = AYNModel.sharedInstance.groupId!
-            let databaseRef = FIRDatabase.database().reference()
+            let databaseRef = Database.database().reference()
             let name = user.displayName?.components(separatedBy: " ").first
             
             databaseRef.child(GroupPath).child(groupId).updateChildValues(["notepad": ["note": _changes, "lastChangedUser":user.uid, "lastChangedName": name]], withCompletionBlock: { (error, newRef) in
