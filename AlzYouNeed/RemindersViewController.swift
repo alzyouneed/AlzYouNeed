@@ -62,6 +62,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         
         AYNModel.sharedInstance.remindersArr.removeAll()
         self.remindersTableView.reloadData()
+        
+        checkPhoneNumbersExist()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -732,11 +734,12 @@ extension RemindersViewController {
         
         emergencyButton.addTarget(self, action: #selector(RemindersViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
         
-        if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
-            print("Saved contacts to AYNModel for emergency")
-            self.emergencyButton.isHidden = false
-            self.emergencyButton.isEnabled = true
-        }
+        checkPhoneNumbersExist()
+    }
+    
+    func checkPhoneNumbersExist() {
+        self.emergencyButton.isHidden = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? true : false
+        self.emergencyButton.isUserInteractionEnabled = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? false : true
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {

@@ -240,6 +240,10 @@ class UpdateProfileTVC: UITableViewController, UINavigationControllerDelegate {
             if let destVC: UpdateActionVC = segue.destination as? UpdateActionVC {
                 destVC.type = "changePassword"
             }
+        } else if segue.identifier == "changePhone" {
+            if let destVC: UpdateActionVC = segue.destination as? UpdateActionVC {
+                destVC.type = "changePhone"
+            }
         }
         
         // Get the new view controller using segue.destinationViewController.

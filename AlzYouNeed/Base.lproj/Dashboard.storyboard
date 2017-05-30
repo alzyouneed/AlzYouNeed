@@ -132,8 +132,35 @@
                                             <segue destination="MtK-Hz-nPj" kind="show" identifier="changePassword" id="bLo-eA-cj3"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="K1I-Rn-iDZ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="zWX-NA-OfY">
                                         <rect key="frame" x="0.0" y="344.5" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zWX-NA-OfY" id="qcW-ZO-qUE">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Phone number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmy-DU-hiI">
+                                                    <rect key="frame" x="16" y="8" width="170" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="170" id="XMC-Mo-zFH"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Vmy-DU-hiI" secondAttribute="bottom" constant="7.5" id="7ME-bC-YgC"/>
+                                                <constraint firstItem="Vmy-DU-hiI" firstAttribute="leading" secondItem="qcW-ZO-qUE" secondAttribute="leading" constant="16" id="lBA-dT-9JZ"/>
+                                                <constraint firstItem="Vmy-DU-hiI" firstAttribute="top" secondItem="qcW-ZO-qUE" secondAttribute="top" constant="8" id="rhQ-jM-S85"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="MtK-Hz-nPj" kind="show" identifier="changePhone" id="l8p-Ha-5aZ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="K1I-Rn-iDZ">
+                                        <rect key="frame" x="0.0" y="404.5" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K1I-Rn-iDZ" id="sns-Ed-tmO">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="59.5"/>
@@ -161,7 +188,7 @@
                             <tableViewSection headerTitle=" " id="Jpq-Sh-jYt">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="vfe-c2-H0c">
-                                        <rect key="frame" x="0.0" y="460.5" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="520.5" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vfe-c2-H0c" id="j4o-QA-PdB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
@@ -428,6 +455,6 @@
         <image name="settingsIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bLo-eA-cj3"/>
+        <segue reference="l8p-Ha-5aZ"/>
     </inferredMetricsTieBreakers>
 </document>

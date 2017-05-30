@@ -58,6 +58,8 @@ class DashboardViewController: UIViewController {
         
         checkUserImageChanged()
         
+        checkPhoneNumbersExist()
+        
         self.navigationController?.navigationBar.tintColor = UIColor.white
         UIApplication.shared.statusBarStyle = .lightContent
         
@@ -324,8 +326,11 @@ class DashboardViewController: UIViewController {
                 }
                 if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
                     print("Saved contacts to AYNModel for emergency")
-                    self.emergencyButton.isHidden = false
-                    self.emergencyButton.isEnabled = true
+                    
+                    DispatchQueue.main.async {
+                        self.emergencyButton.isHidden = false
+                        self.emergencyButton.isEnabled = true
+                    }
                 }
             }
         })
@@ -376,6 +381,11 @@ extension DashboardViewController {
         emergencyButton.layer.shadowOpacity = 0.5
         
         emergencyButton.addTarget(self, action: #selector(DashboardViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+    }
+    
+    func checkPhoneNumbersExist() {
+        self.emergencyButton.isHidden = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? true : false
+        self.emergencyButton.isUserInteractionEnabled = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? false : true
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {

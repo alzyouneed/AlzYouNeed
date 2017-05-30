@@ -62,13 +62,16 @@ class UpdateActionVC: UIViewController {
             typeLabel.text = "Change Name"
         } else if type == "changePassword" {
             typeLabel.text = "Change Password"
+        } else if type == "changePhone" {
+            typeLabel.text = "Change Phone Number"
         }
     }
     
     func setupTopTextField() {
         let changeName = (type == "changeName")
-        
         topTextField.font = UIFont(name: "OpenSans", size: 20)
+        
+        if changeName || type == "changePassword" {
         topTextField.placeholder = changeName ? "First name" : "New password"
         topTextField.title = changeName ? "Name" : "Password"
         topTextField.textColor = UIColor.black
@@ -82,6 +85,19 @@ class UpdateActionVC: UIViewController {
         topTextField.addTarget(self, action:#selector(UpdateActionVC.editedTopTextFieldText), for:UIControlEvents.editingChanged)
         topTextField.autocorrectionType = UITextAutocorrectionType.no
         topTextField.autocapitalizationType = UITextAutocapitalizationType.words
+        } else {
+            topTextField.placeholder = "Phone number"
+            topTextField.title = "Phone number"
+            topTextField.textColor = UIColor.black
+            topTextField.tintColor = UIColor(hex: "7189FF")
+            topTextField.lineColor = UIColor.lightGray
+            
+            topTextField.selectedTitleColor = UIColor(hex: "7189FF")
+            topTextField.selectedLineColor = UIColor(hex: "7189FF")
+            
+            topTextField.addTarget(self, action:#selector(UpdateActionVC.editedTopTextFieldText), for:UIControlEvents.editingChanged)
+            topTextField.keyboardType = UIKeyboardType.phonePad
+        }
     }
     
     func setupBottomTextField() {
@@ -121,6 +137,14 @@ class UpdateActionVC: UIViewController {
             // Check top not empty
             let topEmpty = (topTextField.text?.isEmpty)!
             enableUpdateButton(enable: !topEmpty)
+        } else if type == "changePhone" {
+            // Check top not empty
+            let topEmpty = (topTextField.text?.isEmpty)!
+            let phoneRegex = "^\\d{3}\\d{3}\\d{4}$"
+            let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+            let valid = phoneTest.evaluate(with: topTextField.text!)
+            
+            enableUpdateButton(enable: (!topEmpty && valid))
         } else {
             let topEmpty = (topTextField.text?.isEmpty)!
             let bottomEmpty = (bottomTextField.text?.isEmpty)!
@@ -174,8 +198,10 @@ class UpdateActionVC: UIViewController {
     @IBAction func updateButtonPressed(_ sender: UIButton) {
         if type == "changeName" {
             changeName()
-        } else {
+        } else if type == "changePassword" {
             changePassword()
+        } else if type == "changePhone" {
+            changePhoneNumber()
         }
     }
     
@@ -218,6 +244,22 @@ class UpdateActionVC: UIViewController {
                 }
             } else {
                 print("Updated password")
+                HUD.flash(.success, delay: 0, completion: { (complete) in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
+        })
+    }
+    
+    func changePhoneNumber() {
+        HUD.show(.progress)
+        
+        FirebaseManager.updateUser(updates: ["phoneNumber" : self.topTextField.text!] as NSDictionary, completionHandler: { (error) in
+            if let error = error {
+                HUD.hide()
+                print("Error updating user: ", error.localizedDescription)
+            } else {
+                print("Updated phone number")
                 HUD.flash(.success, delay: 0, completion: { (complete) in
                     self.navigationController?.popViewController(animated: true)
                 })

@@ -70,6 +70,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
+        checkPhoneNumbersExist()
         
         // If new user signed in -- force reload contacts
         if AYNModel.sharedInstance.contactsArrWasReset {
@@ -387,10 +388,12 @@ extension ContactsViewController {
         
         emergencyButton.addTarget(self, action: #selector(ContactsViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
         
-        if !AYNModel.sharedInstance.familyMemberNumbers.isEmpty {
-            self.emergencyButton.isHidden = false
-            self.emergencyButton.isEnabled = true
-        }
+        checkPhoneNumbersExist()
+    }
+    
+    func checkPhoneNumbersExist() {
+        self.emergencyButton.isHidden = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? true : false
+        self.emergencyButton.isUserInteractionEnabled = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? false : true
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {
