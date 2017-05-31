@@ -139,11 +139,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Phone number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmy-DU-hiI">
-                                                    <rect key="frame" x="16" y="8" width="170" height="44"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="170" id="XMC-Mo-zFH"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change phone number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmy-DU-hiI">
+                                                    <rect key="frame" x="16" y="8" width="318" height="44"/>
                                                     <fontDescription key="fontDescription" name="OpenSans" family="Open Sans" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -151,6 +148,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Vmy-DU-hiI" secondAttribute="bottom" constant="7.5" id="7ME-bC-YgC"/>
+                                                <constraint firstAttribute="trailing" secondItem="Vmy-DU-hiI" secondAttribute="trailing" constant="8" id="ZAg-k3-DrY"/>
                                                 <constraint firstItem="Vmy-DU-hiI" firstAttribute="leading" secondItem="qcW-ZO-qUE" secondAttribute="leading" constant="16" id="lBA-dT-9JZ"/>
                                                 <constraint firstItem="Vmy-DU-hiI" firstAttribute="top" secondItem="qcW-ZO-qUE" secondAttribute="top" constant="8" id="rhQ-jM-S85"/>
                                             </constraints>
@@ -229,7 +227,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ola-4O-IRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1519" y="1209"/>
+            <point key="canvasLocation" x="1517.5999999999999" y="1208.5457271364319"/>
         </scene>
         <!--Update ActionVC-->
         <scene sceneID="YHa-za-AAF">
@@ -435,7 +433,7 @@
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6Uy-Sr-Su7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6Uy-Sr-Su7">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

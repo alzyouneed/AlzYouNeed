@@ -262,12 +262,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func sendNotification(message: String) {
         let ref = Database.database().reference()
         
-        if let userName = AYNModel.sharedInstance.currentUser?["name"] as? String {
+        if let username = Auth.auth().currentUser?.displayName {
             if contact.deviceToken != nil {
                 let notification = ["fromId": Auth.auth().currentUser!.uid,
                                     "toId": contact.userId,
-                                    "message" : "\(userName): \(message)",
-                                    "deviceToken": contact.deviceToken!]
+                                    "message" : "\(username): \(message)",
+                    "deviceToken": contact.deviceToken!]
                 ref.child("notifications").childByAutoId().setValue(notification)
                 print("Sent notification")
             }
@@ -278,43 +278,43 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func addConversationObservers() {
         print("Adding Firebase observers")
         if let groupId = AYNModel.sharedInstance.groupId {
-//                self.familyId = userFamilyId
+            //                self.familyId = userFamilyId
             
-                conversationHandle = self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
-//                    self.databaseRef.child(GroupPath).child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
-                    var indexPaths: [IndexPath] = []
-                    self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
-                        //                            print("Value: \(snapshot.value)")
-                        if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
-                            self.messages.append(newMessage)
-                            indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
-                            
-                            //                                print("inserting new message into row")
-                            self.messagesTableView.insertRows(at: indexPaths, with: .none)
-                            
-                            //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-                            
-                            DispatchQueue.main.async(execute: {
-                                self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
-                            })
-                        }
-                    })
+            conversationHandle = self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
+                //                    self.databaseRef.child(GroupPath).child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+                var indexPaths: [IndexPath] = []
+                self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
+                    //                            print("Value: \(snapshot.value)")
+                    if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
+                        self.messages.append(newMessage)
+                        indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
+                        
+                        //                                print("inserting new message into row")
+                        self.messagesTableView.insertRows(at: indexPaths, with: .none)
+                        
+                        //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+                        
+                        DispatchQueue.main.async(execute: {
+                            self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
+                        })
+                    }
                 })
+            })
         }
     }
     
     func removeConversationObservers() {
         print("Removing Firebase observers")
-//        self.databaseRef.child(GroupPath).child(familyId).child("conversations").child(conversationId).removeAllObservers()
+        //        self.databaseRef.child(GroupPath).child(familyId).child("conversations").child(conversationId).removeAllObservers()
         
         if let groupId = AYNModel.sharedInstance.groupId {
-//            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                if conversationHandle != nil {
-                    self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(conversationId).removeObserver(withHandle: conversationHandle!)
-                    conversationHandle = nil
-                    print("Removed conversationHandle")
-                }
-//            }
+            //            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+            if conversationHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(conversationId).removeObserver(withHandle: conversationHandle!)
+                conversationHandle = nil
+                print("Removed conversationHandle")
+            }
+            //            }
         }
     }
     
