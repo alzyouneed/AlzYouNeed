@@ -24,7 +24,10 @@ class FirebaseManager: NSObject {
                 completionHandler(user, error as NSError?)
             }
         })
-    }
+    } //TODO can I do this w/o password?
+    // ask for password in next screen
+    //then enter app
+    //sign up with phone number?
     
     class func getUserSignUpStatus(_ completionHandler: @escaping (_ status: String?) -> Void) {
         if AYNModel.sharedInstance.currentUser != nil {

@@ -490,7 +490,6 @@
 				TargetAttributes = {
 					2D9834D31D0C4A91000977DC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 472W345FWN;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -804,7 +803,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 472W345FWN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = AlzYouNeed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -824,7 +823,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlzYouNeed/AlzYouNeed.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 472W345FWN;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = AlzYouNeed/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
