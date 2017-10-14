@@ -193,13 +193,9 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                     
                     // save unsuccessful logins
                     var ref: FIRDatabaseReference!
-                    ref = FIRDatabase.database().reference().child("unsuccessful")
-                    let key = ref.childByAutoId().key
-                    
-                    let attempt = ["id":key,
-                                     "email":self.emailVTFView.textField.text! as String
-                                     ]
-                    ref.child(key).setValue(attempt)
+                    ref = FIRDatabase.database().reference().child("unsuccessful").childByAutoId()
+                    let attempt = ["email":self.emailVTFView.textField.text! as String]
+                    ref.setValue(attempt)
                     
                 }
                 else {
