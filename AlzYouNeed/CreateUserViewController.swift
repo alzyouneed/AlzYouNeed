@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import PKHUD
 import Crashlytics
+import FirebaseDatabase
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -100,7 +101,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
     @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     // MARK: - UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Switch between textFields by using return key
@@ -123,6 +124,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
+   
     
     func textFieldDidChange(_ textField: UITextField) {
         let tag = textField.superview!.superview!.tag
@@ -165,7 +167,7 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
             nextButton.alpha = 0.5
         }
     }
-    
+    //HERE TODO
     // MARK: - Firebase
     func signUpUser() {
         if validFields() {
@@ -188,6 +190,17 @@ class CreateUserViewController: UIViewController, UITextFieldDelegate {
                         self.showPopoverView(error!)
                         self.interfaceEnabled(true)
                     })
+                    
+                    // save unsuccessful logins
+                    var ref: FIRDatabaseReference!
+                    ref = FIRDatabase.database().reference().child("unsuccessful")
+                    let key = ref.childByAutoId().key
+                    
+                    let attempt = ["id":key,
+                                     "email":self.emailVTFView.textField.text! as String
+                                     ]
+                    ref.child(key).setValue(attempt)
+                    
                 }
                 else {
                     // Successfully signed up
