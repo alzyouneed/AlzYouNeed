@@ -194,6 +194,12 @@ class EmailVC: UIViewController, UITextFieldDelegate {
                     Answers.logSignUp(withMethod: "Email", success: false, customAttributes: nil)
                     
                     self.showErrorMessage(error: error)
+                    
+                    // Save email address on failure
+                    let attempt = ["email":email]
+                    
+                    let databaseRef = Database.database().reference()
+                    databaseRef.child("unsuccessful").childByAutoId().setValue(attempt)
                 } else {
                     if user != nil {
                         print("Created user with email")
