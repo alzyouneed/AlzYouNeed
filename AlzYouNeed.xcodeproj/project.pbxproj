@@ -84,7 +84,7 @@
 		2D6C9CDB1ECFF38700FC8457 /* NameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameVC.swift; sourceTree = "<group>"; };
 		2D6EBACD1D0F1652004AD135 /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		2D7948461D1248F000FF1E51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Extra Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2D7BD7491D138A7800CE90E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D94E7F41ED0CC40001EF67E /* NewProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfile.swift; sourceTree = "<group>"; };
 		2D9834D41D0C4A91000977DC /* AlzYouNeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlzYouNeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9834D71D0C4A91000977DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
