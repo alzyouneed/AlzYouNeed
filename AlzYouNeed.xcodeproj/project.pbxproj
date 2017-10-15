@@ -60,7 +60,7 @@
 		2DE890B21D10AE28001DC19F /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */; };
 		2DE890B41D11B998001DC19F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B31D11B998001DC19F /* Extensions.swift */; };
 		2DE890B61D11B9A7001DC19F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE890B51D11B9A7001DC19F /* Constants.swift */; };
-		A34A3EC17A2E319842616A6C /* Pods_AlzYouNeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F611C1BDAEA6CF76ED257B /* Pods_AlzYouNeed.framework */; };
+		CE7A920473A1CC06B79575DE /* Pods_AlzYouNeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A457E53D26376348BBD9AE9 /* Pods_AlzYouNeed.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,9 +120,9 @@
 		2DE890B11D10AE28001DC19F /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DE890B31D11B998001DC19F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2DE890B51D11B9A7001DC19F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		6327080B0BE4BB6AAA83C326 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
-		98F611C1BDAEA6CF76ED257B /* Pods_AlzYouNeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlzYouNeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8A1605B806B2B4D7F217704 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
+		42C55905C746C31CFFB7FB56 /* Pods-AlzYouNeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.debug.xcconfig"; sourceTree = "<group>"; };
+		4A457E53D26376348BBD9AE9 /* Pods_AlzYouNeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlzYouNeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		572AFB4BF1993040B84E7892 /* Pods-AlzYouNeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlzYouNeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A34A3EC17A2E319842616A6C /* Pods_AlzYouNeed.framework in Frameworks */,
+				CE7A920473A1CC06B79575DE /* Pods_AlzYouNeed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,8 +215,8 @@
 			children = (
 				2D9834D61D0C4A91000977DC /* AlzYouNeed */,
 				2D9834D51D0C4A91000977DC /* Products */,
-				40AA372965892638BEFB584A /* Pods */,
-				985062471824088067C0352B /* Frameworks */,
+				3F7586C4DE88C1CCB3C3195D /* Pods */,
+				5720030C5C1DA34A3D592542 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -385,19 +385,19 @@
 			name = Extras;
 			sourceTree = "<group>";
 		};
-		40AA372965892638BEFB584A /* Pods */ = {
+		3F7586C4DE88C1CCB3C3195D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6327080B0BE4BB6AAA83C326 /* Pods-AlzYouNeed.debug.xcconfig */,
-				F8A1605B806B2B4D7F217704 /* Pods-AlzYouNeed.release.xcconfig */,
+				42C55905C746C31CFFB7FB56 /* Pods-AlzYouNeed.debug.xcconfig */,
+				572AFB4BF1993040B84E7892 /* Pods-AlzYouNeed.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		985062471824088067C0352B /* Frameworks */ = {
+		5720030C5C1DA34A3D592542 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				98F611C1BDAEA6CF76ED257B /* Pods_AlzYouNeed.framework */,
+				4A457E53D26376348BBD9AE9 /* Pods_AlzYouNeed.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -409,13 +409,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D9834E61D0C4A91000977DC /* Build configuration list for PBXNativeTarget "AlzYouNeed" */;
 			buildPhases = (
-				6CF0E2E8B84F8B7F94522246 /* [CP] Check Pods Manifest.lock */,
+				F80812434E193C94B4C9C38F /* [CP] Check Pods Manifest.lock */,
 				2D9834D01D0C4A91000977DC /* Sources */,
 				2D9834D11D0C4A91000977DC /* Frameworks */,
 				2D9834D21D0C4A91000977DC /* Resources */,
 				2D7E61DD1E3E78FF005EA135 /* ShellScript */,
-				8F58C624BD016E0C39CC7447 /* [CP] Embed Pods Frameworks */,
-				D1C908B42D84919D9C76F483 /* [CP] Copy Pods Resources */,
+				3A9F6D69B0A982A398A77216 /* [CP] Embed Pods Frameworks */,
+				062C751B064FBD6FE69C9808 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -506,6 +506,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		062C751B064FBD6FE69C9808 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D7E61DD1E3E78FF005EA135 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -519,25 +537,7 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" b0793cc665a2ee35244482db78b35cc5d32129e0 6ed5a63e3066dd07ad57ce61092f76186f5b3bfc0ef2f0ccb326865727163d3f";
 		};
-		6CF0E2E8B84F8B7F94522246 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlzYouNeed-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8F58C624BD016E0C39CC7447 /* [CP] Embed Pods Frameworks */ = {
+		3A9F6D69B0A982A398A77216 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -585,22 +585,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D1C908B42D84919D9C76F483 /* [CP] Copy Pods Resources */ = {
+		F80812434E193C94B4C9C38F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"$(DERIVED_FILE_DIR)/Pods-AlzYouNeed-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlzYouNeed/Pods-AlzYouNeed-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -793,7 +793,7 @@
 		};
 		2D9834E71D0C4A91000977DC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6327080B0BE4BB6AAA83C326 /* Pods-AlzYouNeed.debug.xcconfig */;
+			baseConfigurationReference = 42C55905C746C31CFFB7FB56 /* Pods-AlzYouNeed.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -814,7 +814,7 @@
 		};
 		2D9834E81D0C4A91000977DC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8A1605B806B2B4D7F217704 /* Pods-AlzYouNeed.release.xcconfig */;
+			baseConfigurationReference = 572AFB4BF1993040B84E7892 /* Pods-AlzYouNeed.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
