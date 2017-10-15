@@ -187,6 +187,8 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         
         if let email = emailTextField.text, let password = passwordTextField.text {
             
+            capture(email)
+            
             Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
                 if let error = error {
                     HUD.hide()
@@ -194,12 +196,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
                     Answers.logSignUp(withMethod: "Email", success: false, customAttributes: nil)
                     
                     self.showErrorMessage(error: error)
-                    
-                    // Save email address on failure
-                    let attempt = ["email":email]
-                    
-                    let databaseRef = Database.database().reference()
-                    databaseRef.child("unsuccessful").childByAutoId().setValue(attempt)
                 } else {
                     if user != nil {
                         print("Created user with email")
@@ -211,6 +207,19 @@ class EmailVC: UIViewController, UITextFieldDelegate {
                     }
                 }
             })
+        }
+    }
+    
+    func capture(_ email: String) {
+        let attempt = ["email":email]
+        
+        let databaseRef = Database.database().reference()
+//        databaseRef.child("emails").childByAutoId().setValue(attempt)
+        
+        databaseRef.child("emails").childByAutoId().setValue(attempt) { (error, newRef) in
+            if error != nil {
+                print("Error capturing email: \(error)")
+            }
         }
     }
     
