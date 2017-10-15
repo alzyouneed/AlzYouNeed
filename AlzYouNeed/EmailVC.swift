@@ -214,8 +214,6 @@ class EmailVC: UIViewController, UITextFieldDelegate {
         let attempt = ["email":email]
         
         let databaseRef = Database.database().reference()
-//        databaseRef.child("emails").childByAutoId().setValue(attempt)
-        
         databaseRef.child("emails").childByAutoId().setValue(attempt) { (error, newRef) in
             if error != nil {
                 print("Error capturing email: \(error)")
