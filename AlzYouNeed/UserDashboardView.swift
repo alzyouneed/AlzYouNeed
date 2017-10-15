@@ -42,12 +42,17 @@ import UIKit
         
         addSubview(view)
         
-        self.userImageView.layer.masksToBounds = true
+        self.userImageView.layer.masksToBounds = false
         self.userImageView.layer.cornerRadius = self.userImageView.frame.height/2
         self.userImageView.clipsToBounds = true
         self.userImageView.layer.borderWidth = 2
-        self.userImageView.layer.borderColor = ivory.cgColor
+        self.userImageView.layer.borderColor = UIColor.white.cgColor
         self.userImageView.alpha = 0
+        
+        self.userImageView.layer.shadowColor = UIColor.black.cgColor
+        self.userImageView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        self.userImageView.layer.shadowOpacity = 0.2
+        self.userImageView.layer.shadowRadius = 1
     }
     
     func loadViewFromNib() -> UIView {

@@ -45,8 +45,18 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        DispatchQueue.main.async {
+            self.contactsCollectionView.reloadData()
+            self.checkCollectionViewEmpty()
+//        }
+        
+//         print("ContactsArr: \(AYNModel.sharedInstance.contactsArr)")
+        
+//        self.contactsCollectionView.reloadData()
+//        self.checkCollectionViewEmpty()
+        
         configureRefreshControl()
-        loadContacts(false)
+//        loadContacts(false)
         contactsCollectionView.delegate = self
         contactsCollectionView.dataSource = self
         searchBar.delegate = self
@@ -60,6 +70,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.presentTransparentNavBar()
+        checkPhoneNumbersExist()
         
         // If new user signed in -- force reload contacts
         if AYNModel.sharedInstance.contactsArrWasReset {
@@ -94,7 +105,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
         FirebaseManager.getFamilyMembers { (members, error) in
             if error == nil {
                 if let members = members {
-                     HUD.hide()
+                    HUD.hide()
                     print("Loaded \(members.count) contacts from Firebase")
                     AYNModel.sharedInstance.contactsArr = members
                     
@@ -128,7 +139,7 @@ class ContactsViewController: UIViewController, UICollectionViewDelegate, UIColl
                     
 //                    queue.async {
                         for member in members {
-                            print("TEST - Starting async lookup of user in family: \(member.fullName)")
+                            print("TEST - Starting async lookup of user in family: \(member.name)")
                             FirebaseManager.getUserById(member.userId, completionHandler: { (userDict, error) in
                                 if error == nil {
                                     if let userDict = userDict {
@@ -317,7 +328,7 @@ extension ContactsViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredContacts = AYNModel.sharedInstance.contactsArr.filter { $0.fullName.contains(searchText) }
+        filteredContacts = AYNModel.sharedInstance.contactsArr.filter { $0.name.contains(searchText) }
         if filteredContacts.count == 0 {
             searchActive = false
         } else {
@@ -332,7 +343,7 @@ extension ContactsViewController: UISearchBarDelegate {
             if contactListTutorialCompleted == "false" {
                 showTutorial()
             } else {
-                print("ContactList tutorial completed")
+//                print("ContactList tutorial completed")
             }
         }
     }
@@ -368,7 +379,6 @@ extension ContactsViewController: MFMessageComposeViewControllerDelegate {
 // MARK: - Emergency button
 extension ContactsViewController {
     func configureEmergencyButton() {
-        print("Configuring group chat button")
         emergencyButton.backgroundColor = caribbeanGreen
         emergencyButton.layer.cornerRadius = emergencyButton.frame.width/2
         emergencyButton.layer.shadowRadius = 1
@@ -377,6 +387,13 @@ extension ContactsViewController {
         emergencyButton.layer.shadowOpacity = 0.5
         
         emergencyButton.addTarget(self, action: #selector(ContactsViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+        
+        checkPhoneNumbersExist()
+    }
+    
+    func checkPhoneNumbersExist() {
+        self.emergencyButton.isHidden = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? true : false
+        self.emergencyButton.isUserInteractionEnabled = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? false : true
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {

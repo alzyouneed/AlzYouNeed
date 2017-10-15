@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import FontAwesome_swift
 
 class ContactCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var contactView: ContactView!
     
     func configureCell(_ contact: Contact, row: Int) {
-        contactView.nameLabel.text = contact.fullName
+        contactView.nameLabel.text = contact.name
         
         // Saves row in tag for contact-specific actions
         contactView.leftButton.tag = row
@@ -25,18 +26,23 @@ class ContactCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 10
         
         // Check user type
-        if let userIsAdmin = contact.admin as String? {
-            if userIsAdmin == "true" {
-                contactView.specialUser("admin")
-            } else {
-                if let userIsPatient = contact.patient as String? {
-                    if userIsPatient == "true" {
-                        contactView.specialUser("patient")
-                    } else {
-                        contactView.specialUser("none")
-                    }
-                }
-            }
+//        if let userIsAdmin = contact.admin as String? {
+//            if userIsAdmin == "true" {
+//                contactView.specialUser("admin")
+//            } else {
+//                if let userIsPatient = contact.patient as String? {
+//                    if userIsPatient == "true" {
+//                        contactView.specialUser("patient")
+//                    } else {
+//                        contactView.specialUser("none")
+//                    }
+//                }
+//            }
+//        }
+        
+        if contact.phoneNumber == nil {
+            contactView.leftButton.isEnabled = false
+            contactView.leftButton.alpha = 0.7
         }
         
         // Load images on background thread to avoid choppiness
@@ -56,7 +62,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
                 }
             }
             if !foundCache {
-                print("No cached user photo -- downloading")
+//                print("No cached user photo -- downloading")
                 
                 // Disable user interaction with cell for now to prevent unwrapping errors
                 self.isUserInteractionEnabled = false
@@ -65,7 +71,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
                 if let imageUrl = contact.photoUrl {
 
                     if imageUrl.hasPrefix("gs://") {
-                        FIRStorage.storage().reference(forURL: imageUrl).data(withMaxSize: INT64_MAX, completion: { (data, error) in
+                        Storage.storage().reference(forURL: imageUrl).getData(maxSize: INT64_MAX, completion: { (data, error) in
                             if let error = error {
                                 // Error
                                 print("Error downloading user profile image: \(error.localizedDescription)")
@@ -92,6 +98,12 @@ class ContactCollectionViewCell: UICollectionViewCell {
                             // Enable user interaction again
                             self.isUserInteractionEnabled = true
                         })
+                    }
+                }  else {
+                    // No image found
+                    self.isUserInteractionEnabled = true
+                    DispatchQueue.main.async {
+                        self.contactView.contactImageView.image = UIImage.fontAwesomeIcon(name: .user, textColor: UIColor(hex: "7189FF"), size: CGSize(width: 100, height: 100))
                     }
                 }
             }

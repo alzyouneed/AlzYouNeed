@@ -9,6 +9,8 @@
 import UIKit
 import UserNotifications
 
+// TODO: Reimplement elsewhere in app (after onboarding)
+
 class PushNotificationsViewController: UIViewController {
     
     @IBOutlet var progressView: UIProgressView!
@@ -73,41 +75,5 @@ class PushNotificationsViewController: UIViewController {
             }
         }
         UIApplication.shared.registerForRemoteNotifications()
-    }
-    
-    // MARK: - Cancel Onboarding
-    @IBAction func cancelOnboarding(_ sender: UIBarButtonItem) {
-        AYNModel.sharedInstance.onboarding = false
-        cancelAccountCreation()
-    }
-    
-    func cancelAccountCreation() {
-        
-        let alertController = UIAlertController(title: "Cancel Signup", message: "All progress will be lost", preferredStyle: .actionSheet)
-        let confirmAction = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
-            self.deleteUser()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            // Cancel button pressed
-        }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func deleteUser() {
-        FirebaseManager.deleteCurrentUser { (error) in
-            if error != nil {
-                // Error deleting user
-            }
-            else {
-                // Successfully deleted user
-                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let onboardingVC: UINavigationController = storyboard.instantiateViewController(withIdentifier: "loginNav") as! UINavigationController
-                self.present(onboardingVC, animated: true, completion: nil)
-            }
-        }
     }
 }

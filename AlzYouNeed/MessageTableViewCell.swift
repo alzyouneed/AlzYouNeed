@@ -38,7 +38,7 @@ class MessageTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(_ message: Message, contact: Contact, profileImage: UIImage) {
+    func configureCell(_ message: Message, contact: Contact) {
         self.alpha = 0
         
         chatBubbleView.layer.cornerRadius = 10
@@ -47,6 +47,8 @@ class MessageTableViewCell: UITableViewCell {
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 1
         profileImageView.layer.borderColor = stormCloud.cgColor
+        
+        profileImageView.isHidden = true
         
         
         // Configure favorited
@@ -85,22 +87,23 @@ class MessageTableViewCell: UITableViewCell {
             self.dateLabel.text = "\(dateFormatter.string(from: date))"
         }
         
-        if let currentUser = FIRAuth.auth()?.currentUser {
+        if let currentUser = Auth.auth().currentUser {
             if message.senderId == currentUser.uid {
                 self.nameLabel.text = "Me"
                 // Use current user's profile image
-                self.profileImageView.image = AYNModel.sharedInstance.currentUserProfileImage
+                
+//                self.profileImageView.image = AYNModel.sharedInstance.currentUserProfileImage
                 self.userType("sender")
             } else {
                 // Get only first name
-                let fullName = contact.fullName
+                let fullName = contact.name
                 if let firstName = fullName?.components(separatedBy: " ")[0] as String? {
                     self.nameLabel.text = firstName
                 } else {
                     self.nameLabel.text = fullName
                 }
                 // Use recipient's profile image
-                self.profileImageView.image = profileImage
+//                self.profileImageView.image = profileImage
                 self.userType("receiver")
             }
         }

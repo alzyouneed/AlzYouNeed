@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qfV-xL-rPd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qfV-xL-rPd">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -74,14 +74,14 @@
                                     <outlet property="delegate" destination="vin-0T-rca" id="5Hz-qo-JOM"/>
                                 </connections>
                             </collectionView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbH-80-chY">
+                            <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbH-80-chY">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="barTintColor" red="0.53333333329999999" green="0.51764705879999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MWK-Af-Q5E">
+                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MWK-Af-Q5E">
                                 <rect key="frame" x="309" y="553" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.25882352939999997" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -91,7 +91,7 @@
                                 <state key="normal" image="groupChatIcon"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.53333333333333333" green="0.51764705882352935" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44313725490196076" green="0.53725490196078429" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PqP-9E-X1L" firstAttribute="top" secondItem="MWK-Af-Q5E" secondAttribute="bottom" constant="15" id="DHA-Aj-ipJ"/>
                             <constraint firstAttribute="trailing" secondItem="xbH-80-chY" secondAttribute="trailing" id="DkF-ig-AkC"/>
@@ -122,11 +122,11 @@
             </objects>
             <point key="canvasLocation" x="728.79999999999995" y="447.52623688155927"/>
         </scene>
-        <!--Family-->
+        <!--Group-->
         <scene sceneID="I0w-bp-nSU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qfV-xL-rPd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Family" image="contactsIcon" id="QWF-CU-oK5"/>
+                    <tabBarItem key="tabBarItem" title="Group" image="contactsIcon" id="QWF-CU-oK5"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="MFg-XF-DfL">

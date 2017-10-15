@@ -15,52 +15,37 @@ class UserDefaultsManager: NSObject {
         
         defaults.set(_user, forKey: "currentUser")
         defaults.synchronize()
-        print("Saved current user in UserDefaults")
+//        print("Saved current user in UserDefaults")
     }
     
-    class func loadCurrentUser(_userId: String) -> NSDictionary? {
-        let defaults = UserDefaults.standard
-        if let savedUserDict = defaults.object(forKey: "currentUser") as? NSDictionary {
-            if let savedUserId = savedUserDict.value(forKey: "userId") as? String {
-                if savedUserId == _userId {
-                    print("Loading user from UserDefaults")
-//                    print("Loading user from UserDefaults:", savedUserDict)
-                    return savedUserDict
-                } else {
-                    // Not the same user -- return nil
-                    print("Different user in UserDefaults - skipping")
-                    return nil
-                }
-            }
-            print("Could not find userId in UserDefaults")
-            return nil
-        }
-        print("Could not find user in UserDefaults")
-        return nil
-    }
-    
-    class func saveCurrentUserNotepad(_note: String) {
+    class func loadCurrentUser() -> NSDictionary? {
         let defaults = UserDefaults.standard
         
-        if let userId = AYNModel.sharedInstance.currentUser?.object(forKey: "userId") as? String {
-            defaults.set(_note, forKey: userId)
-            defaults.synchronize()
-            print("Saved current user notepad to UserDefaults")
+        if let savedUserDict = defaults.object(forKey: "currentUser") as? NSDictionary {
+            return savedUserDict
+        } else {
+            print("Could not find user in UserDefaults")
+            return nil
         }
+    }
+    
+    class func saveCurrentUserNotepad(note: String) {
+        let defaults = UserDefaults.standard
+        
+        defaults.set(note, forKey: "userNote")
+        defaults.synchronize()
     }
     
     class func loadCurrentNote() -> String? {
         let defaults = UserDefaults.standard
-        if let userId = AYNModel.sharedInstance.currentUser?.object(forKey: "userId") as? String {
-            if let savedUserNote = defaults.object(forKey: userId) as? String {
-                print("Loading note from UserDefaults")
-                return savedUserNote
-            } else {
-                print("Could not find note in UserDefaults")
-                return nil
-            }
+        
+        if let savedNote = defaults.object(forKey: "userNote") as? String {
+            print("Loading note from UserDefaults")
+            return savedNote
+        } else {
+            print("Could not find note in UserDefaults")
+            return nil
         }
-        return nil
     }
     
     // Handle first time using certain features
@@ -112,7 +97,18 @@ class UserDefaultsManager: NSObject {
         // Create new dict and try again 
         resetUserTutorials()
         return getTutorialCompletion(tutorial: tutorial)
-//        return nil
+    }
+    
+    class func getReminderWarningStatus() -> Bool {
+        let defaults = UserDefaults.standard
+        let status = defaults.bool(forKey: "getReminderWarningStatus")
+        return status
+    }
+    
+    class func setReminderWarningStatus(status: Bool) {
+        let defaults = UserDefaults.standard
+        defaults.set(status, forKey: "getReminderWarningStatus")
+        defaults.synchronize()
     }
     
     class func getNotificationStatus() -> Bool {
@@ -140,6 +136,15 @@ class UserDefaultsManager: NSObject {
         let defaults = UserDefaults.standard
         let deviceToken = defaults.string(forKey: "deviceToken")
         return deviceToken
+    }
+    
+    class func reset() {
+        print("Reset UserDefaultsManager")
+        resetUserTutorials()
+        setReminderWarningStatus(status: false)
+        setNotificationStatus(status: false)
+        saveDeviceToken(token: "")
+        saveCurrentUser(_user: NSDictionary())
     }
     
 }

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65F7182BA7FAA26CA965BDD0AE5E2658"
+               BlueprintIdentifier = "19B53BBFDB3D59BB8E7A52C6DFD3AB16"
                BuildableName = "Pods_AlzYouNeed.framework"
                BlueprintName = "Pods-AlzYouNeed"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -36,6 +37,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65F7182BA7FAA26CA965BDD0AE5E2658"
+            BlueprintIdentifier = "19B53BBFDB3D59BB8E7A52C6DFD3AB16"
             BuildableName = "Pods_AlzYouNeed.framework"
             BlueprintName = "Pods-AlzYouNeed"
             ReferencedContainer = "container:Pods.xcodeproj">

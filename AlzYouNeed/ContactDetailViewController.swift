@@ -21,9 +21,9 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     @IBOutlet var messageTextField: UITextField!
     
-    let databaseRef = FIRDatabase.database().reference()
+    let databaseRef = Database.database().reference()
     var conversationId: String!
-    var familyId: String!
+//    var familyId: String!
     
     var conversationHandle: UInt?
     
@@ -42,41 +42,46 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     func configureView() {
         messagesTableView.delegate = self
         
-        userView.userNameLabel.text = "\(contact.fullName!)"
-        userView.setImage(profileImage)
+        userView.userNameLabel.text = "\(contact.name!)"
+        if profileImage != nil {
+            userView.setImage(profileImage)
+        }
 
         userView.view.backgroundColor = caribbeanGreen
         
         configureActionButtons()
         lastCalledLabel.isHidden = true
         
+        userView.separatorView.isHidden = true
+        userView.familyGroupLabel.isHidden = true
+        
         // Check user type
-        if let userIsAdmin = contact.admin as String? {
-            if userIsAdmin == "true" {
-                userView.specialUser("admin")
-            } else {
-                if let userIsPatient = contact.patient as String? {
-                    if userIsPatient == "true" {
-                        userView.specialUser("patient")
-                    } else {
-                        userView.specialUser("none")
-                    }
-                }
-            }
-        }
+//        if let userIsAdmin = contact.admin as String? {
+//            if userIsAdmin == "true" {
+//                userView.specialUser("admin")
+//            } else {
+//                if let userIsPatient = contact.patient as String? {
+//                    if userIsPatient == "true" {
+//                        userView.specialUser("patient")
+//                    } else {
+//                        userView.specialUser("none")
+//                    }
+//                }
+//            }
+//        }
         
         // If current user is patient -- show relations
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let patientStatus = AYNModel.sharedInstance.currentUser!["patient"] as? String {
-                if patientStatus == "true" {
-                    if let relation = contact.relation as String? {
-                        showRelation(show: true, relation: relation)
-                    }
-                } else {
-                    showRelation(show: false, relation: "")
-                }
-            }
-        }
+//        if AYNModel.sharedInstance.currentUser != nil {
+//            if let patientStatus = AYNModel.sharedInstance.currentUser!["patient"] as? String {
+//                if patientStatus == "true" {
+//                    if let relation = contact.relation as String? {
+//                        showRelation(show: true, relation: relation)
+//                    }
+//                } else {
+//                    showRelation(show: false, relation: "")
+//                }
+//            }
+//        }
     }
     
     func configureActionButtons() {
@@ -90,6 +95,11 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         
         // Add targets
         contactActionButtons.leftButton.addTarget(self, action: #selector(ContactDetailViewController.leftButtonPressed(_:)), for: [UIControlEvents.touchUpInside])
+        
+        if contact.phoneNumber == nil {
+            contactActionButtons.leftButton.isEnabled = false
+            contactActionButtons.leftButton.alpha = 0.7
+        }
     }
     
     func configureLastCalledLabel(_ dateString: String) {
@@ -137,8 +147,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         // Get conversation ID
 //        if let userFamilyId = AYNModel.sharedInstance.currentUserFamilyId as String? {
         
-        if let userFamilyId = AYNModel.sharedInstance.currentUser?.object(forKey: "familyId") as? String {
-            FirebaseManager.getConversationId(userFamilyId, receiverId: contact.userId) { (error, conversationId) in
+        if let userGroupId = AYNModel.sharedInstance.groupId {
+            FirebaseManager.getConversationId(userGroupId, receiverId: contact.userId) { (error, conversationId) in
                 if error == nil {
                     if let conversationId = conversationId {
                         self.conversationId = conversationId
@@ -147,6 +157,17 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
                 }
             }
         }
+        
+//        if let userFamilyId = AYNModel.sharedInstance.currentUser?.object(forKey: "familyId") as? String {
+//            FirebaseManager.getConversationId(userFamilyId, receiverId: contact.userId) { (error, conversationId) in
+//                if error == nil {
+//                    if let conversationId = conversationId {
+//                        self.conversationId = conversationId
+//                        self.addConversationObservers()
+//                    }
+//                }
+//            }
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,7 +184,7 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         if messageContact {
             messageTextField.becomeFirstResponder()
         }
-        print("Contact:", contact)
+//        print("Contact:", contact)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -185,7 +206,8 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     
     // MARK: - Action Buttons
     func leftButtonPressed(_ sender: UIButton) {
-        print("Calling: \(contact.phoneNumber!)")
+        if let phoneNumber = contact.phoneNumber {
+        print("Calling: \(phoneNumber)")
         
         // Save action in Firebase RTDB
         let now = Date().timeIntervalSince1970
@@ -197,9 +219,12 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
             }
         }
         
-        let url: URL = URL(string: "tel://\(contact.phoneNumber!)")!
+        let url: URL = URL(string: "tel://\(phoneNumber)")!
 //        UIApplication.shared.openURL(url)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            print("No phone number")
+        }
     }
     
     @IBAction func closeContactDetailView(_ sender: AnyObject) {
@@ -235,14 +260,14 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     }
     
     func sendNotification(message: String) {
-        let ref = FIRDatabase.database().reference()
+        let ref = Database.database().reference()
         
-        if let userName = AYNModel.sharedInstance.currentUser?["name"] as? String {
+        if let username = Auth.auth().currentUser?.displayName {
             if contact.deviceToken != nil {
-                let notification = ["fromId": FIRAuth.auth()?.currentUser!.uid,
+                let notification = ["fromId": Auth.auth().currentUser!.uid,
                                     "toId": contact.userId,
-                                    "message" : "\(userName): \(message)",
-                                    "deviceToken": contact.deviceToken!]
+                                    "message" : "\(username): \(message)",
+                    "deviceToken": contact.deviceToken!]
                 ref.child("notifications").childByAutoId().setValue(notification)
                 print("Sent notification")
             }
@@ -252,46 +277,44 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
     // MARK: - Firebase Observers
     func addConversationObservers() {
         print("Adding Firebase observers")
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                self.familyId = userFamilyId
-                
-                conversationHandle = self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
-//                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
-                    var indexPaths: [IndexPath] = []
-                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
-                        //                            print("Value: \(snapshot.value)")
-                        if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
-                            self.messages.append(newMessage)
-                            indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
-                            
-                            //                                print("inserting new message into row")
-                            self.messagesTableView.insertRows(at: indexPaths, with: .none)
-                            
-                            //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
-                            
-                            DispatchQueue.main.async(execute: {
-                                self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
-                            })
-                        }
-                    })
+        if let groupId = AYNModel.sharedInstance.groupId {
+            //                self.familyId = userFamilyId
+            
+            conversationHandle = self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).observe(.childAdded, with: { (snapshot) in
+                //                    self.databaseRef.child(GroupPath).child(userFamilyId).child("conversations").child(self.conversationId).queryLimitedToLast(50).observeEventType(.ChildAdded, withBlock: { (snapshot) in
+                var indexPaths: [IndexPath] = []
+                self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(self.conversationId).child(snapshot.key).observe(.value, with: { (snapshot) in
+                    //                            print("Value: \(snapshot.value)")
+                    if let newMessage = Message(messageId: snapshot.key, messageDict: snapshot.value as! NSDictionary) {
+                        self.messages.append(newMessage)
+                        indexPaths.append(IndexPath(row: self.messages.count-1, section: 0))
+                        
+                        //                                print("inserting new message into row")
+                        self.messagesTableView.insertRows(at: indexPaths, with: .none)
+                        
+                        //                                self.messagesTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Fade)
+                        
+                        DispatchQueue.main.async(execute: {
+                            self.messagesTableView.scrollToRow(at: indexPaths.last!, at: .bottom, animated: false)
+                        })
+                    }
                 })
-            }
+            })
         }
     }
     
     func removeConversationObservers() {
         print("Removing Firebase observers")
-//        self.databaseRef.child("families").child(familyId).child("conversations").child(conversationId).removeAllObservers()
+        //        self.databaseRef.child(GroupPath).child(familyId).child("conversations").child(conversationId).removeAllObservers()
         
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                if conversationHandle != nil {
-                    self.databaseRef.child("families").child(userFamilyId).child("conversations").child(conversationId).removeObserver(withHandle: conversationHandle!)
-                    conversationHandle = nil
-                    print("Removed conversationHandle")
-                }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            //            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
+            if conversationHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("conversations").child(conversationId).removeObserver(withHandle: conversationHandle!)
+                conversationHandle = nil
+                print("Removed conversationHandle")
             }
+            //            }
         }
     }
     
@@ -304,14 +327,16 @@ class ContactDetailViewController: UIViewController, UITableViewDelegate, Messag
         
         let message = messages[(indexPath as NSIndexPath).row]
         
-        if message.senderId == FIRAuth.auth()?.currentUser?.uid {
+        if message.senderId == Auth.auth().currentUser?.uid {
             let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "messageCellMe")! as! MessageTableViewCell
-            cell.configureCell(message, contact: contact, profileImage: profileImage)
+            cell.configureCell(message, contact: contact)
+//            cell.configureCell(message, contact: contact, profileImage: profileImage)
             cell.delegate = self
             return cell
         } else {
             let cell:MessageTableViewCell = tableView.dequeueReusableCell(withIdentifier: "messageCellYou")! as! MessageTableViewCell
-            cell.configureCell(message, contact: contact, profileImage: profileImage)
+            cell.configureCell(message, contact: contact)
+//            cell.configureCell(message, contact: contact, profileImage: profileImage)
             cell.delegate = self
             return cell
         }

@@ -18,7 +18,7 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     @IBOutlet var reminderSegmentedControl: UISegmentedControl!
     @IBOutlet var addReminderTableButton: UIButton!
     
-    let databaseRef = FIRDatabase.database().reference()
+    let databaseRef = Database.database().reference()
     var addReminderHandle: UInt?
     var removeReminderHandle: UInt?
     
@@ -62,6 +62,8 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
         
         AYNModel.sharedInstance.remindersArr.removeAll()
         self.remindersTableView.reloadData()
+        
+        checkPhoneNumbersExist()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -279,65 +281,62 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
     // MARK: - Firebase Observers
     func addRemindersObservers() {
         print("Adding Firebase observers")
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-               addReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").queryOrdered(byChild: "dueDate").observe(FIRDataEventType.childAdded, with: { (snapshot) in
-                    if let reminderDict = snapshot.value! as? NSDictionary {
-                        if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
-                            print("New reminder in RTDB")
-                            
-                            AYNModel.sharedInstance.remindersArr.append(newReminder)
-                            
-                            // Schedule local notifications
-                            if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
-                                let now = Date()
-                                let calendar = Calendar.current
-                                // Check that date has not passed
-                                if calendar.compare(dueDate, to: now, toGranularity: .second) == .orderedDescending || newReminder.repeats != "None" {
-                                    self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
-                                }
-                                else {
-                                    print("Reminder due date has passed -- skipping")
-                                }
-                            }
+        
+        if let groupId = AYNModel.sharedInstance.groupId {
+            addReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").queryOrdered(byChild: "dueDate").observe(DataEventType.childAdded, with: { (snapshot) in
+                if let reminderDict = snapshot.value! as? NSDictionary {
+                    if let newReminder = Reminder(reminderId: snapshot.key, reminderDict: reminderDict) {
+                        print("New reminder in RTDB")
                         
-                            self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
-//                            self.updateTabBadge()
+                        AYNModel.sharedInstance.remindersArr.append(newReminder)
+                        
+                        // Schedule local notifications
+                        if let dueDate = Date(timeIntervalSince1970: Double(newReminder.dueDate)!) as Date? {
+                            let now = Date()
+                            let calendar = Calendar.current
+                            // Check that date has not passed
+                            if calendar.compare(dueDate, to: now, toGranularity: .second) == .orderedDescending || newReminder.repeats != "None" {
+                                self.scheduleLocalNotification(snapshot.key, reminder: reminderDict)
+                            }
+                            else {
+                                print("Reminder due date has passed -- skipping")
+                            }
                         }
+                        
+                        self.remindersTableView.insertRows(at: [IndexPath(row: AYNModel.sharedInstance.remindersArr.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
+                        //                            self.updateTabBadge()
                     }
-                })
-                removeReminderHandle = self.databaseRef.child("families").child(userFamilyId).child("reminders").observe(FIRDataEventType.childRemoved, with: { (snapshot) in
-                    if let reminderId = snapshot.key as String? {
-                        if let index = self.getIndex(reminderId) {
-                            print("Removing reminder in RTDB")
-                            
-                            AYNModel.sharedInstance.remindersArr.remove(at: index)
-                            
-                            // Cancel any local notifications
-                            self.cancelLocalNotification(reminderId)
-                            
-                            self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
-                            self.updateTabBadge()
-                        }
+                }
+            })
+            removeReminderHandle = self.databaseRef.child(GroupPath).child(groupId).child("reminders").observe(DataEventType.childRemoved, with: { (snapshot) in
+                if let reminderId = snapshot.key as String? {
+                    if let index = self.getIndex(reminderId) {
+                        print("Removing reminder in RTDB")
+                        
+                        AYNModel.sharedInstance.remindersArr.remove(at: index)
+                        
+                        // Cancel any local notifications
+                        self.cancelLocalNotification(reminderId)
+                        
+                        self.remindersTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: UITableViewRowAnimation.automatic)
+                        self.updateTabBadge()
                     }
-                })
-            }
+                }
+            })
         }
     }
     
     func removeRemindersObservers() {
-        if AYNModel.sharedInstance.currentUser != nil {
-            if let userFamilyId = AYNModel.sharedInstance.currentUser?.value(forKey: "familyId") as? String {
-                if addReminderHandle != nil {
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: addReminderHandle!)
-                    addReminderHandle = nil
-                    print("Removed addedReminderHandle")
-                }
-                if removeReminderHandle != nil {
-                    self.databaseRef.child("families").child(userFamilyId).child("reminders").removeObserver(withHandle: removeReminderHandle!)
-                    removeReminderHandle = nil
-                    print("Removed removeReminderHandle")
-                }
+        if let groupId = AYNModel.sharedInstance.groupId {
+            if addReminderHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("reminders").removeObserver(withHandle: addReminderHandle!)
+                addReminderHandle = nil
+                print("Removed addedReminderHandle")
+            }
+            if removeReminderHandle != nil {
+                self.databaseRef.child(GroupPath).child(groupId).child("reminders").removeObserver(withHandle: removeReminderHandle!)
+                removeReminderHandle = nil
+                print("Removed removeReminderHandle")
             }
         }
     }
@@ -459,12 +458,13 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
             } else {
                 if granted {
                     print("Push notification auth granted")
+                    UIApplication.shared.registerForRemoteNotifications()
                 } else {
                     print("Push notification auth denied")
                 }
             }
         }
-        UIApplication.shared.registerForRemoteNotifications()
+//        UIApplication.shared.registerForRemoteNotifications()
     }
     
     func scheduleLocalNotification(_ reminderId: String, reminder: NSDictionary) {
@@ -602,17 +602,20 @@ class RemindersViewController: UIViewController, UITableViewDelegate, ReminderTa
                 })
             })
         } else {
-            // Notifications disabled
-            let alertController = UIAlertController(title: "Tip", message: "Enable notifications to be reminded of items on your to-do list", preferredStyle: .alert)
-            let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
-                if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                }
-            })
-            let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
-            alertController.addAction(enableAction)
-            alertController.addAction(cancelAction)
-            present(alertController, animated: true, completion: nil)
+            // Notifications disabled -- check if showed warning
+            if !UserDefaultsManager.getReminderWarningStatus() {
+                UserDefaultsManager.setReminderWarningStatus(status: true)
+                let alertController = UIAlertController(title: "Tip", message: "Enable notifications to be reminded of items on your to-do list", preferredStyle: .alert)
+                let enableAction = UIAlertAction(title: "Enable", style: .default, handler: { (action) in
+                    if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                        UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+                    }
+                })
+                let cancelAction = UIAlertAction(title: "No thanks", style: .cancel, handler: nil)
+                alertController.addAction(enableAction)
+                alertController.addAction(cancelAction)
+                present(alertController, animated: true, completion: nil)
+            }
         }
     }
     
@@ -730,6 +733,13 @@ extension RemindersViewController {
         emergencyButton.layer.shadowOpacity = 0.5
         
         emergencyButton.addTarget(self, action: #selector(RemindersViewController.emergencyButtonPressed(_:)), for: [.touchUpInside, .touchDown])
+        
+        checkPhoneNumbersExist()
+    }
+    
+    func checkPhoneNumbersExist() {
+        self.emergencyButton.isHidden = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? true : false
+        self.emergencyButton.isUserInteractionEnabled = AYNModel.sharedInstance.familyMemberNumbers.isEmpty ? false : true
     }
     
     func emergencyButtonPressed(_ sender: UIButton) {
